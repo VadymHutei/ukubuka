@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseContainer(ABC):
+class Container(ABC):
 
     _providers = []
 

@@ -1,4 +1,4 @@
-from ukubuka.container import BaseContainer
+from ukubuka.container import Container as BaseContainer
 
 from modules.hello.provider import HelloProvider
 
