@@ -10,9 +10,7 @@ class BaseContainer(ABC):
         self._setResources()
 
     def get(self, resourceName):
-        dependencies = []
-        for dependency in self.__dict__[resourceName]['dependencies']:
-            dependencies.append(self.get(dependency.__name__))
+        dependencies = [self.get(dependency.__name__) for dependency in self.__dict__[resourceName]['dependencies']]
         return self.__dict__[resourceName]['class'](*dependencies)
 
     @abstractmethod
@@ -24,12 +22,4 @@ class BaseContainer(ABC):
 
     def _setResources(self):
         for provider in self._providers:
-            for resource, dependencies in provider.getResources().items():
-                setattr(
-                    self,
-                    resource.__name__,
-                    {
-                        'class': resource,
-                        'dependencies': dependencies
-                    }
-                )
+            self.__dict__.update({resource.__name__: {'class': resource, 'dependencies': dependencies} for resource, dependencies in provider.getResources().items()})
