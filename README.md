@@ -11,11 +11,15 @@ source env/bin/activate
 
 ```
 pip install -U pip
-pip install Flask
+pip install -r requirements.txt
 ```
 
 ```
 export FLASK_APP=main.py
 export FLASK_ENV=development
-flask run --host=0.0.0.0 --port=5000
+flask run --port=5000
+```
+
+```
+docker run --name ukubuka_db -d --restart always -v C:\Users\hutei\dev\ukubuka\db\data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5
 ```

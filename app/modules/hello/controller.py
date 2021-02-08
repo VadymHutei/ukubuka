@@ -1,6 +1,6 @@
-class HelloController():
-    def __init__(self):
-        print('Created Hello Controller')
+class HelloController:
+    def __init__(self, view):
+        self.view = view
 
     def helloAction(self):
-        return 'hello World!'
+        return self.view.render()

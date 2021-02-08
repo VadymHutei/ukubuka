@@ -1,11 +1,12 @@
 from flask import Flask
 
-from modules.hello.controller import HelloController
+from container import Container
 
 
 app = Flask(__name__)
+container = Container()
 
 @app.route('/')
 def hello_world():
-    controller = HelloController()
+    controller = container.get('HelloController')
     return controller.helloAction()
