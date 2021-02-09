@@ -7,6 +7,6 @@ class HelloProvider:
     @staticmethod
     def getResources():
         return {
-            HelloController: (HelloView,),
+            HelloController: (HelloView, 'bar'),
             HelloView: ()
         }
