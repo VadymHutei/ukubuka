@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Catalog</title>
+</head>
+<body>
+    <head>
+        <h1>Catalog</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </head>
+    <main>
+        {% for product in products %}
+        <div>
+            <div class="product_name">
+                {{ product.name }}
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+    <footer></footer>
+</body>
+</html>

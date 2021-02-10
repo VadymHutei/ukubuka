@@ -6,7 +6,12 @@ from container import Container
 app = Flask(__name__)
 container = Container()
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def homePage():
     controller = container.get('HomePageController')
     return controller.homePageAction()
+
+@app.route('/catalog', methods=['GET'])
+def catalogPage():
+    controller = container.get('CatalogController')
+    return controller.catalogAction()
