@@ -7,6 +7,6 @@ app = Flask(__name__)
 container = Container()
 
 @app.route('/')
-def hello_world():
-    controller = container.get('HelloController')
-    return controller.helloAction()
+def homePage():
+    controller = container.get('HomePageController')
+    return controller.homePageAction()
