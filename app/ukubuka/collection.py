@@ -2,11 +2,8 @@ class Collection:
 
     _items = []
 
-    def addItem(self, item):
-        self._items.append(item)
-
-    def getItems(self):
-        return self._items
+    def __init__(self, items=[]):
+        self._items = items
 
     def __len__(self):
         return len(self._items)
