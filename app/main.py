@@ -15,3 +15,8 @@ def homePage():
 def catalogPage():
     controller = container.get('CatalogController')
     return controller.catalogAction()
+
+@app.route('/product', methods=['GET'])
+def productPage():
+    controller = container.get('ProductController')
+    return controller.productAction()
