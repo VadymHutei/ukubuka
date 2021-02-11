@@ -10,5 +10,5 @@ class ProductProvider:
         return {
             ProductController: (ProductService, ProductView),
             ProductService: (),
-            ProductView: ('product/page.html',)
+            ProductView: ('modules/product/page.html',)
         }

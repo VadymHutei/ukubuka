@@ -10,5 +10,5 @@ class CatalogProvider:
         return {
             CatalogController: (CatalogService, CatalogView),
             CatalogService: (),
-            CatalogView: ('catalog/page.html',)
+            CatalogView: ('modules/catalog/page.html',)
         }

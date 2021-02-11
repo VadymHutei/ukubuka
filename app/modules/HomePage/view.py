@@ -1,7 +1,6 @@
 from flask import render_template
 
+from ukubuka.view import View
 
-class HomePageView:
-
-    def render(self):
-        return render_template('home_page/page.html')
+class HomePageView(View):
+    pass

@@ -8,5 +8,5 @@ class HomePageProvider:
     def getResources():
         return {
             HomePageController: (HomePageView,),
-            HomePageView: ()
+            HomePageView: ('modules/home_page/page.html',)
         }
