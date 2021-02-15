@@ -4,7 +4,7 @@ class ProductController:
         self.service = service
         self.view = view
 
-    def productAction(self):
-        product = self.service.getProduct()
-        self.view.addData({'product': product.toArray()})
+    def productAction(self, productID):
+        product = self.service.getProductByID(productID)
+        self.view.addData({'product': product})
         return self.view.render()

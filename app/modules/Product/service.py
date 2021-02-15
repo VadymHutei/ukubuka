@@ -1,12 +1,12 @@
+from ukubuka.service.AbstractService import AbstractService
 from modules.Product.entity import ProductEntity
 
 
-class ProductService:
+class ProductService(AbstractService):
 
-    def getProduct(self):
-        product = {
-            'id': '1',
-            'name': 'Product 1',
-            'description': 'Description of Product 1',
-        }
+    def __init__(self, repository):
+        self.repository = repository
+
+    def getProductByID(self, productID):
+        product = self.repository.getProductByID(productID)
         return ProductEntity(product)

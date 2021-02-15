@@ -16,7 +16,7 @@ def catalogPage():
     controller = container.get('CatalogController')
     return controller.catalogAction()
 
-@app.route('/product', methods=['GET'])
-def productPage():
+@app.route('/product/<productID>', methods=['GET'])
+def productPage(productID):
     controller = container.get('ProductController')
-    return controller.productAction()
+    return controller.productAction(productID)
