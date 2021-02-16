@@ -1,4 +1,4 @@
-from ukubuka.service.AbstractService import AbstractService
+from ukubuka.AbstractService import AbstractService
 from modules.Product.entity import ProductEntity
 
 

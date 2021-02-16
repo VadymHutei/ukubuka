@@ -1,4 +1,7 @@
-class HomePageController:
+from ukubuka.AbstractController import AbstractController
+
+
+class HomePageController(AbstractController):
 
     def __init__(self, view):
         self.view = view

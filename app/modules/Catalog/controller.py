@@ -1,4 +1,7 @@
-class CatalogController:
+from ukubuka.AbstractController import AbstractController
+
+
+class CatalogController(AbstractController):
 
     def __init__(self, service, view):
         self.service = service

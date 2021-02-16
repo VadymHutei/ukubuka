@@ -1,4 +1,4 @@
-from ukubuka.entity.AbstractEntity import AbstractEntity
+from ukubuka.AbstractEntity import AbstractEntity
 
 
 class ProductEntity(AbstractEntity):
