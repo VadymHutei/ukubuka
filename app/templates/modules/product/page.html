@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>{{ product.name }}</title>
-</head>
-<body>
-    <head>
-        <h1>{{ product.name }}</h1>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/catalog">Catalog</a></li>
-        </ul>
-    </head>
-    <main>
-        <p>{{ product.description }}</p>
-        <p><small>{{ product.id }}</small></p>
-    </main>
-    <footer></footer>
-</body>
-</html>
+{% extends 'layout/layout.html' %}
+
+
+{% block title -%}
+
+{{ product.name }}
+
+{%- endblock %}
+
+{% block content -%}
+
+<h1>{{ product.name }}</h1>
+<p>{{ product.description }}</p>
+<p><small>{{ product.id }}</small></p>
+
+{%- endblock %}
