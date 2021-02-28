@@ -19,8 +19,8 @@ class AbstractContainer(ABC):
     def _setProviders(self):
         pass
 
-    def _addProvider(self, provider):
-        self._providers.append(provider)
+    def _addProviders(self, providers):
+        self._providers.extend(providers)
 
     def _setResources(self):
         for provider in self._providers:

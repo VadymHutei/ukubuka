@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 
 from container import Container
 
@@ -20,3 +20,18 @@ def catalogPage():
 def productPage(productID):
     controller = container.get('ProductController')
     return controller.productAction(productID)
+
+@app.route('/shop', methods=['GET'])
+def shopPage():
+    controller = container.get('ShopController')
+    return controller.shopAction()
+
+@app.route('/shop/<path:path>', methods=['GET'])
+def shop(path):
+    shopPathResolver = container.get('ShopPathResolver')
+    requestedResource = shopPathResolver.resolve(path)
+    if not requestedResource.isValidPath:
+        abort(404)
+    controller = container.get('ShopController')
+    if requestedResource.isCatalog:
+        return controller.catalogAction(requestedResource.identifierType())
