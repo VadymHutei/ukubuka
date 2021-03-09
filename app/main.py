@@ -34,4 +34,6 @@ def shop(path):
         abort(404)
     controller = container.get('ShopController')
     if requestedResource.isCatalog:
-        return controller.catalogAction(requestedResource.identifierType())
+        return controller.catalogAction(requestedResource.resourceType)
+    elif requestedResource.isProduct:
+        return controller.productAction(requestedResource.resourceType)
