@@ -9,8 +9,8 @@ class ShopService(AbstractService):
     def getCatalogByAlias(self, catalogAlias):
         return self._repository.getCatalogByAlias(catalogAlias)
 
-    def getCatalogById(self, catalogID):
-        return self._repository.getCatalogById(catalogID)
+    def getCatalogByID(self, catalogID):
+        return self._repository.getCatalogByID(catalogID)
 
     def getCategoryByAlias(self, categoryAlias):
         return self._repository.getCategoryByAlias(categoryAlias)

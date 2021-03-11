@@ -21,10 +21,9 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
-    def getCatalogById(self, catalogID):
+    def getCatalogByID(self, catalogID):
         query = f'''
             SELECT
                 *
@@ -39,7 +38,6 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
     def getCategoryByAlias(self, categoryAlias):
@@ -57,7 +55,6 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
     def getCategoryByID(self, categoryID):
@@ -67,7 +64,7 @@ class ShopRepository(AbstractRepository):
             FROM
                 category
             WHERE
-                id = '{alias}'
+                id = '{categoryID}'
         '''
 
         connection = pymysql.connect(**DB_CREDENTIALS)
@@ -75,7 +72,6 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
     def getProductByAlias(self, productAlias):
@@ -93,7 +89,6 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
     def getProductByID(self, productID):
@@ -111,7 +106,6 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
     def getSKUByAlias(self, SKUAlias):
@@ -129,7 +123,6 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
     
     def getSKUByID(self, SKUID):
@@ -147,5 +140,4 @@ class ShopRepository(AbstractRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
-                print(result)
         return result
