@@ -42,7 +42,15 @@ class ShopController(AbstractController):
 
     def categoryAction(self, categoryID):
         category = self._service.getCategoryByID(categoryID)
+
+        if category is None:
+            abort(404)
+
         self._catalogView.addData({'category': category})
+        
+        categoryProducts = self._service.getProductsByCategoryID(categoryID)
+        self._catalogView.addData({'products': categoryProducts})
+
         return self._catalogView.render()
 
     def productAction(self, productID):

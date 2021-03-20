@@ -73,6 +73,23 @@ class ShopRepository(AbstractRepository):
                 cursor.execute(query)
                 result = cursor.fetchone()
         return result
+
+    def getProductsByCategoryID(self, categoryID):
+        query = f'''
+            SELECT
+                *
+            FROM
+                product
+            WHERE
+                category_id = {categoryID}
+        '''
+
+        connection = pymysql.connect(**DB_CREDENTIALS)
+        with connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                result = cursor.fetchall()
+        return result
     
     def getProductByAlias(self, productAlias):
         query = f'''

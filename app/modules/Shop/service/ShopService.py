@@ -1,7 +1,4 @@
-from ukubuka.AbstractService import AbstractService
-
-
-class ShopService(AbstractService):
+class ShopService:
 
     def __init__(self, repository):
         self._repository = repository
@@ -17,6 +14,9 @@ class ShopService(AbstractService):
 
     def getCategoryByID(self, categoryID):
         return self._repository.getCategoryByID(categoryID)
+
+    def getProductsByCategoryID(self, categoryID):
+        return self._repository.getProductsByCategoryID(categoryID)
 
     def getProductByAlias(self, productAlias):
         return self._repository.getProductByAlias(productAlias)

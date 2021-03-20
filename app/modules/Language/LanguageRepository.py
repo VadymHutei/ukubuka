@@ -42,3 +42,22 @@ class LanguageRepository(AbstractRepository):
                 cursor.execute(query)
                 result = cursor.fetchone()
         return result
+
+    def getTranslates(self):
+        query = '''
+            SELECT
+                t.`text`,
+                t.`language`,
+                t.`translate`
+            FROM `translate` t
+            JOIN `language` l
+                ON l.`code` = t.`language`
+            WHERE l.`is_active` = 1
+        '''
+
+        connection = pymysql.connect(**DB_CREDENTIALS)
+        with connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                result = cursor.fetchall()
+        return result
