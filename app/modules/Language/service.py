@@ -18,14 +18,14 @@ class LanguageService:
             @wraps(f)
             def decoratedFunction(*args, **kwargs):
                 if 'language' in kwargs:
+                    if kwargs['language'] not in self.languages:
+                        kwargs['language'] = self.defaultLanguage['code']
+                        return redirect(url_for(f.__name__, *args, **kwargs))
                     language = kwargs['language']
                     del kwargs['language']
                 else:
                     language = self.defaultLanguage['code']
-                if language not in self.languages:
-                    kwargs['language'] = self.defaultLanguage['code']
-                    return redirect(url_for(f.__name__, *args, **kwargs))
-                request.cnx['language'] = self.languages[language]
+                request.cnx['language'] = self.languages[language]['code']
                 return f(*args, **kwargs)
             return decoratedFunction
         return decorator

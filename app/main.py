@@ -50,6 +50,12 @@ def login():
     elif request.method == 'POST':
         return controller.loginAction()
 
+@app.route('/<string:language>/login', methods=['GET'])
+@languageService.languageRedirect()
+def account():
+    controller = UserController()
+    return controller.accountAction()
+
 @app.route('/<string:language>/catalog', methods=['GET'])
 @languageService.languageRedirect()
 def catalogPage():

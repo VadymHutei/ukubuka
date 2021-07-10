@@ -53,3 +53,7 @@ class UserController:
             view.addData({'errors': {'other': [e]}})
             return view.render()
         return redirect(url_for('homePage', language=request.cnx['language']['code']))
+
+    def accountAction(self):
+        view = AccountView('modules/User/login.html')
+        return view.render()
