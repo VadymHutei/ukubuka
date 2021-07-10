@@ -1,6 +1,7 @@
-/app/env/
-
 __pycache__/
 *.pyc
-
 *.css.map
+
+/app/env/
+/app/vendor/
+/app/config.py
