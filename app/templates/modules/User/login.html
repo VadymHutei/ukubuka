@@ -1,0 +1,23 @@
+{% extends 'layouts/layout.html' %}
+
+
+{% block title -%}
+
+{{ 'Log in'|translate }} - Hutei
+
+{%- endblock %}
+
+
+{% block content -%}
+
+<h1>{{ 'Log in'|translate }}</h1>
+{% if errors and 'other' in errors %}{% for error in errors['other'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
+<form action="/{{ t.language.code }}/login" method="post">
+    {% if errors and 'email' in errors %}{% for error in errors['email'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
+    <input type="email" name="email">
+    {% if errors and 'password' in errors %}{% for error in errors['password'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
+    <input type="password" name="password">
+    <input type="submit">
+</form>
+
+{%- endblock %}

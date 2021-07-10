@@ -1,10 +1,9 @@
 from flask import abort
 
-from ukubuka.AbstractController import AbstractController
 from modules.Shop.validator import ShopValidator
 
 
-class ShopController(AbstractController):
+class ShopController:
 
     CATALOG_TYPE = 'catalog'
     CATEGORY_TYPE = 'category'

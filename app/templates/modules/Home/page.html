@@ -1,0 +1,19 @@
+{% extends 'layouts/layout.html' %}
+
+
+{% block title -%}
+
+Ukubuka
+
+{%- endblock %}
+
+
+{% block content -%}
+
+<h1>{{ 'Ukubuka home page'|translate }}</h1>
+<p>Welcome to Ukubuka</p>
+<p>Session ID = {{ sessionID }}</p>
+<p>User ID = {{ userID }}</p>
+<p>Language = {{ t.language }}</p>
+
+{%- endblock %}

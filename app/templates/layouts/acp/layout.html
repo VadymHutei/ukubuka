@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/styles/main.css">
-</head>
-<body>
-    {% include 'layouts/acp/header.html' %}
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-    {% include 'layouts/acp/footer.html' %}
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="/static/styles/main.css">
+    </head>
+    <body>
+        {% include 'layouts/acp/header.html' %}
+        <main>
+            {% include 'layouts/acp/aside_navigation.html' %}
+            {% block content %}{% endblock %}
+        </main>
+        {% include 'layouts/acp/footer.html' %}
+    </body>
 </html>
