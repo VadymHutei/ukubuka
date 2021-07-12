@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import redirect, url_for, request
+from flask import redirect, url_for, request, current_app
 
 from modules.Language.repository import LanguageRepository
 
@@ -25,7 +25,7 @@ class LanguageService:
                     del kwargs['language']
                 else:
                     language = self.defaultLanguage['code']
-                request.cnx['language'] = self.languages[language]['code']
+                request.ctx['language'] = self.languages[language]['code']
                 return f(*args, **kwargs)
             return decoratedFunction
         return decorator
@@ -65,3 +65,7 @@ class LanguageService:
             translates[row['language']][row['text']] = row['translation']
 
         return translates
+
+    @staticmethod
+    def getInstance():
+        return getattr(current_app, 'languageService', False) or LanguageService()

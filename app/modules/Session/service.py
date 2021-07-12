@@ -26,14 +26,14 @@ class SessionService:
                 if sessionID is None:
                     sessionID, sessionExpires = self.startSession()
 
-                request.cnx['sessionID'] = sessionID
-                request.cnx['user'] = self.getUserBySessionID()
+                request.ctx['sessionID'] = sessionID
+                request.ctx['user'] = self.getUserBySessionID()
 
                 response = make_response(f(*args, **kwargs))
                 if sessionExpires is not None:
                     response.set_cookie(
                         SESSION_COOKIE_NAME,
-                        value=request.cnx['sessionID'],
+                        value=request.ctx['sessionID'],
                         expires=sessionExpires,
                         httponly=True
                     )
@@ -50,7 +50,7 @@ class SessionService:
 
     def getUserIDBySessionID(self, sessionID=None):
         if sessionID is None:
-            sessionID = request.cnx.get('sessionID')
+            sessionID = request.ctx.get('sessionID')
         if sessionID is None:
             return None
         result = self.repository.getUserIDBySessionID(sessionID)
@@ -58,21 +58,21 @@ class SessionService:
 
     def getUserBySessionID(self, sessionID=None):
         if sessionID is None:
-            sessionID = request.cnx.get('sessionID')
+            sessionID = request.ctx.get('sessionID')
         if sessionID is None:
             return None
         return self.repository.getUserBySessionID(sessionID)
 
     def setSessionData(self, key, value, sessionID=None):
         if sessionID is None:
-            sessionID = request.cnx.get('sessionID')
+            sessionID = request.ctx.get('sessionID')
         if sessionID is None:
             return None
         self.repository.setSessionData(sessionID, key, value)
 
     def getSessionData(self, key, sessionID=None):
         if sessionID is None:
-            sessionID = request.cnx.get('sessionID')
+            sessionID = request.ctx.get('sessionID')
         if sessionID is None:
             return None
         result = self.repository.getSessionData(sessionID, key)

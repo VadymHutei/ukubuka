@@ -31,4 +31,4 @@ class UserService:
         if userData['password_hash'] != passwordHash:
             raise WrongPassword()
         sessionRepository = SessionMySQLRepository()
-        sessionRepository.setLoginStatus(request.cnx['sessionID'], userData['id'], True)
+        sessionRepository.setLoginStatus(request.ctx['sessionID'], userData['id'], True)

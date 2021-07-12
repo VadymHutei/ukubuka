@@ -28,7 +28,7 @@ class UserController:
             view = RegistrationView('modules/User/registration.html')
             view.addData({'errors': {'other': (str(e),)}})
             return view.render()
-        return redirect(url_for('homePage', language=request.cnx['language']['code']))
+        return redirect(url_for('homePage', language=request.ctx['language']['code']))
 
     def loginPageAction(self):
         view = LoginView('modules/User/login.html')
@@ -52,7 +52,7 @@ class UserController:
             view = LoginView('modules/User/login.html')
             view.addData({'errors': {'other': [e]}})
             return view.render()
-        return redirect(url_for('homePage', language=request.cnx['language']['code']))
+        return redirect(url_for('homePage', language=request.ctx['language']['code']))
 
     def accountAction(self):
         view = AccountView('modules/User/login.html')

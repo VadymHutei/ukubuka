@@ -7,4 +7,4 @@ class RegistrationView(UkubukaView):
 
     def prepareTemplateData(self):
         super().prepareTemplateData()
-        self.data['t']['language'] = request.cnx.get('language')
+        self.data['t']['language'] = request.ctx.get('language')

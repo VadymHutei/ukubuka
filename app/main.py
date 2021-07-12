@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, current_app
 
 from modules.Language.service import LanguageService
 from modules.Session.service import SessionService
@@ -8,9 +8,12 @@ from modules.User.controller import UserController
 
 app = Flask(__name__)
 
+with app.app_context():
+    current_app.languageService = LanguageService()
+
 @app.before_request
-def cnx():
-    request.cnx = {}
+def ctx():
+    request.ctx = {}
 
 languageService = LanguageService()
 sessionService = SessionService()
@@ -24,14 +27,14 @@ def mainRedirect():
     return redirect(url_for('homePage', language=languageService.defaultLanguage['code']))
 
 @app.route('/<string:language>/', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 @sessionService.withSession()
 def homePage():
     controller = HomeController()
     return controller.homeAction()
 
 @app.route('/<string:language>/registration', methods=['GET', 'POST'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 @sessionService.withSession()
 def registration():
     controller = UserController()
@@ -41,7 +44,7 @@ def registration():
         return controller.registrationAction()
 
 @app.route('/<string:language>/login', methods=['GET', 'POST'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 @sessionService.withSession()
 def login():
     controller = UserController()
@@ -51,50 +54,50 @@ def login():
         return controller.loginAction()
 
 @app.route('/<string:language>/login', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def account():
     controller = UserController()
     return controller.accountAction()
 
 @app.route('/<string:language>/catalog', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def catalogPage():
     controller = CatalogController()
     return controller.catalogAction()
 
 @app.route('/product/<productID>', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def productPage(productID):
     controller = ProductController()
     return controller.productAction(productID)
 
 @app.route('/<string:language>/shop', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def shopPage(language):
     controller = ShopController()
     return controller.shopAction()
 
 @app.route('/<string:language>/shop/<path:path>', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def shop(language, path):
     controller = ShopController()
     return controller.shopAction(path)
 
 # ACP
 @app.route('/<string:language>/acp', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def acpPage(language):
     controller = ACPController()
     return controller.ACPAction(language)
 
 @app.route('/<string:language>/acp/translates', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def acpTranslatesPage(language):
     controller = ACPController()
     return controller.translatesAction(language, request.args.get('for_language', language))
 
 @app.route('/<string:language>/acp/categories', methods=['GET'])
-@languageService.languageRedirect()
+@app.languageService.languageRedirect()
 def acpCategories(language):
     controller = ACPController()
     return controller.categoriesAction()
