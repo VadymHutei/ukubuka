@@ -1,15 +1,15 @@
 <header>
     <div>Ukubuka</div>
     {% if t.user and t.user.is_logged_in %}
-        <a href="/{{ t.language['code'] }}/account">{{ 'Account'|translate }}</a>
+        <a href="/{{ t.language }}/account">{{ 'Account'|translate }}</a>
     {% else %}
         <ul>
-            <li><a href="/{{ t.language['code'] }}/login">{{ 'Log in'|translate }}</a></li>
-            <li><a href="/{{ t.language['code'] }}/registration">{{ 'Registration'|translate }}</a></li>
+            <li><a href="/{{ t.language }}/login">{{ 'Log in'|translate }}</a></li>
+            <li><a href="/{{ t.language }}/registration">{{ 'Registration'|translate }}</a></li>
         </ul>
     {% endif %}
     <ul>
-        <li><a href="/{{ t.language['code'] }}/">Home</a></li>
-        <li><a href="/{{ t.language['code'] }}/catalog">Catalog</a></li>
+        <li><a href="/{{ t.language }}/">Home</a></li>
+        <li><a href="/{{ t.language }}/catalog">Catalog</a></li>
     </ul>
 </header>

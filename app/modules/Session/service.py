@@ -27,7 +27,7 @@ class SessionService:
                     sessionID, sessionExpires = self.startSession()
 
                 request.ctx['sessionID'] = sessionID
-                request.ctx['user'] = self.getUserBySessionID()
+                request.ctx['user'] = self.getUserBySessionID(sessionID)
 
                 response = make_response(f(*args, **kwargs))
                 if sessionExpires is not None:
@@ -48,31 +48,23 @@ class SessionService:
         self.repository.addSession(sessionID, currentDatetime, sessionExpires)
         return sessionID, sessionExpires
 
-    def getUserIDBySessionID(self, sessionID=None):
-        if sessionID is None:
-            sessionID = request.ctx.get('sessionID')
+    def getUserIDBySessionID(self, sessionID):
         if sessionID is None:
             return None
         result = self.repository.getUserIDBySessionID(sessionID)
         return None if result is None else int(result['user_id'])
 
-    def getUserBySessionID(self, sessionID=None):
-        if sessionID is None:
-            sessionID = request.ctx.get('sessionID')
+    def getUserBySessionID(self, sessionID):
         if sessionID is None:
             return None
         return self.repository.getUserBySessionID(sessionID)
 
-    def setSessionData(self, key, value, sessionID=None):
-        if sessionID is None:
-            sessionID = request.ctx.get('sessionID')
+    def setSessionData(self, key, value, sessionID):
         if sessionID is None:
             return None
         self.repository.setSessionData(sessionID, key, value)
 
-    def getSessionData(self, key, sessionID=None):
-        if sessionID is None:
-            sessionID = request.ctx.get('sessionID')
+    def getSessionData(self, key, sessionID):
         if sessionID is None:
             return None
         result = self.repository.getSessionData(sessionID, key)
