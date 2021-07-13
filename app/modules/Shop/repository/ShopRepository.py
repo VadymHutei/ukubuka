@@ -1,10 +1,14 @@
 import pymysql.cursors
 
 from config import DB_CREDENTIALS
-from ukubuka.AbstractRepository import AbstractRepository
+from vendor.Ukubuka.repository import Repository
 
 
-class ShopRepository(AbstractRepository):
+class ShopRepository(Repository):
+
+    def __init__(self):
+        super().__init__()
+        self._setCredentials(DB_CREDENTIALS)
     
     def getCatalogByAlias(self, catalogAlias):
         query = f'''
@@ -15,9 +19,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 alias = '{catalogAlias}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -32,9 +34,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 id = '{catalogID}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -49,9 +49,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 alias = '{categoryAlias}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -66,9 +64,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 id = '{categoryID}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -83,9 +79,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 category_id = {categoryID}
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchall()
@@ -100,9 +94,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 alias = '{productAlias}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -117,9 +109,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 alias = '{productID}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -134,9 +124,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 alias = '{SKUAlias}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -151,9 +139,7 @@ class ShopRepository(AbstractRepository):
             WHERE
                 alias = '{SKUID}'
         '''
-
-        connection = pymysql.connect(**DB_CREDENTIALS)
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()

@@ -23,9 +23,7 @@ class SessionMySQLRepository(Repository):
                 %s
             )
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (sessionID, created, expired, user_agent))
             connection.commit()
@@ -39,9 +37,7 @@ class SessionMySQLRepository(Repository):
             WHERE
                 session_id = %s
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, sessionID)
                 result = cursor.fetchone()
@@ -63,9 +59,7 @@ class SessionMySQLRepository(Repository):
             WHERE
                 su.session_id = %s
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, sessionID)
                 result = cursor.fetchone()
@@ -85,9 +79,7 @@ class SessionMySQLRepository(Repository):
                 user_id = %s,
                 is_logged_in = %s
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (sessionID, userID, isLogin, userID, isLogin))
             connection.commit()
@@ -107,9 +99,7 @@ class SessionMySQLRepository(Repository):
             ON DUPLICATE KEY UPDATE
                 data = JSON_SET(data, CONCAT('$.', %s), %s)
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (sessionID, key, value, key, value))
             connection.commit()
@@ -123,9 +113,7 @@ class SessionMySQLRepository(Repository):
             WHERE
                 session_id = %s
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (key, sessionID))
                 result = cursor.fetchone()

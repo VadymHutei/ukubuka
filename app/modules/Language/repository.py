@@ -17,9 +17,7 @@ class LanguageRepository(Repository):
             FROM
                 `language`
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchall()
@@ -37,9 +35,7 @@ class LanguageRepository(Repository):
                 `is_active` = 1
             LIMIT 1
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -56,9 +52,7 @@ class LanguageRepository(Repository):
                 ON l.`code` = t.`language`
             WHERE l.`is_active` = 1
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchall()
@@ -75,9 +69,7 @@ class LanguageRepository(Repository):
                 ON l.`code` = t.`language`
             WHERE l.`code` = %s'
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (language))
                 result = cursor.fetchall()
@@ -90,8 +82,7 @@ class LanguageRepository(Repository):
         '''
         params = (text, language, translation)
 
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, params)
             connection.commit()
