@@ -4,6 +4,7 @@ from modules.Language.service import LanguageService
 from modules.Session.service import SessionService
 from modules.Home.controller import HomeController
 from modules.User.controller import UserController
+from modules.Session.request_decorators import withSession
 from modules.User.request_decorators import onlyRegistered
 
 
@@ -23,20 +24,20 @@ app.jinja_env.filters['translate'] = languageService.translate
 
 
 @app.route('/', methods=['GET'])
-@sessionService.withSession()
+@withSession
 def mainRedirect():
     return redirect(url_for('homePage', language=languageService.defaultLanguage['code']))
 
 @app.route('/<string:language>/', methods=['GET'])
 @app.languageService.languageRedirect()
-@sessionService.withSession()
+@withSession
 def homePage():
     controller = HomeController()
     return controller.homeAction()
 
 @app.route('/<string:language>/registration', methods=['GET', 'POST'])
 @app.languageService.languageRedirect()
-@sessionService.withSession()
+@withSession
 def registration():
     controller = UserController()
     if request.method == 'GET':
@@ -46,7 +47,7 @@ def registration():
 
 @app.route('/<string:language>/login', methods=['GET', 'POST'])
 @app.languageService.languageRedirect()
-@sessionService.withSession()
+@withSession
 def login():
     controller = UserController()
     if request.method == 'GET':
@@ -56,7 +57,7 @@ def login():
 
 @app.route('/<string:language>/account', methods=['GET'])
 @app.languageService.languageRedirect()
-@sessionService.withSession()
+@withSession
 @onlyRegistered
 def account():
     controller = UserController()

@@ -11,5 +11,8 @@
 {% block content -%}
 
 <h1>{{ 'Account'|translate }}</h1>
+<p>Session ID = {{ t.sessionID }}</p>
+<p>User ID = {{ t.user.id }}</p>
+<p>Language = {{ t.language }}</p>
 
 {%- endblock %}

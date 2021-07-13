@@ -1,45 +1,17 @@
-from functools import wraps
 from datetime import datetime, timedelta
 
-from flask import request, make_response
+from flask import request
 
-from config import (SESSION_COOKIE_NAME, PASSWORD_ABC,
+from config import (PASSWORD_ABC,
     SESSION_ID_LENGTH, SESSION_LIFETIME_DAYS)
 from vendor.Ukubuka.password import getSecret
 from modules.Session.repository import SessionMySQLRepository
-from modules.User.service import UserService
 
 
 class SessionService:
 
     def __init__(self):
         self.repository = SessionMySQLRepository()
-
-    def withSession(self):
-        def decorator(f):
-            @wraps(f)
-            def decoratedFunction(*args, **kwargs):
-                userService = UserService()
-
-                sessionExpires = None
-                sessionID = request.cookies.get(SESSION_COOKIE_NAME)
-                if sessionID is None:
-                    sessionID, sessionExpires = self.startSession()
-
-                request.ctx['sessionID'] = sessionID
-                request.ctx['user'] = self.getUserBySessionID(sessionID)
-
-                response = make_response(f(*args, **kwargs))
-                if sessionExpires is not None:
-                    response.set_cookie(
-                        SESSION_COOKIE_NAME,
-                        value=request.ctx['sessionID'],
-                        expires=sessionExpires,
-                        httponly=True
-                    )
-                return response
-            return decoratedFunction
-        return decorator
 
     def startSession(self):
         sessionID = getSecret(PASSWORD_ABC, SESSION_ID_LENGTH)
