@@ -4,6 +4,7 @@ from modules.Language.service import LanguageService
 from modules.Session.service import SessionService
 from modules.Home.controller import HomeController
 from modules.User.controller import UserController
+from modules.User.request_decorators import onlyRegistered
 
 
 app = Flask(__name__)
@@ -53,8 +54,10 @@ def login():
     elif request.method == 'POST':
         return controller.loginAction()
 
-@app.route('/<string:language>/login', methods=['GET'])
+@app.route('/<string:language>/account', methods=['GET'])
 @app.languageService.languageRedirect()
+@sessionService.withSession()
+@onlyRegistered
 def account():
     controller = UserController()
     return controller.accountAction()

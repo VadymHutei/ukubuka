@@ -54,5 +54,5 @@ class UserController:
         return redirect(url_for('homePage', language=request.ctx['language']))
 
     def accountAction(self):
-        view = AccountView('modules/User/login.html')
+        view = UkubukaView('modules/User/account.html')
         return view.render()
