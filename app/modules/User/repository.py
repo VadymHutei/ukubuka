@@ -21,9 +21,7 @@ class UserRepository(Repository):
             WHERE
                 email = %s
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (email,))
                 result = cursor.fetchone()
@@ -56,9 +54,7 @@ class UserRepository(Repository):
                 %s
             )
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query1, (data['email'],))
                 userID = cursor.lastrowid
@@ -79,10 +75,22 @@ class UserRepository(Repository):
             WHERE
                 u.email = %s
         '''
-
-        connection = self.getConnection()
-        with connection:
+        with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, email)
                 result = cursor.fetchone()
         return result
+
+    def logoutBySessionID(self, sessionID):
+        query = '''
+            UPDATE
+                session_user
+            SET
+                is_logged_in = 0
+            WHERE
+                session_id = %s
+        '''
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (sessionID,))
+            connection.commit()

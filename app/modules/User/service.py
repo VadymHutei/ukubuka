@@ -32,3 +32,6 @@ class UserService:
             raise WrongPassword()
         sessionRepository = SessionMySQLRepository()
         sessionRepository.setLoginStatus(request.ctx['sessionID'], userData['id'], True)
+
+    def logoutBySessionID(self, sessionID):
+        self.repository.logoutBySessionID(sessionID)

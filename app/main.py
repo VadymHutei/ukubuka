@@ -4,6 +4,7 @@ from modules.Language.service import LanguageService
 from modules.Session.service import SessionService
 from modules.Home.controller import HomeController
 from modules.User.controller import UserController
+from modules.User.service import UserService
 from modules.Session.request_decorators import withSession
 from modules.User.request_decorators import onlyRegistered
 
@@ -54,6 +55,14 @@ def login():
         return controller.loginPageAction()
     elif request.method == 'POST':
         return controller.loginAction()
+
+@app.route('/<string:language>/logout', methods=['GET'])
+@app.languageService.languageRedirect()
+@withSession
+def logout():
+    userService = UserService()
+    userService.logoutBySessionID(request.ctx['sessionID'])
+    return redirect(url_for('homePage', language=request.ctx['language']))
 
 @app.route('/<string:language>/account', methods=['GET'])
 @app.languageService.languageRedirect()

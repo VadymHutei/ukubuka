@@ -14,5 +14,6 @@
 <p>Session ID = {{ t.sessionID }}</p>
 <p>User ID = {{ t.user.id }}</p>
 <p>Language = {{ t.language }}</p>
+<a href="/{{ t.language }}/logout">{{ 'Log out'|translate }}</a>
 
 {%- endblock %}
