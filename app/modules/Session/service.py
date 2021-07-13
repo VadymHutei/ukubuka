@@ -45,7 +45,8 @@ class SessionService:
         sessionID = getSecret(PASSWORD_ABC, SESSION_ID_LENGTH)
         currentDatetime = datetime.now()
         sessionExpires = currentDatetime + timedelta(days=SESSION_LIFETIME_DAYS)
-        self.repository.addSession(sessionID, currentDatetime, sessionExpires)
+        user_agent = request.user_agent.string
+        self.repository.addSession(sessionID, currentDatetime, sessionExpires, user_agent)
         return sessionID, sessionExpires
 
     def getUserIDBySessionID(self, sessionID):

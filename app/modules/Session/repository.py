@@ -8,14 +8,16 @@ class SessionMySQLRepository(Repository):
         super().__init__()
         self._setCredentials(DB_CREDENTIALS)
 
-    def addSession(self, sessionID, created, expired):
+    def addSession(self, sessionID, created, expired, user_agent):
         query = '''
             INSERT INTO session (
                 id,
                 created_datetime,
-                expired_datetime
+                expired_datetime,
+                user_agent
             )
             VALUES (
+                %s,
                 %s,
                 %s,
                 %s
@@ -25,7 +27,7 @@ class SessionMySQLRepository(Repository):
         connection = self.getConnection()
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (sessionID, created, expired))
+                cursor.execute(query, (sessionID, created, expired, user_agent))
             connection.commit()
 
     def getUserIDBySessionID(self, sessionID):
