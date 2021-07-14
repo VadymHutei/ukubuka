@@ -1,12 +1,12 @@
 from flask import Flask, request, redirect, url_for, current_app
 
-from modules.Language.service import LanguageService
-from modules.Session.service import SessionService
 from modules.Home.controller import HomeController
-from modules.User.controller import UserController
-from modules.User.service import UserService
+from modules.Language.request_decorators import languageRedirect
+from modules.Language.service import LanguageService
 from modules.Session.request_decorators import withSession
+from modules.User.controller import UserController
 from modules.User.request_decorators import onlyRegistered
+from modules.User.service import UserService
 
 
 app = Flask(__name__)
@@ -18,25 +18,23 @@ with app.app_context():
 def ctx():
     request.ctx = {}
 
-languageService = LanguageService()
-
-app.jinja_env.filters['translate'] = languageService.translate
+app.jinja_env.filters['translate'] = app.languageService.translate
 
 
 @app.route('/', methods=['GET'])
 @withSession
 def mainRedirect():
-    return redirect(url_for('homePage', language=languageService.defaultLanguage['code']))
+    return redirect(url_for('homePage', language=app.languageService.defaultLanguage['code']))
 
 @app.route('/<string:language>/', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 @withSession
 def homePage():
     controller = HomeController()
     return controller.homeAction()
 
 @app.route('/<string:language>/registration', methods=['GET', 'POST'])
-@app.languageService.languageRedirect()
+@languageRedirect
 @withSession
 def registration():
     controller = UserController()
@@ -46,7 +44,7 @@ def registration():
         return controller.registrationAction()
 
 @app.route('/<string:language>/login', methods=['GET', 'POST'])
-@app.languageService.languageRedirect()
+@languageRedirect
 @withSession
 def login():
     controller = UserController()
@@ -56,7 +54,7 @@ def login():
         return controller.loginAction()
 
 @app.route('/<string:language>/logout', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 @withSession
 def logout():
     userService = UserService()
@@ -64,7 +62,7 @@ def logout():
     return redirect(url_for('homePage', language=request.ctx['language']))
 
 @app.route('/<string:language>/account', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 @withSession
 @onlyRegistered
 def account():
@@ -72,44 +70,44 @@ def account():
     return controller.accountAction()
 
 @app.route('/<string:language>/catalog', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def catalogPage():
     controller = CatalogController()
     return controller.catalogAction()
 
 @app.route('/product/<productID>', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def productPage(productID):
     controller = ProductController()
     return controller.productAction(productID)
 
 @app.route('/<string:language>/shop', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def shopPage(language):
     controller = ShopController()
     return controller.shopAction()
 
 @app.route('/<string:language>/shop/<path:path>', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def shop(language, path):
     controller = ShopController()
     return controller.shopAction(path)
 
 # ACP
 @app.route('/<string:language>/acp', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def acpPage(language):
     controller = ACPController()
     return controller.ACPAction(language)
 
 @app.route('/<string:language>/acp/translates', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def acpTranslatesPage(language):
     controller = ACPController()
     return controller.translatesAction(language, request.args.get('for_language', language))
 
 @app.route('/<string:language>/acp/categories', methods=['GET'])
-@app.languageService.languageRedirect()
+@languageRedirect
 def acpCategories(language):
     controller = ACPController()
     return controller.categoriesAction()
