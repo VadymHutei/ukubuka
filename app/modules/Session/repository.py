@@ -51,6 +51,7 @@ class SessionMySQLRepository(Repository):
                 u.first_name,
                 u.last_name,
                 u.is_confirmed,
+                u.registered_datetime,
                 su.is_logged_in
             FROM
                 session_user AS su

@@ -15,7 +15,8 @@ class UserRepository(Repository):
                 email,
                 first_name,
                 last_name,
-                is_confirmed
+                is_confirmed,
+                registered_datetime
             FROM
                 user
             WHERE
@@ -33,13 +34,15 @@ class UserRepository(Repository):
                 email,
                 first_name,
                 last_name,
-                is_confirmed
+                is_confirmed,
+                registered_datetime
             )
             VALUES (
                 %s,
                 NULL,
                 NULL,
-                1
+                1,
+                %s
             )
         '''
         query2 = '''
@@ -56,7 +59,7 @@ class UserRepository(Repository):
         '''
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query1, (data['email'],))
+                cursor.execute(query1, (data['email'], data['registered']))
                 userID = cursor.lastrowid
                 cursor.execute(query2, (data['passwordHash'], data['salt']))
             connection.commit()

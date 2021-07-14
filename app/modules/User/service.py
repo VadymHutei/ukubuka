@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import request
 
 from vendor.Ukubuka.exceptions.WrongPassword import WrongPassword
@@ -21,6 +23,7 @@ class UserService:
         if self.repository.getUserByEmail(data['email']) is not None:
             raise UserAlreadyExist(f"user with same email already exist: {data['email']}")
         _, data['salt'], data['passwordHash'] = getPassword(password = data['password'])
+        data['registered'] = datetime.now()
         return self.repository.addUser(data)
 
     def login(self, data):

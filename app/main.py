@@ -19,7 +19,6 @@ def ctx():
     request.ctx = {}
 
 languageService = LanguageService()
-sessionService = SessionService()
 
 app.jinja_env.filters['translate'] = languageService.translate
 
