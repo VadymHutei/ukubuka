@@ -1,0 +1,9 @@
+<ul>
+    {% for _, language in t.languages.items() %}
+    {% if language.code == t.language %}
+    <li>{{ language.name }}</li>
+    {% else %}
+    <li><a href="{{ t.request.path|pathWithLanguage(language.code) }}">{{ language.name }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

@@ -29,6 +29,19 @@ class LanguageService:
 
         return self.translations[language].get(text, text)
 
+    def pathWithLanguage(self, path, language):
+        pathSegments = path.split('/')
+        if not pathSegments:
+            return f'/{language}/'
+        del pathSegments[0]
+        if pathSegments[0] in self.languages:
+            pathSegments[0] = language
+        else:
+            pathSegments.insert(0, language)
+        res = '/' + '/'.join(pathSegments)
+        print(res)
+        return res
+
     def getTranslationsForLanguage(self, language):
         translates = self.repository.getTranslationsForLanguage(language)
         
@@ -36,6 +49,9 @@ class LanguageService:
 
     def reloadTranslations(self):
         self.translations = self._getTranslations()
+
+    def getAvailableLanguages(self):
+        return {code: language for code, language in self.languages.items() if language.get('is_active', 0) == 1}
 
     def _getTranslations(self):
         translates = {}

@@ -11,14 +11,13 @@ from modules.User.service import UserService
 
 app = Flask(__name__)
 
-with app.app_context():
-    current_app.languageService = LanguageService()
+app.languageService = LanguageService()
+app.jinja_env.filters['translate'] = app.languageService.translate
+app.jinja_env.filters['pathWithLanguage'] = app.languageService.pathWithLanguage
 
 @app.before_request
 def ctx():
     request.ctx = {}
-
-app.jinja_env.filters['translate'] = app.languageService.translate
 
 
 @app.route('/', methods=['GET'])
