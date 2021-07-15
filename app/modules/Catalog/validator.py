@@ -1,9 +1,9 @@
 import re
 
-from ukubuka.validator import Validator
+from vendor.Ukubuka.validator import UkubukaValidator
 
 
-class ShopValidator(Validator):
+class CatalogValidator(UkubukaValidator):
 
     @staticmethod
     def catalogID(catalogID):
