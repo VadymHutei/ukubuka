@@ -97,7 +97,7 @@ def shop(language, path):
 @languageRedirect
 def acpPage(language):
     controller = ACPController()
-    return controller.ACPAction(language)
+    return controller.ACPAction()
 
 @app.route('/<string:language>/acp/translates', methods=['GET'])
 @languageRedirect

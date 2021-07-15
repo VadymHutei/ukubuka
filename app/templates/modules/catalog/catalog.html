@@ -1,0 +1,23 @@
+{% extends 'layouts/layout.html' %}
+
+
+{% block title -%}
+
+{{ 'Catalog'|translate }} - Ukubuka
+
+{%- endblock %}
+
+
+{% block content -%}
+
+<h1>{{ catalog.name }}</h1>
+<div>
+    {% for product in products %}
+    <div>
+        <p>{{ product.name }}</p>
+        <p>{{ product.price }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{%- endblock %}

@@ -1,5 +1,3 @@
-from flask import request
-
 from modules.Ukubuka.view import UkubukaView
 from modules.Session.service import SessionService
 
