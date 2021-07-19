@@ -56,7 +56,8 @@ class SessionMySQLRepository(Repository):
             FROM
                 session_user AS su
             JOIN
-                user AS u ON u.id = su.user_id
+                user AS u
+                ON u.id = su.user_id
             WHERE
                 su.session_id = %s
         '''

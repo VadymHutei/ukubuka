@@ -74,7 +74,8 @@ class UserRepository(Repository):
             FROM
                 user u
             JOIN
-                user_password up ON up.user_id = u.id
+                user_password up
+                ON up.user_id = u.id
             WHERE
                 u.email = %s
         '''

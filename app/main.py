@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, url_for, current_app
 
+from modules.Catalog.controller import CatalogController
 from modules.Home.controller import HomeController
 from modules.Language.request_decorators import languageRedirect
 from modules.Language.service import LanguageService
@@ -70,9 +71,17 @@ def account():
 
 @app.route('/<string:language>/catalog', methods=['GET'])
 @languageRedirect
-def catalogPage():
+@withSession
+def catalogMainPage():
     controller = CatalogController()
-    return controller.catalogAction()
+    return controller.catalogMainPageAction()
+
+@app.route('/<string:language>/catalog/<string:catalogAlias>', methods=['GET'])
+@languageRedirect
+@withSession
+def catalogPage(catalogAlias):
+    controller = CatalogController()
+    return controller.catalogAction(catalogAlias)
 
 @app.route('/product/<productID>', methods=['GET'])
 @languageRedirect

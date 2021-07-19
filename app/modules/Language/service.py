@@ -39,7 +39,6 @@ class LanguageService:
         else:
             pathSegments.insert(0, language)
         res = '/' + '/'.join(pathSegments)
-        print(res)
         return res
 
     def getTranslationsForLanguage(self, language):

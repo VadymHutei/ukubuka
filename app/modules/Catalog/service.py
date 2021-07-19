@@ -1,4 +1,5 @@
 from modules.Catalog.repository import CatalogRepository
+from modules.Category.service import CategoryService
 
 
 class CatalogService:
@@ -6,16 +7,23 @@ class CatalogService:
     def __init__(self):
         self.repository = CatalogRepository()
 
-        def getCatalogByAlias(self, catalogAlias):
-            return self.repository.getCatalogByAlias(categoryAlias)
+    def getActiveCatalogs(self):
+        return self.repository.getActiveCatalogs()
 
-        def getProductsByCatalogID(self, catalogID):
-            catalogCategoriesID = self.getCategoriesIDByCatalogID(catalogID)
-            catalogProducts = self.repository.getProductsByCatalogID(catalogID) + self.repository.getProductsByCategoriesID(catalogCategoriesID)
+    def getCatalogByAlias(self, catalogAlias):
+        return self.repository.getCatalogByAlias(catalogAlias)
 
-        def getCategoriesIDByCatalogID(self, catalogID):
-            categories = self.repository.getCategoriesByCatalogID(catalogID)
-            return [category['id'] for category in categories]
+    def getProductsByCatalogID(self, catalogID):
+        categoryService = CategoryService()
+        catalogCategoryIDs = self.getCategoryIDsByCatalogID(catalogID)
+        categoryIDs = categoryService.getSubcategoryIDs(catalogCategoryIDs)
+        catalogProducts = categoryService.getProductsByCategoryIDs(categoryIDs)
+        catalogProducts += self.repository.getProductsByCatalogID(catalogID)
+        return catalogProducts
 
-        def getActiveProductsByCategoryAlias(self, categoryAlias):
-            return self.repository.getActiveProductsByCategoryAlias(categoryAlias)
+    def getCategoryIDsByCatalogID(self, catalogID):
+        categories = self.repository.getCategoriesByCatalogID(catalogID)
+        return [category['id'] for category in categories]
+
+    def getActiveProductsByCategoryAlias(self, categoryAlias):
+        return self.repository.getActiveProductsByCategoryAlias(categoryAlias)

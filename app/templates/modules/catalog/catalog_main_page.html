@@ -1,0 +1,20 @@
+{% extends 'layouts/layout.html' %}
+
+
+{% block title -%}
+
+{{ 'Catalog'|translate }} - Ukubuka
+
+{%- endblock %}
+
+
+{% block content -%}
+
+{% if catalogs %}
+<h2>{{ 'Catalogs'|translate }}</h2>
+{% for catalog in catalogs %}
+<a href="/{{ t.language }}/catalog/{{catalog.alias}}">{{ catalog.name }}</a>
+{% endfor %}
+{% endif %}
+
+{%- endblock %}

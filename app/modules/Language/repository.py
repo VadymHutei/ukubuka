@@ -47,8 +47,9 @@ class LanguageRepository(Repository):
                 t.`text`,
                 t.`language`,
                 t.`translation`
-            FROM `translation` t
-            JOIN `language` l
+            FROM
+                `translation` AS t
+            JOIN `language` AS l
                 ON l.`code` = t.`language`
             WHERE l.`is_active` = 1
         '''
@@ -64,8 +65,9 @@ class LanguageRepository(Repository):
                 t.`text`,
                 t.`language`,
                 t.`translation`
-            FROM `translation` t
-            JOIN `language` l
+            FROM
+                `translation` AS t
+            JOIN `language` AS l
                 ON l.`code` = t.`language`
             WHERE l.`code` = %s'
         '''
