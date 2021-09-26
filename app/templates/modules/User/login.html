@@ -12,7 +12,7 @@
 
 <h1>{{ 'Log in'|translate }}</h1>
 {% if errors and 'other' in errors %}{% for error in errors['other'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
-<form action="/{{ t.language }}/login" method="post">
+<form action="/{{ t.language.code }}/login" method="post">
     {% if errors and 'email' in errors %}{% for error in errors['email'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
     <input type="email" name="email">
     {% if errors and 'password' in errors %}{% for error in errors['password'] %}<p>{{ error }}</p>{% endfor %}{% endif %}

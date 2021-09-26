@@ -9,8 +9,8 @@ class TranslationsController:
         languageService = LanguageService.getInstance()
 
         view.addData({
-            'translations': languageService.getTranslations(),
-            'languages': languageService.getLanguages(),
+            'translations': languageService.translations,
+            'languages': languageService.languages,
         })
 
         return view.render()

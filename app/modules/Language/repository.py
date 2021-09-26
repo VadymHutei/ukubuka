@@ -28,7 +28,9 @@ class LanguageRepository(Repository):
         query = '''
             SELECT
                 `code`,
-                `name`
+                `name`,
+                `is_active`,
+                `is_default`
             FROM
                 `language`
             WHERE
@@ -78,7 +80,7 @@ class LanguageRepository(Repository):
                 result = cursor.fetchall()
         return result
 
-    def addTranslation(self, language, text, translation):
+    def addTranslation(self, text, language, translation):
         query = '''
             INSERT INTO `translation` (`text`, `language`, `translation`)
             VALUES (%s, %s, %s)

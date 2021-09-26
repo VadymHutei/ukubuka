@@ -14,7 +14,7 @@
 <div>
     {% for product in products %}
     <div>
-        <p><a href="/{{ t.language }}/product/{{ product.alias }}">{{ product.name }}</a></p>
+        <p><a href="/{{ t.language.code }}/product/{{ product.alias }}">{{ product.name }}</a></p>
         <p>{{ product.price }}</p>
     </div>
     {% endfor %}

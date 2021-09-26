@@ -13,7 +13,7 @@
 {% if catalogs %}
 <h2>{{ 'Catalogs'|translate }}</h2>
 {% for catalog in catalogs %}
-<a href="/{{ t.language }}/catalog/{{catalog.alias}}">{{ catalog.name }}</a>
+<a href="/{{ t.language.code }}/catalog/{{catalog.alias}}">{{ catalog.name }}</a>
 {% endfor %}
 {% endif %}
 

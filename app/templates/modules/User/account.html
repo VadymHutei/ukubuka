@@ -16,7 +16,7 @@
 <p>{{ 'First name'|translate }}: {{ t.user.first_name }}</p>
 <p>{{ 'Last name'|translate }}: {{ t.user.last_name }}</p>
 <p>{{ 'Registered on'|translate }}: {{ t.user.registered_datetime }}</p>
-<p>{{ 'Language'|translate }}: {{ t.language }}</p>
-<a href="/{{ t.language }}/logout">{{ 'Log out'|translate }}</a>
+<p>{{ 'Language'|translate }}: {{ t.language.code }}</p>
+<a href="/{{ t.language.code }}/logout">{{ 'Log out'|translate }}</a>
 
 {%- endblock %}

@@ -14,7 +14,7 @@ ACP - {{ t.title }}
     <thead>
         <tr>
             <th>{{ 'text'|translate }}</th>
-            {% for language in languages %}
+            {% for language in languages.values() %}
             <th>{{ language.name }}</th>
             {% endfor %}
         </tr>
@@ -23,10 +23,11 @@ ACP - {{ t.title }}
         {% for text, translation in translations.items() %}
         <tr>
             <td>{{ text }}</td>
-            {% for language in languages %}
-            <td>{{ translation[language.code] }}</td>
+            {% for languageCode in languages.keys() %}
+            <td>{{ translation[languageCode] }}</td>
             {% endfor %}
-            <td><a href="/{{ t.language }}/acp/translations/edit?text={{ text }}">{{ 'edit'|translate }}</a></td>
+            <td><a href="/{{ t.language.code }}/acp/translations/edit?text={{ text }}">{{ 'edit'|translate }}</a></td>
+            <td><a href="/{{ t.language.code }}/acp/translations/delete?text={{ text }}">{{ 'delete'|translate }}</a></td>
         </tr>
         {% endfor %}
     </tbody>

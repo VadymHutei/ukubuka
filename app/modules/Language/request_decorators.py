@@ -11,13 +11,13 @@ def languageRedirect(f):
         languageService = LanguageService.getInstance()
 
         if 'language' in kwargs:
-            if kwargs['language'] not in languageService.languages:
+            if not languageService.inAvailableLanguages(kwargs['language']):
                 kwargs['language'] = languageService.defaultLanguage['code']
                 return redirect(url_for(f.__name__, *args, **kwargs))
             language = kwargs['language']
             del kwargs['language']
         else:
             language = languageService.defaultLanguage['code']
-        request.ctx['language'] = languageService.languages[language]['code']
+        request.ctx['language'] = languageService.languages[language]
         return f(*args, **kwargs)
     return decoratedFunction
