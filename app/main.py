@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, url_for, current_app
 
+from modules.ACP.Dashboard.controller import DashboardController
 from modules.Catalog.controller import CatalogController
 from modules.Home.controller import HomeController
 from modules.Language.request_decorators import languageRedirect
@@ -104,9 +105,9 @@ def shop(language, path):
 # ACP
 @app.route('/<string:language>/acp', methods=['GET'])
 @languageRedirect
-def acpPage(language):
-    controller = ACPController()
-    return controller.ACPAction()
+def acpPage():
+    controller = DashboardController()
+    return controller.dashboardAction()
 
 @app.route('/<string:language>/acp/translates', methods=['GET'])
 @languageRedirect

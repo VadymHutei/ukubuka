@@ -3,14 +3,23 @@
     <head>
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="/static/styles/main.css">
+        <link rel="stylesheet" type="text/css" href="/static/styles/ACP/main.css">
     </head>
     <body>
-        {% include 'layouts/acp/header.html' %}
+        <header>
+            <a href="/{{ t.language }}/acp">Ukubuka</a> <a href="/{{ t.language }}/">ACP</a>
+            <nav>
+                <ul>
+                    <li><a href="/{{ t.language }}/acp">{{ 'Home page'|translate }}</a></li>
+                    <li><a href="/{{ t.language }}/acp/translates">{{ 'Translates'|translate }}</a></li>
+                    <li><a href="/{{ t.language }}/acp/categories">{{ 'Categories'|translate }}</a></li>
+                    <li><a href="/{{ t.language }}/acp/products">{{ 'Products'|translate }}</a></li>
+                    <li><a href="/{{ t.language }}/acp/catalog">{{ 'Catalog'|translate }}</a></li>
+                </ul>
+            </nav>
+        </header>
         <main>
-            {% include 'layouts/acp/aside_navigation.html' %}
             {% block content %}{% endblock %}
         </main>
-        {% include 'layouts/acp/footer.html' %}
     </body>
 </html>
