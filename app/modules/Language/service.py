@@ -3,6 +3,7 @@ from functools import wraps
 from flask import request, current_app
 
 from modules.Language.repository import LanguageRepository
+from modules.Language.entities.LanguageEntity import LanguageEntity
 
 
 class LanguageService:
@@ -11,7 +12,9 @@ class LanguageService:
         self.repository = LanguageRepository()
         self.defaultLanguage = self.repository.getDefaultLanguage()
         self.languages = {language['code']: language for language in self.repository.getLanguages()}
-        self.translations = self._getTranslations()
+        self.translations = self._getTranslationsByLanguage()
+        self._translations = self._getTranslations()
+        self._languages = self._getLanguages()
 
     def translate(self, text, language=None):
         if language is None:
@@ -28,6 +31,12 @@ class LanguageService:
                 self.reloadTranslations()
 
         return self.translations[language].get(text, text)
+
+    def getTranslations(self):
+        return self._translations
+
+    def getLanguages(self):
+        return self._languages
 
     def pathWithLanguage(self, path, language):
         pathSegments = path.split('/')
@@ -47,20 +56,34 @@ class LanguageService:
         return {row['text']: row['translation'] for row in translates}
 
     def reloadTranslations(self):
-        self.translations = self._getTranslations()
+        self.translations = self._getTranslationsByLanguage()
 
     def getAvailableLanguages(self):
         return {code: language for code, language in self.languages.items() if language.get('is_active', 0) == 1}
 
-    def _getTranslations(self):
-        translates = {}
+    def _getTranslationsByLanguage(self):
+        translations = {}
 
         for row in self.repository.getTranslations():
-            if row['language'] not in translates:
-                translates[row['language']] = {}
-            translates[row['language']][row['text']] = row['translation']
+            if row['language'] not in translations:
+                translations[row['language']] = {}
+            translations[row['language']][row['text']] = row['translation']
 
-        return translates
+        return translations
+
+    def _getTranslations(self):
+        translations = {}
+
+        translationsData = self.repository.getTranslations()
+        for row in translationsData:
+            if row['text'] not in translations:
+                translations[row['text']] = {}
+            translations[row['text']][row['language']] = row['translation']
+
+        return translations
+
+    def _getLanguages(self):
+        return [LanguageEntity(row) for row in self.repository.getLanguages()]
 
     @staticmethod
     def getInstance():

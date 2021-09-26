@@ -7,17 +7,9 @@
     </head>
     <body>
         <header>
-            <a href="/{{ t.language }}/acp">Ukubuka</a> <a href="/{{ t.language }}/">ACP</a>
-            <nav>
-                <ul>
-                    <li><a href="/{{ t.language }}/acp">{{ 'Home page'|translate }}</a></li>
-                    <li><a href="/{{ t.language }}/acp/translates">{{ 'Translates'|translate }}</a></li>
-                    <li><a href="/{{ t.language }}/acp/categories">{{ 'Categories'|translate }}</a></li>
-                    <li><a href="/{{ t.language }}/acp/products">{{ 'Products'|translate }}</a></li>
-                    <li><a href="/{{ t.language }}/acp/catalog">{{ 'Catalog'|translate }}</a></li>
-                </ul>
-            </nav>
+            {% include 'layouts/ACP/header.html' %}
         </header>
+        <h1>{{ t.title }}</h1>
         <main>
             {% block content %}{% endblock %}
         </main>

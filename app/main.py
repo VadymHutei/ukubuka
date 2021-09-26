@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, current_app
 
 from modules.ACP.Dashboard.controller import DashboardController
+from modules.ACP.Translations.controller import TranslationsController
 from modules.Catalog.controller import CatalogController
 from modules.Home.controller import HomeController
 from modules.Language.request_decorators import languageRedirect
@@ -92,7 +93,7 @@ def productPage(productID):
 
 @app.route('/<string:language>/shop', methods=['GET'])
 @languageRedirect
-def shopPage(language):
+def shopPage():
     controller = ShopController()
     return controller.shopAction()
 
@@ -109,14 +110,14 @@ def acpPage():
     controller = DashboardController()
     return controller.dashboardAction()
 
-@app.route('/<string:language>/acp/translates', methods=['GET'])
+@app.route('/<string:language>/acp/translations', methods=['GET'])
 @languageRedirect
-def acpTranslatesPage(language):
-    controller = ACPController()
-    return controller.translatesAction(language, request.args.get('for_language', language))
+def acpTranslationsPage():
+    controller = TranslationsController()
+    return controller.listAction()
 
 @app.route('/<string:language>/acp/categories', methods=['GET'])
 @languageRedirect
-def acpCategories(language):
+def acpCategories():
     controller = ACPController()
     return controller.categoriesAction()

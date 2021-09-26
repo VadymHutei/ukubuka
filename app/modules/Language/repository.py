@@ -13,7 +13,8 @@ class LanguageRepository(Repository):
             SELECT
                 `code`,
                 `name`,
-                `is_active`
+                `is_active`,
+                `is_default`
             FROM
                 `language`
         '''

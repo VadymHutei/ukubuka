@@ -1,0 +1,35 @@
+{% extends 'layouts/acp/layout.html' %}
+
+
+{% block title -%}
+
+ACP - {{ t.title }}
+
+{%- endblock %}
+
+
+{% block content -%}
+
+<table>
+    <thead>
+        <tr>
+            <th>{{ 'text'|translate }}</th>
+            {% for language in languages %}
+            <th>{{ language.name }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for text, translation in translations.items() %}
+        <tr>
+            <td>{{ text }}</td>
+            {% for language in languages %}
+            <td>{{ translation[language.code] }}</td>
+            {% endfor %}
+            <td><a href="/{{ t.language }}/acp/translations/edit?text={{ text }}">{{ 'edit'|translate }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{%- endblock %}
