@@ -1,5 +1,6 @@
 __pycache__/
 *.sublime-workspace
+*.code-workspace
 
 *.pyc
 *.css.map
