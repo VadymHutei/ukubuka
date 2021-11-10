@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import request, redirect, url_for, current_app
+from flask import request, redirect, url_for
 
 from modules.Language.service import LanguageService
 
