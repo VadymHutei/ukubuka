@@ -30,8 +30,8 @@ ACP - {{ t.title }}
             {% for languageCode in languages.keys() %}
             <td>{{ text.translations[languageCode] }}</td>
             {% endfor %}
-            <td><a href="/{{ t.language.code }}/acp/translations/edit?text={{ text.ID }}">{{ 'edit'|translate }}</a></td>
-            <td><a href="/{{ t.language.code }}/acp/translations/delete?text={{ text.ID }}">{{ 'delete'|translate }}</a></td>
+            <td><a href="/{{ t.language.code }}/acp/translations/edit?id={{ text.ID }}">{{ 'edit'|translate }}</a></td>
+            <td><a href="/{{ t.language.code }}/acp/translations/delete?id={{ text.ID }}">{{ 'delete'|translate }}</a></td>
         </tr>
         {% endfor %}
     </tbody>

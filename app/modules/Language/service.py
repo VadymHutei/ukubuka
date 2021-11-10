@@ -60,6 +60,9 @@ class LanguageService:
             textEntity.ID = textID
         self._repository.setTranslations(textEntity.ID, textEntity.translations)
         self._reloadTexts()
+    
+    def _getTranslationsByTextID(self, textID):
+        return {row['language']: row['translation'] for row in self._repository.getTranslationsByTextID(textID)}
 
     def _reloadTexts(self):
         self._texts = self._getTexts()
@@ -101,6 +104,13 @@ class LanguageService:
 
     def getAvailableLanguages(self):
         return {code: language for code, language in self.languages.items() if language.isActive}
+
+    def getTextByID(self, textID):
+        textData = self._repository.getTextByID(textID)
+        textEntity = TextEntity(textData)
+        textEntity.translations = self._getTranslationsByTextID(textID)
+
+        return textEntity
 
     @staticmethod
     def getInstance():

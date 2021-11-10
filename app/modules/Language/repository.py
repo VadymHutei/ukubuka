@@ -116,3 +116,32 @@ class LanguageRepository(Repository):
                 cursor.execute(query, (language))
                 result = cursor.fetchall()
         return result
+
+    def getTextByID(self, textID):
+        query = '''
+            SELECT
+                text.id,
+                text.text
+            FROM text
+            WHERE
+                text.id = %s
+        '''
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (textID,))
+                return cursor.fetchone()
+
+    def getTranslationsByTextID(self, textID):
+        query = '''
+            SELECT
+                translation.language,
+                translation.translation
+            FROM translation
+            WHERE
+                translation.text_id = %s
+        '''
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (textID,))
+                result = cursor.fetchall()
+        return result
