@@ -116,6 +116,12 @@ def acpTranslationsPage():
     controller = TranslationsController()
     return controller.listAction()
 
+@app.route('/<string:language>/acp/translations/edit', methods=['GET'])
+@languageRedirect
+def acpTranslationsEditPage():
+    controller = TranslationsController()
+    return controller.editAction()
+
 @app.route('/<string:language>/acp/categories', methods=['GET'])
 @languageRedirect
 def acpCategories():

@@ -1,4 +1,5 @@
-from modules.ACP.Translations.view import ACPTranslationsView
+from modules.ACP.Translations.views.ACPTranslationsView import ACPTranslationsView
+from modules.ACP.Translations.views.ACPTranslationsEditView import ACPTranslationsEditView
 from modules.Language.service import LanguageService
 
 
@@ -12,5 +13,10 @@ class TranslationsController:
             'texts': languageService.texts,
             'languages': languageService.languages,
         })
+
+        return view.render()
+
+    def editAction(self):
+        view = ACPTranslationsEditView('modules/ACP/Translations/edit.html')
 
         return view.render()
