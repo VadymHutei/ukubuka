@@ -38,7 +38,4 @@ class CategoryService:
             for productTextCharacteristic in productTextCharacteristics:
                 if product['id'] == productTextCharacteristic['product_id']:
                     product['characteristics'][productTextCharacteristic['characteristic_id']] = productTextCharacteristic['value']
-        print(productNumericCharacteristics)
-        print(productTextCharacteristics)
-        print(products)
         return products

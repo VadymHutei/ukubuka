@@ -57,10 +57,13 @@ class LanguageService:
     def _saveText(self, textEntity):
         if textEntity.ID is None:
             textID = self._repository.addText(textEntity.text)
-            print(type(textID))
             textEntity.ID = textID
         self._repository.setTranslations(textEntity.ID, textEntity.translations)
+        self._reloadTexts()
 
+    def _reloadTexts(self):
+        self._texts = self._getTexts()
+        self._setTranslations()
 
     def translate(self, text, language=None):
         if language is None:

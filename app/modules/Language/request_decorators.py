@@ -12,12 +12,12 @@ def languageRedirect(f):
 
         if 'language' in kwargs:
             if kwargs['language'] not in languageService.languages:
-                kwargs['language'] = languageService.defaultLanguage['code']
+                kwargs['language'] = languageService.defaultLanguage.code
                 return redirect(url_for(f.__name__, *args, **kwargs))
             language = kwargs['language']
             del kwargs['language']
         else:
-            language = languageService.defaultLanguage['code']
+            language = languageService.defaultLanguage.code
         request.ctx['language'] = languageService.languages[language]
         return f(*args, **kwargs)
     return decoratedFunction

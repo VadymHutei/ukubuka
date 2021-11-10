@@ -18,11 +18,14 @@ ACP - {{ t.title }}
             {% for language in languages.values() %}
             <th>{{ language.name }}</th>
             {% endfor %}
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for text in texts %}
         <tr>
+            <td>{{ text.ID }}</td>
             <td>{{ text.text }}</td>
             {% for languageCode in languages.keys() %}
             <td>{{ text.translations[languageCode] }}</td>
