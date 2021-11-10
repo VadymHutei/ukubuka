@@ -2,8 +2,8 @@ from datetime import datetime
 
 from flask import request
 
-from vendor.Ukubuka.exceptions.WrongPassword import WrongPassword
-from vendor.Ukubuka.password import getPassword
+from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
+from vendor.ukubuka.password import getPassword
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.exceptions.UserNotExist import UserNotExist
 from modules.User.repository import UserRepository

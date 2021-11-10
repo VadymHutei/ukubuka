@@ -4,6 +4,7 @@ from flask import request, current_app
 
 from modules.Language.repository import LanguageRepository
 from modules.Language.entities.LanguageEntity import LanguageEntity
+from modules.Language.entities.TextEntity import TextEntity
 from modules.Language.exceptions.LanguageException import LanguageException
 
 
@@ -13,7 +14,8 @@ class LanguageService:
         self._repository = LanguageRepository()
         self._defaultLanguage = self._getDefaultLanguage()
         self._languages = self._getLanguages()
-        self._translations = self._getTranslations()
+        self._texts = self._getTexts()
+        self._setTranslations()
 
     @property
     def defaultLanguage(self):
@@ -24,8 +26,8 @@ class LanguageService:
         return self._languages
 
     @property
-    def translations(self):
-        return self._translations
+    def texts(self):
+        return self._texts
 
 
     def _getDefaultLanguage(self):
@@ -34,55 +36,48 @@ class LanguageService:
     def _getLanguages(self):
         return {row['code']: LanguageEntity(row) for row in self._repository.getLanguages()}
 
+    def _getTexts(self):
+        return [TextEntity(row) for row in self._repository.getTexts()]
+
+    def _setTranslations(self):
+        translations = self._getTranslations()
+        for textEntity in self._texts:
+            textEntity.translations = {row['language']: row['translation'] for row in translations.get(textEntity.ID, [])}
+
     def _getTranslations(self):
         translations = {}
 
         for row in self._repository.getTranslations():
-            if row['text'] not in translations:
-                translations[row['text']] = {}
-            translations[row['text']][row['language']] = row['translation']
+            if row['text_id'] not in translations:
+                translations[row['text_id']] = []
+            translations[row['text_id']].append(row)
 
         return translations
 
-
-    def inAvailableLanguages(self, code):
-        return code in self._languages
-
-    def hasTranslation(self, text):
-        return text in self._translations
-
-    def addTranslation(self, text, translations={}):
-        if not text:
-            return
-
-        for languageCode in self._languages.keys():
-            self._repository.addTranslation(text, languageCode, translations.get(languageCode, ''))
-
-    def reloadTranslations(self):
-        self._translations = self._getTranslations()
-
-    def translate(self, text, languageCode=None):
-        if languageCode is None:
-            languageCode = request.ctx['language'].code
-
-        if not self.inAvailableLanguages(languageCode):
-            raise LanguageException(f'The site does not support this language: {languageCode}')
-
-        if not self.hasTranslation(text):
-            self.addTranslation(text)
-            self.reloadTranslations()
-            return text
-
-        if self.hasTranslation(text) and self._translations[text][languageCode] == '':
-            return text
-
-        return self._translations[text][languageCode]
+    def _saveText(self, textEntity):
+        if textEntity.ID is None:
+            textID = self._repository.addText(textEntity.text)
+            print(type(textID))
+            textEntity.ID = textID
+        self._repository.setTranslations(textEntity.ID, textEntity.translations)
 
 
+    def translate(self, text, language=None):
+        if language is None:
+            language = request.ctx['language'].code
 
+        if language not in self._languages:
+            raise LanguageException(f'The site does not support this language: {language}')
 
-
-
+        for textEntity in self._texts:
+            if text == textEntity.text:
+                if language not in textEntity.translations:
+                    textEntity.translations[language] = ''
+                    self._saveText(textEntity)
+                    return text
+                return textEntity.translations[language] if textEntity.translations[language] else text
+        self._saveText(TextEntity({'text': text}))
+        return text
 
     def pathWithLanguage(self, path, language):
         pathSegments = path.split('/')
@@ -103,27 +98,6 @@ class LanguageService:
 
     def getAvailableLanguages(self):
         return {code: language for code, language in self.languages.items() if language.isActive}
-
-    def _getTranslationsByLanguage(self):
-        translations = {}
-
-        for row in self._repository.getTranslations():
-            if row['language'] not in translations:
-                translations[row['language']] = {}
-            translations[row['language']][row['text']] = row['translation']
-
-        return translations
-
-    def _getTranslations(self):
-        translations = {}
-
-        translationsData = self._repository.getTranslations()
-        for row in translationsData:
-            if row['text'] not in translations:
-                translations[row['text']] = {}
-            translations[row['text']][row['language']] = row['translation']
-
-        return translations
 
     @staticmethod
     def getInstance():

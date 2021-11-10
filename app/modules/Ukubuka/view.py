@@ -1,7 +1,7 @@
 from flask import request
 
 from modules.Language.service import LanguageService
-from vendor.Ukubuka.view import View
+from vendor.ukubuka.view import View
 
 
 class UkubukaView(View):

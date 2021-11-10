@@ -1,4 +1,4 @@
-from vendor.Ukubuka.repository import Repository
+from vendor.ukubuka.repository import Repository
 from config import DB_CREDENTIALS
 
 
@@ -44,50 +44,75 @@ class LanguageRepository(Repository):
                 result = cursor.fetchone()
         return result
 
-    def getTranslations(self):
+    def addText(self, text):
+        query = '''
+            INSERT INTO text (text)
+            VALUES (%s)
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (text,))
+                textID = cursor.lastrowid
+            connection.commit()
+        return textID
+
+    def getTexts(self):
         query = '''
             SELECT
-                t.`text`,
-                t.`language`,
-                t.`translation`
-            FROM
-                `translation` AS t
-            JOIN `language` AS l
-                ON l.`code` = t.`language`
-            WHERE l.`is_active` = 1
+                text.id,
+                text.text
+            FROM text
         '''
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                result = cursor.fetchall()
-        return result
+                return cursor.fetchall()
+
+    def setTranslations(self, textID, translations):
+        query = '''
+            INSERT INTO translation (text_id, language, translation)
+            VALUES (%s, %s, %s)
+            ON DUPLICATE KEY UPDATE
+                translation=translation
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                for language, translation in translations.items():
+                    cursor.execute(query, (textID, language, translation))
+            connection.commit()
+
+    def getTranslations(self):
+        query = '''
+            SELECT
+                translation.text_id,
+                translation.language,
+                translation.translation
+            FROM translation
+            JOIN language
+                ON language.code = translation.language
+                AND language.is_active = 1
+        '''
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return cursor.fetchall()
 
     def getTranslationsForLanguage(self, language):
         query = '''
             SELECT
-                t.`text`,
-                t.`language`,
-                t.`translation`
-            FROM
-                `translation` AS t
-            JOIN `language` AS l
-                ON l.`code` = t.`language`
-            WHERE l.`code` = %s'
+                text.id,
+                text.text,
+                translation.translation
+            FROM text
+            JOIN translation
+                ON translation.text_id = text.id
+            WHERE
+                translation.language = %s
         '''
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (language))
                 result = cursor.fetchall()
         return result
-
-    def addTranslation(self, text, language, translation):
-        query = '''
-            INSERT INTO `translation` (`text`, `language`, `translation`)
-            VALUES (%s, %s, %s)
-        '''
-        params = (text, language, translation)
-
-        with self.getConnection() as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query, params)
-            connection.commit()

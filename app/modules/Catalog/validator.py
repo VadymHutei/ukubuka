@@ -1,6 +1,6 @@
 import re
 
-from vendor.Ukubuka.validator import UkubukaValidator
+from vendor.ukubuka.validator import UkubukaValidator
 
 
 class CatalogValidator(UkubukaValidator):

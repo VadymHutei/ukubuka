@@ -1,7 +1,7 @@
 from flask import request
 
 from config import DB_CREDENTIALS
-from vendor.Ukubuka.repository import Repository
+from vendor.ukubuka.repository import Repository
 
 
 class CategoryRepository(Repository):

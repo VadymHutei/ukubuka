@@ -1,4 +1,4 @@
-from vendor.Ukubuka.repository import Repository
+from vendor.ukubuka.repository import Repository
 from config import DB_CREDENTIALS
 
 

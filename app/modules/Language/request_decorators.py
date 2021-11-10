@@ -11,7 +11,7 @@ def languageRedirect(f):
         languageService = LanguageService.getInstance()
 
         if 'language' in kwargs:
-            if not languageService.inAvailableLanguages(kwargs['language']):
+            if kwargs['language'] not in languageService.languages:
                 kwargs['language'] = languageService.defaultLanguage['code']
                 return redirect(url_for(f.__name__, *args, **kwargs))
             language = kwargs['language']

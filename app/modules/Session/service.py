@@ -4,7 +4,7 @@ from flask import request
 
 from config import (PASSWORD_ABC,
     SESSION_ID_LENGTH, SESSION_LIFETIME_DAYS)
-from vendor.Ukubuka.password import getSecret
+from vendor.ukubuka.password import getSecret
 from modules.Session.repository import SessionMySQLRepository
 
 

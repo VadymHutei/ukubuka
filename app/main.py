@@ -26,7 +26,7 @@ def ctx():
 @app.route('/', methods=['GET'])
 @withSession
 def mainRedirect():
-    return redirect(url_for('homePage', language=app.languageService.defaultLanguage['code']))
+    return redirect(url_for('homePage', language=app.languageService.defaultLanguage.code))
 
 @app.route('/<string:language>/', methods=['GET'])
 @languageRedirect
