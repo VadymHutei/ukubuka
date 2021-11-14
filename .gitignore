@@ -5,8 +5,8 @@ __pycache__/
 *.pyc
 *.css.map
 
-/app/env/
-/app/vendor/
-/app/config.py
+/env/
 /db/data/
 /db/*_data.sql
+/app/vendor/
+/app/config.py
