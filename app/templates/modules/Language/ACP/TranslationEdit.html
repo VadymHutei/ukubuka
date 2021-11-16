@@ -1,0 +1,24 @@
+{% extends 'layouts/acp/layout.html' %}
+
+
+{% block title -%}
+
+ACP - {{ t.title }}
+
+{%- endblock %}
+
+
+{% block content -%}
+
+<form action="{{ url_for('ACPTranslationEditPage', language=t.language.code) }}" method="POST">
+    <label for="text">Text</label>
+    <input type="text" name="text" id="text" value="{{ text.text }}" disabled>
+    {% for language in t.languages.values() %}
+    <label for="translation_{{ language.code }}">{{ language.name }}</label>
+    <input type="text" id="translation_{{ language.code }}" name="translations[{{ language.code }}]"
+        value="{{ text.translations[language.code] }}" placeholder="{{ language.name }}">
+    {% endfor %}
+    <input type="submit">
+</form>
+
+{%- endblock %}

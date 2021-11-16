@@ -15,7 +15,7 @@ ACP - {{ t.title }}
         <tr>
             <th>ID</th>
             <th>{{ 'text'|translate }}</th>
-            {% for language in languages.values() %}
+            {% for language in t.languages.values() %}
             <th>{{ language.name }}</th>
             {% endfor %}
             <th></th>
@@ -27,11 +27,12 @@ ACP - {{ t.title }}
         <tr>
             <td>{{ text.ID }}</td>
             <td>{{ text.text }}</td>
-            {% for languageCode in languages.keys() %}
+            {% for languageCode in t.languages.keys() %}
             <td>{{ text.translations[languageCode] }}</td>
             {% endfor %}
-            <td><a href="/{{ t.language.code }}/acp/translations/edit?id={{ text.ID }}">{{ 'edit'|translate }}</a></td>
-            <td><a href="/{{ t.language.code }}/acp/translations/delete?id={{ text.ID }}">{{ 'delete'|translate }}</a></td>
+            <td><a href="{{ url_for('ACPTranslationEditPage', language=t.language.code, id=text.ID) }}">{{ 'edit'|translate }}</a></td>
+            <td><a href="/{{ t.language.code }}/acp/translations/delete?id={{ text.ID }}">{{ 'delete'|translate }}</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

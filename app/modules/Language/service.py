@@ -102,9 +102,6 @@ class LanguageService:
         
         return {row['text']: row['translation'] for row in translates}
 
-    def getAvailableLanguages(self):
-        return {code: language for code, language in self.languages.items() if language.isActive}
-
     def getTextByID(self, textID):
         textData = self._repository.getTextByID(textID)
         textEntity = TextEntity(textData)

@@ -1,9 +1,10 @@
-from flask import Flask, request, redirect, url_for, current_app
+from flask import Flask, current_app, redirect, request, url_for
 
 from modules.ACP.Dashboard.controller import DashboardController
 from modules.ACP.Translations.controller import TranslationsController
 from modules.Catalog.controller import CatalogController
 from modules.Home.controller import HomeController
+from modules.Language.controllers.ACPTranslationController import ACPTranslationController
 from modules.Language.request_decorators import languageRedirect
 from modules.Language.service import LanguageService
 from modules.Session.request_decorators import withSession
@@ -11,12 +12,12 @@ from modules.User.controller import UserController
 from modules.User.request_decorators import onlyRegistered
 from modules.User.service import UserService
 
-
 app = Flask(__name__)
 
 app.languageService = LanguageService()
 app.jinja_env.filters['translate'] = app.languageService.translate
 app.jinja_env.filters['pathWithLanguage'] = app.languageService.pathWithLanguage
+
 
 @app.before_request
 def ctx():
@@ -99,7 +100,7 @@ def shopPage():
 
 @app.route('/<string:language>/shop/<path:path>', methods=['GET'])
 @languageRedirect
-def shop(language, path):
+def shop(path):
     controller = ShopController()
     return controller.shopAction(path)
 
@@ -112,18 +113,12 @@ def acpPage():
 
 @app.route('/<string:language>/acp/translations', methods=['GET'])
 @languageRedirect
-def acpTranslationsPage():
-    controller = TranslationsController()
+def ACPTranslationPage():
+    controller = ACPTranslationController()
     return controller.listAction()
 
-@app.route('/<string:language>/acp/translations/edit', methods=['GET'])
+@app.route('/<string:language>/acp/translations/edit', methods=['GET', 'POST'])
 @languageRedirect
-def acpTranslationsEditPage():
-    controller = TranslationsController()
+def ACPTranslationEditPage():
+    controller = ACPTranslationController()
     return controller.editAction()
-
-@app.route('/<string:language>/acp/categories', methods=['GET'])
-@languageRedirect
-def acpCategories():
-    controller = ACPController()
-    return controller.categoriesAction()
