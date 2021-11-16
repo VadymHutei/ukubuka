@@ -1,6 +1,6 @@
 from flask import abort
 
-from modules.Ukubuka.view import UkubukaView
+from modules.Ukubuka.UkubukaView import UkubukaView
 from modules.Catalog.service import CatalogService
 
 class CatalogController:

@@ -1,7 +1,7 @@
 from flask import request, redirect, url_for
 
 from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
-from modules.Ukubuka.view import UkubukaView
+from modules.Ukubuka.UkubukaView import UkubukaView
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
