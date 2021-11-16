@@ -9,6 +9,13 @@
         <header>
             {% include 'layouts/ACP/header.html' %}
         </header>
+        {% if t.notifications %}
+        <div>
+            {% for notification in t.notifications %}
+            <p>{{ notification.text }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
         <h1>{{ t.title }}</h1>
         <main>
             {% block content %}{% endblock %}
