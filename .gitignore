@@ -1,12 +1,15 @@
 __pycache__/
 *.sublime-workspace
 *.code-workspace
+*.idea
 
 *.pyc
 *.css.map
 
 /env/
+
 /db/data/
 /db/*_data.sql
+
 /app/vendor/
 /app/config.py
