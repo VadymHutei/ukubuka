@@ -1,4 +1,3 @@
-<a href="/{{ t.language.code }}/acp">Ukubuka</a> <a href="/{{ t.language.code }}/">ACP</a>
-<nav>
-    {% include 'layouts/ACP/navigation.html' %}
-</nav>
+<header>
+    <a href="{{ url_for('homePage', language=t.language.code) }}">Ukubuka</a> <a href="{{ url_for('ACPDashboardPage', language=t.language.code) }}">ACP</a>
+</header>

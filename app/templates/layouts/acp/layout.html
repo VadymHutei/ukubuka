@@ -2,23 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}{% endblock %}</title>
+        <title>ACP - {{ t.title }}</title>
         <link rel="stylesheet" type="text/css" href="/static/styles/ACP/main.css">
     </head>
     <body>
-        <header>
-            {% include 'layouts/ACP/header.html' %}
-        </header>
-        {% if t.notifications %}
-        <div>
-            {% for notification in t.notifications %}
-            <p>{{ notification.text }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
-        <h1>{{ t.title }}</h1>
-        <main>
-            {% block content %}{% endblock %}
-        </main>
+        {% include 'layouts/ACP/notifications.html' %}
+        {% include 'layouts/ACP/header.html' %}
+        {% include 'layouts/ACP/navigation.html' %}
+        {% block content %}{% endblock %}
+        {% include 'layouts/ACP/footer.html' %}
     </body>
 </html>

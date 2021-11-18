@@ -1,0 +1,9 @@
+{% if t.notifications %}
+<div class="notifications">
+    {% for notification in t.notifications %}
+    <div class="{{ notification.type }}">
+        <p>{{ notification.text }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
