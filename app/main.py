@@ -11,6 +11,7 @@ from modules.User.controller import UserController
 from modules.User.request_decorators import onlyRegistered
 from modules.User.service import UserService
 
+
 app = Flask(__name__)
 
 app.languageService = LanguageService()
@@ -106,7 +107,7 @@ def shop(path):
 # ACP
 @app.route('/<string:language>/acp', methods=['GET'])
 @languageRedirect
-def acpPage():
+def ACPDashboardPage():
     controller = ACPController()
     return controller.dashboardAction()
 
