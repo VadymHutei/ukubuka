@@ -12,5 +12,5 @@ class NotificationEntity:
         return self._text
 
     @property
-    def type_(self):
+    def type(self):
         return self._type
