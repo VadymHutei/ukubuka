@@ -1,4 +1,5 @@
 from functools import wraps
+import re
 
 from flask import request, current_app
 
@@ -108,6 +109,21 @@ class LanguageService:
         textEntity.translations = self._getTranslationsByTextID(textID)
 
         return textEntity
+
+    def updateTranslations(self, data):
+        translations = {}
+
+        pattern = re.compile('translation_(' + '|'.join(self._languages.keys()) + ')')
+        for fieldName, fieldValue in data.items():
+            result = pattern.search(fieldName)
+            if result:
+                translations[result.group(1)] = fieldValue
+
+        self._repository.updateTranslations({
+            'textID': data['textID'],
+            'translations': translations,
+        })
+        self._setTranslations()
 
     @staticmethod
     def getInstance():

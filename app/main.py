@@ -86,23 +86,23 @@ def catalogPage(catalogAlias):
     controller = CatalogController()
     return controller.catalogAction(catalogAlias)
 
-@app.route('/product/<productID>', methods=['GET'])
-@languageRedirect
-def productPage(productID):
-    controller = ProductController()
-    return controller.productAction(productID)
+# @app.route('/product/<productID>', methods=['GET'])
+# @languageRedirect
+# def productPage(productID):
+#     controller = ProductController()
+#     return controller.productAction(productID)
 
-@app.route('/<string:language>/shop', methods=['GET'])
-@languageRedirect
-def shopPage():
-    controller = ShopController()
-    return controller.shopAction()
+# @app.route('/<string:language>/shop', methods=['GET'])
+# @languageRedirect
+# def shopPage():
+#     controller = ShopController()
+#     return controller.shopAction()
 
-@app.route('/<string:language>/shop/<path:path>', methods=['GET'])
-@languageRedirect
-def shop(path):
-    controller = ShopController()
-    return controller.shopAction(path)
+# @app.route('/<string:language>/shop/<path:path>', methods=['GET'])
+# @languageRedirect
+# def shop(path):
+#     controller = ShopController()
+#     return controller.shopAction(path)
 
 # ACP
 @app.route('/<string:language>/acp', methods=['GET'])
@@ -121,4 +121,7 @@ def ACPTranslationPage():
 @languageRedirect
 def ACPTranslationEditPage():
     controller = ACPTranslationController()
-    return controller.editAction()
+    if request.method == 'GET':
+        return controller.editPageAction()
+    elif request.method == 'POST':
+        return controller.editAction()

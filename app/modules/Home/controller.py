@@ -1,4 +1,4 @@
-from modules.Ukubuka.UkubukaView import UkubukaView
+from modules.Ukubuka.views.UkubukaView import UkubukaView
 from modules.Session.service import SessionService
 
 

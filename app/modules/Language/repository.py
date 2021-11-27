@@ -18,6 +18,7 @@ class LanguageRepository(Repository):
             FROM
                 `language`
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -38,6 +39,7 @@ class LanguageRepository(Repository):
                 `is_active` = 1
             LIMIT 1
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -64,6 +66,7 @@ class LanguageRepository(Repository):
                 text.text
             FROM text
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -94,6 +97,7 @@ class LanguageRepository(Repository):
                 ON language.code = translation.language
                 AND language.is_active = 1
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -111,6 +115,7 @@ class LanguageRepository(Repository):
             WHERE
                 translation.language = %s
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (language))
@@ -126,6 +131,7 @@ class LanguageRepository(Repository):
             WHERE
                 text.id = %s
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
@@ -140,8 +146,29 @@ class LanguageRepository(Repository):
             WHERE
                 translation.text_id = %s
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
                 result = cursor.fetchall()
         return result
+
+    def updateTranslations(self, data):
+        query = '''
+            INSERT INTO translation (
+                text_id,
+                language,
+                translation
+            )
+            VALUES (%s, %s, %s)
+            ON DUPLICATE KEY
+            UPDATE
+                translation = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                for data in [(data['textID'], language, translation, translation) for language, translation in data['translations'].items()]:
+                    cursor.execute(query, data)
+                    print(cursor.rowcount)
+            connection.commit()
