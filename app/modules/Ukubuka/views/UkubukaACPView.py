@@ -1,6 +1,6 @@
 from modules.Notification.entities.NotificationEntity import NotificationEntity
 from modules.Notification.services.NotificationService import NotificationService
-from modules.Ukubuka.UkubukaView import UkubukaView
+from modules.Ukubuka.views.UkubukaView import UkubukaView
 
 
 class UkubukaACPView(UkubukaView):

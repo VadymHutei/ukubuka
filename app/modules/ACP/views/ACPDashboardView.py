@@ -1,5 +1,5 @@
 from modules.Language.service import LanguageService
-from modules.Ukubuka.UkubukaACPView import UkubukaACPView
+from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 
 class ACPDashboardView(UkubukaACPView):
