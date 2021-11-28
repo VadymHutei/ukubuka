@@ -4,7 +4,7 @@
 
 <form action="{{ url_for('ACPTranslationEditPage', language=t.language.code, id=text.ID) }}" method="POST">
     <div>
-        <label for="text">Text</label>
+        <label for="text">{{ 'Text'|translate }}</label>
         <input type="text" name="text" id="text" value="{{ text.text }}" disabled>
     </div>
     {% for language in t.languages.values() %}
