@@ -2,7 +2,7 @@ from functools import wraps
 
 from flask import request, redirect, url_for
 
-from modules.Language.service import LanguageService
+from modules.Language.services.LanguageService import LanguageService
 
 
 def languageRedirect(f):
