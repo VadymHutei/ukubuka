@@ -5,7 +5,7 @@ from modules.Ukubuka.views.UkubukaView import UkubukaView
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
-from modules.User.service import UserService
+from modules.User.services.UserService import UserService
 
 
 class UserController:

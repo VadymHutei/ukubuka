@@ -98,3 +98,21 @@ class UserRepository(Repository):
             with connection.cursor() as cursor:
                 cursor.execute(query, (sessionID,))
             connection.commit()
+
+    def getUsers(self):
+        query = '''
+            SELECT
+                id,
+                email,
+                first_name,
+                last_name,
+                is_confirmed,
+                registered_datetime
+            FROM
+                user
+        '''
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                result = cursor.fetchall()
+        return result

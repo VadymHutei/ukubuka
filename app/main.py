@@ -1,15 +1,17 @@
 from flask import Flask, redirect, request, url_for
 
-from modules.ACP.controllers.ACPController import ACPController
 from modules.Catalog.controller import CatalogController
+from modules.ACP.controllers.ACPController import ACPController
 from modules.Home.controller import HomeController
 from modules.Language.controllers.ACPTranslationController import ACPTranslationController
-from modules.Language.request_decorators import languageRedirect
-from modules.Language.service import LanguageService
-from modules.Session.request_decorators import withSession
-from modules.User.controller import UserController
-from modules.User.request_decorators import onlyRegistered
-from modules.User.service import UserService
+from modules.Language.requestDecorators import languageRedirect
+from modules.Language.services.LanguageService import LanguageService
+from modules.Session.requestDecorators import withSession
+from modules.User.controllers.UserACPController import UserACPController
+from modules.User.controllers.UserController import UserController
+from modules.User.requestDecorators import onlyRegistered
+from modules.User.services.UserService import UserService
+from vendor.ukubuka.JinjaFilters import viewJinjaFilter
 
 
 app = Flask(__name__)
@@ -17,6 +19,7 @@ app = Flask(__name__)
 app.languageService = LanguageService()
 app.jinja_env.filters['translate'] = app.languageService.translate
 app.jinja_env.filters['pathWithLanguage'] = app.languageService.pathWithLanguage
+app.jinja_env.filters['view'] = viewJinjaFilter
 
 
 @app.before_request
@@ -72,19 +75,19 @@ def account():
     controller = UserController()
     return controller.accountAction()
 
-@app.route('/<string:language>/catalog', methods=['GET'])
-@languageRedirect
-@withSession
-def catalogMainPage():
-    controller = CatalogController()
-    return controller.catalogMainPageAction()
+# @app.route('/<string:language>/catalog', methods=['GET'])
+# @languageRedirect
+# @withSession
+# def catalogMainPage():
+#     controller = CatalogController()
+#     return controller.catalogMainPageAction()
 
-@app.route('/<string:language>/catalog/<string:catalogAlias>', methods=['GET'])
-@languageRedirect
-@withSession
-def catalogPage(catalogAlias):
-    controller = CatalogController()
-    return controller.catalogAction(catalogAlias)
+# @app.route('/<string:language>/catalog/<string:catalogAlias>', methods=['GET'])
+# @languageRedirect
+# @withSession
+# def catalogPage(catalogAlias):
+#     controller = CatalogController()
+#     return controller.catalogAction(catalogAlias)
 
 # @app.route('/product/<productID>', methods=['GET'])
 # @languageRedirect
@@ -125,3 +128,27 @@ def ACPTranslationEditPage():
         return controller.editPageAction()
     elif request.method == 'POST':
         return controller.editAction()
+
+@app.route('/<string:language>/acp/users', methods=['GET'])
+@languageRedirect
+def usersListACP():
+    controller = UserACPController()
+    return controller.usersListAction()
+
+@app.route('/<string:language>/acp/users/edit', methods=['GET'])
+@languageRedirect
+def editUserACProute():
+    controller = UserACPController()
+    return controller.usersListAction()
+
+@app.route('/<string:language>/acp/users/block', methods=['GET'])
+@languageRedirect
+def blockUserACProute():
+    controller = UserACPController()
+    return controller.usersListAction()
+
+@app.route('/<string:language>/acp/users/delete', methods=['GET'])
+@languageRedirect
+def deleteUserACProute():
+    controller = UserACPController()
+    return controller.usersListAction()

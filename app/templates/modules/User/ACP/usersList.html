@@ -1,0 +1,34 @@
+{% extends 'layouts/acp/layout.html' %}
+
+{% block content -%}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>{{ 'email'|translate }}</th>
+            <th>{{ 'name'|translate }}</th>
+            <th>{{ 'is confirmed'|translate }}</th>
+            <th>{{ 'registration date'|translate }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.ID }}</td>
+            <td>{{ user.email|view }}</td>
+            <td>{{ user.firstName|view }} {{ user.lastName|view }}</td>
+            <td>{{ user.isConfirmed|view|translate }}</td>
+            <td>{{ user.registeredDatetime }}</td>
+            <td>
+                <a href="{{ url_for('editUserACProute', language=t.language.code, id=user.ID) }}">{{ 'edit'|translate }}</a>
+                <a href="{{ url_for('blockUserACProute', language=t.language.code, id=user.ID) }}">{{ 'block'|translate }}</a>
+                <a href="{{ url_for('deleteUserACProute', language=t.language.code, id=user.ID) }}">{{ 'delete'|translate }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{%- endblock %}
