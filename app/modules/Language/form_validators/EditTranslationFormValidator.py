@@ -1,4 +1,4 @@
-from modules.Language.service import LanguageService
+from modules.Language.services.LanguageService import LanguageService
 from modules.Language.validator import LanguageValidator
 from vendor.ukubuka.AbstractFormValidator import AbstractFormValidator
 from vendor.ukubuka.ValidatedField import ValidatedField

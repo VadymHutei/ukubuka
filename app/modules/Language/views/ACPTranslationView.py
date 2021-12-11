@@ -1,4 +1,4 @@
-from modules.Language.service import LanguageService
+from modules.Language.services.LanguageService import LanguageService
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 

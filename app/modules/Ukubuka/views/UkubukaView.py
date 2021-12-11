@@ -1,6 +1,6 @@
 from flask import request
 
-from modules.Language.service import LanguageService
+from modules.Language.services.LanguageService import LanguageService
 from vendor.ukubuka.view import View
 
 

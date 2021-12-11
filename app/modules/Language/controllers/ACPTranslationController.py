@@ -1,7 +1,7 @@
 from flask import request, redirect, url_for
 
 from modules.Language.form_validators.EditTranslationFormValidator import EditTranslationFormValidator
-from modules.Language.service import LanguageService
+from modules.Language.services.LanguageService import LanguageService
 from modules.Language.validator import LanguageValidator
 from modules.Language.views.ACPTranslationEditView import ACPTranslationEditView
 from modules.Language.views.ACPTranslationView import ACPTranslationView
