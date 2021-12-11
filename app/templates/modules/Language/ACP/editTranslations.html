@@ -2,7 +2,7 @@
 
 {% block content -%}
 
-<form action="{{ url_for('ACPTranslationEditPage', language=t.language.code, id=text.ID) }}" method="POST">
+<form action="{{ url_for('editTranslationACPRoute', language=t.language.code, id=text.ID) }}" method="POST">
     <div>
         <label for="text">{{ 'Text'|translate }}</label>
         <input type="text" name="text" id="text" value="{{ text.text }}" disabled>

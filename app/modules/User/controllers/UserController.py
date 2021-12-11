@@ -27,7 +27,7 @@ class UserController:
             view = UkubukaView('modules/User/registration.html')
             view.addData({'errors': {'other': (str(e),)}})
             return view.render()
-        return redirect(url_for('homePage', language=request.ctx['language']))
+        return redirect(url_for('homeRoute', language=request.ctx['language']))
 
     def loginPageAction(self):
         view = UkubukaView('modules/User/login.html')
@@ -51,7 +51,7 @@ class UserController:
             view = UkubukaView('modules/User/login.html')
             view.addData({'errors': {'other': [e]}})
             return view.render()
-        return redirect(url_for('homePage', language=request.ctx['language']))
+        return redirect(url_for('homeRoute', language=request.ctx['language']))
 
     def accountAction(self):
         view = UkubukaView('modules/User/account.html')

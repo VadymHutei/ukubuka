@@ -22,8 +22,9 @@
             {% for languageCode in t.languages.keys() %}
             <td>{{ text.translations[languageCode] }}</td>
             {% endfor %}
-            <td><a href="{{ url_for('ACPTranslationEditPage', language=t.language.code, id=text.ID) }}">{{ 'edit'|translate }}</a></td>
-            <td><a href="/{{ t.language.code }}/acp/translations/delete?id={{ text.ID }}">{{ 'delete'|translate }}</a>
+            <td>
+                <a href="{{ url_for('editTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'edit'|translate }}</a>
+                <a href="{{ url_for('deleteTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'delete'|translate }}</a>
             </td>
         </tr>
         {% endfor %}

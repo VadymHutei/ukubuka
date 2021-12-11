@@ -1,8 +1,8 @@
-from modules.ACP.views.ACPDashboardView import ACPDashboardView
+from modules.ACP.views.DashboardACPView import DashboardACPView
 
 
 class ACPController:
 
     def dashboardAction(self):
-        view = ACPDashboardView()
+        view = DashboardACPView()
         return view.render()

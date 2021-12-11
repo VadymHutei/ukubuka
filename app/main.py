@@ -1,48 +1,34 @@
-from flask import Flask, redirect, request, url_for
+from flask import redirect, request, url_for
 
-from modules.Catalog.controller import CatalogController
+from app import app
+
 from modules.ACP.controllers.ACPController import ACPController
 from modules.Home.controller import HomeController
-from modules.Language.controllers.ACPTranslationController import ACPTranslationController
+from modules.Language.controllers.TranslationACPController import TranslationACPController
 from modules.Language.requestDecorators import languageRedirect
-from modules.Language.services.LanguageService import LanguageService
 from modules.Session.requestDecorators import withSession
 from modules.User.controllers.UserACPController import UserACPController
 from modules.User.controllers.UserController import UserController
 from modules.User.requestDecorators import onlyRegistered
 from modules.User.services.UserService import UserService
-from vendor.ukubuka.JinjaFilters import viewJinjaFilter
-
-
-app = Flask(__name__)
-
-app.languageService = LanguageService()
-app.jinja_env.filters['translate'] = app.languageService.translate
-app.jinja_env.filters['pathWithLanguage'] = app.languageService.pathWithLanguage
-app.jinja_env.filters['view'] = viewJinjaFilter
-
-
-@app.before_request
-def ctx():
-    request.ctx = {}
 
 
 @app.route('/', methods=['GET'])
 @withSession
 def mainRedirect():
-    return redirect(url_for('homePage', language=app.languageService.defaultLanguage.code))
+    return redirect(url_for('homeRoute', language=app.languageService.defaultLanguage.code))
 
 @app.route('/<string:language>/', methods=['GET'])
 @languageRedirect
 @withSession
-def homePage():
+def homeRoute():
     controller = HomeController()
     return controller.homeAction()
 
 @app.route('/<string:language>/registration', methods=['GET', 'POST'])
 @languageRedirect
 @withSession
-def registration():
+def registrationRoute():
     controller = UserController()
     if request.method == 'GET':
         return controller.registrationPageAction()
@@ -52,7 +38,7 @@ def registration():
 @app.route('/<string:language>/login', methods=['GET', 'POST'])
 @languageRedirect
 @withSession
-def login():
+def loginRoute():
     controller = UserController()
     if request.method == 'GET':
         return controller.loginPageAction()
@@ -62,16 +48,16 @@ def login():
 @app.route('/<string:language>/logout', methods=['GET'])
 @languageRedirect
 @withSession
-def logout():
+def logoutRoute():
     userService = UserService()
     userService.logoutBySessionID(request.ctx['sessionID'])
-    return redirect(url_for('homePage', language=request.ctx['language']))
+    return redirect(url_for('homeRoute', language=request.ctx['language']))
 
 @app.route('/<string:language>/account', methods=['GET'])
 @languageRedirect
 @withSession
 @onlyRegistered
-def account():
+def accountRoute():
     controller = UserController()
     return controller.accountAction()
 
@@ -110,45 +96,55 @@ def account():
 # ACP
 @app.route('/<string:language>/acp', methods=['GET'])
 @languageRedirect
-def ACPDashboardPage():
+def dashboardACPRoute():
     controller = ACPController()
     return controller.dashboardAction()
 
 @app.route('/<string:language>/acp/translations', methods=['GET'])
 @languageRedirect
-def ACPTranslationPage():
-    controller = ACPTranslationController()
-    return controller.listAction()
+def translationsACPRoute():
+    controller = TranslationACPController()
+    return controller.translationsAction()
 
 @app.route('/<string:language>/acp/translations/edit', methods=['GET', 'POST'])
 @languageRedirect
-def ACPTranslationEditPage():
-    controller = ACPTranslationController()
+def editTranslationACPRoute():
+    controller = TranslationACPController()
     if request.method == 'GET':
         return controller.editPageAction()
     elif request.method == 'POST':
         return controller.editAction()
+    return controller.translationsAction()
+
+@app.route('/<string:language>/acp/translations/delete', methods=['GET', 'POST'])
+@languageRedirect
+def deleteTranslationACPRoute():
+    controller = TranslationACPController()
+    if request.method == 'GET':
+        return controller.deletePageAction()
+    elif request.method == 'POST':
+        return controller.deleteAction()
 
 @app.route('/<string:language>/acp/users', methods=['GET'])
 @languageRedirect
-def usersListACP():
+def usersACPRoute():
     controller = UserACPController()
-    return controller.usersListAction()
+    return controller.usersAction()
 
 @app.route('/<string:language>/acp/users/edit', methods=['GET'])
 @languageRedirect
 def editUserACProute():
     controller = UserACPController()
-    return controller.usersListAction()
+    return controller.usersAction()
 
 @app.route('/<string:language>/acp/users/block', methods=['GET'])
 @languageRedirect
 def blockUserACProute():
     controller = UserACPController()
-    return controller.usersListAction()
+    return controller.usersAction()
 
 @app.route('/<string:language>/acp/users/delete', methods=['GET'])
 @languageRedirect
 def deleteUserACProute():
     controller = UserACPController()
-    return controller.usersListAction()
+    return controller.usersAction()
