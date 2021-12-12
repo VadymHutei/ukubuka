@@ -1,13 +1,12 @@
-from flask import Flask, redirect, request, url_for
+from flask import Flask, request
 
-from modules.ACP.controllers.ACPController import ACPController
 from modules.Home.routes.HomeBlueprint import homeBlueprint
-from modules.Language.requestDecorators import languageRedirect
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.services.LanguageService import LanguageService
 from modules.User.routes.UserACPBlueprint import userACPBlueprint
 from modules.User.routes.UserBlueprint import userBlueprint
 from vendor.ukubuka.JinjaFilters import viewJinjaFilter
+from modules.ACP.routes.DashboardACPBlueprint import DashboardACPBlueprint
 
 
 app = Flask(__name__)
@@ -23,9 +22,11 @@ def ctx():
     request.ctx = {}
 
 app.register_blueprint(homeBlueprint)
+app.register_blueprint(userBlueprint)
+
+app.register_blueprint(DashboardACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(userACPBlueprint)
-app.register_blueprint(userBlueprint)
 
 # @app.route('/<string:language>/catalog', methods=['GET'])
 # @languageRedirect
@@ -58,11 +59,3 @@ app.register_blueprint(userBlueprint)
 # def shop(path):
 #     controller = ShopController()
 #     return controller.shopAction(path)
-
-# ACP
-@app.route('/<string:language>/acp', methods=['GET'])
-@languageRedirect
-def dashboardACPRoute():
-    print(request.blueprint)
-    controller = ACPController()
-    return controller.dashboardAction()
