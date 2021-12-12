@@ -1,12 +1,12 @@
 from flask import Flask, request
 
+from modules.ACP.routes.DashboardACPBlueprint import DashboardACPBlueprint
 from modules.Home.routes.HomeBlueprint import homeBlueprint
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.services.LanguageService import LanguageService
 from modules.User.routes.UserACPBlueprint import userACPBlueprint
 from modules.User.routes.UserBlueprint import userBlueprint
 from vendor.ukubuka.JinjaFilters import viewJinjaFilter
-from modules.ACP.routes.DashboardACPBlueprint import DashboardACPBlueprint
 
 
 app = Flask(__name__)
