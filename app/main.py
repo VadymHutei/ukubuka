@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-from modules.ACP.routes.DashboardACPBlueprint import DashboardACPBlueprint
+from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
 from modules.Home.routes.HomeBlueprint import homeBlueprint
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.services.LanguageService import LanguageService
@@ -24,7 +24,7 @@ def ctx():
 app.register_blueprint(homeBlueprint)
 app.register_blueprint(userBlueprint)
 
-app.register_blueprint(DashboardACPBlueprint)
+app.register_blueprint(dashboardACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(userACPBlueprint)
 

@@ -5,10 +5,10 @@ from modules.Language.requestDecorators import languageRedirect
 from modules.Session.requestDecorators import withSession
 
 
-DashboardACPBlueprint = Blueprint('DashboardACPBlueprint', __name__,)
+dashboardACPBlueprint = Blueprint('dashboardACPBlueprint', __name__,)
 controller = DashboardACPController()
 
-@DashboardACPBlueprint.route('/<string:language>/acp', methods=['GET'])
+@dashboardACPBlueprint.route('/<string:language>/acp', methods=['GET'])
 @languageRedirect
 @withSession
 def dashboardACPRoute():
