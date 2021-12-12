@@ -23,8 +23,8 @@
             <td>{{ text.translations[languageCode] }}</td>
             {% endfor %}
             <td>
-                <a href="{{ url_for('editTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'edit'|translate }}</a>
-                <a href="{{ url_for('deleteTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'delete'|translate }}</a>
+                <a href="{{ url_for('translationsACPBlueprint.editTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'edit'|translate }}</a>
+                <a href="{{ url_for('translationsACPBlueprint.deleteTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'delete'|translate }}</a>
             </td>
         </tr>
         {% endfor %}

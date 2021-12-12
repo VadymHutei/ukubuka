@@ -22,9 +22,9 @@
             <td>{{ user.isConfirmed|view|translate }}</td>
             <td>{{ user.registeredDatetime }}</td>
             <td>
-                <a href="{{ url_for('editUserACProute', language=t.language.code, id=user.ID) }}">{{ 'edit'|translate }}</a>
-                <a href="{{ url_for('blockUserACProute', language=t.language.code, id=user.ID) }}">{{ 'block'|translate }}</a>
-                <a href="{{ url_for('deleteUserACProute', language=t.language.code, id=user.ID) }}">{{ 'delete'|translate }}</a>
+                <a href="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'edit'|translate }}</a>
+                <a href="{{ url_for('userACPBlueprint.blockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'block'|translate }}</a>
+                <a href="{{ url_for('userACPBlueprint.deleteUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'delete'|translate }}</a>
             </td>
         </tr>
         {% endfor %}
