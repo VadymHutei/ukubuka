@@ -28,7 +28,7 @@ class TranslationACPController:
     def editAction(self):
         textID = int(request.args.get('id', 0))
         if (textID == 0 or not LanguageValidator.intID(textID, True)):
-            return redirect(url_for('TranslationACPPage', language=request.ctx['language']))
+            return redirect(url_for('TranslationACPPage', language=request.ctx['language'].code))
 
         languageService = LanguageService.getInstance()
 

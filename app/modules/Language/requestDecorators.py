@@ -13,7 +13,11 @@ def languageRedirect(f):
         if 'language' in kwargs:
             if kwargs['language'] not in languageService.languages:
                 kwargs['language'] = languageService.defaultLanguage.code
-                return redirect(url_for(f.__name__, *args, **kwargs))
+                if request.blueprint is None:
+                    fName = request.blueprint + '.' + f.__name__
+                else:
+                    fName = f.__name__
+                return redirect(url_for(fName, *args, **kwargs))
             language = kwargs['language']
             del kwargs['language']
         else:

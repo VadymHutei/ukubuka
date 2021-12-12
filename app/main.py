@@ -3,13 +3,10 @@ from flask import Flask, redirect, request, url_for
 from modules.ACP.controllers.ACPController import ACPController
 from modules.Home.routes.HomeBlueprint import homeBlueprint
 from modules.Language.requestDecorators import languageRedirect
-from modules.Language.routes.translationsACPBlueprint import translationsACPBlueprint
+from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.services.LanguageService import LanguageService
-from modules.Session.requestDecorators import withSession
-from modules.User.controllers.UserController import UserController
-from modules.User.requestDecorators import onlyRegistered
-from modules.User.routes.userACPBlueprint import userACPBlueprint
-from modules.User.services.UserService import UserService
+from modules.User.routes.UserACPBlueprint import userACPBlueprint
+from modules.User.routes.UserBlueprint import userBlueprint
 from vendor.ukubuka.JinjaFilters import viewJinjaFilter
 
 
@@ -28,42 +25,7 @@ def ctx():
 app.register_blueprint(homeBlueprint)
 app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(userACPBlueprint)
-
-@app.route('/<string:language>/registration', methods=['GET', 'POST'])
-@languageRedirect
-@withSession
-def registrationRoute():
-    controller = UserController()
-    if request.method == 'GET':
-        return controller.registrationPageAction()
-    elif request.method == 'POST':
-        return controller.registrationAction()
-
-@app.route('/<string:language>/login', methods=['GET', 'POST'])
-@languageRedirect
-@withSession
-def loginRoute():
-    controller = UserController()
-    if request.method == 'GET':
-        return controller.loginPageAction()
-    elif request.method == 'POST':
-        return controller.loginAction()
-
-@app.route('/<string:language>/logout', methods=['GET'])
-@languageRedirect
-@withSession
-def logoutRoute():
-    userService = UserService()
-    userService.logoutBySessionID(request.ctx['sessionID'])
-    return redirect(url_for('homeRoute', language=request.ctx['language']))
-
-@app.route('/<string:language>/account', methods=['GET'])
-@languageRedirect
-@withSession
-@onlyRegistered
-def accountRoute():
-    controller = UserController()
-    return controller.accountAction()
+app.register_blueprint(userBlueprint)
 
 # @app.route('/<string:language>/catalog', methods=['GET'])
 # @languageRedirect
@@ -101,5 +63,6 @@ def accountRoute():
 @app.route('/<string:language>/acp', methods=['GET'])
 @languageRedirect
 def dashboardACPRoute():
+    print(request.blueprint)
     controller = ACPController()
     return controller.dashboardAction()
