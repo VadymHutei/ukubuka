@@ -5,7 +5,7 @@ class UserEntity:
         self._email = data.get('email')
         self._firstName = data.get('first_name')
         self._lastName = data.get('last_name')
-        self._isConfirmed = bool(data.get('is_confirmed'))
+        self._isBlocked = bool(data.get('is_blocked'))
         self._registeredDatetime = data.get('registered_datetime')
 
     @property
@@ -41,12 +41,12 @@ class UserEntity:
         self._lastName = lastName
 
     @property
-    def isConfirmed(self):
-        return self._isConfirmed
+    def isBlocked(self):
+        return self._isBlocked
 
-    @isConfirmed.setter
-    def isConfirmed(self, isConfirmed):
-        self._isConfirmed = isConfirmed
+    @isBlocked.setter
+    def isBlocked(self, isBlocked):
+        self._isBlocked = isBlocked
 
     @property
     def registeredDatetime(self):

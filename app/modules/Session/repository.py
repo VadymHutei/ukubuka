@@ -50,7 +50,7 @@ class SessionMySQLRepository(Repository):
                 u.email,
                 u.first_name,
                 u.last_name,
-                u.is_confirmed,
+                u.is_blocked,
                 u.registered_datetime,
                 su.is_logged_in
             FROM

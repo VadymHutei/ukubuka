@@ -106,7 +106,7 @@ class UserRepository(Repository):
                 email,
                 first_name,
                 last_name,
-                is_confirmed,
+                is_blocked,
                 registered_datetime
             FROM
                 user
