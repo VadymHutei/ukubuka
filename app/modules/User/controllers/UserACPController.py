@@ -2,6 +2,7 @@ from flask import request, redirect, url_for
 
 from modules.User.services.UserService import UserService
 from modules.User.validators.UserValidator import UserValidator
+from modules.User.views.EditUserACPView import EditUserACPView
 from modules.User.views.UsersACPView import UsersACPView
 
 
@@ -16,6 +17,24 @@ class UserACPController:
 
         view.data = {
             'users': users,
+        }
+
+        return view.render()
+
+    def editUserPageAction(self):
+        userID = int(request.args.get('id', 0))
+
+        if (userID == 0 or not UserValidator.intID(userID, True)):
+            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+
+        user = self._userService.getUserByID(userID)
+
+        if user is None:
+            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+
+        view = EditUserACPView()
+        view.data = {
+            'user': user
         }
 
         return view.render()

@@ -8,6 +8,27 @@ class UserRepository(Repository):
         super().__init__()
         self._setCredentials(DB_CREDENTIALS)
 
+    def getUserByID(self, userID):
+        query = '''
+            SELECT
+                id,
+                email,
+                first_name,
+                last_name,
+                is_blocked,
+                registered_datetime
+            FROM
+                user
+            WHERE
+                id = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (userID,))
+                result = cursor.fetchone()
+        return result
+
     def getUserByEmail(self, email):
         query = '''
             SELECT
@@ -15,7 +36,7 @@ class UserRepository(Repository):
                 email,
                 first_name,
                 last_name,
-                is_confirmed,
+                is_blocked,
                 registered_datetime
             FROM
                 user
@@ -35,7 +56,7 @@ class UserRepository(Repository):
                 email,
                 first_name,
                 last_name,
-                is_confirmed,
+                is_blocked,
                 registered_datetime
             )
             VALUES (

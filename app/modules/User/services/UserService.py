@@ -18,7 +18,7 @@ class UserService:
 
     def getUserByID(self, userID):
         data = self._usersRepository.getUserByID(userID)
-        return User(data) if data else None
+        return UserEntity(data) if data else None
 
     def createUser(self, data):
         if self._usersRepository.getUserByEmail(data['email']) is not None:

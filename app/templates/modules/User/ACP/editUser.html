@@ -1,0 +1,30 @@
+{% extends 'layouts/acp/layout.html' %}
+
+{% block content -%}
+
+<form action="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}" method="POST">
+    <div>
+        <label for="text">{{ 'ID'|translate }}</label>
+        <input type="text" name="text" id="text" value="{{ user.ID }}" disabled>
+    </div>
+    <div>
+        <label for="email">{{ 'Email'|translate }}</label>
+        <input type="email" name="email" id="email" value="{{ user.email }}">
+    </div>
+    <div>
+        <label for="first_name">{{ 'First name'|translate }}</label>
+        <input type="text" name="first_name" id="first_name" value="{{ user.firstName }}">
+    </div>
+    <div>
+        <label for="last_name">{{ 'Last name'|translate }}</label>
+        <input type="text" name="last_name" id="last_name" value="{{ user.lastName }}">
+    </div>
+    <div>
+        <label for="is_blocked">{{ 'Is blocked'|translate }}</label>
+        {% set checked = 'checked' if user.isBlocked else '' %}
+        <input type="checkbox" name="is_blocked" id="is_blocked" {{ checked }}>
+    </div>
+    <input type="submit">
+</form>
+
+{%- endblock %}
