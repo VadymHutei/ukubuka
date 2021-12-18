@@ -125,6 +125,14 @@ class LanguageService:
         })
         self._setTranslations()
 
+    def deleteTranslations(self, textID):
+        self._repository.deleteTranslations(textID)
+        self._setTranslations()
+
+    def deleteText(self, textID):
+        self._repository.deleteText(textID)
+        self._reloadTexts()
+
     @staticmethod
     def getInstance():
         return getattr(current_app, 'languageService', False) or LanguageService()

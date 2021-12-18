@@ -28,14 +28,13 @@ class TranslationACPController:
     def editAction(self):
         textID = int(request.args.get('id', 0))
         if (textID == 0 or not LanguageValidator.intID(textID, True)):
-            return redirect(url_for('TranslationACPPage', language=request.ctx['language'].code))
+            return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
 
         languageService = LanguageService.getInstance()
-
-        view = EditTranslationACPView()
         
         formValidator = EditTranslationFormValidator(request.form)
         if formValidator.hasErrors:
+            view = EditTranslationACPView()
             view.error('Form errors')
             view.data = {'text': languageService.getTextByID(textID)}
             view.data = {'formErrors': formValidator.errors}
@@ -44,7 +43,17 @@ class TranslationACPController:
         data = formValidator.getFormData()
         data['textID'] = textID
         languageService.updateTranslations(data)
-        
-        view.data = {'text': languageService.getTextByID(textID)}
-        
-        return view.render()
+
+        return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
+
+    def deleteAction(self):
+        textID = int(request.args.get('id', 0))
+        if (textID == 0 or not LanguageValidator.intID(textID, True)):
+            return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
+
+        languageService = LanguageService.getInstance()
+
+        languageService.deleteTranslations(textID)
+        languageService.deleteText(textID)
+
+        return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))

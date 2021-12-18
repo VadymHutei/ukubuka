@@ -170,5 +170,29 @@ class LanguageRepository(Repository):
             with connection.cursor() as cursor:
                 for data in [(data['textID'], language, translation, translation) for language, translation in data['translations'].items()]:
                     cursor.execute(query, data)
-                    print(cursor.rowcount)
+            connection.commit()
+
+    def deleteTranslations(self, textID):
+        query = '''
+            DELETE FROM translation
+            WHERE
+                text_id = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (textID,))
+            connection.commit()
+            connection.commit()
+
+    def deleteText(self, textID):
+        query = '''
+            DELETE FROM text
+            WHERE
+                id = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (textID,))
             connection.commit()

@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, redirect, url_for
 
 from modules.Language.controllers.TranslationACPController import TranslationACPController
 from modules.Language.requestDecorators import languageRedirect
@@ -22,13 +22,9 @@ def editTranslationACPRoute():
         return translationsACPController.editPageAction()
     elif request.method == 'POST':
         return translationsACPController.editAction()
-    return translationsACPController.translationsAction()
 
-@translationsACPBlueprint.route('/delete', methods=['GET', 'POST'])
+@translationsACPBlueprint.route('/delete', methods=['GET'])
 @languageRedirect
 @withSession
 def deleteTranslationACPRoute():
-    if request.method == 'GET':
-        return translationsACPController.deletePageAction()
-    elif request.method == 'POST':
-        return translationsACPController.deleteAction()
+    return translationsACPController.deleteAction()
