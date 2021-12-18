@@ -23,7 +23,11 @@
             <td>{{ user.registeredDatetime }}</td>
             <td>
                 <a href="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'edit'|translate }}</a>
+                {% if user.isBlocked %}
+                <a href="{{ url_for('userACPBlueprint.unblockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'unblock'|translate }}</a>
+                {% else %}
                 <a href="{{ url_for('userACPBlueprint.blockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'block'|translate }}</a>
+                {% endif %}
                 <a href="{{ url_for('userACPBlueprint.deleteUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'delete'|translate }}</a>
             </td>
         </tr>

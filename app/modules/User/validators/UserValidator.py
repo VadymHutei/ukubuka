@@ -10,3 +10,7 @@ class UserValidator(UkubukaValidator):
         if isinstance(password, str):
             return bool(re.fullmatch(r'[\w\W]{3,64}', password))
         return False
+
+    @staticmethod
+    def textID(ID):
+        return UserValidator.intID(ID, True)

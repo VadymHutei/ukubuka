@@ -12,19 +12,19 @@ translationsACPController = TranslationACPController()
 @languageRedirect
 @withSession
 def translationsACPRoute():
-    return translationsACPController.translationsAction()
+    return translationsACPController.translationsPageAction()
 
 @translationsACPBlueprint.route('/edit', methods=['GET', 'POST'])
 @languageRedirect
 @withSession
 def editTranslationACPRoute():
     if request.method == 'GET':
-        return translationsACPController.editPageAction()
+        return translationsACPController.editTranslationsPageAction()
     elif request.method == 'POST':
-        return translationsACPController.editAction()
+        return translationsACPController.editTranslationsAction()
 
 @translationsACPBlueprint.route('/delete', methods=['GET'])
 @languageRedirect
 @withSession
 def deleteTranslationACPRoute():
-    return translationsACPController.deleteAction()
+    return translationsACPController.deleteTextAction()

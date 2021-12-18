@@ -1,6 +1,6 @@
 from vendor.ukubuka.AbstractFormValidator import AbstractFormValidator
 from vendor.ukubuka.ValidatedField import ValidatedField
-from modules.User.validator import UserValidator
+from modules.User.validators.UserValidator import UserValidator
 
 
 class RegistrationFormValidator(AbstractFormValidator):

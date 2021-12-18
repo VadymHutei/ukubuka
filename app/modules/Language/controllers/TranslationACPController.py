@@ -2,14 +2,14 @@ from flask import request, redirect, url_for
 
 from modules.Language.form_validators.EditTranslationFormValidator import EditTranslationFormValidator
 from modules.Language.services.LanguageService import LanguageService
-from modules.Language.validator import LanguageValidator
+from modules.Language.validators.LanguageValidator import LanguageValidator
 from modules.Language.views.EditTranslationACPView import EditTranslationACPView
 from modules.Language.views.TranslationsACPView import TranslationsACPView
 
 
 class TranslationACPController:
 
-    def translationsAction(self):
+    def translationsPageAction(self):
         view = TranslationsACPView()
         languageService = LanguageService.getInstance()
 
@@ -17,7 +17,7 @@ class TranslationACPController:
 
         return view.render()
 
-    def editPageAction(self):
+    def editTranslationsPageAction(self):
         view = EditTranslationACPView()
         languageService = LanguageService.getInstance()
 
@@ -25,8 +25,9 @@ class TranslationACPController:
 
         return view.render()
 
-    def editAction(self):
+    def editTranslationsAction(self):
         textID = int(request.args.get('id', 0))
+
         if (textID == 0 or not LanguageValidator.intID(textID, True)):
             return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
 
@@ -46,8 +47,9 @@ class TranslationACPController:
 
         return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
 
-    def deleteAction(self):
+    def deleteTextAction(self):
         textID = int(request.args.get('id', 0))
+
         if (textID == 0 or not LanguageValidator.intID(textID, True)):
             return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
 

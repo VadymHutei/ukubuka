@@ -22,6 +22,7 @@ class UserRepository(Repository):
             WHERE
                 email = %s
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (email,))
@@ -57,6 +58,7 @@ class UserRepository(Repository):
                 %s
             )
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query1, (data['email'], data['registered']))
@@ -79,6 +81,7 @@ class UserRepository(Repository):
             WHERE
                 u.email = %s
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, email)
@@ -94,6 +97,7 @@ class UserRepository(Repository):
             WHERE
                 session_id = %s
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (sessionID,))
@@ -111,8 +115,39 @@ class UserRepository(Repository):
             FROM
                 user
         '''
+
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchall()
         return result
+
+    def blockUser(self, userID):
+        query = '''
+            UPDATE
+                user
+            SET
+                is_blocked = 1
+            WHERE
+                id = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (userID,))
+            connection.commit()
+
+    def unblockUser(self, userID):
+        query = '''
+            UPDATE
+                user
+            SET
+                is_blocked = 0
+            WHERE
+                id = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (userID,))
+            connection.commit()
