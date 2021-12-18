@@ -3,7 +3,7 @@ import re
 
 from flask import request, current_app
 
-from modules.Language.repository import LanguageRepository
+from modules.Language.repositories.LanguageRepository import LanguageRepository
 from modules.Language.entities.LanguageEntity import LanguageEntity
 from modules.Language.entities.TextEntity import TextEntity
 from modules.Language.exceptions.LanguageException import LanguageException
