@@ -7,6 +7,14 @@ from modules.Language.services.LanguageService import LanguageService
 
 class Translator:
 
+    _instance = None
+
+    @classmethod
+    def getInstance(cls):
+        if not cls._instance:
+            cls._instance = Translator()
+        return cls._instance
+
     def __init__(self):
         self._languageService = LanguageService()
 
@@ -28,7 +36,10 @@ class Translator:
 
     def translate(self, text, language=None):
         if language is None:
-            language = request.ctx['language'].code
+            if hasattr(request, 'ctx'):
+                language = request.ctx['language'].code
+            else:
+                return text
 
         if language not in self._languages:
             raise LanguageException(f'The site does not support this language: {language}')
