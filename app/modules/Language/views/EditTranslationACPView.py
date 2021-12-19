@@ -1,4 +1,5 @@
-from modules.Language.services.LanguageService import LanguageService
+from flask import g
+
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 
@@ -10,5 +11,4 @@ class EditTranslationACPView(UkubukaACPView):
     def _prepareTemplateData(self):
         super()._prepareTemplateData()
 
-        languageService = LanguageService.getInstance()
-        self.templateData['title'] = languageService.translate('Edit translation')
+        self.templateData['title'] = g.t._('Edit translation')

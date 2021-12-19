@@ -11,12 +11,12 @@ class LanguageRepository(Repository):
     def getLanguages(self):
         query = '''
             SELECT
-                `code`,
-                `name`,
-                `is_active`,
-                `is_default`
+                code,
+                name,
+                is_active,
+                is_default
             FROM
-                `language`
+                language
         '''
 
         with self.getConnection() as connection:
@@ -28,15 +28,15 @@ class LanguageRepository(Repository):
     def getDefaultLanguage(self):
         query = '''
             SELECT
-                `code`,
-                `name`,
-                `is_active`,
-                `is_default`
+                code,
+                name,
+                is_active,
+                is_default
             FROM
-                `language`
+                language
             WHERE
-                `is_default` = 1 AND
-                `is_active` = 1
+                is_default = 1 AND
+                is_active = 1
             LIMIT 1
         '''
 
@@ -99,25 +99,6 @@ class LanguageRepository(Repository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return cursor.fetchall()
-
-    def getTranslationsForLanguage(self, language):
-        query = '''
-            SELECT
-                text.id,
-                text.text,
-                translation.translation
-            FROM text
-            JOIN translation
-                ON translation.text_id = text.id
-            WHERE
-                translation.language = %s
-        '''
-
-        with self.getConnection() as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query, (language))
-                result = cursor.fetchall()
-        return result
 
     def getTextByID(self, textID):
         query = '''
