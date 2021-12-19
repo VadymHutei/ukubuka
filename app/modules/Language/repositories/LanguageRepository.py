@@ -93,9 +93,6 @@ class LanguageRepository(Repository):
                 translation.language,
                 translation.translation
             FROM translation
-            JOIN language
-                ON language.code = translation.language
-                AND language.is_active = 1
         '''
 
         with self.getConnection() as connection:
@@ -182,7 +179,6 @@ class LanguageRepository(Repository):
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
-            connection.commit()
             connection.commit()
 
     def deleteText(self, textID):

@@ -1,9 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, g
 
 from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
 from modules.Home.routes.HomeBlueprint import homeBlueprint
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.services.LanguageService import LanguageService
+from modules.Language.Translator import Translator
 from modules.User.routes.UserACPBlueprint import userACPBlueprint
 from modules.User.routes.UserBlueprint import userBlueprint
 from vendor.ukubuka.JinjaFilters import viewJinjaFilter
@@ -18,8 +19,9 @@ app.jinja_env.filters['pathWithLanguage'] = app.languageService.pathWithLanguage
 app.jinja_env.filters['view'] = viewJinjaFilter
 
 @app.before_request
-def ctx():
+def beforeRequest():
     request.ctx = {}
+    g.t = Translator()
 
 app.register_blueprint(homeBlueprint)
 app.register_blueprint(userBlueprint)

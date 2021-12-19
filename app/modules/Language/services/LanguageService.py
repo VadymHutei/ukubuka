@@ -12,9 +12,9 @@ from modules.Language.exceptions.LanguageException import LanguageException
 class LanguageService:
 
     def __init__(self):
-        self._repository = LanguageRepository()
-        self._defaultLanguage = self._getDefaultLanguage()
-        self._languages = self._getLanguages()
+        self._languageRepository = LanguageRepository()
+        self._defaultLanguage = self.getDefaultLanguage()
+        self._languages = self.getLanguages()
         self._texts = self._getTexts()
         self._setTranslations()
 
@@ -31,39 +31,49 @@ class LanguageService:
         return self._texts
 
 
-    def _getDefaultLanguage(self):
-        return LanguageEntity(self._repository.getDefaultLanguage())
+    def getDefaultLanguage(self):
+        return LanguageEntity(self._languageRepository.getDefaultLanguage())
 
-    def _getLanguages(self):
-        return {row['code']: LanguageEntity(row) for row in self._repository.getLanguages()}
+    def getLanguages(self):
+        return {row['code']: LanguageEntity(row) for row in self._languageRepository.getLanguages()}
 
     def _getTexts(self):
-        return [TextEntity(row) for row in self._repository.getTexts()]
+        return [TextEntity(row) for row in self._languageRepository.getTexts()]
 
-    def _setTranslations(self):
-        translations = self._getTranslations()
+    def getTexts(self):
+        return {row['id']: TextEntity(row) for row in self._languageRepository.getTexts()}
+
+        return None if textData is None else TextEntity(textData)
+
+    def addText(self, textEntity):
+        self._languageRepository.addText(textEntity.text)
+        if textEntity.translations:
+            self.updateTranslations(textEntity)
+
+    def  _setTranslations(self):
+        translations = self.getTranslations()
         for textEntity in self._texts:
-            textEntity.translations = {row['language']: row['translation'] for row in translations.get(textEntity.ID, [])}
+            textEntity.translations = translations.get(textEntity.ID, {})
 
-    def _getTranslations(self):
+    def getTranslations(self):
         translations = {}
 
-        for row in self._repository.getTranslations():
+        for row in self._languageRepository.getTranslations():
             if row['text_id'] not in translations:
-                translations[row['text_id']] = []
-            translations[row['text_id']].append(row)
+                translations[row['text_id']] = {}
+            translations[row['text_id']][row['language']] = row['translation']
 
         return translations
 
     def _saveText(self, textEntity):
         if textEntity.ID is None:
-            textID = self._repository.addText(textEntity.text)
+            textID = self._languageRepository.addText(textEntity.text)
             textEntity.ID = textID
-        self._repository.setTranslations(textEntity.ID, textEntity.translations)
+        self._languageRepository.setTranslations(textEntity.ID, textEntity.translations)
         self._reloadTexts()
     
-    def _getTranslationsByTextID(self, textID):
-        return {row['language']: row['translation'] for row in self._repository.getTranslationsByTextID(textID)}
+    def getTranslationsByTextID(self, textID):
+        return {row['language']: row['translation'] for row in self._languageRepository.getTranslationsByTextID(textID)}
 
     def _reloadTexts(self):
         self._texts = self._getTexts()
@@ -99,14 +109,14 @@ class LanguageService:
         return res
 
     def getTranslationsForLanguage(self, language):
-        translates = self._repository.getTranslationsForLanguage(language)
+        translates = self._languageRepository.getTranslationsForLanguage(language)
         
         return {row['text']: row['translation'] for row in translates}
 
     def getTextByID(self, textID):
-        textData = self._repository.getTextByID(textID)
+        textData = self._languageRepository.getTextByID(textID)
         textEntity = TextEntity(textData)
-        textEntity.translations = self._getTranslationsByTextID(textID)
+        textEntity.translations = self.getTranslationsByTextID(textID)
 
         return textEntity
 
@@ -119,19 +129,25 @@ class LanguageService:
             if result:
                 translations[result.group(1)] = fieldValue
 
-        self._repository.updateTranslations({
+        self._languageRepository.updateTranslations({
             'textID': data['textID'],
             'translations': translations,
         })
         self._setTranslations()
 
     def deleteTranslations(self, textID):
-        self._repository.deleteTranslations(textID)
+        self._languageRepository.deleteTranslations(textID)
         self._setTranslations()
 
     def deleteText(self, textID):
-        self._repository.deleteText(textID)
+        self._languageRepository.deleteText(textID)
         self._reloadTexts()
+
+    def updateTextTranslations(self, textEntity):
+        self._languageRepository.updateTranslations({
+            'textID': textEntity.ID,
+            'translations': textEntity.translations,
+        })
 
     @staticmethod
     def getInstance():
