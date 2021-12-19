@@ -20,7 +20,7 @@ class Translator:
 
         self._defaultLanguage = self._languageService.getDefaultLanguage()
         self._languages = self._languageService.getLanguages()
-        self._setTexts()
+        self.setTexts()
 
     @property
     def defaultLanguage(self):
@@ -33,6 +33,10 @@ class Translator:
     @property
     def availableLanguages(self):
         return {languageCode: language for languageCode, language in self._languages.items() if language.isActive}
+
+    @property
+    def texts(self):
+        return self._texts
 
     def translate(self, text, language=None):
         if language is None:
@@ -49,7 +53,7 @@ class Translator:
         if (textID is None):
             textEntity = TextEntity({'text': text})
             self._languageService.addText(textEntity)
-            self._setTexts()
+            self.setTexts()
             return text
 
         translation = self._texts[textID].translations.get(language)
@@ -64,7 +68,9 @@ class Translator:
         
         return translation if translation else text
 
-    def _setTexts(self):
+    _ = translate
+
+    def setTexts(self):
         self._texts = self._languageService.getTexts()
         self._textIDs = {text.text: text.ID for text in self._texts.values()}
         self._setTranslations()

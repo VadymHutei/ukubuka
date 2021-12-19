@@ -1,4 +1,3 @@
-from functools import wraps
 import re
 
 from flask import request, current_app
@@ -115,6 +114,10 @@ class LanguageService:
 
     def getTextByID(self, textID):
         textData = self._languageRepository.getTextByID(textID)
+
+        if textData is None:
+            return None
+
         textEntity = TextEntity(textData)
         textEntity.translations = self.getTranslationsByTextID(textID)
 
@@ -137,11 +140,9 @@ class LanguageService:
 
     def deleteTranslations(self, textID):
         self._languageRepository.deleteTranslations(textID)
-        self._setTranslations()
 
     def deleteText(self, textID):
         self._languageRepository.deleteText(textID)
-        self._reloadTexts()
 
     def updateTextTranslations(self, textEntity):
         self._languageRepository.updateTranslations({

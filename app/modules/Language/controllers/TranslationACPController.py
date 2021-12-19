@@ -1,4 +1,6 @@
-from flask import request, redirect, url_for
+import re
+
+from flask import request, redirect, url_for, g
 
 from modules.Language.form_validators.EditTranslationFormValidator import EditTranslationFormValidator
 from modules.Language.services.LanguageService import LanguageService
@@ -9,19 +11,39 @@ from modules.Language.views.TranslationsACPView import TranslationsACPView
 
 class TranslationACPController:
 
+    def __init__(self):
+        self._languageService = LanguageService()
+
     def translationsPageAction(self):
         view = TranslationsACPView()
-        languageService = LanguageService.getInstance()
 
-        view.data = {'texts': languageService.texts}
+        view.data = {'texts': g.t.texts}
 
         return view.render()
 
     def editTranslationsPageAction(self):
-        view = EditTranslationACPView()
-        languageService = LanguageService.getInstance()
+        textID = int(request.args.get('id', 0))
 
-        view.data = {'text': languageService.getTextByID(request.args.get('id'))}
+        if (textID == 0 or not LanguageValidator.intID(textID, True)):
+            return redirect(
+                url_for(
+                    'translationsACPBlueprint.translationsACPRoute',
+                    language=request.ctx['language'].code
+                )
+            )
+
+        text = self._languageService.getTextByID(textID)
+
+        if text is None:
+            return redirect(
+                url_for(
+                    'translationsACPBlueprint.translationsACPRoute',
+                    language=request.ctx['language'].code
+                )
+            )
+        
+        view = EditTranslationACPView()
+        view.data = {'text': text}
 
         return view.render()
 
@@ -29,33 +51,73 @@ class TranslationACPController:
         textID = int(request.args.get('id', 0))
 
         if (textID == 0 or not LanguageValidator.intID(textID, True)):
-            return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
-
-        languageService = LanguageService.getInstance()
+            return redirect(
+                url_for(
+                    'translationsACPBlueprint.translationsACPRoute',
+                    language=request.ctx['language'].code
+                )
+            )
         
+        textEntity = self._languageService.getTextByID(textID)
+
+        if textEntity is None:
+            return redirect(
+                url_for(
+                    'translationsACPBlueprint.translationsACPRoute',
+                    language=request.ctx['language'].code
+                )
+            )
+
         formValidator = EditTranslationFormValidator(request.form)
         if formValidator.hasErrors:
             view = EditTranslationACPView()
             view.error('Form errors')
-            view.data = {'text': languageService.getTextByID(textID)}
-            view.data = {'formErrors': formValidator.errors}
+            view.data = {
+                'text': textEntity,
+                'formErrors': formValidator.errors,
+            }
+
             return view.render()
 
         data = formValidator.getFormData()
-        data['textID'] = textID
-        languageService.updateTranslations(data)
 
-        return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
+        pattern = re.compile('translation_(' + '|'.join(g.t.languages.keys()) + ')')
+        for fieldName, fieldValue in data.items():
+            result = pattern.search(fieldName)
+            if result:
+                language = result.group(1)
+                if language not in g.t.languages:
+                    continue
+                textEntity.translations[language] = fieldValue
+
+        self._languageService.updateTextTranslations(textEntity)
+        g.t.setTexts()
+
+        return redirect(
+            url_for(
+                'translationsACPBlueprint.translationsACPRoute',
+                language=request.ctx['language'].code
+            )
+        )
 
     def deleteTextAction(self):
         textID = int(request.args.get('id', 0))
 
         if (textID == 0 or not LanguageValidator.intID(textID, True)):
-            return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
+            return redirect(
+                url_for(
+                    'translationsACPBlueprint.translationsACPRoute',
+                    language=request.ctx['language'].code
+                )
+            )
+            
+        self._languageService.deleteTranslations(textID)
+        self._languageService.deleteText(textID)
+        g.t.setTexts()
 
-        languageService = LanguageService.getInstance()
-
-        languageService.deleteTranslations(textID)
-        languageService.deleteText(textID)
-
-        return redirect(url_for('translationsACPBlueprint.translationsACPRoute', language=request.ctx['language'].code))
+        return redirect(
+            url_for(
+                'translationsACPBlueprint.translationsACPRoute',
+                language=request.ctx['language'].code
+            )
+        )
