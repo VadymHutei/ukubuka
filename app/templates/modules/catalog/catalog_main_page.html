@@ -3,7 +3,7 @@
 
 {% block title -%}
 
-{{ 'Catalog'|translate }} - Ukubuka
+{{ 'Catalog'|translate(t.language.code) }} - Ukubuka
 
 {%- endblock %}
 
@@ -11,7 +11,7 @@
 {% block content -%}
 
 {% if catalogs %}
-<h2>{{ 'Catalogs'|translate }}</h2>
+<h2>{{ 'Catalogs'|translate(t.language.code) }}</h2>
 {% for catalog in catalogs %}
 <a href="/{{ t.language.code }}/catalog/{{catalog.alias}}">{{ catalog.name }}</a>
 {% endfor %}

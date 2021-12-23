@@ -4,23 +4,23 @@
 
 <form action="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}" method="POST">
     <div>
-        <label for="text">{{ 'ID'|translate }}</label>
+        <label for="text">{{ 'ID'|translate(t.language.code) }}</label>
         <input type="text" name="text" id="text" value="{{ user.ID }}" disabled>
     </div>
     <div>
-        <label for="email">{{ 'Email'|translate }}</label>
+        <label for="email">{{ 'Email'|translate(t.language.code) }}</label>
         <input type="email" name="email" id="email" value="{{ user.email }}">
     </div>
     <div>
-        <label for="first_name">{{ 'First name'|translate }}</label>
+        <label for="first_name">{{ 'First name'|translate(t.language.code) }}</label>
         <input type="text" name="first_name" id="first_name" value="{{ user.firstName }}">
     </div>
     <div>
-        <label for="last_name">{{ 'Last name'|translate }}</label>
+        <label for="last_name">{{ 'Last name'|translate(t.language.code) }}</label>
         <input type="text" name="last_name" id="last_name" value="{{ user.lastName }}">
     </div>
     <div>
-        <label for="is_blocked">{{ 'Is blocked'|translate }}</label>
+        <label for="is_blocked">{{ 'Is blocked'|translate(t.language.code) }}</label>
         {% set checked = 'checked' if user.isBlocked else '' %}
         <input type="checkbox" name="is_blocked" id="is_blocked" {{ checked }}>
     </div>

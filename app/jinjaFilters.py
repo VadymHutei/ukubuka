@@ -1,7 +1,7 @@
 from modules.Language.Translator import Translator
 
 
-def translate(text, language=None):
+def translate(text, language):
     translator = Translator.getInstance()
     return translator.translate(text, language)
 

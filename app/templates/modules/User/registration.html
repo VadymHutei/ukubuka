@@ -3,14 +3,14 @@
 
 {% block title -%}
 
-{{ 'Registration'|translate }} - Ukubuka
+{{ 'Registration'|translate(t.language.code) }} - Ukubuka
 
 {%- endblock %}
 
 
 {% block content -%}
 
-<h1>{{ 'Registration'|translate }}</h1>
+<h1>{{ 'Registration'|translate(t.language.code) }}</h1>
 {% if errors and 'other' in errors %}{% for error in errors['other'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
 <form action="{{ url_for('userBlueprint.registrationRoute', language=t.language.code) }}" method="post">
     {% if errors and 'email' in errors %}{% for error in errors['email'] %}<p>{{ error }}</p>{% endfor %}{% endif %}

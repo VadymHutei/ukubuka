@@ -38,12 +38,9 @@ class Translator:
     def texts(self):
         return self._texts
 
-    def translate(self, text, language=None):
+    def translate(self, text, language):
         if language is None:
-            if hasattr(request, 'ctx'):
-                language = request.ctx['language'].code
-            else:
-                return text
+            raise LanguageException(f'language must be not None')
 
         if language not in self._languages:
             raise LanguageException(f'The site does not support this language: {language}')
@@ -68,7 +65,13 @@ class Translator:
         
         return translation if translation else text
 
-    _ = translate
+    def _(self, text, language=None):
+        if language is None:
+            if hasattr(request, 'ctx'):
+                language = request.ctx['language'].code
+            else:
+                return text
+        return self.translate(text, language)
 
     def setTexts(self):
         self._texts = self._languageService.getTexts()
