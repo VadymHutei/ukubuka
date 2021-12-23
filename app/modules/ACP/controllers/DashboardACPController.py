@@ -5,4 +5,5 @@ class DashboardACPController:
 
     def dashboardAction(self):
         view = DashboardACPView()
+        
         return view.render()

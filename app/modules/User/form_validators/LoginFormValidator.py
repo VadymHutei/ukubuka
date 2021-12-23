@@ -17,4 +17,5 @@ class LoginFormValidator(AbstractFormValidator):
             UserValidator.password,
             'Wrong password'
         )
+        
         return (emailField, passwordField)

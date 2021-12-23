@@ -11,4 +11,4 @@ class HomeView(UkubukaACPView):
     def _prepareTemplateData(self):
         super()._prepareTemplateData()
 
-        self.templateData['title'] = g.t.translate('Ukubuka')
+        self.templateData['title'] = g.t._('Ukubuka')

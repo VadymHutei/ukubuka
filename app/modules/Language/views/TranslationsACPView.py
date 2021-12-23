@@ -11,4 +11,4 @@ class TranslationsACPView(UkubukaACPView):
     def _prepareTemplateData(self):
         super()._prepareTemplateData()
 
-        self.templateData['title'] = g.t.translate('Translations')
+        self.templateData['title'] = g.t._('Translations')
