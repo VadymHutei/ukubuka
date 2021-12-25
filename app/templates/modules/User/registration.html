@@ -1,14 +1,14 @@
 {% extends 'layouts/layout.html' %}
 
 
-{% block title -%}
+{% block title %}
 
 {{ 'Registration'|translate(t.language.code) }} - Ukubuka
 
-{%- endblock %}
+{% endblock %}
 
 
-{% block content -%}
+{% block content %}
 
 <h1>{{ 'Registration'|translate(t.language.code) }}</h1>
 {% if errors and 'other' in errors %}{% for error in errors['other'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
@@ -20,4 +20,4 @@
     <input type="submit">
 </form>
 
-{%- endblock %}
+{% endblock %}

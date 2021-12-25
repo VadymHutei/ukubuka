@@ -1,14 +1,14 @@
 {% extends 'layouts/layout.html' %}
 
 
-{% block title -%}
+{% block title %}
 
 {{ 'Catalog'|translate(t.language.code) }} - Ukubuka
 
-{%- endblock %}
+{% endblock %}
 
 
-{% block content -%}
+{% block content %}
 
 {% if catalogs %}
 <h2>{{ 'Catalogs'|translate(t.language.code) }}</h2>
@@ -17,4 +17,4 @@
 {% endfor %}
 {% endif %}
 
-{%- endblock %}
+{% endblock %}

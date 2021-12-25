@@ -1,14 +1,14 @@
 {% extends 'layouts/layout.html' %}
 
 
-{% block title -%}
+{% block title %}
 
 {{ 'Account'|translate(t.language.code) }} - Ukubuka
 
-{%- endblock %}
+{% endblock %}
 
 
-{% block content -%}
+{% block content %}
 
 <h1>{{ 'Account'|translate(t.language.code) }}</h1>
 <p>{{ 'Session ID'|translate(t.language.code) }}: {{ t.sessionID }}</p>
@@ -19,4 +19,4 @@
 <p>{{ 'Language'|translate(t.language.code) }}: {{ t.language.code }}</p>
 <a href="/{{ t.language.code }}/logout">{{ 'Log out'|translate(t.language.code) }}</a>
 
-{%- endblock %}
+{% endblock %}

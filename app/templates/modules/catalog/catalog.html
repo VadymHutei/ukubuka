@@ -1,14 +1,14 @@
 {% extends 'layouts/layout.html' %}
 
 
-{% block title -%}
+{% block title %}
 
 {{ 'Catalog'|translate(t.language.code) }} - Ukubuka
 
-{%- endblock %}
+{% endblock %}
 
 
-{% block content -%}
+{% block content %}
 
 <h1>{{ catalog.name }}</h1>
 <div>
@@ -20,4 +20,4 @@
     {% endfor %}
 </div>
 
-{%- endblock %}
+{% endblock %}

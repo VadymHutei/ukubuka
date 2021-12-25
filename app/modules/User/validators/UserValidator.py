@@ -14,3 +14,9 @@ class UserValidator(UkubukaValidator):
     @staticmethod
     def textID(ID):
         return UserValidator.intID(ID, True)
+
+    @staticmethod
+    def name(name):
+        if isinstance(name, str):
+            return bool(re.fullmatch(r'[a-zA-Zа-яА-ЯєЄіІїЇґҐ\']{1,64}', name))
+        return False

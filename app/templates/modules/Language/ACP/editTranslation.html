@@ -1,32 +1,35 @@
 {% extends 'layouts/acp/layout.html' %}
 
-{% block content -%}
+{% block content %}
 
 <form action="{{ url_for('translationsACPBlueprint.editTranslationACPRoute', language=t.language.code, id=text.ID) }}" method="POST">
+    
     <div>
         <label for="text">{{ 'Text'|translate(t.language.code) }}</label>
         <input type="text" name="text" id="text" value="{{ text.text }}" disabled>
     </div>
+    
     {% for language in t.languages.values() %}
+    
     {% set fieldName = 'translation_' ~ language.code %}
     {% set hasError = fieldName in formErrors %}
+    
     <div>
         <label for="{{ fieldName }}">{{ language.name }}</label>
+
         {% if hasError %}
         {% for errorText in formErrors[fieldName] %}
         <p>{{ errorText }}</p>
         {% endfor %}
         {% endif %}
-        <input
-            class="{{ 'error' if hasError }}"
-            type="text" id="{{ fieldName }}"
-            name="{{ fieldName }}"
-            value="{{ text.translations[language.code] }}"
-            placeholder="{{ language.name }}"
-        >
+
+        <input class="{{ 'error' if hasError }}" type="text" id="{{ fieldName }}" name="{{ fieldName }}" value="{{ text.translations[language.code] }}" placeholder="{{ language.name }}">
     </div>
-        {% endfor %}
-        <input type="submit">
+    
+    {% endfor %}
+    
+    <input type="submit">
+
 </form>
 
-{%- endblock %}
+{% endblock %}

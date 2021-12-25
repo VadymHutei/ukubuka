@@ -1,30 +1,58 @@
 {% extends 'layouts/acp/layout.html' %}
 
-{% block content -%}
+{% block content %}
 
 <form action="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}" method="POST">
+
     <div>
         <label for="text">{{ 'ID'|translate(t.language.code) }}</label>
         <input type="text" name="text" id="text" value="{{ user.ID }}" disabled>
     </div>
+
     <div>
+
+        {% if 'email' in formErrors %}
+        {% for errorText in formErrors['email'] %}
+        <p>{{ errorText }}</p>
+        {% endfor %}
+        {% endif %}
+        
         <label for="email">{{ 'Email'|translate(t.language.code) }}</label>
-        <input type="email" name="email" id="email" value="{{ user.email }}">
+        <input class="{{ 'error' if 'email' in formErrors }}" type="email" name="email" id="email" value="{{ user.email }}">
     </div>
+
     <div>
+
+        {% if 'first_name' in formErrors %}
+        {% for errorText in formErrors['first_name'] %}
+        <p>{{ errorText }}</p>
+        {% endfor %}
+        {% endif %}
+
         <label for="first_name">{{ 'First name'|translate(t.language.code) }}</label>
-        <input type="text" name="first_name" id="first_name" value="{{ user.firstName }}">
+        <input class="{{ 'error' if 'first_name' in formErrors }}" type="text" name="first_name" id="first_name" value="{{ user.firstName }}">
     </div>
+
     <div>
+
+        {% if 'last_name' in formErrors %}
+        {% for errorText in formErrors['last_name'] %}
+        <p>{{ errorText }}</p>
+        {% endfor %}
+        {% endif %}
+
         <label for="last_name">{{ 'Last name'|translate(t.language.code) }}</label>
-        <input type="text" name="last_name" id="last_name" value="{{ user.lastName }}">
+        <input class="{{ 'error' if 'last_name' in formErrors }}" type="text" name="last_name" id="last_name" value="{{ user.lastName }}">
     </div>
+
     <div>
         <label for="is_blocked">{{ 'Is blocked'|translate(t.language.code) }}</label>
         {% set checked = 'checked' if user.isBlocked else '' %}
         <input type="checkbox" name="is_blocked" id="is_blocked" {{ checked }}>
     </div>
+
     <input type="submit">
+
 </form>
 
-{%- endblock %}
+{% endblock %}

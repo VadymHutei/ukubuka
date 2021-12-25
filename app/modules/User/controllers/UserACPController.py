@@ -60,17 +60,22 @@ class UserACPController:
                     language=request.ctx['language'].code
                 )
             )
-        
+
+        view = EditUserACPView()
+        user = self._userService.getUserByID(userID)
+
+        view.data = {
+            'user': user,
+        }
+
         formValidator = EditUserFormValidator(request.form)
         if formValidator.hasErrors:
-            view = EditUserACPView()
             view.error('Form errors')
-
-            user = self._userService.getUserByID(userID)
             view.data = {
-                'user': user,
-                'errors': formValidator.errors
+                'formErrors': formValidator.errors
             }
+
+        return view.render()
 
     def blockUserAction(self):
         userID = int(request.args.get('id', 0))
