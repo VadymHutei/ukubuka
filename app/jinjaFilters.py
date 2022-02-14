@@ -5,6 +5,10 @@ def translate(text, language):
     translator = Translator.getInstance()
     return translator.translate(text, language)
 
+def _(text, language=None):
+    translator = Translator.getInstance()
+    return translator._(text, language)
+
 def pathWithLanguage(path, language):
     pathSegments = path.split('/')
 
