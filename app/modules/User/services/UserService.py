@@ -41,11 +41,8 @@ class UserService:
         self._usersRepository.logoutBySessionID(sessionID)
 
     def getUsers(self):
-        users = []
         usersData = self._usersRepository.getUsers()
-        for row in usersData:
-            users.append(UserEntity(row))
-        return users
+        return [UserEntity(row) for row in usersData]
 
     def blockUser(self, userID):
         self._usersRepository.blockUser(userID)

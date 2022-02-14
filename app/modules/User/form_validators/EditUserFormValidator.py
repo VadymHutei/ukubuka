@@ -6,10 +6,16 @@ from vendor.ukubuka.ValidatedField import ValidatedField
 class EditUserFormValidator(AbstractFormValidator):
 
     def setRules(self):
-        emailField = ValidatedField('email')
+        emailField = ValidatedField('email', required=False)
         emailField.addRule(
             UserValidator.email,
             'Wrong email'
+        )
+
+        passwordField = ValidatedField('password', required=False)
+        passwordField.addRule(
+            UserValidator.password,
+            'Wrong password'
         )
 
         firstNameField = ValidatedField('first_name', required=False, emptyAllowed=True)
@@ -24,4 +30,4 @@ class EditUserFormValidator(AbstractFormValidator):
             'Wrong last name'
         )
 
-        return (emailField, firstNameField, lastNameField)
+        return (emailField, passwordField, firstNameField, lastNameField)
