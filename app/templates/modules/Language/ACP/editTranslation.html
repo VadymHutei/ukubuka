@@ -5,7 +5,7 @@
 <form action="{{ url_for('translationsACPBlueprint.editTranslationACPRoute', language=t.language.code, id=text.ID) }}" method="POST">
     
     <div>
-        <label for="text">{{ 'Text'|translate(t.language.code) }}</label>
+        <label for="text">{{ 'Text'|_ }}</label>
         <input type="text" name="text" id="text" value="{{ text.text }}" disabled>
     </div>
     

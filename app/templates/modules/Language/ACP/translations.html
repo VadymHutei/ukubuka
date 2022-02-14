@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>{{ 'text'|translate(t.language.code) }}</th>
+            <th>{{ 'text'|_ }}</th>
             {% for language in t.languages.values() %}
             <th>{{ language.name }}</th>
             {% endfor %}
@@ -23,8 +23,8 @@
             <td>{{ text.translations[languageCode] }}</td>
             {% endfor %}
             <td>
-                <a href="{{ url_for('translationsACPBlueprint.editTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'edit'|translate(t.language.code) }}</a>
-                <a href="{{ url_for('translationsACPBlueprint.deleteTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'delete'|translate(t.language.code) }}</a>
+                <a href="{{ url_for('translationsACPBlueprint.editTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'edit'|_ }}</a>
+                <a href="{{ url_for('translationsACPBlueprint.deleteTranslationACPRoute', language=t.language.code, id=text.ID) }}">{{ 'delete'|_ }}</a>
             </td>
         </tr>
         {% endfor %}

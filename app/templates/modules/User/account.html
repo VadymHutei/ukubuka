@@ -3,20 +3,20 @@
 
 {% block title %}
 
-{{ 'Account'|translate(t.language.code) }} - Ukubuka
+{{ 'Account'|_ }} - Ukubuka
 
 {% endblock %}
 
 
 {% block content %}
 
-<h1>{{ 'Account'|translate(t.language.code) }}</h1>
-<p>{{ 'Session ID'|translate(t.language.code) }}: {{ t.sessionID }}</p>
-<p>{{ 'User ID'|translate(t.language.code) }}: {{ t.user.id }}</p>
-<p>{{ 'First name'|translate(t.language.code) }}: {{ t.user.first_name }}</p>
-<p>{{ 'Last name'|translate(t.language.code) }}: {{ t.user.last_name }}</p>
-<p>{{ 'Registered on'|translate(t.language.code) }}: {{ t.user.registered_datetime }}</p>
-<p>{{ 'Language'|translate(t.language.code) }}: {{ t.language.code }}</p>
-<a href="/{{ t.language.code }}/logout">{{ 'Log out'|translate(t.language.code) }}</a>
+<h1>{{ 'Account'|_ }}</h1>
+<p>{{ 'Session ID'|_ }}: {{ t.sessionID }}</p>
+<p>{{ 'User ID'|_ }}: {{ t.user.id }}</p>
+<p>{{ 'First name'|_ }}: {{ t.user.first_name }}</p>
+<p>{{ 'Last name'|_ }}: {{ t.user.last_name }}</p>
+<p>{{ 'Registered on'|_ }}: {{ t.user.registered_datetime }}</p>
+<p>{{ 'Language'|_ }}: {{ t.language.code }}</p>
+<a href="/{{ t.language.code }}/logout">{{ 'Log out'|_ }}</a>
 
 {% endblock %}

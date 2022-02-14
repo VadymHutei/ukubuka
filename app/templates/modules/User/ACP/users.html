@@ -6,10 +6,10 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>{{ 'email'|translate(t.language.code) }}</th>
-            <th>{{ 'name'|translate(t.language.code) }}</th>
-            <th>{{ 'is blocked'|translate(t.language.code) }}</th>
-            <th>{{ 'registration date'|translate(t.language.code) }}</th>
+            <th>{{ 'email'|_ }}</th>
+            <th>{{ 'name'|_ }}</th>
+            <th>{{ 'is blocked'|_ }}</th>
+            <th>{{ 'registration date'|_ }}</th>
             <th></th>
         </tr>
     </thead>
@@ -19,16 +19,16 @@
             <td>{{ user.ID }}</td>
             <td>{{ user.email|view }}</td>
             <td>{{ user.firstName|view }} {{ user.lastName|view }}</td>
-            <td>{{ user.isBlocked|view|translate(t.language.code) }}</td>
+            <td>{{ user.isBlocked|view|_ }}</td>
             <td>{{ user.registeredDatetime }}</td>
             <td>
-                <a href="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'edit'|translate(t.language.code) }}</a>
+                <a href="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'edit'|_ }}</a>
                 {% if user.isBlocked %}
-                <a href="{{ url_for('userACPBlueprint.unblockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'unblock'|translate(t.language.code) }}</a>
+                <a href="{{ url_for('userACPBlueprint.unblockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'unblock'|_ }}</a>
                 {% else %}
-                <a href="{{ url_for('userACPBlueprint.blockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'block'|translate(t.language.code) }}</a>
+                <a href="{{ url_for('userACPBlueprint.blockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'block'|_ }}</a>
                 {% endif %}
-                <a href="{{ url_for('userACPBlueprint.deleteUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'delete'|translate(t.language.code) }}</a>
+                <a href="{{ url_for('userACPBlueprint.deleteUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'delete'|_ }}</a>
             </td>
         </tr>
         {% endfor %}
