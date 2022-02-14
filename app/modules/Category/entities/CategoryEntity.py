@@ -1,13 +1,13 @@
 class CategoryEntity():
 
     def __init__(self, data):
-        self._ID = data.get('id')
-        self._alias = data.get('alias')
-        self._parentID = data.get('parent_id')
-        self._name = data.get('name')
-        self._createdDatetime = data.get('created_datetime')
-        self._changedDatetime = data.get('changed_datetime')
-        self._isActive = bool(data.get('is_active'))
+        self._ID = data['id']
+        self._alias = data['alias']
+        self._parentID = data['parent_id']
+        self._name = data['name']
+        self._createdDatetime = data['created_datetime']
+        self._changedDatetime = data['changed_datetime']
+        self._isActive = bool(data['is_active'])
 
     @property
     def ID(self):
