@@ -10,6 +10,29 @@ class CategoryRepository(Repository):
         super().__init__()
         self._setCredentials(DB_CREDENTIALS)
 
+    def getCategories(self):
+        query = '''
+            SELECT
+                category.id,
+                category.alias,
+                category.parent_id,
+                category.created_datetime,
+                category.changed_datetime,
+                category.is_active,
+                category_text.name
+            FROM
+                category
+            LEFT JOIN category_text
+                ON category_text.category_id = category.id
+                AND category_text.language = %s
+        '''
+
+        with self.getConnection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (request.ctx['language'].code))
+                result = cursor.fetchall()
+        return result
+
     def getAllSubcategories(self, categoryIDs):
         query = '''
             SELECT

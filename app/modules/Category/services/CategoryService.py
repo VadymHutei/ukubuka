@@ -1,10 +1,15 @@
-from modules.Category.repository import CategoryRepository
+from modules.Category.entities.CategoryEntity import CategoryEntity
+from modules.Category.repositories.CategoryRepository import CategoryRepository
 
 
 class CategoryService:
 
     def __init__(self):
-        self.repository = CategoryRepository()
+        self._categoryRepository = CategoryRepository()
+
+    def getCategories(self):
+        categoriesData = self._categoryRepository.getCategories()
+        return [CategoryEntity(row) for row in categoriesData]
 
     def getSubcategoryIDs(self, categoryIDs):
         if isinstance(categoryIDs, int):
@@ -15,7 +20,7 @@ class CategoryService:
         if not categoryIDs:
             return result
 
-        categories = self.repository.getAllSubcategories(categoryIDs)
+        categories = self._categoryRepository.getAllSubcategories(categoryIDs)
         count = 1
         while count > 0:
             count = 0
@@ -26,10 +31,10 @@ class CategoryService:
         return result
 
     def getProductsByCategoryIDs(self, categoryIDs):
-        products = self.repository.getProductsByCategoryIDs(categoryIDs)
+        products = self._categoryRepository.getProductsByCategoryIDs(categoryIDs)
         productIDs = [product['id'] for product in products]
-        productNumericCharacteristics = self.repository.getNumericCharacteristicsByProductIDs(productIDs)
-        productTextCharacteristics = self.repository.getTextCharacteristicsByProductIDs(productIDs)
+        productNumericCharacteristics = self._categoryRepository.getNumericCharacteristicsByProductIDs(productIDs)
+        productTextCharacteristics = self._categoryRepository.getTextCharacteristicsByProductIDs(productIDs)
         for product in products:
             product['characteristics'] = {}
             for productNumericCharacteristic in productNumericCharacteristics:

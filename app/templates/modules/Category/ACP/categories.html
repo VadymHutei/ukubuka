@@ -1,0 +1,32 @@
+{% extends 'layouts/acp/layout.html' %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>{{'parent ID'|_}}</th>
+            <th>{{'alias'|_}}</th>
+            <th>{{'name'|_}}</th>
+            <th>{{'date of creation'|_}}</th>
+            <th>{{'date of change'|_}}</th>
+            <th>{{'is active'|_}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.ID }}</td>
+            <td>{{ category.parentID }}</td>
+            <td>{{ category.alias }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.createdDatetime }}</td>
+            <td>{{ category.changedDatetime }}</td>
+            <td>{{ category.isActive|view|_ }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

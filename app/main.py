@@ -1,18 +1,21 @@
 from flask import Flask, request, g
 
+import jinjaFilters
+
 from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
+from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
 from modules.Home.routes.HomeBlueprint import homeBlueprint
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.Translator import Translator
 from modules.User.routes.UserACPBlueprint import userACPBlueprint
 from modules.User.routes.UserBlueprint import userBlueprint
-import jinjaFilters
 
 
 app = Flask(__name__)
 
 app.jinja_env.filters.update({
     'translate': jinjaFilters.translate,
+    '_': jinjaFilters._,
     'pathWithLanguage': jinjaFilters.pathWithLanguage,
     'view': jinjaFilters.view,
 })
@@ -25,6 +28,7 @@ def beforeRequest():
 app.register_blueprint(homeBlueprint)
 app.register_blueprint(userBlueprint)
 
+app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(dashboardACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(userACPBlueprint)
