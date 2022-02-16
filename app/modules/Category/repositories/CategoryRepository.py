@@ -1,14 +1,9 @@
 from flask import request
 
-from config import DB_CREDENTIALS
-from vendor.ukubuka.repository import Repository
+from modules.Base.Repository import Repository
 
 
 class CategoryRepository(Repository):
-
-    def __init__(self):
-        super().__init__()
-        self._setCredentials(DB_CREDENTIALS)
 
     def getCategories(self):
         query = '''
