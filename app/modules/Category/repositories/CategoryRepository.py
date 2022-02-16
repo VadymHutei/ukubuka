@@ -6,6 +6,8 @@ from modules.Base.repositories.MySQLRepository import MySQLRepository
 class CategoryRepository(MySQLRepository):
 
     def getCategories(self):
+        currentLanguage = request.ctx['language'].code
+
         query = '''
             SELECT
                 category.id,
@@ -22,4 +24,4 @@ class CategoryRepository(MySQLRepository):
                 AND category_text.language = %s
         '''
 
-        return self.fetchAll(query, (request.ctx['language'].code))
+        return self.fetchAll(query, (currentLanguage,))
