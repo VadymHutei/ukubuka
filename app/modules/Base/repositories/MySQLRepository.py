@@ -15,3 +15,9 @@ class MySQLRepository:
     @property
     def connection(self):
         return MySQLRepository.getConnection()
+
+    def fetchAll(self, query, args = ()):
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, args)
+                return cursor.fetchall()
