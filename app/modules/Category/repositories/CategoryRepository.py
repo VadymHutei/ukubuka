@@ -1,9 +1,9 @@
 from flask import request
 
-from modules.Base.Repository import Repository
+from modules.Base.repositories.MySQLRepository import MySQLRepository
 
 
-class CategoryRepository(Repository):
+class CategoryRepository(MySQLRepository):
 
     def getCategories(self):
         query = '''
@@ -22,7 +22,7 @@ class CategoryRepository(Repository):
                 AND category_text.language = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (request.ctx['language'].code))
                 result = cursor.fetchall()
@@ -40,7 +40,7 @@ class CategoryRepository(Repository):
                 OR id IN (%s)
         '''
 
-        with self.getConnection() as connection:
+        with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (','.join(str(categoryID) for categoryID in categoryIDs),))
                 result = cursor.fetchall()
@@ -66,7 +66,7 @@ class CategoryRepository(Repository):
                 p.category_id IN (%s)
         '''
 
-        with self.getConnection() as connection:
+        with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (request.ctx['language'], ','.join(str(categoryID) for categoryID in categoryIDs),))
                 result = cursor.fetchall()
@@ -84,7 +84,7 @@ class CategoryRepository(Repository):
                 product_id IN (%s)
         '''
 
-        with self.getConnection() as connection:
+        with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (','.join(str(productID) for productID in productIDs),))
                 result = cursor.fetchall()
@@ -103,7 +103,7 @@ class CategoryRepository(Repository):
                 AND product_id IN (%s)
         '''
 
-        with self.getConnection() as connection:
+        with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (request.ctx['language'], ','.join(str(productID) for productID in productIDs),))
                 result = cursor.fetchall()
