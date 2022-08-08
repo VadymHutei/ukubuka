@@ -31,3 +31,10 @@ def view(x):
 	if isinstance(x, bool):
 		return 'yes' if x else 'no'
 	return x
+
+filters = {
+    'translate': translate,
+    '_': _,
+    'pathWithLanguage': pathWithLanguage,
+    'view': view,
+}

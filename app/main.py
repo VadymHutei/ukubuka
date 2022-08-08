@@ -1,6 +1,6 @@
 from flask import Flask, request, g
 
-import jinjaFilters
+from jinjaFilters import filters
 
 from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
@@ -13,12 +13,7 @@ from modules.User.routes.UserBlueprint import userBlueprint
 
 app = Flask(__name__)
 
-app.jinja_env.filters.update({
-    'translate': jinjaFilters.translate,
-    '_': jinjaFilters._,
-    'pathWithLanguage': jinjaFilters.pathWithLanguage,
-    'view': jinjaFilters.view,
-})
+app.jinja_env.filters.update(filters)
 
 @app.before_request
 def beforeRequest():
