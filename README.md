@@ -9,8 +9,16 @@ python3.9 -m venv env
 source env/bin/activate
 ```
 
+### Requirements
+
 ```
 pip install -U pip
+
+pip install Flask
+pip install PyMySQL
+
+# or
+
 pip install -r ../requirements.txt
 ```
 
