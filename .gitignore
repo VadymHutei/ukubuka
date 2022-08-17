@@ -12,4 +12,4 @@ __pycache__/
 /db/*_data.sql
 
 /app/vendor/
-/app/config.py
+/app/instance/config.py
