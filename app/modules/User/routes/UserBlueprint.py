@@ -7,7 +7,7 @@ from modules.User.requestDecorators import onlyRegistered
 from modules.User.services.UserService import UserService
 
 
-userBlueprint = Blueprint('userBlueprint', __name__,)
+userBlueprint = Blueprint('userBlueprint', __name__)
 controller = UserController()
 
 @userBlueprint.route('/<string:language>/registration', methods=['GET', 'POST'])
