@@ -1,15 +1,12 @@
-from vendor.ukubuka.Entity import Entity
+class UserEntity():
 
+    def __init__(self, ID=None):
+        self._ID = ID
 
-class UserEntity(Entity):
+    @property
+    def ID(self):
+        return self._ID
 
-    properties = {
-        'ID': 'id',
-        'email': 'email',
-        'firstName': 'first_name',
-        'lastName': 'last_name',
-        'registeredDatetime': 'registered_datetime',
-    }
-    booleanProperties = {
-        'isBlocked': 'is_blocked',
-    }
+    @ID.setter
+    def ID(self, ID):
+        self._ID = ID

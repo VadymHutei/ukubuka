@@ -1,16 +1,14 @@
 import pymysql
-
-from config import DB_CREDENTIALS
+from flask import current_app as app
 
 
 class MySQLRepository:
 
-    _dbCredentials = DB_CREDENTIALS.copy()
-    _dbCredentials['cursorclass'] = pymysql.cursors.DictCursor
-
     @classmethod
     def getConnection(cls):
-        return pymysql.connect(**cls._dbCredentials)
+        _dbCredentials = app.config['DB_CREDENTIALS']
+        _dbCredentials['cursorclass'] = pymysql.cursors.DictCursor
+        return pymysql.connect(**_dbCredentials)
 
     @property
     def connection(self):

@@ -1,12 +1,7 @@
-from config import DB_CREDENTIALS
-from vendor.ukubuka.repository import Repository
+from modules.Base.repositories.MySQLRepository import MySQLRepository
 
 
-class UserRepository(Repository):
-
-    def __init__(self):
-        super().__init__()
-        self._setCredentials(DB_CREDENTIALS)
+class UserRepository(MySQLRepository):
 
     def getUserByID(self, userID):
         query = '''

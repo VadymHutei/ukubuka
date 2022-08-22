@@ -9,7 +9,8 @@ __pycache__/
 /env/
 
 /db/data/
+/db/mysql/data/
 /db/*_data.sql
 
 /app/vendor/
-/app/config.py
+/app/instance/config.py

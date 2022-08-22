@@ -5,6 +5,13 @@ DB_CREDENTIALS = {
     'database': 'database',
 }
 
+DB_CREDENTIALS = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'root',
+    'database': 'ukubuka',
+}
+
 SESSION_COOKIE_NAME = 'usid'
 SESSION_ID_LENGTH = 32
 SESSION_LIFETIME_DAYS = 7
