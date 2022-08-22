@@ -22,7 +22,7 @@ pip install -r ../requirements.txt
 
 ### MySQL DB
 ```
-docker run --name ukubuka_db -d --restart always -v C:\Users\hutei\dev\ukubuka\db\data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5
+docker run --name ukubuka_db -d --restart always -v /path/to/mysql/data/dir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:8
 ```
 
 ### Running app
