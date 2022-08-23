@@ -5,10 +5,18 @@ from modules.User.entities.UserNameEntity import UserNameEntity
 
 class UserRepository(MySQLRepository):
 
-    _matchingFieldsToProperties = {
-        'ID': 'id',
-        'email': 'email',
-    }
+    @classmethod
+    def createUserEntity(cls, row):
+        return UserEntity(
+            ID=int(row['id']),
+            email=row['email'],
+            name=UserNameEntity(
+                firstName=row['first_name'],
+                lastName=row['last_name'],
+            ),
+            isBlocked=bool(row['is_blocked']),
+            registeredDatetime=row['registered_datetime'],
+        )
 
     def getUserByID(self, userID):
         query = '''
@@ -174,15 +182,3 @@ class UserRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query, (userID,))
             connection.commit()
-
-    @classmethod
-    def createUserEntity(cls, row):
-        userData = {
-            'ID': int(row['id']),
-            'email': row['email'],
-            'name': UserNameEntity(
-                firstName=row['first_name'],
-                lastName=row['last_name'],
-            )
-        }
-        return UserEntity(**userData)
