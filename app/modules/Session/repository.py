@@ -1,12 +1,7 @@
-from vendor.ukubuka.repository import Repository
-from config import DB_CREDENTIALS
+from modules.Base.repositories.MySQLRepository import MySQLRepository
 
 
-class SessionMySQLRepository(Repository):
-
-    def __init__(self):
-        super().__init__()
-        self._setCredentials(DB_CREDENTIALS)
+class SessionMySQLRepository(MySQLRepository):
 
     def addSession(self, sessionID, created, expired, user_agent):
         query = '''

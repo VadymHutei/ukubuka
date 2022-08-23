@@ -1,14 +1,8 @@
 from flask import request
-
-from config import DB_CREDENTIALS
-from vendor.ukubuka.repository import Repository
+from modules.Base.repositories.MySQLRepository import MySQLRepository
 
 
-class CatalogRepository(Repository):
-
-    def __init__(self):
-        super().__init__()
-        self._setCredentials(DB_CREDENTIALS)
+class CatalogRepository(MySQLRepository):
 
     def getActiveCatalogs(self):
         query = '''
