@@ -2,6 +2,7 @@ __pycache__/
 *.sublime-workspace
 *.code-workspace
 *.idea
+*.vscode
 
 *.pyc
 *.css.map
