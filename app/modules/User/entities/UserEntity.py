@@ -1,12 +1,16 @@
+from typing import Optional
+
+from modules.User.entities.UserNameEntity import UserNameEntity
+
+
 class UserEntity():
 
-    def __init__(self, ID=None):
-        self._ID = ID
-
-    @property
-    def ID(self):
-        return self._ID
-
-    @ID.setter
-    def ID(self, ID):
-        self._ID = ID
+    def __init__(
+        self,
+        ID: Optional[int] = None,
+        email: Optional[str] = None,
+        name: Optional[UserNameEntity] = None,
+    ):
+        self.ID = int(ID)
+        self.email = email
+        self.name = name

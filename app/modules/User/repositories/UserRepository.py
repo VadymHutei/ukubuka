@@ -1,7 +1,14 @@
 from modules.Base.repositories.MySQLRepository import MySQLRepository
+from modules.User.entities.UserEntity import UserEntity
+from modules.User.entities.UserNameEntity import UserNameEntity
 
 
 class UserRepository(MySQLRepository):
+
+    _matchingFieldsToProperties = {
+        'ID': 'id',
+        'email': 'email',
+    }
 
     def getUserByID(self, userID):
         query = '''
@@ -135,8 +142,8 @@ class UserRepository(MySQLRepository):
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                result = cursor.fetchall()
-        return result
+
+                return [UserRepository.createUserEntity(row) for row in cursor.fetchall()]
 
     def blockUser(self, userID):
         query = '''
@@ -167,3 +174,15 @@ class UserRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query, (userID,))
             connection.commit()
+
+    @classmethod
+    def createUserEntity(cls, row):
+        userData = {
+            'ID': int(row['id']),
+            'email': row['email'],
+            'name': UserNameEntity(
+                firstName=row['first_name'],
+                lastName=row['last_name'],
+            )
+        }
+        return UserEntity(**userData)

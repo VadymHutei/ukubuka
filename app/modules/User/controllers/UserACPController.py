@@ -14,10 +14,9 @@ class UserACPController:
 
     def usersPageAction(self):
         view = UsersACPView()
-        users = self._userService.getUsers()
 
         view.data = {
-            'users': users,
+            'users': self._userService.getUsers(),
         }
 
         return view.render()
