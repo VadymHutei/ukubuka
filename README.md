@@ -4,7 +4,7 @@
 
 ### Virtual environment
 ```
-python3.9 -m venv env
+python3 -m venv env
 source env/bin/activate
 ```
 
