@@ -17,7 +17,7 @@ class UkubukaACPView(UkubukaView):
     def _prepareTemplateData(self):
         super()._prepareTemplateData()
 
-        self._templateData['notifications'] = self._notifications
+        self.templateData['notifications'] = self._notifications
     
     def info(self, text):
         self._notifications.append(NotificationEntity(text, NotificationService.INFO_TYPE))
