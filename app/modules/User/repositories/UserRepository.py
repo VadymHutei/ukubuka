@@ -36,8 +36,7 @@ class UserRepository(MySQLRepository):
         with self.getConnection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (userID,))
-                result = cursor.fetchone()
-        return result
+                return UserRepository.createUserEntity(cursor.fetchone())
 
     def getUserByEmail(self, email):
         query = '''

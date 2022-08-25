@@ -11,4 +11,4 @@ class EditUserACPView(UkubukaACPView):
     def _prepareTemplateData(self):
         super()._prepareTemplateData()
 
-        self.templateData['title'] = g.t._('Translations')
+        self.templateData['title'] = g.t._('Edit user')

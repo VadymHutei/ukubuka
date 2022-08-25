@@ -1,6 +1,6 @@
-from flask import request, redirect, url_for
-
-from modules.User.form_validators.EditUserFormValidator import EditUserFormValidator
+from flask import redirect, request, url_for
+from modules.User.form_validators.EditUserFormValidator import \
+    EditUserFormValidator
 from modules.User.services.UserService import UserService
 from modules.User.validators.UserValidator import UserValidator
 from modules.User.views.EditUserACPView import EditUserACPView
@@ -15,9 +15,7 @@ class UserACPController:
     def usersPageAction(self):
         view = UsersACPView()
 
-        view.data = {
-            'users': self._userService.getUsers(),
-        }
+        view.data['users'] = self._userService.getUsers()
 
         return view.render()
 
@@ -43,9 +41,7 @@ class UserACPController:
             )
 
         view = EditUserACPView()
-        view.data = {
-            'user': user
-        }
+        view.data['user'] = user
 
         return view.render()
 
@@ -61,11 +57,8 @@ class UserACPController:
             )
 
         view = EditUserACPView()
-        user = self._userService.getUserByID(userID)
 
-        view.data = {
-            'user': user,
-        }
+        view.data['user'] = self._userService.getUserByID(userID)
 
         formValidator = EditUserFormValidator(request.form)
         if formValidator.hasErrors:
