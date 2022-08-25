@@ -5,7 +5,7 @@ html { height: 100%; font-size: 16px; font-family: "Roboto", sans-serif; }
 
 input.error { border-color: red; }
 
-body { background-color: #111; }
+body { background-color: #111; color: #ccc; }
 
 .notifications .info { background-color: white; }
 .notifications .warning { background-color: darkkhaki; }
