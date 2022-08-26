@@ -2,7 +2,7 @@ from vendor.ukubuka.validator import Validator
 
 
 class UkubukaValidator(Validator):
-    
+
     @staticmethod
     def intID(ID, unsigned=True):
         min = 0 if unsigned else -2147483648
