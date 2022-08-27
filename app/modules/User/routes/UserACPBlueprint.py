@@ -1,45 +1,45 @@
 from flask import Blueprint, request
 from modules.Language.requestDecorators import languageRedirect
 from modules.Session.requestDecorators import withSession
-from modules.User.controllers.UserACPController import UserACPController
+from modules.User.controllers.ACPUserController import ACPUserController
 
-userACPBlueprint = Blueprint('userACPBlueprint', __name__, url_prefix='/<string:language>/acp/users')
-userACPController = UserACPController()
+ACP_user_blueprint = Blueprint('ACP_user_Blueprint', __name__, url_prefix='/<string: language > /acp/users')
+ACP_user_controller = ACPUserController()
 
 
-@userACPBlueprint.route('', methods=['GET'])
+@ACP_user_blueprint.route('', methods=['GET'])
 @languageRedirect
 @withSession
-def usersACPRoute():
-    return userACPController.usersPageAction()
+def ACP_users_route():
+    return ACP_user_controller.users_page_action()
 
 
-@userACPBlueprint.route('/edit', methods=['GET', 'POST'])
+@ACP_user_blueprint.route('/edit', methods=['GET', 'POST'])
 @languageRedirect
 @withSession
-def editUserACPRoute():
+def ACP_edit_user_route():
     if request.method == 'GET':
-        return userACPController.editUserPageAction()
+        return ACP_user_controller.edit_user_page_action()
     elif request.method == 'POST':
-        return userACPController.editUserAction()
+        return ACP_user_controller.edit_user_action()
 
 
-@userACPBlueprint.route('/block', methods=['GET'])
+@ACP_user_blueprint.route('/block', methods=['GET'])
 @languageRedirect
 @withSession
-def blockUserACPRoute():
-    return userACPController.blockUserAction()
+def block_user_ACP_route():
+    return ACP_user_controller.block_user_action()
 
 
-@userACPBlueprint.route('/unblock', methods=['GET'])
+@ACP_user_blueprint.route('/unblock', methods=['GET'])
 @languageRedirect
 @withSession
-def unblockUserACPRoute():
-    return userACPController.unblockUserAction()
+def unblock_user_ACP_route():
+    return ACP_user_controller.unblock_user_action()
 
 
-@userACPBlueprint.route('/delete', methods=['GET'])
+@ACP_user_blueprint.route('/delete', methods=['GET'])
 @languageRedirect
 @withSession
-def deleteUserACPRoute():
-    return userACPController.deleteUserAction()
+def delete_user_ACP_route():
+    return ACP_user_controller.deleteUserAction()

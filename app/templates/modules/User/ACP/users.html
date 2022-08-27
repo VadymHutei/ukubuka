@@ -22,13 +22,13 @@
             <td>{{ user.isBlocked|view|_ }}</td>
             <td>{{ user.registeredDatetime }}</td>
             <td>
-                <a href="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'edit'|_ }}</a>
+                <a href="{{ url_for('ACP_user_Blueprint.ACP_edit_user_route', language=t.language.code, id=user.ID) }}">{{ 'edit'|_ }}</a>
                 {% if user.isBlocked %}
-                <a href="{{ url_for('userACPBlueprint.unblockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'unblock'|_ }}</a>
+                <a href="{{ url_for('ACP_user_Blueprint.unblock_user_ACP_route', language=t.language.code, id=user.ID) }}">{{ 'unblock'|_ }}</a>
                 {% else %}
-                <a href="{{ url_for('userACPBlueprint.blockUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'block'|_ }}</a>
+                <a href="{{ url_for('ACP_user_Blueprint.block_user_ACP_route', language=t.language.code, id=user.ID) }}">{{ 'block'|_ }}</a>
                 {% endif %}
-                <a href="{{ url_for('userACPBlueprint.deleteUserACPRoute', language=t.language.code, id=user.ID) }}">{{ 'delete'|_ }}</a>
+                <a href="{{ url_for('ACP_user_Blueprint.delete_user_ACP_route', language=t.language.code, id=user.ID) }}">{{ 'delete'|_ }}</a>
             </td>
         </tr>
         {% endfor %}

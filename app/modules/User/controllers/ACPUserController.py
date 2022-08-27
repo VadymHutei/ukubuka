@@ -6,19 +6,19 @@ from modules.User.views.EditUserACPView import EditUserACPView
 from modules.User.views.UsersACPView import UsersACPView
 
 
-class UserACPController:
+class ACPUserController:
 
     def __init__(self):
         self._userService = UserService()
 
-    def usersPageAction(self):
+    def users_page_action(self):
         view = UsersACPView()
 
         view.data['users'] = self._userService.getUsers()
 
         return view.render()
 
-    def editUserPageAction(self):
+    def edit_user_page_action(self):
         userID = int(request.args.get('id'))
         userEntity = self._userService.getUserByID(userID)
 
@@ -30,7 +30,7 @@ class UserACPController:
 
         return view.render()
 
-    def editUserAction(self):
+    def edit_user_action(self):
         form_validator = EditUserFormValidator()
         form_validator.validate(request.form)
         form_data = form_validator.getFormData()
@@ -39,12 +39,12 @@ class UserACPController:
         if form_validator.errors:
             if user_ID is None:
                 return redirect(url_for(
-                    'userACPBlueprint.usersACPRoute',
+                    'ACP_user_Blueprint.ACP_users_route',
                     language=request.ctx['language'].code
                 ))
             else:
                 return redirect(url_for(
-                    'userACPBlueprint.editUserACPRoute',
+                    'ACP_user_Blueprint.ACP_edit_user_route',
                     language=request.ctx['language'].code,
                     id=user_ID
                 ))
@@ -56,22 +56,22 @@ class UserACPController:
 
         return view.render()
 
-    def blockUserAction(self):
+    def block_user_action(self):
         userID = int(request.args.get('id', 0))
 
         if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
 
         self._userService.blockUser(userID)
 
-        return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
 
-    def unblockUserAction(self):
+    def unblock_user_action(self):
         userID = int(request.args.get('id', 0))
 
         if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
 
         self._userService.unblockUser(userID)
 
-        return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))

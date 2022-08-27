@@ -6,7 +6,7 @@ from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
 from modules.Home.routes.HomeBlueprint import homeBlueprint
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.Translator import Translator
-from modules.User.routes.UserACPBlueprint import userACPBlueprint
+from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
 from modules.User.routes.UserBlueprint import userBlueprint
 
 app = Flask(__name__, instance_relative_config=True)
@@ -28,4 +28,4 @@ app.register_blueprint(userBlueprint)
 app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(dashboardACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
-app.register_blueprint(userACPBlueprint)
+app.register_blueprint(ACP_user_blueprint)
