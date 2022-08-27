@@ -3,7 +3,7 @@ from modules.Language.requestDecorators import languageRedirect
 from modules.Session.requestDecorators import withSession
 from modules.User.controllers.ACPUserController import ACPUserController
 
-ACP_user_blueprint = Blueprint('ACP_user_Blueprint', __name__, url_prefix='/<string: language > /acp/users')
+ACP_user_blueprint = Blueprint('ACP_user_Blueprint', __name__, url_prefix='/<string:language>/acp/users')
 ACP_user_controller = ACPUserController()
 
 
