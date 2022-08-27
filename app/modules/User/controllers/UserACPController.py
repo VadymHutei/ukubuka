@@ -19,7 +19,8 @@ class UserACPController:
         return view.render()
 
     def editUserPageAction(self):
-        userEntity = self._userService.getUserByID(int(request.args.get('id')))
+        userID = int(request.args.get('id'))
+        userEntity = self._userService.getUserByID(userID)
 
         if userEntity is None:
             return abort(404)
@@ -30,21 +31,28 @@ class UserACPController:
         return view.render()
 
     def editUserAction(self):
-        userID = int(request.args.get('id', 0))
+        form_validator = EditUserFormValidator()
+        form_validator.validate(request.form)
+        form_data = form_validator.getFormData()
+        user_ID = form_data.get('id')
 
-        if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+        if form_validator.errors:
+            if user_ID is None:
+                return redirect(url_for(
+                    'userACPBlueprint.usersACPRoute',
+                    language=request.ctx['language'].code
+                ))
+            else:
+                return redirect(url_for(
+                    'userACPBlueprint.editUserACPRoute',
+                    language=request.ctx['language'].code,
+                    id=user_ID
+                ))
+
+        user_entity = self._userService.getUserByID(form_data['id'])
 
         view = EditUserACPView()
-
-        view.data['user'] = self._userService.getUserByID(userID)
-
-        formValidator = EditUserFormValidator(request.form)
-        if formValidator.errors:
-            view.error('Form errors')
-            view.data = {
-                'formErrors': formValidator.errors
-            }
+        view.data['user'] = user_entity
 
         return view.render()
 
