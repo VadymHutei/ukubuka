@@ -1,3 +1,5 @@
+from typing import Optional, Union
+
 from modules.Base.repositories.MySQLRepository import MySQLRepository
 from modules.User.entities.UserEntity import UserEntity
 from modules.User.entities.UserNameEntity import UserNameEntity
@@ -6,7 +8,10 @@ from modules.User.entities.UserNameEntity import UserNameEntity
 class UserRepository(MySQLRepository):
 
     @classmethod
-    def createUserEntity(cls, row):
+    def createUserEntity(cls, row: Optional[dict]) -> Union[UserEntity, None]:
+        if row is None:
+            return None
+
         return UserEntity(
             ID=int(row['id']),
             email=row['email'],
@@ -18,7 +23,7 @@ class UserRepository(MySQLRepository):
             registeredDatetime=row['registered_datetime'],
         )
 
-    def getUserByID(self, userID):
+    def getUserByID(self, userID: int) -> Union[UserEntity, None]:
         query = '''
             SELECT
                 id,

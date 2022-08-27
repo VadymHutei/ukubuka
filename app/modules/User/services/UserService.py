@@ -1,7 +1,7 @@
 from datetime import datetime
+from typing import Union
 
 from flask import request
-
 from modules.Session.repository import SessionMySQLRepository
 from modules.User.entities.UserEntity import UserEntity
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
@@ -16,13 +16,13 @@ class UserService:
     def __init__(self):
         self._usersRepository = UserRepository()
 
-    def getUserByID(self, userID):
+    def getUserByID(self, userID: int) -> Union[UserEntity, None]:
         return self._usersRepository.getUserByID(userID)
 
     def createUser(self, data):
         if self._usersRepository.getUserByEmail(data['email']) is not None:
             raise UserAlreadyExist(f"user with same email already exist: {data['email']}")
-        _, data['salt'], data['passwordHash'] = getPassword(password = data['password'])
+        _, data['salt'], data['passwordHash'] = getPassword(password=data['password'])
         data['registered'] = datetime.now()
         return self._usersRepository.addUser(data)
 

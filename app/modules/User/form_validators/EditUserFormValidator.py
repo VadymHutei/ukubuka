@@ -18,4 +18,4 @@ class EditUserFormValidator(AbstractFormValidator):
         lastNameField = ValidatedField('last_name', required=False, emptyAllowed=True)
         lastNameField.addRule(UserValidator.name, 'Wrong last name')
 
-        return (emailField, passwordField, firstNameField, lastNameField)
+        return emailField, passwordField, firstNameField, lastNameField

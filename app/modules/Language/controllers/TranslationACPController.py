@@ -1,7 +1,6 @@
 import re
 
-from flask import request, redirect, url_for, g
-
+from flask import g, redirect, request, url_for
 from modules.Language.form_validators.EditTranslationFormValidator import EditTranslationFormValidator
 from modules.Language.services.LanguageService import LanguageService
 from modules.Language.validators.LanguageValidator import LanguageValidator
@@ -41,7 +40,7 @@ class TranslationACPController:
                     language=request.ctx['language'].code
                 )
             )
-        
+
         view = EditTranslationACPView()
         view.data = {'text': text}
 
@@ -57,7 +56,7 @@ class TranslationACPController:
                     language=request.ctx['language'].code
                 )
             )
-        
+
         textEntity = self._languageService.getTextByID(textID)
 
         if textEntity is None:
@@ -69,7 +68,7 @@ class TranslationACPController:
             )
 
         formValidator = EditTranslationFormValidator(request.form)
-        if formValidator.hasErrors:
+        if formValidator.errors:
             view = EditTranslationACPView()
             view.error('Form errors')
             view.data = {
@@ -110,7 +109,7 @@ class TranslationACPController:
                     language=request.ctx['language'].code
                 )
             )
-            
+
         self._languageService.deleteTranslations(textID)
         self._languageService.deleteText(textID)
         g.t.setTexts()

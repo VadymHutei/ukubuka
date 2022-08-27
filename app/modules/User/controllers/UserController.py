@@ -1,11 +1,10 @@
-from flask import request, redirect, url_for
-
-from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
+from flask import redirect, request, url_for
 from modules.Ukubuka.views.UkubukaView import UkubukaView
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
 from modules.User.services.UserService import UserService
+from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
 
 
 class UserController:
@@ -16,7 +15,7 @@ class UserController:
 
     def registrationAction(self):
         formValidator = RegistrationFormValidator(request.form)
-        if formValidator.hasErrors:
+        if formValidator.errors:
             view = UkubukaView('modules/User/registration.html')
             view.addData({'errors': formValidator.errors})
             return view.render()
@@ -35,7 +34,7 @@ class UserController:
 
     def loginAction(self):
         formValidator = LoginFormValidator(request.form)
-        if formValidator.hasErrors:
+        if formValidator.errors:
             view = UkubukaView('modules/User/login.html')
             view.addData({'errors': formValidator.errors})
             return view.render()

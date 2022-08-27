@@ -1,4 +1,4 @@
-from flask import redirect, request, url_for
+from flask import abort, redirect, request, url_for
 from modules.User.form_validators.EditUserFormValidator import EditUserFormValidator
 from modules.User.services.UserService import UserService
 from modules.User.validators.UserValidator import UserValidator
@@ -19,18 +19,13 @@ class UserACPController:
         return view.render()
 
     def editUserPageAction(self):
-        userID = int(request.args.get('id', 0))
+        userEntity = self._userService.getUserByID(int(request.args.get('id')))
 
-        if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
-
-        user = self._userService.getUserByID(userID)
-
-        if user is None:
-            return redirect(url_for('userACPBlueprint.usersACPRoute', language=request.ctx['language'].code))
+        if userEntity is None:
+            return abort(404)
 
         view = EditUserACPView()
-        view.data['user'] = user
+        view.data['user'] = userEntity
 
         return view.render()
 
@@ -45,7 +40,7 @@ class UserACPController:
         view.data['user'] = self._userService.getUserByID(userID)
 
         formValidator = EditUserFormValidator(request.form)
-        if formValidator.hasErrors:
+        if formValidator.errors:
             view.error('Form errors')
             view.data = {
                 'formErrors': formValidator.errors
