@@ -16,3 +16,9 @@ class UserValidator(UkubukaValidator):
         if isinstance(name, str):
             return bool(re.fullmatch(r'[a-zA-Zа-яА-ЯєЄіІїЇґҐ\']{1,64}', name))
         return False
+
+    @staticmethod
+    def email(email):
+        if isinstance(email, str):
+            return bool(re.fullmatch(r'[^@]+@[^@]+', email))
+        return False

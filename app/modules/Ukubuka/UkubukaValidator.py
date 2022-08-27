@@ -1,7 +1,4 @@
-from vendor.ukubuka.validator import Validator
-
-
-class UkubukaValidator(Validator):
+class UkubukaValidator:
 
     INT_MIN_VALUE = -2147483648
     INT_MAX_VALUE = 2147483647
