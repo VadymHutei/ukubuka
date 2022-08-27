@@ -21,7 +21,7 @@ class UserController:
             return view.render()
         service = UserService()
         try:
-            service.createUser(formValidator.getFormData())
+            service.create_user(formValidator.getFormData())
         except UserAlreadyExist as e:
             view = UkubukaView('modules/User/registration.html')
             view.addData({'errors': {'other': (str(e),)}})

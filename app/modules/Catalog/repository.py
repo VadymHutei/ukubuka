@@ -20,7 +20,7 @@ class CatalogRepository(MySQLRepository):
                 c.is_active = 1
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (request.ctx['language'],))
                 result = cursor.fetchall()
@@ -42,7 +42,7 @@ class CatalogRepository(MySQLRepository):
                 c.alias = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (request.ctx['language'], catalogAlias))
                 result = cursor.fetchone()
@@ -59,7 +59,7 @@ class CatalogRepository(MySQLRepository):
                 catalog_id = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (catalogID,))
                 result = cursor.fetchall()
@@ -81,7 +81,7 @@ class CatalogRepository(MySQLRepository):
                 AND p.is_active = 1
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (categoryAlias,))
                 result = cursor.fetchall()
@@ -104,7 +104,7 @@ class CatalogRepository(MySQLRepository):
                 cp.catalog_id = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (catalogID,))
                 result = cursor.fetchall()

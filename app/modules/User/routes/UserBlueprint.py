@@ -10,6 +10,7 @@ from modules.User.services.UserService import UserService
 userBlueprint = Blueprint('userBlueprint', __name__)
 controller = UserController()
 
+
 @userBlueprint.route('/<string:language>/registration', methods=['GET', 'POST'])
 @languageRedirect
 @withSession
@@ -18,6 +19,7 @@ def registrationRoute():
         return controller.registrationPageAction()
     elif request.method == 'POST':
         return controller.registrationAction()
+
 
 @userBlueprint.route('/<string:language>/login', methods=['GET', 'POST'])
 @languageRedirect
@@ -28,13 +30,15 @@ def loginRoute():
     elif request.method == 'POST':
         return controller.loginAction()
 
+
 @userBlueprint.route('/<string:language>/logout', methods=['GET'])
 @languageRedirect
 @withSession
 def logoutRoute():
     userService = UserService()
-    userService.logoutBySessionID(request.ctx['sessionID'])
+    userService.logout_by_session_ID(request.ctx['sessionID'])
     return redirect(url_for('homeBlueprint.homeRoute', language=request.ctx['language'].code))
+
 
 @userBlueprint.route('/<string:language>/account', methods=['GET'])
 @languageRedirect

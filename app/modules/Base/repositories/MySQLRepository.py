@@ -5,16 +5,16 @@ from flask import current_app as app
 class MySQLRepository:
 
     @classmethod
-    def getConnection(cls):
-        _dbCredentials = app.config['DB_CREDENTIALS']
-        _dbCredentials['cursorclass'] = pymysql.cursors.DictCursor
-        return pymysql.connect(**_dbCredentials)
+    def get_connection(cls):
+        _db_credentials = app.config['DB_CREDENTIALS']
+        _db_credentials['cursorclass'] = pymysql.cursors.DictCursor
+        return pymysql.connect(**_db_credentials)
 
     @property
     def connection(self):
-        return MySQLRepository.getConnection()
+        return MySQLRepository.get_connection()
 
-    def fetchAll(self, query, args = ()):
+    def fetchAll(self, query, args=()):
         with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, args)

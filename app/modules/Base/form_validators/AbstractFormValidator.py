@@ -4,11 +4,11 @@ from abc import ABC, abstractmethod
 class AbstractFormValidator(ABC):
 
     def __init__(self):
-        self._fields = self._setFieldValidationRules()
+        self._fields = self._set_field_validation_rules()
         self.errors = {}
 
     @abstractmethod
-    def _setFieldValidationRules(self):
+    def _set_field_validation_rules(self):
         pass
 
     def validate(self, form):

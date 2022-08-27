@@ -1,15 +1,16 @@
 from modules.Base.form_validators.AbstractFormValidator import AbstractFormValidator
 from modules.Base.form_validators.ValidatedField import ValidatedField
+from modules.Base.form_validators.ValidationRule import ValidationRule
 from modules.User.validators.UserValidator import UserValidator
 
 
 class RegistrationFormValidator(AbstractFormValidator):
 
-    def _setFieldValidationRules(self):
-        emailField = ValidatedField('email', required=True)
-        emailField.addRule(UserValidator.email, 'Wrong email')
+    def _set_field_validation_rules(self):
+        email = ValidatedField('email', required=True)
+        email.add_rule(ValidationRule(UserValidator.email, 'Wrong email'))
 
-        passwordField = ValidatedField('password', required=True)
-        passwordField.addRule(UserValidator.password, 'Wrong password')
+        password = ValidatedField('password', required=True)
+        password.add_rule(ValidationRule(UserValidator.password, 'Wrong password'))
 
-        return (emailField, passwordField)
+        return email, password

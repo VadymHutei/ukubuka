@@ -6,13 +6,13 @@ from modules.Language.validators.LanguageValidator import LanguageValidator
 
 class EditTranslationFormValidator(AbstractFormValidator):
 
-    def _setFieldValidationRules(self):
+    def _set_field_validation_rules(self):
         fields = []
 
         for languageCode in g.t.languages:
             fieldName = f'translation_{languageCode}'
             translationField = ValidatedField(fieldName, required=True)
-            translationField.addRule(LanguageValidator.translation, g.t._('Wrong translation'))
+            translationField.add_rule(LanguageValidator.translation, g.t._('Wrong translation'))
             fields.append(translationField)
 
         return fields

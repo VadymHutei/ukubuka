@@ -14,7 +14,7 @@ class LanguageRepository(MySQLRepository):
                 language
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchall()
@@ -35,7 +35,7 @@ class LanguageRepository(MySQLRepository):
             LIMIT 1
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 result = cursor.fetchone()
@@ -47,7 +47,7 @@ class LanguageRepository(MySQLRepository):
             VALUES (%s)
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (text,))
                 textID = cursor.lastrowid
@@ -62,7 +62,7 @@ class LanguageRepository(MySQLRepository):
             FROM text
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return cursor.fetchall()
@@ -75,7 +75,7 @@ class LanguageRepository(MySQLRepository):
                 translation=translation
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 for language, translation in translations.items():
                     cursor.execute(query, (textID, language, translation))
@@ -90,7 +90,7 @@ class LanguageRepository(MySQLRepository):
             FROM translation
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return cursor.fetchall()
@@ -105,7 +105,7 @@ class LanguageRepository(MySQLRepository):
                 text.id = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
                 return cursor.fetchone()
@@ -120,7 +120,7 @@ class LanguageRepository(MySQLRepository):
                 translation.text_id = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
                 result = cursor.fetchall()
@@ -139,7 +139,7 @@ class LanguageRepository(MySQLRepository):
                 translation = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 for data in [(data['textID'], language, translation, translation) for language, translation in data['translations'].items()]:
                     cursor.execute(query, data)
@@ -152,7 +152,7 @@ class LanguageRepository(MySQLRepository):
                 text_id = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
             connection.commit()
@@ -164,7 +164,7 @@ class LanguageRepository(MySQLRepository):
                 id = %s
         '''
 
-        with self.getConnection() as connection:
+        with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (textID,))
             connection.commit()

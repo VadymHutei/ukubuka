@@ -11,11 +11,11 @@ class UserEntity():
         ID: Optional[int] = None,
         email: Optional[str] = None,
         name: Optional[UserNameEntity] = None,
-        isBlocked: bool = False,
-        registeredDatetime: Optional[datetime] = False,
+        is_blocked: bool = False,
+        registered_datetime: Optional[datetime] = False,
     ):
         self.ID = ID
         self.email = email
         self.name = name
-        self.isBlocked = isBlocked
-        self.registeredDatetime = registeredDatetime
+        self.is_blocked = is_blocked
+        self.registered_datetime = registered_datetime
