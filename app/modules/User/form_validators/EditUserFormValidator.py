@@ -1,21 +1,25 @@
 from modules.Base.form_validators.AbstractFormValidator import AbstractFormValidator
+from modules.Base.form_validators.ValidatedField import ValidatedField
+from modules.Base.form_validators.ValidationRule import ValidationRule
 from modules.User.validators.UserValidator import UserValidator
-from vendor.ukubuka.ValidatedField import ValidatedField
 
 
 class EditUserFormValidator(AbstractFormValidator):
 
-    def setRules(self):
-        emailField = ValidatedField('email', required=False)
-        emailField.addRule(UserValidator.email, 'Wrong email')
+    def _setFieldValidationRules(self):
+        ID = ValidatedField('id', required=True)
+        ID.addRule(ValidationRule(UserValidator.text_ID, 'Wrong ID'))
 
-        passwordField = ValidatedField('password', required=False)
-        passwordField.addRule(UserValidator.password, 'Wrong password')
+        email = ValidatedField('email', required=False)
+        email.addRule(ValidationRule(UserValidator.email, 'Wrong email'))
 
-        firstNameField = ValidatedField('first_name', required=False, emptyAllowed=True)
-        firstNameField.addRule(UserValidator.name, 'Wrong first name')
+        password = ValidatedField('password', required=False)
+        password.addRule(ValidationRule(UserValidator.password, 'Wrong password'))
 
-        lastNameField = ValidatedField('last_name', required=False, emptyAllowed=True)
-        lastNameField.addRule(UserValidator.name, 'Wrong last name')
+        first_name = ValidatedField('first_name', required=False, emptyAllowed=True)
+        first_name.addRule(ValidationRule(UserValidator.name, 'Wrong first name'))
 
-        return emailField, passwordField, firstNameField, lastNameField
+        last_name = ValidatedField('last_name', required=False, emptyAllowed=True)
+        last_name.addRule(ValidationRule(UserValidator.name, 'Wrong last name'))
+
+        return ID, email, password, first_name, last_name

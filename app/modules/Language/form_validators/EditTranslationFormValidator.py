@@ -1,12 +1,12 @@
 from flask import g
 from modules.Base.form_validators.AbstractFormValidator import AbstractFormValidator
+from modules.Base.form_validators.ValidatedField import ValidatedField
 from modules.Language.validators.LanguageValidator import LanguageValidator
-from vendor.ukubuka.ValidatedField import ValidatedField
 
 
 class EditTranslationFormValidator(AbstractFormValidator):
 
-    def setRules(self):
+    def _setFieldValidationRules(self):
         fields = []
 
         for languageCode in g.t.languages:

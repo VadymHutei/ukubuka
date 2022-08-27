@@ -1,11 +1,11 @@
 from modules.Base.form_validators.AbstractFormValidator import AbstractFormValidator
+from modules.Base.form_validators.ValidatedField import ValidatedField
 from modules.User.validators.UserValidator import UserValidator
-from vendor.ukubuka.ValidatedField import ValidatedField
 
 
 class LoginFormValidator(AbstractFormValidator):
 
-    def setRules(self):
+    def _setFieldValidationRules(self):
         emailField = ValidatedField('email', required=True)
         emailField.addRule(UserValidator.email, 'Wrong email')
 

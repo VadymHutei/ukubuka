@@ -3,19 +3,20 @@ from abc import ABC, abstractmethod
 
 class AbstractFormValidator(ABC):
 
-    def __init__(self, form):
-        self._fields = self.setRules()
+    def __init__(self):
+        self._fields = self._setFieldValidationRules()
         self.errors = {}
 
+    @abstractmethod
+    def _setFieldValidationRules(self):
+        pass
+
+    def validate(self, form):
         for field in self._fields:
             field.value = form.get(field.name)
             field.validate()
-            if field.hasErrors:
-                self.errors.update(field.getErrors())
-
-    @abstractmethod
-    def setRules(self):
-        pass
+            if field.errors:
+                self.errors.update({field.name: field.errors})
 
     def getFormData(self):
         for field in self._fields:
