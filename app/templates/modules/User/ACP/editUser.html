@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form action="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code) }}" method="POST">
+<form action="{{ url_for('userACPBlueprint.editUserACPRoute', language=t.language.code, id=user.ID) }}" method="POST">
     <div>
         <label for="text">{{ 'ID'|_ }}</label>
         <input type="text" name="id" id="id" value="{{ user.ID }}" readonly>
