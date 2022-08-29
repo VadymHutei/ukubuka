@@ -18,7 +18,7 @@ class Translator:
     def __init__(self):
         self._languageService = LanguageService()
 
-        self._defaultLanguage = self._languageService.getDefaultLanguage()
+        self._defaultLanguage = self._languageService.get_default_language()
         self._languages = self._languageService.getLanguages()
         self.setTexts()
 
@@ -62,7 +62,7 @@ class Translator:
             self._texts[textID].translations = textTranslations
             self._languageService.updateTextTranslations(self._texts[textID])
             return text
-        
+
         return translation if translation else text
 
     def _(self, text, language=None):

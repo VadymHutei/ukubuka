@@ -1,9 +1,24 @@
+from typing import Optional, Union
+
 from modules.Base.repositories.MySQLRepository import MySQLRepository
+from modules.Language.entities.LanguageEntity import LanguageEntity
 
 
 class LanguageRepository(MySQLRepository):
 
-    def getLanguages(self):
+    @classmethod
+    def create_language_entity(cls, row: Optional[dict]) -> Union[LanguageEntity, None]:
+        if row is None:
+            return None
+
+        return LanguageEntity(
+            code=row['code'],
+            name=row['name'],
+            is_active=bool(row['is_active']),
+            is_default=bool(row['is_default']),
+        )
+
+    def get_languages(self) -> list[LanguageEntity]:
         query = '''
             SELECT
                 code,
@@ -17,10 +32,9 @@ class LanguageRepository(MySQLRepository):
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                result = cursor.fetchall()
-        return result
+                return [LanguageRepository.create_language_entity(row) for row in cursor.fetchall()]
 
-    def getDefaultLanguage(self):
+    def get_default_language(self) -> Union[LanguageEntity, None]:
         query = '''
             SELECT
                 code,
@@ -38,8 +52,7 @@ class LanguageRepository(MySQLRepository):
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                result = cursor.fetchone()
-        return result
+                return LanguageRepository.create_language_entity(cursor.fetchone())
 
     def addText(self, text):
         query = '''
