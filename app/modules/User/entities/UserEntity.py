@@ -8,11 +8,11 @@ class UserEntity():
 
     def __init__(
         self,
-        ID: Optional[int] = None,
-        email: Optional[str] = None,
-        name: Optional[UserNameEntity] = None,
-        is_blocked: bool = False,
-        registered_datetime: Optional[datetime] = False,
+        ID: int,
+        email: Optional[str],
+        name: Optional[UserNameEntity],
+        is_blocked: bool,
+        registered_datetime: datetime,
     ):
         self.ID = ID
         self.email = email
