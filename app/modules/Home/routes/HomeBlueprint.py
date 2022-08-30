@@ -7,10 +7,11 @@ from modules.Session.requestDecorators import withSession
 
 homeBlueprint = Blueprint('homeBlueprint', __name__)
 
+
 @homeBlueprint.route('/', methods=['GET'])
 @withSession
 def mainRedirect():
-    return redirect(url_for('homeBlueprint.homeRoute', language=g.t.defaultLanguage.code))
+    return redirect(url_for('homeBlueprint.homeRoute', language=g.t.default_language.code))
 
 
 @homeBlueprint.route('/<string:language>/', methods=['GET'])

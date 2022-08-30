@@ -8,7 +8,7 @@ def languageRedirect(f):
     def decoratedFunction(*args, **kwargs):
         if 'language' in kwargs:
             if kwargs['language'] not in g.t.languages:
-                kwargs['language'] = g.t.defaultLanguage.code
+                kwargs['language'] = g.t.default_language.code
                 if request.blueprint is None:
                     fName = f.__name__
                 else:
@@ -17,7 +17,7 @@ def languageRedirect(f):
             language = kwargs['language']
             del kwargs['language']
         else:
-            language = g.t.defaultLanguage.code
+            language = g.t.default_language.code
         request.ctx['language'] = g.t.languages[language]
         return f(*args, **kwargs)
     return decoratedFunction

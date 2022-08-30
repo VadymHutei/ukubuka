@@ -1,5 +1,5 @@
 from flask import request
-
+from modules.Language.entities.LanguageEntity import LanguageEntity
 from modules.Language.entities.TextEntity import TextEntity
 from modules.Language.exceptions.LanguageException import LanguageException
 from modules.Language.services.LanguageService import LanguageService
@@ -15,41 +15,29 @@ class Translator:
             cls._instance = Translator()
         return cls._instance
 
-    def __init__(self):
-        self._languageService = LanguageService()
+    def __init__(self) -> None:
+        self._language_service = LanguageService()
+        self.default_language = self._language_service.get_default_language()
+        self.languages = {language.code: language for language in self._language_service.get_languages()}
 
-        self._defaultLanguage = self._languageService.get_default_language()
-        self._languages = self._languageService.getLanguages()
         self.setTexts()
 
     @property
-    def defaultLanguage(self):
-        return self._defaultLanguage
-
-    @property
-    def languages(self):
-        return self._languages
-
-    @property
-    def availableLanguages(self):
-        return {languageCode: language for languageCode, language in self._languages.items() if language.isActive}
-
-    @property
-    def texts(self):
-        return self._texts
+    def available_languages(self):
+        return {languageCode: language for languageCode, language in self.languages.items() if language.isActive}
 
     def translate(self, text, language):
         if language is None:
             raise LanguageException(f'language must be not None')
 
-        if language not in self._languages:
+        if language not in self.languages:
             raise LanguageException(f'The site does not support this language: {language}')
 
         textID = self._getTextIDByText(text)
 
         if (textID is None):
             textEntity = TextEntity({'text': text})
-            self._languageService.addText(textEntity)
+            self._language_service.addText(textEntity)
             self.setTexts()
             return text
 
@@ -57,10 +45,10 @@ class Translator:
 
         if translation is None:
             textTranslations = {}
-            for languageCode in self._languages:
+            for languageCode in self.languages:
                 textTranslations[languageCode] = ''
             self._texts[textID].translations = textTranslations
-            self._languageService.updateTextTranslations(self._texts[textID])
+            self._language_service.updateTextTranslations(self._texts[textID])
             return text
 
         return translation if translation else text
@@ -74,20 +62,20 @@ class Translator:
         return self.translate(text, language)
 
     def setTexts(self):
-        self._texts = self._languageService.getTexts()
+        self._texts = self._language_service.getTexts()
         self._textIDs = {text.text: text.ID for text in self._texts.values()}
         self._setTranslations()
 
     def _setTranslations(self):
-        translations = self._languageService.getTranslations()
+        translations = self._language_service.getTranslations()
 
         for textID in self._texts:
             if textID not in translations:
                 textTranslations = {}
-                for languageCode in self._languages:
+                for languageCode in self.languages:
                     textTranslations[languageCode] = ''
                 self._texts[textID].translations = textTranslations
-                self._languageService.updateTextTranslations(self._texts[textID])
+                self._language_service.updateTextTranslations(self._texts[textID])
             else:
                 self._texts[textID].translations = translations[textID]
 

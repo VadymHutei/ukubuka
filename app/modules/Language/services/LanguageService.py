@@ -8,14 +8,14 @@ from modules.Language.repositories.LanguageRepository import LanguageRepository
 
 class LanguageService:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._language_repository = LanguageRepository()
 
     def get_default_language(self):
         return self._language_repository.get_default_language()
 
-    def getLanguages(self) -> dict[str, LanguageEntity]:
-        return {language.code: language for language in self._language_repository.get_languages()}
+    def get_languages(self) -> list[LanguageEntity]:
+        return self._language_repository.get_languages()
 
     def getTexts(self):
         return {row['id']: TextEntity(row) for row in self._language_repository.getTexts()}
