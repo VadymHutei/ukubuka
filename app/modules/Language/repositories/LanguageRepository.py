@@ -1,25 +1,31 @@
-from typing import Optional, Union
+from typing import Union
 
 from modules.Base.repositories.MySQLRepository import MySQLRepository
 from modules.Language.entities.LanguageEntity import LanguageEntity
+from modules.Language.entities.TextEntity import TextEntity
 
 
 class LanguageRepository(MySQLRepository):
 
     @classmethod
-    def create_language_entity(cls, row: Optional[dict]) -> Union[LanguageEntity, None]:
-        if row is None:
-            return None
-
+    def create_language_entity(cls, data: dict) -> Union[LanguageEntity, None]:
         return LanguageEntity(
-            code=row['code'],
-            name=row['name'],
-            is_active=bool(row['is_active']),
-            is_default=bool(row['is_default']),
+            code=data['code'],
+            name=data['name'],
+            is_active=bool(data['is_active']),
+            is_default=bool(data['is_default']),
         )
 
-    def get_languages(self) -> list[LanguageEntity]:
-        query = '''
+    @classmethod
+    def create_text_entity(cls, data: dict) -> Union[TextEntity, None]:
+        return TextEntity(
+            ID=int(data['id']),
+            text=data['text'],
+        )
+
+    def get_languages(self, only_active: bool = False) -> dict[str, LanguageEntity]:
+        only_active_condition = 'WHERE is_active = 1' if only_active else ''
+        query = f'''
             SELECT
                 code,
                 name,
@@ -27,12 +33,13 @@ class LanguageRepository(MySQLRepository):
                 is_default
             FROM
                 language
+            {only_active_condition}
         '''
 
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                return [LanguageRepository.create_language_entity(row) for row in cursor.fetchall()]
+                return {row['code']: LanguageRepository.create_language_entity(row) for row in cursor.fetchall()}
 
     def get_default_language(self) -> Union[LanguageEntity, None]:
         query = '''
@@ -53,6 +60,42 @@ class LanguageRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return LanguageRepository.create_language_entity(cursor.fetchone())
+
+    def get_texts(self) -> dict[int, TextEntity]:
+        get_texts_query = '''
+            SELECT
+                id,
+                text
+            FROM
+                text
+        '''
+        get_translations_query = '''
+            SELECT
+                text_id,
+                language,
+                translation
+            FROM
+                translation
+        '''
+
+        with self.get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(get_texts_query)
+                texts_data = cursor.fetchall()
+                cursor.execute(get_translations_query)
+                translations_data = cursor.fetchall()
+
+        texts = {int(text_row['id']): LanguageRepository.create_text_entity(text_row) for text_row in texts_data}
+
+        for translation_row in translations_data:
+            text_ID = int(translation_row['text_id'])
+
+            if text_ID not in texts:
+                continue
+
+            texts[text_ID].translations[translation_row['language']] = translation_row['translation']
+
+        return texts
 
     def addText(self, text):
         query = '''

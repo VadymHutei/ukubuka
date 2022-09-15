@@ -1,6 +1,3 @@
-from email.policy import default
-from xml.etree.ElementInclude import default_loader
-
 from modules.Language.entities.LanguageEntity import LanguageEntity
 from modules.Language.entities.TextEntity import TextEntity
 from modules.Language.repositories.LanguageRepository import LanguageRepository
@@ -14,13 +11,14 @@ class LanguageService:
     def get_default_language(self):
         return self._language_repository.get_default_language()
 
-    def get_languages(self) -> list[LanguageEntity]:
-        return self._language_repository.get_languages()
+    def get_languages(self, only_active: bool = False) -> dict[str, LanguageEntity]:
+        return self._language_repository.get_languages(only_active)
+
+    def get_texts(self) -> dict[int, TextEntity]:
+        return self._language_repository.get_texts()
 
     def getTexts(self):
         return {row['id']: TextEntity(row) for row in self._language_repository.getTexts()}
-
-        return None if textData is None else TextEntity(textData)
 
     def addText(self, textEntity):
         self._language_repository.addText(textEntity.text)

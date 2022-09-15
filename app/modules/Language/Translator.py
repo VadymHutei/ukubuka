@@ -1,7 +1,8 @@
-from flask import request
+from typing import Optional
+
+from flask import g
 from modules.Language.entities.LanguageEntity import LanguageEntity
 from modules.Language.entities.TextEntity import TextEntity
-from modules.Language.exceptions.LanguageException import LanguageException
 from modules.Language.services.LanguageService import LanguageService
 
 
@@ -9,78 +10,86 @@ class Translator:
 
     _instance = None
 
+    def __init__(self) -> None:
+        self._language_service = LanguageService()
+
+        self.default_language: LanguageEntity = self._language_service.get_default_language()
+        self.languages: dict[str, LanguageEntity] = self._language_service.get_languages(only_active=True)
+        self.available_languages: dict[str, LanguageEntity] = self._get_available_languages()
+        self._texts: dict[int, TextEntity] = self._language_service.get_texts()
+        self._text_IDs: dict[str, int] = self._get_text_IDs()
+
+    def _get_available_languages(self) -> dict[str, LanguageEntity]:
+        return {languageCode: language for languageCode, language in self.languages.items() if language.is_active}
+
+    def _get_text_IDs(self) -> dict[str, int]:
+        return {text_entity.text: text_entity.ID for text_entity in self._texts.values()}
+
+    def _get_text_ID(self, text: str) -> Optional[int]:
+        return self._text_IDs.get(text)
+
+    def get_translation(self, text: str, language: str) -> Optional[str]:
+        try:
+            text_ID = self._get_text_ID(text)
+            return self._texts[text_ID].translations[language]
+        except:
+            return None
+
+    def _(self, text):
+        return self.get_translation(text, g.current_language.code)
+
     @classmethod
     def getInstance(cls):
         if not cls._instance:
             cls._instance = Translator()
+
         return cls._instance
 
-    def __init__(self) -> None:
-        self._language_service = LanguageService()
-        self.default_language = self._language_service.get_default_language()
-        self.languages = {language.code: language for language in self._language_service.get_languages()}
+    # def translate(self, text, language):
+    #     if language is None:
+    #         raise LanguageException(f'language must be not None')
 
-        self.setTexts()
+    #     if language not in self.languages:
+    #         raise LanguageException(f'The site does not support this language: {language}')
 
-    @property
-    def available_languages(self):
-        return {languageCode: language for languageCode, language in self.languages.items() if language.isActive}
+    #     textID = self._getTextIDByText(text)
 
-    def translate(self, text, language):
-        if language is None:
-            raise LanguageException(f'language must be not None')
+    #     if (textID is None):
+    #         textEntity = TextEntity({'text': text})
+    #         self._language_service.addText(textEntity)
+    #         self.setTexts()
+    #         return text
 
-        if language not in self.languages:
-            raise LanguageException(f'The site does not support this language: {language}')
+    #     translation = self._texts[textID].translations.get(language)
 
-        textID = self._getTextIDByText(text)
+    #     if translation is None:
+    #         textTranslations = {}
+    #         for languageCode in self.languages:
+    #             textTranslations[languageCode] = ''
+    #         self._texts[textID].translations = textTranslations
+    #         self._language_service.updateTextTranslations(self._texts[textID])
+    #         return text
 
-        if (textID is None):
-            textEntity = TextEntity({'text': text})
-            self._language_service.addText(textEntity)
-            self.setTexts()
-            return text
+    #     return translation if translation else text
 
-        translation = self._texts[textID].translations.get(language)
+    # def _(self, text, language=None):
+    #     return self.translate(text, language or g.current_language.code)
 
-        if translation is None:
-            textTranslations = {}
-            for languageCode in self.languages:
-                textTranslations[languageCode] = ''
-            self._texts[textID].translations = textTranslations
-            self._language_service.updateTextTranslations(self._texts[textID])
-            return text
+    # def _setTranslations(self):
+    #     translations = self._language_service.getTranslations()
 
-        return translation if translation else text
+    #     for textID in self._texts:
+    #         if textID not in translations:
+    #             textTranslations = {}
+    #             for languageCode in self.languages:
+    #                 textTranslations[languageCode] = ''
+    #             self._texts[textID].translations = textTranslations
+    #             self._language_service.updateTextTranslations(self._texts[textID])
+    #         else:
+    #             self._texts[textID].translations = translations[textID]
 
-    def _(self, text, language=None):
-        if language is None:
-            if hasattr(request, 'ctx'):
-                language = request.ctx['language'].code
-            else:
-                return text
-        return self.translate(text, language)
-
-    def setTexts(self):
-        self._texts = self._language_service.getTexts()
-        self._textIDs = {text.text: text.ID for text in self._texts.values()}
-        self._setTranslations()
-
-    def _setTranslations(self):
-        translations = self._language_service.getTranslations()
-
-        for textID in self._texts:
-            if textID not in translations:
-                textTranslations = {}
-                for languageCode in self.languages:
-                    textTranslations[languageCode] = ''
-                self._texts[textID].translations = textTranslations
-                self._language_service.updateTextTranslations(self._texts[textID])
-            else:
-                self._texts[textID].translations = translations[textID]
-
-    def _getTextIDByText(self, text):
-        for textEntity in self._texts.values():
-            if text == textEntity.text:
-                return textEntity.ID
-        return None
+    # def _getTextIDByText(self, text):
+    #     for textEntity in self._texts.values():
+    #         if text == textEntity.text:
+    #             return textEntity.ID
+    #     return None
