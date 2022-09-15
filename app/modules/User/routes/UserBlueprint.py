@@ -1,11 +1,9 @@
-from flask import Blueprint, request, redirect, url_for
-
+from flask import Blueprint, redirect, request, url_for
 from modules.Language.requestDecorators import languageRedirect
 from modules.Session.requestDecorators import withSession
 from modules.User.controllers.UserController import UserController
 from modules.User.requestDecorators import onlyRegistered
 from modules.User.services.UserService import UserService
-
 
 userBlueprint = Blueprint('userBlueprint', __name__)
 controller = UserController()
@@ -37,7 +35,7 @@ def loginRoute():
 def logoutRoute():
     userService = UserService()
     userService.logout_by_session_ID(request.ctx['sessionID'])
-    return redirect(url_for('homeBlueprint.homeRoute', language=request.ctx['language'].code))
+    return redirect(url_for('homeBlueprint.homeRoute', language=g.current_language.code))
 
 
 @userBlueprint.route('/<string:language>/account', methods=['GET'])

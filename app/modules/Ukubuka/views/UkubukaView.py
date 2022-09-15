@@ -1,5 +1,4 @@
-from flask import request, g
-
+from flask import g, request
 from modules.Base.view import View
 
 
@@ -12,7 +11,7 @@ class UkubukaView(View):
             'request': {
                 'path': request.path,
             },
-            'language': request.ctx.get('language'),
+            'language': g.current_language,
             'languages': g.t.languages,
             'sessionID': request.ctx.get('sessionID'),
             'user': request.ctx.get('user'),

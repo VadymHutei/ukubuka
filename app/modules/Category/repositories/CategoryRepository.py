@@ -1,12 +1,11 @@
 from flask import request
-
 from modules.Base.repositories.MySQLRepository import MySQLRepository
 
 
 class CategoryRepository(MySQLRepository):
 
     def getCategories(self):
-        currentLanguage = request.ctx['language'].code
+        currentLanguage = g.current_language.code
 
         query = '''
             SELECT

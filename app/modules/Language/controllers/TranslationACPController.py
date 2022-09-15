@@ -27,7 +27,7 @@ class TranslationACPController:
             return redirect(
                 url_for(
                     'translationsACPBlueprint.translationsACPRoute',
-                    language=request.ctx['language'].code
+                    language=g.current_language.code
                 )
             )
 
@@ -37,7 +37,7 @@ class TranslationACPController:
             return redirect(
                 url_for(
                     'translationsACPBlueprint.translationsACPRoute',
-                    language=request.ctx['language'].code
+                    language=g.current_language.code
                 )
             )
 
@@ -53,7 +53,7 @@ class TranslationACPController:
             return redirect(
                 url_for(
                     'translationsACPBlueprint.translationsACPRoute',
-                    language=request.ctx['language'].code
+                    language=g.current_language.code
                 )
             )
 
@@ -63,7 +63,7 @@ class TranslationACPController:
             return redirect(
                 url_for(
                     'translationsACPBlueprint.translationsACPRoute',
-                    language=request.ctx['language'].code
+                    language=g.current_language.code
                 )
             )
 
@@ -95,7 +95,7 @@ class TranslationACPController:
         return redirect(
             url_for(
                 'translationsACPBlueprint.translationsACPRoute',
-                language=request.ctx['language'].code
+                language=g.current_language.code
             )
         )
 
@@ -106,7 +106,7 @@ class TranslationACPController:
             return redirect(
                 url_for(
                     'translationsACPBlueprint.translationsACPRoute',
-                    language=request.ctx['language'].code
+                    language=g.current_language.code
                 )
             )
 
@@ -117,6 +117,6 @@ class TranslationACPController:
         return redirect(
             url_for(
                 'translationsACPBlueprint.translationsACPRoute',
-                language=request.ctx['language'].code
+                language=g.current_language.code
             )
         )

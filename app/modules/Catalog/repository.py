@@ -22,7 +22,7 @@ class CatalogRepository(MySQLRepository):
 
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (request.ctx['language'],))
+                cursor.execute(query, (g.current_language,))
                 result = cursor.fetchall()
         return result
 
@@ -44,7 +44,7 @@ class CatalogRepository(MySQLRepository):
 
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (request.ctx['language'], catalogAlias))
+                cursor.execute(query, (g.current_language, catalogAlias))
                 result = cursor.fetchone()
         return result
 

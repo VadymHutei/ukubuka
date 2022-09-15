@@ -1,23 +1,22 @@
 from functools import wraps
 
-from flask import request, redirect, url_for, g
+from flask import g, redirect, request, url_for
 
 
 def languageRedirect(f):
     @wraps(f)
     def decoratedFunction(*args, **kwargs):
         if 'language' in kwargs:
-            if kwargs['language'] not in g.t.languages:
+            if kwargs['language'] not in g.t.available_languages:
                 kwargs['language'] = g.t.default_language.code
                 if request.blueprint is None:
-                    fName = f.__name__
+                    f_name = f.__name__
                 else:
-                    fName = request.blueprint + '.' + f.__name__
-                return redirect(url_for(fName, *args, **kwargs))
-            language = kwargs['language']
+                    f_name = request.blueprint + '.' + f.__name__
+                return redirect(url_for(f_name, *args, **kwargs))
+            g.current_language = g.t.languages[kwargs['language']]
             del kwargs['language']
         else:
-            language = g.t.default_language.code
-        request.ctx['language'] = g.t.languages[language]
+            g.current_language = g.t.default_language
         return f(*args, **kwargs)
     return decoratedFunction

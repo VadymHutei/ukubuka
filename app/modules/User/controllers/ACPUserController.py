@@ -40,12 +40,12 @@ class ACPUserController:
             if user_ID is None:
                 return redirect(url_for(
                     'ACP_user_Blueprint.ACP_users_route',
-                    language=request.ctx['language'].code
+                    language=g.current_language.code
                 ))
             else:
                 return redirect(url_for(
                     'ACP_user_Blueprint.ACP_edit_user_route',
-                    language=request.ctx['language'].code,
+                    language=g.current_language.code,
                     id=user_ID
                 ))
 
@@ -60,18 +60,18 @@ class ACPUserController:
         userID = int(request.args.get('id', 0))
 
         if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
+            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
 
         self._userService.block_user(userID)
 
-        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
+        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
 
     def unblock_user_action(self):
         userID = int(request.args.get('id', 0))
 
         if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
+            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
 
         self._userService.unblock_user(userID)
 
-        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=request.ctx['language'].code))
+        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))

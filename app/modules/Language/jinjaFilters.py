@@ -1,13 +1,11 @@
+from flask import g
 from modules.Language.Translator import Translator
 
 
-def translate(text, language):
+def _(text):
     translator = Translator.getInstance()
-    return translator.translate(text, language)
+    return translator.get_translation(text, g.current_language.code)
 
-def _(text, language=None):
-    translator = Translator.getInstance()
-    return translator._(text, language)
 
 def pathWithLanguage(path, language):
     pathSegments = path.split('/')
@@ -17,7 +15,7 @@ def pathWithLanguage(path, language):
 
     translator = Translator.getInstance()
     del pathSegments[0]
-    
+
     if pathSegments[0] in translator.languages:
         pathSegments[0] = language
     else:
@@ -25,15 +23,16 @@ def pathWithLanguage(path, language):
 
     return '/' + '/'.join(pathSegments)
 
+
 def view(x):
-	if x is None:
-		return ''
-	if isinstance(x, bool):
-		return 'yes' if x else 'no'
-	return x
+    if x is None:
+        return ''
+    if isinstance(x, bool):
+        return 'yes' if x else 'no'
+    return x
+
 
 filters = {
-    'translate': translate,
     '_': _,
     'pathWithLanguage': pathWithLanguage,
     'view': view,
