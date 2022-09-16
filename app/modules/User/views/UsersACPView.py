@@ -1,5 +1,4 @@
 from flask import g
-
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 

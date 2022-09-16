@@ -20,7 +20,7 @@
             <td>{{ user.email|view }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.isBlocked|view|_ }}</td>
-            <td>{{ user.registeredDatetime }}</td>
+            <td>{{ user.registered_datetime }}</td>
             <td>
                 <a href="{{ url_for('ACP_user_Blueprint.ACP_edit_user_route', language=t.language.code, id=user.ID) }}">{{ 'edit'|_ }}</a>
                 {% if user.isBlocked %}
