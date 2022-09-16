@@ -3,22 +3,23 @@ from flask import render_template
 
 class View:
 
-    def __init__(self, template=None):
-        self.template = template
+    template: str
+
+    def __init__(self):
         self.data = {}
-        self.templateData = {}
+        self.template_data = {}
 
-    def _prepageData(self):
-        self._prepareTemplateData()
-        self._preparePageData()
-        self.data['t'] = self.templateData
+    def _prepage_data(self):
+        self._prepare_template_data()
+        self._prepare_page_data()
+        self.data['t'] = self.template_data
 
-    def _prepareTemplateData(self):
+    def _prepare_template_data(self):
         pass
 
-    def _preparePageData(self):
+    def _prepare_page_data(self):
         pass
 
     def render(self):
-        self._prepageData()
+        self._prepage_data()
         return render_template(self.template, **self.data)

@@ -1,14 +1,12 @@
 from flask import g
-
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 
 class TranslationsACPView(UkubukaACPView):
 
-    def __init__(self):
-        super().__init__('modules/Language/ACP/translations.html')
+    template: str = 'modules/Language/ACP/translations.html'
 
-    def _prepareTemplateData(self):
-        super()._prepareTemplateData()
+    def _prepare_template_data(self):
+        super()._prepare_template_data()
 
-        self.templateData['title'] = g.t._('Translations')
+        self.template_data['title'] = g.t._('Translations')

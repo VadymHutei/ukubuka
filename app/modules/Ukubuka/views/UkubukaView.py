@@ -4,10 +4,10 @@ from modules.Base.view import View
 
 class UkubukaView(View):
 
-    def _prepareTemplateData(self):
-        super()._prepareTemplateData()
+    def _prepare_template_data(self):
+        super()._prepare_template_data()
 
-        self.templateData.update({
+        self.template_data.update({
             'request': {
                 'path': request.path,
             },

@@ -1,14 +1,12 @@
 from flask import g
-
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 
 class CategoryACPView(UkubukaACPView):
-    
-    def __init__(self):
-        super().__init__('modules/Category/ACP/categories.html')
 
-    def _prepareTemplateData(self):
-        super()._prepareTemplateData()
+    template: str = 'modules/Category/ACP/categories.html'
 
-        self.templateData['title'] = g.t._('Categories')
+    def _prepare_template_data(self):
+        super()._prepare_template_data()
+
+        self.template_data['title'] = g.t._('Categories')

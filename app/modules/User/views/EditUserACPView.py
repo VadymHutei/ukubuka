@@ -1,14 +1,21 @@
-from flask import g
-
+from flask import g, url_for
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 
 class EditUserACPView(UkubukaACPView):
 
-    def __init__(self):
-        super().__init__('modules/User/ACP/editUser.html')
+    template: str = 'modules/User/ACP/editUser.html'
 
-    def _prepareTemplateData(self):
-        super()._prepareTemplateData()
+    def _prepage_data(self):
+        super()._prepage_data()
 
-        self.templateData['title'] = g.t._('Edit user')
+        self.data['form_url'] = url_for(
+            endpoint='ACP_user_Blueprint.ACP_edit_user_route',
+            language=g.current_language.code,
+            id=self.data['user'].ID,
+        )
+
+    def _prepare_template_data(self):
+        super()._prepare_template_data()
+
+        self.template_data['title'] = g.t._('Edit user')

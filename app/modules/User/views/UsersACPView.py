@@ -4,10 +4,9 @@ from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 class UsersACPView(UkubukaACPView):
 
-    def __init__(self):
-        super().__init__('modules/User/ACP/users.html')
+    template: str = 'modules/User/ACP/users.html'
 
-    def _prepareTemplateData(self):
-        super()._prepareTemplateData()
+    def _prepare_template_data(self):
+        super()._prepare_template_data()
 
-        self.templateData['title'] = g.t._('Users')
+        self.template_data['title'] = g.t._('Users')

@@ -1,14 +1,12 @@
 from flask import g
-
 from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
 
 
 class DashboardACPView(UkubukaACPView):
 
-    def __init__(self):
-        super().__init__('modules/ACP/dashboard.html')
+    template: str = 'modules/ACP/dashboard.html'
 
-    def _prepareTemplateData(self):
-        super()._prepareTemplateData()
+    def _prepare_template_data(self):
+        super()._prepare_template_data()
 
-        self.templateData['title'] = g.t._('Dashboard')
+        self.template_data['title'] = g.t._('Dashboard')
