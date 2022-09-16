@@ -42,7 +42,7 @@ class UserRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query, (user_ID,))
 
-                return UserRepository.create_user_entity(cursor.fetchone())
+        return UserRepository.create_user_entity(cursor.fetchone())
 
     def get_user_by_email(self, email: str) -> Union[UserEntity, None]:
         query = '''
