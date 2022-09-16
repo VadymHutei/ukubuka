@@ -26,6 +26,7 @@ class ACPUserController:
             return abort(404)
 
         view = EditUserACPView()
+
         view.data['user'] = userEntity
 
         return view.render()
