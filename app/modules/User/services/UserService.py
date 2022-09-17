@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Union
 
-from flask import request
 from modules.Session.repository import SessionMySQLRepository
 from modules.User.entities.UserEntity import UserEntity
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
@@ -34,7 +33,7 @@ class UserService:
         if user_data['password_hash'] != passwordHash:
             raise WrongPassword()
         session_repository = SessionMySQLRepository()
-        session_repository.setLoginStatus(request.ctx['sessionID'], user_data['id'], True)
+        session_repository.setLoginStatus(g.session_ID, user_data['id'], True)
 
     def logout_by_session_ID(self, session_ID: str):
         self._users_repository.logout_by_session_ID(session_ID)

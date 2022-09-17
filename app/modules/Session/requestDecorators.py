@@ -1,31 +1,30 @@
 from functools import wraps
 
-from flask import request, make_response
+from flask import current_app as app
+from flask import g, make_response, request
+from modules.Session.services.SessionService import SessionService
 
-from config import SESSION_COOKIE_NAME
-from modules.Session.service import SessionService
 
-
-def withSession(f):
+def with_session(f):
     @wraps(f)
-    def decoratedFunction(*args, **kwargs):
-        sessionService = SessionService()
+    def decorated_function(*args, **kwargs):
+        session_service = SessionService()
+        session_expires = None
+        session_ID = request.cookies.get(app.config['SESSION_COOKIE_NAME'])
 
-        sessionExpires = None
-        sessionID = request.cookies.get(SESSION_COOKIE_NAME)
-        if sessionID is None:
-            sessionID, sessionExpires = sessionService.startSession()
+        if session_ID is None:
+            session_ID, session_expires = session_service.start_session()
 
-        request.ctx['sessionID'] = sessionID
-        request.ctx['user'] = sessionService.getUserBySessionID(sessionID)
+        g.session_ID = session_ID
+        request.ctx['user'] = session_service.get_user_by_session_ID(session_ID)
 
         response = make_response(f(*args, **kwargs))
-        if sessionExpires is not None:
+        if session_expires is not None:
             response.set_cookie(
-                SESSION_COOKIE_NAME,
-                value=request.ctx['sessionID'],
-                expires=sessionExpires,
-                httponly=True
+                app.config['SESSION_COOKIE_NAME'],
+                value=g.session_ID,
+                expires=session_expires,
+                httponly=True,
             )
         return response
-    return decoratedFunction
+    return decorated_function

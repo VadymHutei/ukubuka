@@ -1,11 +1,9 @@
 from datetime import datetime, timedelta
 
+from config import PASSWORD_ABC, SESSION_ID_LENGTH, SESSION_LIFETIME_DAYS
 from flask import request
-
-from config import (PASSWORD_ABC,
-    SESSION_ID_LENGTH, SESSION_LIFETIME_DAYS)
-from vendor.ukubuka.password import getSecret
 from modules.Session.repository import SessionMySQLRepository
+from vendor.ukubuka.password import getSecret
 
 
 class SessionService:
@@ -13,7 +11,7 @@ class SessionService:
     def __init__(self):
         self.repository = SessionMySQLRepository()
 
-    def startSession(self):
+    def start_session(self):
         sessionID = getSecret(PASSWORD_ABC, SESSION_ID_LENGTH)
         currentDatetime = datetime.now()
         sessionExpires = currentDatetime + timedelta(days=SESSION_LIFETIME_DAYS)
@@ -27,7 +25,7 @@ class SessionService:
         result = self.repository.getUserIDBySessionID(sessionID)
         return None if result is None else int(result['user_id'])
 
-    def getUserBySessionID(self, sessionID):
+    def get_user_by_session_ID(self, sessionID):
         if sessionID is None:
             return None
         return self.repository.getUserBySessionID(sessionID)
