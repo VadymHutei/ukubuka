@@ -1,9 +1,7 @@
-from flask import Blueprint, redirect, url_for, g
-
+from flask import Blueprint, g, redirect, url_for
 from modules.Home.controllers.HomeController import HomeController
-from modules.Language.requestDecorators import languageRedirect
+from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import withSession
-
 
 homeBlueprint = Blueprint('homeBlueprint', __name__)
 
@@ -15,7 +13,7 @@ def mainRedirect():
 
 
 @homeBlueprint.route('/<string:language>/', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 def homeRoute():
     controller = HomeController()

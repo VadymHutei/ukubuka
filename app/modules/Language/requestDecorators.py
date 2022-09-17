@@ -3,9 +3,9 @@ from functools import wraps
 from flask import g, redirect, request, url_for
 
 
-def languageRedirect(f):
+def language_redirect(f):
     @wraps(f)
-    def decoratedFunction(*args, **kwargs):
+    def decorated_function(*args, **kwargs):
         if 'language' in kwargs:
             if kwargs['language'] not in g.t.available_languages:
                 kwargs['language'] = g.t.default_language.code
@@ -19,4 +19,4 @@ def languageRedirect(f):
         else:
             g.current_language = g.t.default_language
         return f(*args, **kwargs)
-    return decoratedFunction
+    return decorated_function

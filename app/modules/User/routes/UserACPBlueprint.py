@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from modules.Language.requestDecorators import languageRedirect
+from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import withSession
 from modules.User.controllers.ACPUserController import ACPUserController
 
@@ -8,14 +8,14 @@ ACP_user_controller = ACPUserController()
 
 
 @ACP_user_blueprint.route('', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 def ACP_users_route():
     return ACP_user_controller.users_page_action()
 
 
 @ACP_user_blueprint.route('/edit', methods=['GET', 'POST'])
-@languageRedirect
+@language_redirect
 @withSession
 def ACP_edit_user_route():
     if request.method == 'GET':
@@ -25,21 +25,21 @@ def ACP_edit_user_route():
 
 
 @ACP_user_blueprint.route('/block', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 def block_user_ACP_route():
     return ACP_user_controller.block_user_action()
 
 
 @ACP_user_blueprint.route('/unblock', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 def unblock_user_ACP_route():
     return ACP_user_controller.unblock_user_action()
 
 
 @ACP_user_blueprint.route('/delete', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 def delete_user_ACP_route():
     return ACP_user_controller.deleteUserAction()

@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, request, url_for
-from modules.Language.requestDecorators import languageRedirect
+from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import withSession
 from modules.User.controllers.UserController import UserController
 from modules.User.requestDecorators import onlyRegistered
@@ -10,7 +10,7 @@ controller = UserController()
 
 
 @userBlueprint.route('/<string:language>/registration', methods=['GET', 'POST'])
-@languageRedirect
+@language_redirect
 @withSession
 def registrationRoute():
     if request.method == 'GET':
@@ -20,7 +20,7 @@ def registrationRoute():
 
 
 @userBlueprint.route('/<string:language>/login', methods=['GET', 'POST'])
-@languageRedirect
+@language_redirect
 @withSession
 def loginRoute():
     if request.method == 'GET':
@@ -30,7 +30,7 @@ def loginRoute():
 
 
 @userBlueprint.route('/<string:language>/logout', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 def logoutRoute():
     userService = UserService()
@@ -39,7 +39,7 @@ def logoutRoute():
 
 
 @userBlueprint.route('/<string:language>/account', methods=['GET'])
-@languageRedirect
+@language_redirect
 @withSession
 @onlyRegistered
 def accountRoute():
