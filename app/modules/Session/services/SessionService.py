@@ -1,42 +1,51 @@
 from datetime import datetime, timedelta
+from typing import Optional
 
-from config import PASSWORD_ABC, SESSION_ID_LENGTH, SESSION_LIFETIME_DAYS
+from flask import current_app as app
 from flask import request
-from modules.Session.repository import SessionMySQLRepository
-from vendor.ukubuka.password import getSecret
+from modules.Auth.services.AuthService import AuthService
+from modules.Session.entities.SessionEntity import SessionEntity
+from modules.Session.repositories.SessionRepository import SessionRepository
 
 
 class SessionService:
 
     def __init__(self):
-        self.repository = SessionMySQLRepository()
+        self._repository = SessionRepository()
 
-    def start_session(self):
-        sessionID = getSecret(PASSWORD_ABC, SESSION_ID_LENGTH)
-        currentDatetime = datetime.now()
-        sessionExpires = currentDatetime + timedelta(days=SESSION_LIFETIME_DAYS)
-        user_agent = request.user_agent.string
-        self.repository.addSession(sessionID, currentDatetime, sessionExpires, user_agent)
-        return sessionID, sessionExpires
+    def get_session(self, session_ID: str) -> Optional[SessionEntity]:
+        return self._repository.get_session(session_ID)
+
+    def start_session(self) -> SessionEntity:
+        session_entity = SessionEntity(
+            AuthService.get_random_string(app.config['SESSION_ID_LENGTH'], app.config['PASSWORD_ABC']),
+            datetime.now(),
+            datetime.now() + timedelta(days=app.config['SESSION_LIFETIME_DAYS']),
+            request.user_agent.string
+        )
+
+        self._repository.add_session(session_entity)
+
+        return session_entity
 
     def getUserIDBySessionID(self, sessionID):
         if sessionID is None:
             return None
-        result = self.repository.getUserIDBySessionID(sessionID)
+        result = self._repository.getUserIDBySessionID(sessionID)
         return None if result is None else int(result['user_id'])
 
     def get_user_by_session_ID(self, sessionID):
         if sessionID is None:
             return None
-        return self.repository.getUserBySessionID(sessionID)
+        return self._repository.getUserBySessionID(sessionID)
 
     def setSessionData(self, key, value, sessionID):
         if sessionID is None:
             return None
-        self.repository.setSessionData(sessionID, key, value)
+        self._repository.setSessionData(sessionID, key, value)
 
     def getSessionData(self, key, sessionID):
         if sessionID is None:
             return None
-        result = self.repository.getSessionData(sessionID, key)
+        result = self._repository.getSessionData(sessionID, key)
         return None if result is None else result['value']

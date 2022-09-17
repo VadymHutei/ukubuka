@@ -1,9 +1,42 @@
+from typing import Optional
+
 from modules.Base.repositories.MySQLRepository import MySQLRepository
+from modules.Session.entities.SessionEntity import SessionEntity
 
 
-class SessionMySQLRepository(MySQLRepository):
+class SessionRepository(MySQLRepository):
 
-    def addSession(self, sessionID, created, expired, user_agent):
+    @staticmethod
+    def create_session_entity(row: dict) -> SessionEntity:
+        return SessionEntity(
+            ID=row['id'],
+            created_datetime=row['created_datetime'],
+            expired_datetime=row['expired_datetime'],
+            user_agent=row['user_agent'],
+        )
+
+    def get_session(self, session_ID: str) -> Optional[SessionEntity]:
+        query = '''
+            SELECT
+                id,
+                created_datetime,
+                expired_datetime,
+                user_agent
+            FROM
+                session
+            WHERE
+                id = %s
+        '''
+
+        with self.get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (session_ID,))
+                try:
+                    return SessionRepository.create_session_entity(cursor.fetchone())
+                except:
+                    return None
+
+    def add_session(self, session: SessionEntity):
         query = '''
             INSERT INTO session (
                 id,
@@ -20,7 +53,13 @@ class SessionMySQLRepository(MySQLRepository):
         '''
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (sessionID, created, expired, user_agent))
+                data = (
+                    session.ID,
+                    session.created_datetime,
+                    session.expired_datetime,
+                    session.user_agent
+                )
+                cursor.execute(query, data)
             connection.commit()
 
     def getUserIDBySessionID(self, sessionID):

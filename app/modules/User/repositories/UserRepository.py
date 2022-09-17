@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional
 
 from modules.Base.repositories.MySQLRepository import MySQLRepository
 from modules.User.entities.UserEntity import UserEntity
@@ -7,11 +7,8 @@ from modules.User.entities.UserNameEntity import UserNameEntity
 
 class UserRepository(MySQLRepository):
 
-    @classmethod
-    def create_user_entity(cls, row: Optional[dict]) -> Union[UserEntity, None]:
-        if row is None:
-            return None
-
+    @staticmethod
+    def create_user_entity(row: Optional[dict]) -> Optional[UserEntity]:
         return UserEntity(
             ID=int(row['id']),
             email=row['email'],
@@ -23,7 +20,7 @@ class UserRepository(MySQLRepository):
             registered_datetime=row['registered_datetime'],
         )
 
-    def get_user_by_ID(self, user_ID: int) -> Union[UserEntity, None]:
+    def get_user_by_ID(self, user_ID: int) -> Optional[UserEntity]:
         query = '''
             SELECT
                 id,
@@ -44,7 +41,7 @@ class UserRepository(MySQLRepository):
 
         return UserRepository.create_user_entity(cursor.fetchone())
 
-    def get_user_by_email(self, email: str) -> Union[UserEntity, None]:
+    def get_user_by_email(self, email: str) -> Optional[UserEntity]:
         query = '''
             SELECT
                 id,
@@ -64,6 +61,31 @@ class UserRepository(MySQLRepository):
                 cursor.execute(query, (email,))
 
                 return UserRepository.create_user_entity(cursor.fetchone())
+
+    def get_user_by_session_ID(self, session_ID: str) -> Optional[UserEntity]:
+        query = '''
+            SELECT
+                user.id,
+                user.email,
+                user.first_name,
+                user.last_name,
+                user.is_blocked,
+                user.registered_datetime
+            FROM
+                user
+            JOIN
+                session_user ON session_user.user_id = user.id
+            WHERE
+                session_user.session_id = %s
+        '''
+
+        with self.get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (session_ID,))
+                try:
+                    return UserRepository.create_user_entity(cursor.fetchone())
+                except:
+                    return None
 
     def add_user(self, data: dict) -> int:
         query1 = '''
