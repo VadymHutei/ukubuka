@@ -20,18 +20,18 @@ class ACPUserController:
 
     def edit_user_page_action(self):
         userID = int(request.args.get('id'))
-        userEntity = self._userService.get_user_by_ID(userID)
+        user_entity = self._userService.get_user_by_ID(userID)
 
-        if userEntity is None:
+        if user_entity is None:
             return abort(404)
 
         view = EditUserACPView()
 
-        view.data['user'] = userEntity
+        view.data['user'] = user_entity
         view.data['form_url'] = url_for(
             endpoint='ACP_user_Blueprint.ACP_edit_user_route',
             language=g.current_language.code,
-            id=userEntity.ID,
+            id=user_entity.ID,
         )
 
         return view.render()
@@ -54,10 +54,8 @@ class ACPUserController:
                     id=user_ID
                 ))
 
-        user_entity = self._userService.get_user_by_ID(form_data['id'])
-
         view = EditUserACPView()
-        view.data['user'] = user_entity
+        view.data['user'] = self._userService.get_user_by_ID(int(form_data['id']))
 
         return view.render()
 
