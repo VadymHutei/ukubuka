@@ -4,7 +4,7 @@
 
 <form action="{{ form_url }}" method="POST">
     <div>
-        <label for="text">{{ 'ID'|_ }}</label>
+        <label for="text">{{ 'ID' }}</label>
         <input type="text" name="id" id="id" value="{{ user.ID }}" readonly>
     </div>
     <div>
@@ -32,7 +32,7 @@
         {% endfor %}
         {% endif %}
         <label for="first_name">{{ 'first name'|_ }}</label>
-        <input class="{{ 'error' if 'first_name' in formErrors }}" type="text" name="first_name" id="first_name" value="{{ user.firstName }}">
+        <input class="{{ 'error' if 'first_name' in formErrors }}" type="text" name="first_name" id="first_name" value="{{ user.name.first_name }}">
     </div>
     <div>
         {% if 'last_name' in formErrors %}
@@ -41,7 +41,7 @@
         {% endfor %}
         {% endif %}
         <label for="last_name">{{ 'last name'|_ }}</label>
-        <input class="{{ 'error' if 'last_name' in formErrors }}" type="text" name="last_name" id="last_name" value="{{ user.lastName }}">
+        <input class="{{ 'error' if 'last_name' in formErrors }}" type="text" name="last_name" id="last_name" value="{{ user.name.last_name }}">
     </div>
     <input type="submit">
 </form>
