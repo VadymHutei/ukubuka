@@ -3,13 +3,13 @@ from typing import Optional
 
 class ValidatedField:
 
-    def __init__(self, name, required=True, empty_allowed=False):
-        self.name = name
-        self.value = None
-        self.required = required
-        self.empty_allowed = empty_allowed
-        self.errors = []
-        self.rules = []
+    def __init__(self, name: str, required: bool = True, empty_allowed: bool = False):
+        self.name: str = name
+        self.value: Optional[str] = None
+        self.required: bool = required
+        self.empty_allowed: bool = empty_allowed
+        self.errors: list = []
+        self.rules: list = []
 
     def validate(self, value: Optional[str]):
         if value is None and self.required:

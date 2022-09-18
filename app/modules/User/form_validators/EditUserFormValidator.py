@@ -6,7 +6,7 @@ from modules.User.validators.UserValidator import UserValidator
 
 class EditUserFormValidator(AbstractFormValidator):
 
-    def _set_field_validation_rules(self):
+    def _set_field_validation_rules(self) -> tuple[ValidatedField]:
         ID = ValidatedField('id')
         ID.rules.append(ValidationRule(UserValidator.text_ID, 'Wrong ID'))
 
