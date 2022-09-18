@@ -1,4 +1,4 @@
-from modules.Base.form_validators.ValidationRule import ValidationRule
+from typing import Optional
 
 
 class ValidatedField:
@@ -9,21 +9,24 @@ class ValidatedField:
         self.required = required
         self.empty_allowed = empty_allowed
         self.errors = []
-        self._rules = []
+        self.rules = []
 
-    def add_rule(self, rule: ValidationRule):
-        self._rules.append(rule)
+    def validate(self, value: Optional[str]):
+        if value is None and self.required:
+            self.errors.append(f'{self.name} is required')
+            return
 
-    def validate(self):
-        if self.value is None:
-            if self.required:
-                self.errors.append(f'{self.name} is required')
+        if not isinstance(value, str):
+            self.errors.append('Value must be of type string')
+            return
 
-        if isinstance(self.value, str) and not self.value:
-            if not self.empty_allowed and self.required:
-                self.errors.append(f'{self.name} cannot be empty')
+        if not value and not self.empty_allowed:
+            self.errors.append(f'{self.name} cannot be empty')
+            return
 
-        else:
-            for rule in self._rules:
-                if not rule.callback(self.value):
-                    self.errors.append(rule.error_message)
+        for rule in self.rules:
+            if not rule.callback(value):
+                self.errors.append(rule.error_message)
+
+        if not self.errors:
+            self.value = value

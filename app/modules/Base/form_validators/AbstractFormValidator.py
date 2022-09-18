@@ -1,32 +1,25 @@
 from abc import ABC, abstractmethod
 
+from modules.Base.form_validators.ValidatedField import ValidatedField
+
 
 class AbstractFormValidator(ABC):
 
-    def __init__(self):
-        self._fields = self._set_field_validation_rules()
-        self.errors = {}
+    def __init__(self, form):
+        self._fields: tuple[ValidatedField] = self._set_field_validation_rules()
+        self.errors: dict[str, list] = {}
+
+        self._validate(form)
 
     @abstractmethod
     def _set_field_validation_rules(self):
         pass
 
-    def validate(self, form):
+    def _validate(self, form):
         for field in self._fields:
-            field.value = form.get(field.name)
-            field.validate()
+            field.validate(form.get(field.name))
             if field.errors:
                 self.errors.update({field.name: field.errors})
 
-    def getFormData(self):
-        for field in self._fields:
-            if field.required and field.emptyAllowed:
-                pass
-            if field.required and not field.emptyAllowed:
-                pass
-            if not field.required and field.emptyAllowed:
-                pass
-            if not field.required and not field.emptyAllowed:
-                pass
-
-        return {field.name: field.value for field in self._fields}
+    def getFormData(self) -> dict[str, str]:
+        return {field.name: field.value for field in self._fields if not field.errors}

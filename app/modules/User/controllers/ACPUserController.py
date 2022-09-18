@@ -37,8 +37,7 @@ class ACPUserController:
         return view.render()
 
     def edit_user_action(self):
-        form_validator = EditUserFormValidator()
-        form_validator.validate(request.form)
+        form_validator = EditUserFormValidator(request.form)
         form_data = form_validator.getFormData()
         user_ID = form_data.get('id')
 

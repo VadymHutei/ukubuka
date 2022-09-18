@@ -3,10 +3,12 @@
 {% block content %}
 
 <form action="{{ form_url }}" method="POST">
+
     <div>
         <label for="text">{{ 'ID' }}</label>
         <input type="text" name="id" id="id" value="{{ user.ID }}" readonly>
     </div>
+
     <div>
         {% if 'email' in formErrors %}
         {% for errorText in formErrors['email'] %}
@@ -16,15 +18,7 @@
         <label for="email">{{ 'email'|_ }}</label>
         <input class="{{ 'error' if 'email' in formErrors }}" type="email" name="email" id="email" value="{{ user.email }}">
     </div>
-    <div>
-        {% if 'password' in formErrors %}
-        {% for errorText in formErrors['password'] %}
-        <p>{{ errorText }}</p>
-        {% endfor %}
-        {% endif %}
-        <label for="password">{{ 'password'|_ }}</label>
-        <input class="{{ 'error' if 'password' in formErrors }}" type="password" name="password" id="password">
-    </div>
+
     <div>
         {% if 'first_name' in formErrors %}
         {% for errorText in formErrors['first_name'] %}
@@ -34,6 +28,7 @@
         <label for="first_name">{{ 'first name'|_ }}</label>
         <input class="{{ 'error' if 'first_name' in formErrors }}" type="text" name="first_name" id="first_name" value="{{ user.name.first_name }}">
     </div>
+
     <div>
         {% if 'last_name' in formErrors %}
         {% for errorText in formErrors['last_name'] %}
@@ -43,7 +38,9 @@
         <label for="last_name">{{ 'last name'|_ }}</label>
         <input class="{{ 'error' if 'last_name' in formErrors }}" type="text" name="last_name" id="last_name" value="{{ user.name.last_name }}">
     </div>
+
     <input type="submit">
+
 </form>
 
 {% endblock %}
