@@ -1,4 +1,4 @@
-from flask import abort, redirect, request, url_for
+from flask import abort, g, redirect, request, url_for
 from modules.User.form_validators.EditUserFormValidator import EditUserFormValidator
 from modules.User.services.UserService import UserService
 from modules.User.validators.UserValidator import UserValidator
@@ -28,6 +28,11 @@ class ACPUserController:
         view = EditUserACPView()
 
         view.data['user'] = userEntity
+        view.data['form_url'] = url_for(
+            endpoint='ACP_user_Blueprint.ACP_edit_user_route',
+            language=g.current_language.code,
+            id=userEntity.ID,
+        )
 
         return view.render()
 

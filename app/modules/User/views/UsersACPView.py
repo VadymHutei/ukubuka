@@ -1,8 +1,8 @@
 from flask import g
-from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
+from modules.Base.views.ACPView import ACPView
 
 
-class UsersACPView(UkubukaACPView):
+class UsersACPView(ACPView):
 
     template: str = 'modules/User/ACP/users.html'
 

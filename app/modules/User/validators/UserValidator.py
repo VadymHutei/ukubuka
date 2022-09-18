@@ -1,9 +1,9 @@
 import re
 
-from modules.Ukubuka.UkubukaValidator import UkubukaValidator
+from modules.Base.validators.Validator import Validator
 
 
-class UserValidator(UkubukaValidator):
+class UserValidator(Validator):
 
     @staticmethod
     def password(password: str) -> bool:

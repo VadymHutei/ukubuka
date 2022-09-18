@@ -1,9 +1,9 @@
 import re
 
-from modules.Ukubuka.UkubukaValidator import UkubukaValidator
+from modules.Base.validators.Validator import Validator
 
 
-class LanguageValidator(UkubukaValidator):
+class LanguageValidator(Validator):
 
     @staticmethod
     def languageCode(code):

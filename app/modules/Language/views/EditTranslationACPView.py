@@ -1,8 +1,8 @@
 from flask import g
-from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
+from modules.Base.views.ACPView import ACPView
 
 
-class EditTranslationACPView(UkubukaACPView):
+class EditTranslationACPView(ACPView):
 
     template: str = 'modules/Language/ACP/editTranslation.html'
 

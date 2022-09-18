@@ -1,9 +1,9 @@
+from modules.Base.views.View import View
 from modules.Notification.entities.NotificationEntity import NotificationEntity
 from modules.Notification.services.NotificationService import NotificationService
-from modules.Ukubuka.views.UkubukaView import UkubukaView
 
 
-class UkubukaACPView(UkubukaView):
+class ACPView(View):
 
     def __init__(self):
         super().__init__()

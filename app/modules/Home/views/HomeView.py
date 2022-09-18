@@ -1,8 +1,8 @@
 from flask import g
-from modules.Ukubuka.views.UkubukaACPView import UkubukaACPView
+from modules.Base.views.ACPView import ACPView
 
 
-class HomeView(UkubukaACPView):
+class HomeView(ACPView):
 
     template: str = 'modules/Home/homepage.html'
 

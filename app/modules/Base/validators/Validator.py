@@ -1,4 +1,4 @@
-class UkubukaValidator:
+class Validator:
 
     INT_MIN_VALUE = -2147483648
     INT_MAX_VALUE = 2147483647

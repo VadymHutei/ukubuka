@@ -1,7 +1,7 @@
 from flask import abort
-
-from modules.Ukubuka.views.UkubukaView import UkubukaView
+from modules.Base.views.View import View
 from modules.Catalog.service import CatalogService
+
 
 class CatalogController:
 
@@ -10,7 +10,7 @@ class CatalogController:
 
     def catalogMainPageAction(self):
         catalogs = self.service.getActiveCatalogs()
-        view = UkubukaView('modules/Catalog/catalog_main_page.html')
+        view = View('modules/Catalog/catalog_main_page.html')
         view.addData({
             'catalogs': catalogs,
         })
@@ -21,7 +21,7 @@ class CatalogController:
         if catalog is None:
             abort(404)
         products = self.service.getProductsByCatalogID(catalog['id'])
-        view = UkubukaView('modules/Catalog/catalog.html')
+        view = View('modules/Catalog/catalog.html')
         view.addData({
             'catalog': catalog,
             'products': products,

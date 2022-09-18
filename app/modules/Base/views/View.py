@@ -1,9 +1,10 @@
-from flask import render_template
+from flask import g, render_template
 
 
 class View:
 
     template: str
+    page_title: str
 
     def __init__(self):
         self.data = {}
@@ -15,7 +16,8 @@ class View:
         self.data['t'] = self.template_data
 
     def _prepare_template_data(self):
-        pass
+        self.template_data['title'] = g.t._(self.page_title)
+        self.template_data['language'] = g.current_language
 
     def _prepare_page_data(self):
         pass
