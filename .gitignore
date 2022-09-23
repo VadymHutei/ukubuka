@@ -9,8 +9,8 @@ __pycache__/
 
 /env/
 
-/db/data/
-/db/mysql/data/
+/db/mysql/
+/db/redis/
 /db/*_data.sql
 
 /app/vendor/
