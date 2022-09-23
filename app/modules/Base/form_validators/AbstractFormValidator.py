@@ -17,9 +17,9 @@ class AbstractFormValidator(ABC):
 
     def _validate(self, form):
         for field in self._fields:
-            field.validate(form.get(field.name))
+            field.validate(form[field.name])
             if field.errors:
                 self.errors.update({field.name: field.errors})
 
-    def getFormData(self) -> dict[str, str]:
+    def get_form_data(self) -> dict[str, str]:
         return {field.name: field.value for field in self._fields if not field.errors}

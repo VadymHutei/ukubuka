@@ -78,7 +78,7 @@ class TranslationACPController:
 
             return view.render()
 
-        data = formValidator.getFormData()
+        data = formValidator.get_form_data()
 
         pattern = re.compile('translation_(' + '|'.join(g.t.languages.keys()) + ')')
         for fieldName, fieldValue in data.items():

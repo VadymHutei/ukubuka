@@ -9,18 +9,18 @@ from modules.User.views.UsersACPView import UsersACPView
 class ACPUserController:
 
     def __init__(self):
-        self._userService = UserService()
+        self._user_service = UserService()
 
     def users_page_action(self):
         view = UsersACPView()
 
-        view.data['users'] = self._userService.get_users()
+        view.data['users'] = self._user_service.get_users()
 
         return view.render()
 
     def edit_user_page_action(self):
-        userID = int(request.args.get('id'))
-        user_entity = self._userService.get_user_by_ID(userID)
+        user_ID = int(request.args.get('id'))
+        user_entity = self._user_service.get_user_by_ID(user_ID)
 
         if user_entity is None:
             return abort(404)
@@ -38,24 +38,28 @@ class ACPUserController:
 
     def edit_user_action(self):
         form_validator = EditUserFormValidator(request.form)
-        form_data = form_validator.getFormData()
-        user_ID = form_data.get('id')
+        form_data = form_validator.get_form_data()
 
         if form_validator.errors:
-            if user_ID is None:
+            try:
+                return redirect(
+                    location=url_for(
+                        'ACP_user_Blueprint.ACP_edit_user_route',
+                        language=g.current_language.code,
+                        id=form_data['id']
+                    ),
+                    code=303,
+                )
+            except:
                 return redirect(url_for(
                     'ACP_user_Blueprint.ACP_users_route',
                     language=g.current_language.code
                 ))
-            else:
-                return redirect(url_for(
-                    'ACP_user_Blueprint.ACP_edit_user_route',
-                    language=g.current_language.code,
-                    id=user_ID
-                ))
+
+        # self._user_service.edit_user()
 
         view = EditUserACPView()
-        view.data['user'] = self._userService.get_user_by_ID(int(form_data['id']))
+        view.data['user'] = self._user_service.get_user_by_ID(int(form_data['id']))
 
         return view.render()
 
@@ -65,7 +69,7 @@ class ACPUserController:
         if (userID == 0 or not UserValidator.intID(userID, True)):
             return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
 
-        self._userService.block_user(userID)
+        self._user_service.block_user(userID)
 
         return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
 
@@ -75,6 +79,6 @@ class ACPUserController:
         if (userID == 0 or not UserValidator.intID(userID, True)):
             return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
 
-        self._userService.unblock_user(userID)
+        self._user_service.unblock_user(userID)
 
         return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))

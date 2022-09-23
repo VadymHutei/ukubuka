@@ -21,7 +21,7 @@ class UserController:
             return view.render()
         service = UserService()
         try:
-            service.create_user(formValidator.getFormData())
+            service.create_user(formValidator.get_form_data())
         except UserAlreadyExist as e:
             view = View('modules/User/registration.html')
             view.addData({'errors': {'other': (str(e),)}})
@@ -39,9 +39,9 @@ class UserController:
             view.addData({'errors': formValidator.errors})
             return view.render()
         service = UserService()
-        formData = formValidator.getFormData()
+        formData = formValidator.get_form_data()
         try:
-            userID = service.login(formValidator.getFormData())
+            userID = service.login(formValidator.get_form_data())
         except WrongPassword as e:
             view = View('modules/User/login.html')
             view.addData({'errors': {'password': [e]}})
