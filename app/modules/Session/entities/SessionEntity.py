@@ -10,3 +10,4 @@ class SessionEntity:
     created_datetime: datetime
     expired_datetime: datetime
     user_agent: Optional[str]
+    is_new: bool = False

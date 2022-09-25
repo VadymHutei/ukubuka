@@ -16,17 +16,18 @@ class SessionService:
     def get_session(self, session_ID: str) -> Optional[SessionEntity]:
         return self._repository.get_session(session_ID)
 
-    def start_session(self) -> SessionEntity:
-        session_entity = SessionEntity(
-            AuthService.get_random_string(app.config['SESSION_ID_LENGTH'], app.config['PASSWORD_ABC']),
-            datetime.now(),
-            datetime.now() + timedelta(days=app.config['SESSION_LIFETIME_DAYS']),
-            request.user_agent.string
+    def create_session(self) -> SessionEntity:
+        session = SessionEntity(
+            ID=AuthService.get_random_string(app.config['SESSION_ID_LENGTH'], app.config['PASSWORD_ABC']),
+            created_datetime=datetime.now(),
+            expired_datetime=datetime.now() + timedelta(days=app.config['SESSION_LIFETIME_DAYS']),
+            user_agent=request.user_agent.string,
+            is_new=True
         )
 
-        self._repository.add_session(session_entity)
+        self._repository.add_session(session)
 
-        return session_entity
+        return session
 
     def getUserIDBySessionID(self, sessionID):
         if sessionID is None:

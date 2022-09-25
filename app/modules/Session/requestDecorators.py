@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import wraps
 
 from flask import current_app as app
@@ -11,14 +12,22 @@ def with_session(f):
         session_service = SessionService()
         response = make_response(f(*args, **kwargs))
         session_ID = request.cookies.get(app.config['SESSION_COOKIE_NAME'])
-        g.session = session_service.get_session(session_ID)
-        if g.session is None:
-            g.session = session_service.start_session()
+
+        if session_ID is None:
+            g.session = session_service.create_session()
+        else:
+            g.session = session_service.get_session(session_ID)
+            if g.session is None or g.session.expired_datetime < datetime.now():
+                g.session = session_service.create_session()
+
+        if g.session.is_new:
             response.set_cookie(
                 app.config['SESSION_COOKIE_NAME'],
                 value=g.session.ID,
                 expires=g.session.expired_datetime,
                 httponly=True,
             )
+
         return response
+
     return decorated_function
