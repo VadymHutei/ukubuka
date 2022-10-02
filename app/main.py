@@ -1,4 +1,4 @@
-from flask import Flask, g, request
+from flask import Flask, g
 
 from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
@@ -20,7 +20,6 @@ app.jinja_env.filters.update(language_filters)
 
 @app.before_request
 def beforeRequest():
-    request.ctx = {}
     g.t = Translator.getInstance()
     g.current_language = g.t.default_language
 
