@@ -4,7 +4,7 @@ from modules.Base.repositories.MySQLRepository import MySQLRepository
 from modules.Session.entities.SessionEntity import SessionEntity
 
 
-class SessionRepository(MySQLRepository):
+class SessionMySQLRepository(MySQLRepository):
 
     @staticmethod
     def create_session_entity(row: dict) -> SessionEntity:
@@ -32,7 +32,7 @@ class SessionRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query, (session_ID,))
                 try:
-                    return SessionRepository.create_session_entity(cursor.fetchone())
+                    return SessionMySQLRepository.create_session_entity(cursor.fetchone())
                 except:
                     return None
 

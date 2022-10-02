@@ -6,7 +6,7 @@ class MySQLRepository:
 
     @classmethod
     def get_connection(cls):
-        _db_credentials = app.config['DB_CREDENTIALS']
+        _db_credentials = app.config['MYSQL_DB_CREDENTIALS']
         _db_credentials['cursorclass'] = pymysql.cursors.DictCursor
         return pymysql.connect(**_db_credentials)
 

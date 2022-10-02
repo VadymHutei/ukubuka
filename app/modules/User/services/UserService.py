@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from modules.Session.repositories.SessionRepository import SessionRepository
+from modules.Session.repositories.SessionMySQLRepository import SessionMySQLRepository
 from modules.User.entities.UserEntity import UserEntity
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.exceptions.UserNotExist import UserNotExist
@@ -35,7 +35,7 @@ class UserService:
         _, _, passwordHash = getPassword(password=data['password'], salt=user_data['salt'])
         if user_data['password_hash'] != passwordHash:
             raise WrongPassword()
-        session_repository = SessionRepository()
+        session_repository = SessionMySQLRepository()
         session_repository.setLoginStatus(g.session_ID, user_data['id'], True)
 
     def logout_by_session_ID(self, session_ID: str):

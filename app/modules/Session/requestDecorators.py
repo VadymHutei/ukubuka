@@ -12,15 +12,18 @@ def with_session(f):
         session_service = SessionService()
         response = make_response(f(*args, **kwargs))
         session_ID = request.cookies.get(app.config['SESSION_COOKIE_NAME'])
+        is_new_session = False
 
         if session_ID is None:
             g.session = session_service.create_session()
+            is_new_session = True
         else:
             g.session = session_service.get_session(session_ID)
             if g.session is None or g.session.expired_datetime < datetime.now():
                 g.session = session_service.create_session()
+                is_new_session = True
 
-        if g.session.is_new:
+        if is_new_session:
             response.set_cookie(
                 app.config['SESSION_COOKIE_NAME'],
                 value=g.session.ID,
