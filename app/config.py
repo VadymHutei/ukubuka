@@ -1,15 +1,19 @@
-DB_CREDENTIALS = {
+MYSQL_DB_CREDENTIALS = {
     'host': 'localhost',
     'user': 'user',
     'password': 'password',
     'database': 'database',
 }
 
-DB_CREDENTIALS = {
+REDIS_DB_CREDENTIALS = {
     'host': 'localhost',
-    'user': 'root',
-    'password': 'root',
-    'database': 'ukubuka',
+    'port': 6379,
+}
+
+REDIS_DBS = {
+    'test': 0,
+    'session': 1,
+    'cache': 2,
 }
 
 SESSION_COOKIE_NAME = 'usid'
