@@ -10,9 +10,12 @@ def with_session(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         session_service = SessionService()
+
         response = make_response(f(*args, **kwargs))
-        session_ID = request.cookies.get(app.config['SESSION_COOKIE_NAME'])
+
         is_new_session = False
+
+        session_ID = request.cookies.get(app.config['SESSION_COOKIE_NAME'])
 
         if session_ID is None:
             g.session = session_service.create_session()
@@ -23,13 +26,15 @@ def with_session(f):
                 g.session = session_service.create_session()
                 is_new_session = True
 
-        if is_new_session:
-            response.set_cookie(
-                app.config['SESSION_COOKIE_NAME'],
-                value=g.session.ID,
-                expires=g.session.expired_datetime,
-                httponly=True,
-            )
+        if not is_new_session:
+            session_service.update_last_visit(g.session)
+
+        response.set_cookie(
+            app.config['SESSION_COOKIE_NAME'],
+            value=g.session.ID,
+            expires=g.session.expired_datetime,
+            httponly=True,
+        )
 
         return response
 

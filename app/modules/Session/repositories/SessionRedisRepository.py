@@ -17,6 +17,10 @@ class SessionRedisRepository(RedisRepository):
                 session_data[b'created_datetime'].decode('utf-8'),
                 RedisRepository.DATETIME_FORMAT
             ),
+            'last_visit_datetime': datetime.strptime(
+                session_data[b'last_visit_datetime'].decode('utf-8'),
+                RedisRepository.DATETIME_FORMAT
+            ),
             'expired_datetime': datetime.strptime(
                 session_data[b'expired_datetime'].decode('utf-8'),
                 RedisRepository.DATETIME_FORMAT
@@ -32,15 +36,16 @@ class SessionRedisRepository(RedisRepository):
     def _get_session_key(self, session_ID: str) -> str:
         return f'{self.SESSION_PREFIX}:{session_ID}'
 
-    def add_session(self, session: SessionEntity):
+    def set_session(self, session: SessionEntity):
         key = self._get_session_key(session.ID)
-        session_TTL = int((session.expired_datetime - session.created_datetime).total_seconds())
+        session_TTL = int((session.expired_datetime - datetime.now()).total_seconds())
 
         self._db.hmset(
             key,
             {
                 'id': session.ID,
                 'created_datetime': session.created_datetime.strftime(RedisRepository.DATETIME_FORMAT),
+                'last_visit_datetime': session.last_visit_datetime.strftime(RedisRepository.DATETIME_FORMAT),
                 'expired_datetime': session.expired_datetime.strftime(RedisRepository.DATETIME_FORMAT),
                 'user_agent': session.user_agent,
             }

@@ -22,11 +22,12 @@ class SessionService:
         session = SessionEntity(
             ID=AuthService.get_random_string(app.config['SESSION_ID_LENGTH'], app.config['PASSWORD_ABC']),
             created_datetime=datetime.now(),
+            last_visit_datetime=datetime.now(),
             expired_datetime=datetime.now() + timedelta(days=app.config['SESSION_LIFETIME_DAYS']),
             user_agent=request.user_agent.string,
         )
 
-        self._Redis_repository.add_session(session)
+        self._Redis_repository.set_session(session)
 
         return session
 
@@ -51,3 +52,9 @@ class SessionService:
             return None
         result = self._MySQL_repository.getSessionData(sessionID, key)
         return None if result is None else result['value']
+
+    def update_last_visit(self, session: SessionEntity):
+        session.last_visit_datetime = datetime.now()
+        session.expired_datetime = datetime.now() + timedelta(days=app.config['SESSION_LIFETIME_DAYS'])
+
+        self._Redis_repository.set_session(session)
