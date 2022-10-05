@@ -1,8 +1,7 @@
-from flask import g
-from modules.Base.views.ACPView import ACPView
+from modules.Base.views.LayoutView import LayoutView
 
 
-class HomeView(ACPView):
+class HomeView(LayoutView):
 
-    template: str = 'modules/Home/homepage.html'
     page_title: str = 'Ukubuka'
+    template: str = 'modules/Home/homepage.html'

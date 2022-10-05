@@ -35,7 +35,7 @@ def loginRoute():
 def logoutRoute():
     userService = UserService()
     userService.logout_by_session_ID(g.session_ID)
-    return redirect(url_for('homeBlueprint.homeRoute', language=g.current_language.code))
+    return redirect(url_for('home_blueprint.home_route', language=g.current_language.code))
 
 
 @userBlueprint.route('/<string:language>/account', methods=['GET'])

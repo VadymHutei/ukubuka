@@ -26,7 +26,7 @@ class UserController:
             view = View('modules/User/registration.html')
             view.addData({'errors': {'other': (str(e),)}})
             return view.render()
-        return redirect(url_for('homeBlueprint.homeRoute', language=g.current_language.code))
+        return redirect(url_for('home_blueprint.home_route', language=g.current_language.code))
 
     def loginPageAction(self):
         view = View('modules/User/login.html')
@@ -50,7 +50,7 @@ class UserController:
             view = View('modules/User/login.html')
             view.addData({'errors': {'other': [e]}})
             return view.render()
-        return redirect(url_for('homeBlueprint.homeRoute', language=g.current_language.code))
+        return redirect(url_for('home_blueprint.home_route', language=g.current_language.code))
 
     def accountAction(self):
         view = View('modules/User/account.html')

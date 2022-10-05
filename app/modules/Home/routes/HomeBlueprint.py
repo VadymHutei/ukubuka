@@ -3,18 +3,18 @@ from modules.Home.controllers.HomeController import HomeController
 from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
 
-homeBlueprint = Blueprint('homeBlueprint', __name__)
+home_blueprint = Blueprint('home_blueprint', __name__)
 
 
-@homeBlueprint.route('/', methods=['GET'])
+@home_blueprint.route('/', methods=['GET'])
 @with_session
-def mainRedirect():
-    return redirect(url_for('homeBlueprint.homeRoute', language=g.t.default_language.code))
+def main_redirect():
+    return redirect(url_for('home_blueprint.home_route', language=g.t.default_language.code))
 
 
-@homeBlueprint.route('/<string:language>/', methods=['GET'])
+@home_blueprint.route('/<string:language>/', methods=['GET'])
 @language_redirect
 @with_session
-def homeRoute():
+def home_route():
     controller = HomeController()
-    return controller.homeAction()
+    return controller.home_action()

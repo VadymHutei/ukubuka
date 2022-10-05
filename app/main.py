@@ -2,7 +2,7 @@ from flask import Flask, g
 
 from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
-from modules.Home.routes.HomeBlueprint import homeBlueprint
+from modules.Home.routes.HomeBlueprint import home_blueprint
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.Translator import Translator
@@ -24,7 +24,7 @@ def beforeRequest():
     g.current_language = g.t.default_language
 
 
-app.register_blueprint(homeBlueprint)
+app.register_blueprint(home_blueprint)
 app.register_blueprint(userBlueprint)
 app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(dashboardACPBlueprint)

@@ -3,12 +3,12 @@ from flask import g, render_template
 
 class View:
 
-    template: str
     page_title: str
+    template: str
 
     def __init__(self):
-        self.data = {}
         self.template_data = {}
+        self.data = {}
 
     def _prepage_data(self):
         self._prepare_template_data()
