@@ -29,7 +29,7 @@ class ACPUserController:
 
         view.data['user'] = user_entity
         view.data['form_url'] = url_for(
-            endpoint='ACP_user_Blueprint.ACP_edit_user_route',
+            endpoint='ACP_user_blueprint.ACP_edit_user_route',
             language=g.current_language.code,
             id=user_entity.ID,
         )
@@ -44,7 +44,7 @@ class ACPUserController:
             try:
                 return redirect(
                     location=url_for(
-                        'ACP_user_Blueprint.ACP_edit_user_route',
+                        'ACP_user_blueprint.ACP_edit_user_route',
                         language=g.current_language.code,
                         id=form_data['id']
                     ),
@@ -52,7 +52,7 @@ class ACPUserController:
                 )
             except:
                 return redirect(url_for(
-                    'ACP_user_Blueprint.ACP_users_route',
+                    'ACP_user_blueprint.ACP_users_route',
                     language=g.current_language.code
                 ))
 
@@ -67,18 +67,18 @@ class ACPUserController:
         userID = int(request.args.get('id', 0))
 
         if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
+            return redirect(url_for('ACP_user_blueprint.ACP_users_route', language=g.current_language.code))
 
         self._user_service.block_user(userID)
 
-        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
+        return redirect(url_for('ACP_user_blueprint.ACP_users_route', language=g.current_language.code))
 
     def unblock_user_action(self):
         userID = int(request.args.get('id', 0))
 
         if (userID == 0 or not UserValidator.intID(userID, True)):
-            return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
+            return redirect(url_for('ACP_user_blueprint.ACP_users_route', language=g.current_language.code))
 
         self._user_service.unblock_user(userID)
 
-        return redirect(url_for('ACP_user_Blueprint.ACP_users_route', language=g.current_language.code))
+        return redirect(url_for('ACP_user_blueprint.ACP_users_route', language=g.current_language.code))
