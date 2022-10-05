@@ -56,6 +56,6 @@ class SessionService:
     def update_last_visit(self, session: SessionEntity):
         session.last_visit_datetime = datetime.now()
         session.expired_datetime = datetime.now() + timedelta(days=app.config['SESSION_LIFETIME_DAYS'])
-        session.user_agent = request.user_agent.string,
+        session.user_agent = request.user_agent.string
 
         self._Redis_repository.set_session(session)
