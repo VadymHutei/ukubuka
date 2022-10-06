@@ -1,16 +1,12 @@
-from modules.Notification.services.NotificationService import NotificationService
+from dataclasses import dataclass
+from typing import Any, Optional
+
+from modules.Notification.entities.NotificationType import NotificationType
 
 
+@dataclass
 class NotificationEntity:
 
-    def __init__(self, text, type=NotificationService.INFO_TYPE):
-        self._text = text
-        self._type = type if type in NotificationService.TYPES else NotificationService.INFO_TYPE
-
-    @property
-    def text(self):
-        return self._text
-
-    @property
-    def type(self):
-        return self._type
+    text: str
+    type: str = NotificationType.INFO_TYPE
+    metadata: Optional[dict[str, Any]] = None
