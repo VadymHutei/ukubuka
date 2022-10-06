@@ -5,42 +5,42 @@ from modules.User.controllers.UserController import UserController
 from modules.User.requestDecorators import onlyRegistered
 from modules.User.services.UserService import UserService
 
-userBlueprint = Blueprint('userBlueprint', __name__)
+user_blueprint = Blueprint('user_blueprint', __name__)
 controller = UserController()
 
 
-@userBlueprint.route('/<string:language>/registration', methods=['GET', 'POST'])
+@user_blueprint.route('/<string:language>/registration', methods=['GET', 'POST'])
 @language_redirect
 @with_session
-def registrationRoute():
+def registration_route():
     if request.method == 'GET':
-        return controller.registrationPageAction()
+        return controller.registration_page_action()
     elif request.method == 'POST':
-        return controller.registrationAction()
+        return controller.registration_action()
 
 
-@userBlueprint.route('/<string:language>/login', methods=['GET', 'POST'])
+@user_blueprint.route('/<string:language>/login', methods=['GET', 'POST'])
 @language_redirect
 @with_session
-def loginRoute():
+def login_route():
     if request.method == 'GET':
         return controller.loginPageAction()
     elif request.method == 'POST':
         return controller.loginAction()
 
 
-@userBlueprint.route('/<string:language>/logout', methods=['GET'])
+@user_blueprint.route('/<string:language>/logout', methods=['GET'])
 @language_redirect
 @with_session
-def logoutRoute():
+def logout_route():
     userService = UserService()
     userService.logout_by_session_ID(g.session_ID)
     return redirect(url_for('home_blueprint.home_route', language=g.current_language.code))
 
 
-@userBlueprint.route('/<string:language>/account', methods=['GET'])
+@user_blueprint.route('/<string:language>/account', methods=['GET'])
 @language_redirect
 @with_session
 @onlyRegistered
-def accountRoute():
+def accountroute():
     return controller.accountAction()

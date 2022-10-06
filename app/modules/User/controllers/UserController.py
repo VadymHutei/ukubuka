@@ -4,16 +4,17 @@ from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
 from modules.User.services.UserService import UserService
+from modules.User.views.RegistrationView import RegistrationView
 from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
 
 
 class UserController:
 
-    def registrationPageAction(self):
-        view = View('modules/User/registration.html')
+    def registration_page_action(self):
+        view = RegistrationView()
         return view.render()
 
-    def registrationAction(self):
+    def registration_action(self):
         formValidator = RegistrationFormValidator(request.form)
         if formValidator.errors:
             view = View('modules/User/registration.html')
