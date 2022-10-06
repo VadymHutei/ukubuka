@@ -1,5 +1,8 @@
-from flask import redirect, request, url_for
+from flask import g, redirect, request, url_for
 from modules.Base.views.View import View
+from modules.Notification.entities.NotificationEntity import NotificationEntity
+from modules.Notification.entities.NotificationType import NotificationType
+from modules.Notification.services.NotificationService import NotificationService
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
@@ -16,6 +19,28 @@ class UserController:
 
     def registration_action(self):
         formValidator = RegistrationFormValidator(request.form)
+
+        if formValidator.errors:
+            for field, errors in formValidator.errors.items():
+                for error in errors:
+                    NotificationService.add_notification(
+                        notification=NotificationEntity(
+                            text=error,
+                            type=NotificationType.WARNING_TYPE,
+                            metadata={'field': field}
+                        ),
+                        endpoint='user_blueprint.registration_route',
+                        form='registration',
+                    )
+
+            return redirect(
+                location=url_for(
+                    endpoint='user_blueprint.registration_route',
+                    language=g.current_language.code,
+                ),
+                code=303,
+            )
+
         if formValidator.errors:
             view = View('modules/User/registration.html')
             view.addData({'errors': formValidator.errors})
