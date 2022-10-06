@@ -11,8 +11,6 @@ def with_session(f):
     def decorated_function(*args, **kwargs):
         session_service = SessionService()
 
-        response = make_response(f(*args, **kwargs))
-
         is_new_session = False
 
         session_ID = request.cookies.get(app.config['SESSION_COOKIE_NAME'])
@@ -29,6 +27,7 @@ def with_session(f):
         if not is_new_session:
             session_service.update_last_visit(g.session)
 
+        response = make_response(f(*args, **kwargs))
         response.set_cookie(
             app.config['SESSION_COOKIE_NAME'],
             value=g.session.ID,
