@@ -15,6 +15,10 @@ class UserController:
 
     def registration_page_action(self):
         view = RegistrationView()
+        view.data['errors'] = NotificationService.get_notifications(
+            endpoint='user_blueprint.registration_route',
+            form='registration'
+        )
         return view.render()
 
     def registration_action(self):
@@ -23,12 +27,13 @@ class UserController:
         if formValidator.errors:
             for field, errors in formValidator.errors.items():
                 for error in errors:
+                    notification = NotificationEntity(
+                        text=error,
+                        type=NotificationType.WARNING_TYPE,
+                        metadata={'field': field}
+                    )
                     NotificationService.add_notification(
-                        notification=NotificationEntity(
-                            text=error,
-                            type=NotificationType.WARNING_TYPE,
-                            metadata={'field': field}
-                        ),
+                        notification,
                         endpoint='user_blueprint.registration_route',
                         form='registration',
                     )
