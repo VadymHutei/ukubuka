@@ -14,6 +14,7 @@ REDIS_DBS = {
     'test': 0,
     'session': 1,
     'cache': 2,
+    'notification': 3,
 }
 
 SESSION_COOKIE_NAME = 'usid'
