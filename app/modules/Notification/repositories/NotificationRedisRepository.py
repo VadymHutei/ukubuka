@@ -30,7 +30,7 @@ class NotificationRedisRepository(RedisRepository):
     def _pop_notifications(self, key: str) -> list[Notification]:
         pipeline = self._db.pipeline()
         pipeline.lrange(key, 0, -1)
-        # pipeline.delete(key)
+        pipeline.delete(key)
         data = pipeline.execute()[0]
 
         return [Notification(**json.loads(row.decode('utf-8'))) for row in data]
