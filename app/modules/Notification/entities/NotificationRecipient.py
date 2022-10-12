@@ -1,13 +1,10 @@
-from enum import Enum
+from dataclasses import dataclass
+
+from modules.Notification.entities.NotificationRecipientLevel import NotificationRecipientLevel
 
 
-class NotificationRecipient(str, Enum):
+@dataclass
+class NotificationRecipient:
 
-    USER: str = 'user'
-    ALL: str = 'all'
-
-    def __str__(self):
-        return str(self.value)
-
-    def __repr__(self):
-        return str(self.value)
+    level: NotificationRecipientLevel
+    value: str

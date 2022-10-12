@@ -1,28 +1,57 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Optional
 
-from modules.Notification.entities.NotificationEntity import NotificationEntity
+from flask import g
+from modules.Notification.entities.NotificationEntity import Notification
 from modules.Notification.entities.NotificationRecipient import NotificationRecipient
+from modules.Notification.entities.NotificationRecipientLevel import NotificationRecipientLevel
 from modules.Notification.repositories.NotificationRedisRepository import NotificationRedisRepository
 
 
 class NotificationService:
 
-    @staticmethod
-    def add_notification(
-        notification: NotificationEntity,
+    def __init__(self):
+        self._repository = NotificationRedisRepository()
+
+    def set_notification(
+        self,
+        notification: Notification,
+        recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
-        form: Optional[str] = None,
-        recipient: NotificationRecipient = NotificationRecipient.USER,
+        key_data: Optional[dict[str, str]] = None,
         TTL: Optional[timedelta] = None,
     ):
-        repository = NotificationRedisRepository()
-        repository.add_notification(notification, endpoint, form, recipient, TTL)
+        self._repository.set_notification(notification, recipient, endpoint, key_data, TTL)
 
-    @staticmethod
+    def set_form_notification(
+        self,
+        notification: Notification,
+        endpoint: str,
+        form: str,
+        field: str,
+    ):
+        recipient = NotificationRecipient(NotificationRecipientLevel.SESSION, g.session.ID)
+        key_data = {
+            'form': form,
+            'field': field,
+        }
+        TTL = g.session.expired_datetime - datetime.now()
+
+        self.set_notification(notification, recipient, endpoint, key_data, TTL)
+
     def get_notifications(
+        self,
+        recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
-        form: Optional[str] = None
-    ) -> list[NotificationEntity]:
-        repository = NotificationRedisRepository()
-        return repository.get_notifications(endpoint, form)
+        key_data: Optional[dict[str, str]] = None,
+    ) -> list[Notification]:
+        return self._repository.get_notifications(recipient, endpoint, key_data)
+
+    def get_form_notifications(self, endpoint: str, form: str) -> list[Notification]:
+        recipient = NotificationRecipient(NotificationRecipientLevel.SESSION, g.session.ID)
+        key_data = {
+            'form': form,
+            'field': '*',
+        }
+
+        return self.get_notifications(recipient, endpoint, key_data)

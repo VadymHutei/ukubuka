@@ -1,12 +1,10 @@
 from dataclasses import dataclass
-from typing import Any, Optional
 
 from modules.Notification.entities.NotificationType import NotificationType
 
 
 @dataclass
-class NotificationEntity:
+class Notification:
 
     text: str
-    type: str = NotificationType.INFO_TYPE
-    metadata: Optional[dict[str, Any]] = None
+    type: NotificationType = NotificationType.INFO_TYPE

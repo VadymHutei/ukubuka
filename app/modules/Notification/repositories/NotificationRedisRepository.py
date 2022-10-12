@@ -4,7 +4,7 @@ from typing import Optional
 
 from flask import g
 from modules.Base.repositories.RedisRepository import RedisRepository
-from modules.Notification.entities.NotificationEntity import NotificationEntity
+from modules.Notification.entities.NotificationEntity import Notification
 from modules.Notification.entities.NotificationRecipient import NotificationRecipient
 
 
@@ -15,38 +15,43 @@ class NotificationRedisRepository(RedisRepository):
 
     def _get_notification_key(
         self,
+        recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
-        form: Optional[str] = None,
-        recipient: NotificationRecipient = NotificationRecipient.USER,
+        key_data: Optional[list[str]] = None,
     ) -> str:
-        data = (
-            g.session.ID if recipient == NotificationRecipient.USER else 'all',
+        data = [
+            f'{recipient.level}_{recipient.value}',
             endpoint or 'all',
-            form or 'page',
-        )
+        ]
+        if key_data is not None:
+            data += key_data
         return ':'.join(data)
 
-    def add_notification(
+    def set_notification(
         self,
-        notification: NotificationEntity,
+        notification: Notification,
+        recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
-        form: Optional[str] = None,
-        recipient: NotificationRecipient = NotificationRecipient.USER,
+        key_data: Optional[list[str]] = None,
         TTL: Optional[timedelta] = None,
     ):
-        key = self._get_notification_key(endpoint, form, recipient)
+        key = self._get_notification_key(recipient, endpoint, key_data)
 
-        self._db.lpush(key, json.dumps(notification.__dict__))
+        self._db.rpush(key, json.dumps(notification.__dict__))
 
         if TTL:
-            self._db.expire(key, TTL.total_seconds())
+            self._db.expire(key, TTL)
 
     def get_notifications(
         self,
+        recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
-        form: Optional[str] = None
-    ) -> list[NotificationEntity]:
-        key = self._get_notification_key(endpoint, form)
-        data = self._db.lrange(key, 0, -1)
+        key_data: Optional[list[str]] = None,
+    ) -> list[Notification]:
+        key = self._get_notification_key(recipient, endpoint, key_data)
+        pipeline = self._db.pipeline()
+        pipeline.lrange(key, 0, -1)
+        pipeline.delete(key)
+        data = pipeline.execute()[0]
 
-        return [NotificationEntity(**json.loads(row.decode('utf-8'))) for row in data]
+        return [Notification(**json.loads(row.decode('utf-8'))) for row in data]

@@ -1,5 +1,5 @@
 from modules.Base.views.View import View
-from modules.Notification.entities.NotificationEntity import NotificationEntity
+from modules.Notification.entities.NotificationEntity import Notification
 from modules.Notification.services.NotificationService import NotificationService
 
 
@@ -16,13 +16,13 @@ class ACPView(View):
         self.template_data['notifications'] = self.notifications
 
     def info(self, text):
-        self.notifications.append(NotificationEntity(text, NotificationService.INFO_TYPE))
+        self.notifications.append(Notification(text, NotificationService.INFO_TYPE))
 
     def warning(self, text):
-        self.notifications.append(NotificationEntity(text, NotificationService.WARNING_TYPE))
+        self.notifications.append(Notification(text, NotificationService.WARNING_TYPE))
 
     def success(self, text):
-        self.notifications.append(NotificationEntity(text, NotificationService.SUCCESS_TYPE))
+        self.notifications.append(Notification(text, NotificationService.SUCCESS_TYPE))
 
     def error(self, text):
-        self.notifications.append(NotificationEntity(text, NotificationService.ERROR_TYPE))
+        self.notifications.append(Notification(text, NotificationService.ERROR_TYPE))
