@@ -2,7 +2,7 @@ from flask import g, redirect, request, url_for
 from modules.Base.views.View import View
 from modules.Notification.entities.NotificationEntity import Notification
 from modules.Notification.entities.NotificationType import NotificationType
-from modules.Notification.services.NotificationService import NotificationService
+from modules.Notification.services.FormNotificationService import FormNotificationService
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
@@ -15,8 +15,8 @@ class UserController:
 
     def registration_page_action(self):
         view = RegistrationView()
-        notificationService = NotificationService()
-        view.data['errors'] = notificationService.get_form_notifications(
+        form_notification_service = FormNotificationService()
+        view.data['errors'] = form_notification_service.pop_form_notifications(
             endpoint='user_blueprint.registration_route',
             form='registration',
         )
@@ -26,10 +26,10 @@ class UserController:
         formValidator = RegistrationFormValidator(request.form)
 
         if formValidator.errors:
-            notificationService = NotificationService()
+            form_notification_service = FormNotificationService()
             for field, errors in formValidator.errors.items():
                 for error in errors:
-                    notificationService.set_form_notification(
+                    form_notification_service.push_form_notification(
                         notification=Notification(error, NotificationType.ERROR_TYPE),
                         endpoint='user_blueprint.registration_route',
                         form='registration',

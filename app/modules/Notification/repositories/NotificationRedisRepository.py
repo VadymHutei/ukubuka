@@ -27,7 +27,15 @@ class NotificationRedisRepository(RedisRepository):
             data += key_data
         return ':'.join(data)
 
-    def set_notification(
+    def _pop_notifications(self, key: str) -> list[Notification]:
+        pipeline = self._db.pipeline()
+        pipeline.lrange(key, 0, -1)
+        # pipeline.delete(key)
+        data = pipeline.execute()[0]
+
+        return [Notification(**json.loads(row.decode('utf-8'))) for row in data]
+
+    def push_notification(
         self,
         notification: Notification,
         recipient: NotificationRecipient,
@@ -42,16 +50,20 @@ class NotificationRedisRepository(RedisRepository):
         if TTL:
             self._db.expire(key, TTL)
 
-    def get_notifications(
+    def pop_notifications(
         self,
         recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
         key_data: Optional[list[str]] = None,
+        by_pattern: bool = False,
     ) -> list[Notification]:
         key = self._get_notification_key(recipient, endpoint, key_data)
-        pipeline = self._db.pipeline()
-        pipeline.lrange(key, 0, -1)
-        pipeline.delete(key)
-        data = pipeline.execute()[0]
 
-        return [Notification(**json.loads(row.decode('utf-8'))) for row in data]
+        if by_pattern:
+            notifications = []
+            for key in self._db.scan_iter(key):
+                notifications += self._pop_notifications(key)
+
+            return notifications
+        else:
+            return self._pop_notifications(key)
