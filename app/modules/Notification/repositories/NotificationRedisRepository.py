@@ -1,10 +1,8 @@
-import json
-from datetime import timedelta
+from datetime import datetime
 from typing import Optional
 
-from flask import g
 from modules.Base.repositories.RedisRepository import RedisRepository
-from modules.Notification.entities.NotificationEntity import Notification
+from modules.Notification.entities.Notification import Notification
 from modules.Notification.entities.NotificationRecipient import NotificationRecipient
 
 
@@ -15,55 +13,49 @@ class NotificationRedisRepository(RedisRepository):
 
     def _get_notification_key(
         self,
-        recipient: NotificationRecipient,
-        endpoint: Optional[str] = None,
-        key_data: Optional[list[str]] = None,
+        recipient: Optional[NotificationRecipient],
+        endpoint: Optional[str]
     ) -> str:
-        data = [
-            f'{recipient.level}_{recipient.value}',
-            endpoint or 'all',
-        ]
-        if key_data is not None:
-            data += key_data
+        data = []
+
+        if recipient is None:
+            data.appent('all')
+        else:
+            data.append(f'{recipient.level}_{recipient.value}')
+
+        data.append(endpoint or 'all')
+
         return ':'.join(data)
 
-    def _pop_notifications(self, key: str) -> list[Notification]:
+    def _pop_list(self, key: str) -> list[Notification]:
         pipeline = self._db.pipeline()
         pipeline.lrange(key, 0, -1)
         pipeline.delete(key)
         data = pipeline.execute()[0]
 
-        return [Notification(**json.loads(row.decode('utf-8'))) for row in data]
+        return [Notification.from_JSON(row.decode('utf-8')) for row in data]
 
-    def push_notification(
-        self,
-        notification: Notification,
-        recipient: NotificationRecipient,
-        endpoint: Optional[str] = None,
-        key_data: Optional[list[str]] = None,
-        TTL: Optional[timedelta] = None,
-    ):
-        key = self._get_notification_key(recipient, endpoint, key_data)
+    def push(self, notification: Notification):
+        key = self._get_notification_key(notification.recipient, notification.endpoint)
 
-        self._db.rpush(key, json.dumps(notification.__dict__))
+        self._db.rpush(key, notification.to_JSON())
 
-        if TTL:
-            self._db.expire(key, TTL)
+        if notification.expired_at is not None:
+            self._db.expire(key, notification.expired_at - datetime.now())
 
-    def pop_notifications(
+    def pop_list(
         self,
         recipient: NotificationRecipient,
         endpoint: Optional[str] = None,
-        key_data: Optional[list[str]] = None,
         by_pattern: bool = False,
     ) -> list[Notification]:
-        key = self._get_notification_key(recipient, endpoint, key_data)
+        key = self._get_notification_key(recipient, endpoint)
 
         if by_pattern:
             notifications = []
             for key in self._db.scan_iter(key):
-                notifications += self._pop_notifications(key)
+                notifications += self._pop_list(key)
 
             return notifications
         else:
-            return self._pop_notifications(key)
+            return self._pop_list(key)

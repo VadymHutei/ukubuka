@@ -4,8 +4,6 @@
 
 <h1>{{ 'Registration'|_ }}</h1>
 
-{% if errors and 'other' in errors %}{% for error in errors['other'] %}<p>{{ error }}</p>{% endfor %}{% endif %}
-
 <form action="{{ url_for('user_blueprint.registration_route', language=t.language.code) }}" method="post">
 
     {% if errors and 'email' in errors %}{% for error in errors['email'] %}<p>{{ error }}</p>{% endfor %}{% endif %}

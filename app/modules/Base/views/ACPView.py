@@ -1,5 +1,5 @@
 from modules.Base.views.View import View
-from modules.Notification.entities.NotificationEntity import Notification
+from modules.Notification.entities.Notification import Notification
 from modules.Notification.services.NotificationService import NotificationService
 
 

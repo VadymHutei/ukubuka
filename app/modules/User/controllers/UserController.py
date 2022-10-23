@@ -1,6 +1,6 @@
 from flask import g, redirect, request, url_for
 from modules.Base.views.View import View
-from modules.Notification.entities.NotificationEntity import Notification
+from modules.Notification.entities.Notification import Notification
 from modules.Notification.entities.NotificationType import NotificationType
 from modules.Notification.services.FormNotificationService import FormNotificationService
 from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
@@ -13,13 +13,14 @@ from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
 
 class UserController:
 
+    _REGISTRATION_FORM_ENDPOINT = 'user_blueprint.registration_route.registration'
+
     def registration_page_action(self):
         view = RegistrationView()
         form_notification_service = FormNotificationService()
-        view.data['errors'] = form_notification_service.pop_form_notifications(
-            endpoint='user_blueprint.registration_route',
-            form='registration',
-        )
+
+        view.data['errors'] = form_notification_service.pop_list(self._REGISTRATION_FORM_ENDPOINT)
+
         return view.render()
 
     def registration_action(self):
@@ -29,12 +30,13 @@ class UserController:
             form_notification_service = FormNotificationService()
             for field, errors in formValidator.errors.items():
                 for error in errors:
-                    form_notification_service.push_form_notification(
-                        notification=Notification(error, NotificationType.ERROR_TYPE),
-                        endpoint='user_blueprint.registration_route',
-                        form='registration',
-                        field=field,
+                    notification = Notification(
+                        text=error,
+                        type=NotificationType.ERROR_TYPE,
+                        endpoint=self._REGISTRATION_FORM_ENDPOINT,
+                        metadata={'field': field}
                     )
+                    form_notification_service.push(notification)
 
             return redirect(
                 location=url_for(
