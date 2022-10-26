@@ -42,5 +42,5 @@ def logout_route():
 @language_redirect
 @with_session
 @onlyRegistered
-def accountroute():
+def account_route():
     return controller.accountAction()

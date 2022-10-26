@@ -19,7 +19,7 @@ class NotificationRedisRepository(RedisRepository):
         data = []
 
         if recipient is None:
-            data.appent('all')
+            data.append('all')
         else:
             data.append(f'{recipient.level}_{recipient.value}')
 
