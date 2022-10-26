@@ -17,8 +17,8 @@ class LayoutView(View):
         self.layout_data['request_endpoint'] = request.endpoint
         # self.layout_data['request'] = request
 
-    def _prepage_data(self):
-        super()._prepage_data()
+    def _prepare_data(self):
+        super()._prepare_data()
 
         self._prepare_layout_data()
         self.data['l'] = self.layout_data

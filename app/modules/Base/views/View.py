@@ -10,7 +10,7 @@ class View:
         self.template_data = {}
         self.data = {}
 
-    def _prepage_data(self):
+    def _prepare_data(self):
         self._prepare_template_data()
         self._prepare_page_data()
         self.data['t'] = self.template_data
@@ -23,5 +23,5 @@ class View:
         pass
 
     def render(self):
-        self._prepage_data()
+        self._prepare_data()
         return render_template(self.template, **self.data)

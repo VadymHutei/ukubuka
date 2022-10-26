@@ -18,4 +18,14 @@ class FormNotificationService:
         self._notification_service.push(notification)
 
     def pop_list(self, endpoint: str) -> list[Notification]:
-        return self._notification_service.pop_list(self._recipient, endpoint)
+        notifications = self._notification_service.pop_list(self._recipient, endpoint)
+        result = {}
+        for notification in notifications:
+            field = notification.metadata.get('field')
+            if field is None:
+                continue
+            if field not in result:
+                result[field] = []
+            result[field].append(notification)
+
+        return result

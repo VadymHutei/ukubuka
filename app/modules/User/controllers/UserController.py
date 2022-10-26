@@ -24,11 +24,11 @@ class UserController:
         return view.render()
 
     def registration_action(self):
-        formValidator = RegistrationFormValidator(request.form)
+        form_validator = RegistrationFormValidator(request.form)
 
-        if formValidator.errors:
+        if form_validator.errors:
             form_notification_service = FormNotificationService()
-            for field, errors in formValidator.errors.items():
+            for field, errors in form_validator.errors.items():
                 for error in errors:
                     notification = Notification(
                         text=error,
@@ -46,13 +46,13 @@ class UserController:
                 code=303,
             )
 
-        if formValidator.errors:
+        if form_validator.errors:
             view = View('modules/User/registration.html')
-            view.addData({'errors': formValidator.errors})
+            view.addData({'errors': form_validator.errors})
             return view.render()
         service = UserService()
         try:
-            service.create_user(formValidator.get_form_data())
+            service.create_user(form_validator.get_form_data())
         except UserAlreadyExist as e:
             view = View('modules/User/registration.html')
             view.addData({'errors': {'other': (str(e),)}})
