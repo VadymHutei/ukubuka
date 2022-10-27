@@ -43,4 +43,4 @@ def logout_route():
 @with_session
 @onlyRegistered
 def account_route():
-    return controller.accountAction()
+    return controller.account_action()

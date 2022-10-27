@@ -8,7 +8,7 @@ from modules.User.entities.UserNameEntity import UserNameEntity
 class UserRepository(MySQLRepository):
 
     @staticmethod
-    def create_user_entity(row: Optional[dict]) -> Optional[UserEntity]:
+    def create_user_entity(row: dict) -> UserEntity:
         return UserEntity(
             ID=int(row['id']),
             email=row['email'],
@@ -59,8 +59,9 @@ class UserRepository(MySQLRepository):
         with self.get_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (email,))
-
-                return UserRepository.create_user_entity(cursor.fetchone())
+                user_data = cursor.fetchone()
+        
+        return UserRepository.create_user_entity(user_data) if user_data else None
 
     def get_user_by_session_ID(self, session_ID: str) -> Optional[UserEntity]:
         query = '''

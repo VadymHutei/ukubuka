@@ -9,6 +9,7 @@ from modules.Notification.services.NotificationService import NotificationServic
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
 from modules.User.services.UserService import UserService
+from modules.User.views.AccountView import AccountView
 from modules.User.views.RegistrationView import RegistrationView
 from vendor.ukubuka.exceptions.WrongPassword import WrongPassword
 
@@ -50,9 +51,7 @@ class UserController:
             )
 
         user_service = UserService()
-
         registration_data = form_validator.get_form_data()
-
         try:
             user_service.create_user(registration_data)
         except Exception as e:
@@ -109,6 +108,6 @@ class UserController:
             return view.render()
         return redirect(url_for('home_blueprint.home_route', language=g.current_language.code))
 
-    def accountAction(self):
-        view = View('modules/User/account.html')
+    def account_action(self):
+        view = AccountView()
         return view.render()
