@@ -19,7 +19,7 @@ app.jinja_env.filters.update(language_filters)
 
 
 @app.before_request
-def beforeRequest():
+def before_request() -> None:
     g.t = Translator.getInstance()
     g.current_language = g.t.default_language
 

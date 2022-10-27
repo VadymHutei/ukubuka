@@ -9,7 +9,7 @@ user_blueprint = Blueprint('user_blueprint', __name__)
 controller = UserController()
 
 
-@user_blueprint.route('/<string:language>/registration', methods=['GET', 'POST'])
+@user_blueprint.route('/<string:language>/registration', methods=['GET', 'POST'])  # type: ignore
 @language_redirect
 @with_session
 def registration_route():
@@ -19,7 +19,7 @@ def registration_route():
         return controller.registration_action()
 
 
-@user_blueprint.route('/<string:language>/login', methods=['GET', 'POST'])
+@user_blueprint.route('/<string:language>/login', methods=['GET', 'POST'])  # type: ignore
 @language_redirect
 @with_session
 def login_route():

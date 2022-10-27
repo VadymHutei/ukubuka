@@ -1,12 +1,11 @@
 from flask import g, redirect, request, url_for
-from modules.Notification.entities.NotificationRecipient import NotificationRecipient
-from modules.Notification.entities.NotificationRecipientLevel import NotificationRecipientLevel
-from modules.Notification.services.NotificationService import NotificationService
 from modules.Base.views.View import View
 from modules.Notification.entities.Notification import Notification
+from modules.Notification.entities.NotificationRecipient import NotificationRecipient
+from modules.Notification.entities.NotificationRecipientLevel import NotificationRecipientLevel
 from modules.Notification.entities.NotificationType import NotificationType
 from modules.Notification.services.FormNotificationService import FormNotificationService
-from modules.User.exceptions.UserAlreadyExist import UserAlreadyExist
+from modules.Notification.services.NotificationService import NotificationService
 from modules.User.form_validators.LoginFormValidator import LoginFormValidator
 from modules.User.form_validators.RegistrationFormValidator import RegistrationFormValidator
 from modules.User.services.UserService import UserService
