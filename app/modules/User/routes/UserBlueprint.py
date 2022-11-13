@@ -8,8 +8,21 @@ from modules.User.services.UserService import UserService
 user_blueprint = Blueprint('user_blueprint', __name__)
 controller = UserController()
 
+routes = {
+    'users': '/<string:language>/users',
+    'registration': '/<string:language>/registration',
+    'login': '/<string:language>/login',
+}
 
-@user_blueprint.route('/<string:language>/registration', methods=['GET', 'POST'])  # type: ignore
+
+@user_blueprint.route(routes['users'], methods=['GET'])  # type: ignore
+@language_redirect
+@with_session
+def users_route():
+    return controller.users_action()
+
+
+@user_blueprint.route(routes['registration'], methods=['GET', 'POST'])  # type: ignore
 @language_redirect
 @with_session
 def registration_route():
@@ -24,9 +37,9 @@ def registration_route():
 @with_session
 def login_route():
     if request.method == 'GET':
-        return controller.loginPageAction()
+        return controller.login_page_action()
     elif request.method == 'POST':
-        return controller.loginAction()
+        return controller.login_action()
 
 
 @user_blueprint.route('/<string:language>/logout', methods=['GET'])

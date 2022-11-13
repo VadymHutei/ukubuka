@@ -8,9 +8,10 @@ class LoginFormValidator(AbstractFormValidator):
 
     def _set_field_validation_rules(self):
         email = ValidatedField('email', required=True)
-        email.add_rule(ValidationRule(UserValidator.email, 'Wrong email'))
+        email.rules.append(ValidationRule(UserValidator.email, 'Wrong email'))
 
         password = ValidatedField('password', required=True)
-        password.add_rule(ValidationRule(UserValidator.password, 'Wrong password'))
+        password.rules.append(ValidationRule(
+            UserValidator.password, 'Wrong password'))
 
         return email, password

@@ -20,7 +20,7 @@ class ACPUserController:
 
     def edit_user_page_action(self):
         user_ID = int(request.args.get('id'))
-        user_entity = self._user_service.get_user_by_ID(user_ID)
+        user_entity = self._user_service.get_user_by_id(user_ID)
 
         if user_entity is None:
             return abort(404)
@@ -59,7 +59,8 @@ class ACPUserController:
         # self._user_service.edit_user()
 
         view = EditUserACPView()
-        view.data['user'] = self._user_service.get_user_by_ID(int(form_data['id']))
+        view.data['user'] = self._user_service.get_user_by_id(
+            int(form_data['id']))
 
         return view.render()
 

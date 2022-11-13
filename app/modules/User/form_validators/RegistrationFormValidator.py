@@ -11,6 +11,7 @@ class RegistrationFormValidator(AbstractFormValidator):
         email.rules.append(ValidationRule(UserValidator.email, 'Wrong email'))
 
         password = ValidatedField('password', required=True)
-        password.rules.append(ValidationRule(UserValidator.password, 'Wrong password'))
+        password.rules.append(ValidationRule(
+            UserValidator.password, 'Wrong password'))
 
         return email, password

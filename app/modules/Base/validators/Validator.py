@@ -25,6 +25,6 @@ class Validator:
         if isinstance(ID, str):
             try:
                 return cls.DB_int(int(ID), True)
-            except:
+            except Exception:
                 return False
         return False

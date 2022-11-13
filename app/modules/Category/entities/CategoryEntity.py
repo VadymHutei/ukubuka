@@ -1,7 +1,4 @@
-from vendor.ukubuka.Entity import Entity
-
-
-class CategoryEntity(Entity):
+class CategoryEntity:
 
     properties = {
         'ID': 'id',

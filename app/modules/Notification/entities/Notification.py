@@ -1,11 +1,11 @@
+import json
 from dataclasses import dataclass, field
 from datetime import datetime
-import json
 from typing import Optional
+
 from app.modules.Base.entities.AbstractJSONSerializable import AbstractJSONSerializable
 from app.modules.Base.repositories.RedisRepository import RedisRepository
 from modules.Notification.entities.NotificationRecipient import NotificationRecipient
-
 from modules.Notification.entities.NotificationType import NotificationType
 
 
@@ -24,16 +24,19 @@ class Notification(AbstractJSONSerializable):
         if self.recipient is not None:
             data['recipient'] = self.recipient.to_JSON()
         if self.expired_at is not None:
-            data['expired_at'] = self.expired_at.strftime(RedisRepository.DATETIME_FORMAT)
-        
+            data['expired_at'] = self.expired_at.strftime(
+                RedisRepository.DATETIME_FORMAT)
+
         return json.dumps(data)
 
     @classmethod
     def from_JSON(cls, JSON_data: str):
         data = json.loads(JSON_data)
         if data['recipient'] is not None:
-            data['recipient'] = NotificationRecipient.from_JSON(data['recipient'])
+            data['recipient'] = NotificationRecipient.from_JSON(
+                data['recipient'])
         if data['expired_at'] is not None:
-            data['expired_at'] = datetime.strptime(data['expired_at'], RedisRepository.DATETIME_FORMAT)
-        
+            data['expired_at'] = datetime.strptime(
+                data['expired_at'], RedisRepository.DATETIME_FORMAT)
+
         return cls(**data)
