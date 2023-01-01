@@ -3,8 +3,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 
-from app.modules.Base.entities.AbstractJSONSerializable import AbstractJSONSerializable
-from app.modules.Base.repositories.RedisRepository import RedisRepository
+from modules.Base.entities.AbstractJSONSerializable import AbstractJSONSerializable
+from modules.Base.repositories.RedisRepository import RedisRepository
 from modules.Notification.entities.NotificationRecipient import NotificationRecipient
 from modules.Notification.entities.NotificationType import NotificationType
 

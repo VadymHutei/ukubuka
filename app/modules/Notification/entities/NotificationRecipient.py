@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import json
-from app.modules.Base.entities.AbstractJSONSerializable import AbstractJSONSerializable
+from modules.Base.entities.AbstractJSONSerializable import AbstractJSONSerializable
 
 from modules.Notification.entities.NotificationRecipientLevel import NotificationRecipientLevel
 
