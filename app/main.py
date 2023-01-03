@@ -1,3 +1,4 @@
+from blueprints.ACP.LanguageBlueprint import language_blueprint
 from flask import Flask, g
 from modules.ACP.routes.DashboardACPBlueprint import dashboardACPBlueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
@@ -9,8 +10,8 @@ from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
 from modules.User.routes.UserBlueprint import user_blueprint
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_object("config")
-app.config.from_pyfile("config.py")
+app.config.from_object('config')
+app.config.from_pyfile('config.py')
 app.jinja_env.filters.update(language_filters)
 
 
@@ -26,3 +27,4 @@ app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(dashboardACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(ACP_user_blueprint)
+app.register_blueprint(language_blueprint)
