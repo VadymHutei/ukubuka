@@ -1,3 +1,4 @@
+from controllers.HTTP.ACP.LanguageController import LanguageController
 from flask import Blueprint
 from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
@@ -10,4 +11,5 @@ language_blueprint = Blueprint(BLUEPRINT_NAME, __name__, url_prefix='/<string:la
 @language_redirect
 @with_session
 def language_route():
-    return 'languages'
+    controller = LanguageController()
+    return controller.languages_page_action()
