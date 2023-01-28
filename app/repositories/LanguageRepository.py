@@ -1,11 +1,16 @@
+from entities.Language import Language
 from repositories.MySQLRepository import MySQLRepository
+from repositories.mappers.LanguageMapper import LanguageMapper
 
 
 class LanguageRepository(MySQLRepository):
 
     TABLE = 'language'
 
-    def find_all(self):
+    def __init__(self, mapper: LanguageMapper) -> None:
+        self._mapper = mapper
+
+    def find_all(self) -> dict[str, Language]:
         query = f'''
             SELECT
                 code,
@@ -19,4 +24,4 @@ class LanguageRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query)
         
-        return cursor.fetchall()
+        return self._mapper.from_rows(cursor.fetchall())
