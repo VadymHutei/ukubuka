@@ -8,6 +8,5 @@ class LanguageController:
 
     def languages_page_action(self):
         languages = self._service.get_languages()
-        print(languages)
 
-        return 'languages page'
+        return languages
