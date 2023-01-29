@@ -1,5 +1,8 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class AbstractRepository(ABC):
-    pass
+
+    @abstractmethod
+    def find_all(self):
+        pass
