@@ -3,11 +3,11 @@ from repositories.mappers.IMapper import IMapper
 
 
 class LanguageMapper(IMapper):
-    
+
     def from_row(self, row: dict) -> Language:
         return Language(
-            code = row['code'],
-            name = row['name'],
+            code=row['code'],
+            name=row['name'],
             is_active=row['is_active'],
             is_default=row['is_default'],
         )
