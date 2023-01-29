@@ -1,17 +1,18 @@
 from flask import render_template
+from entities.Page import Page
 
 from views.AbstractView import AbstractView
 
 
 class View(AbstractView):
 
-    TEMPLATE: str
+    page_code: str
 
-    _title: str
+    def __init__(self, page: Page) -> None:
+        super().__init__()
 
-    def __init__(self):
+        self._page = page
         self._template_data = {}
-        self._data = {}
 
     def _prepare_data(self):
         self._prepare_page_data()
@@ -22,9 +23,9 @@ class View(AbstractView):
         pass
 
     def _prepare_template_data(self):
-        self._template_data['title'] = self._title
+        self._template_data['title'] = self._page.title
 
     def render(self):
         self._prepare_data()
 
-        return render_template(self.TEMPLATE, **self._data)
+        return render_template(self._page.template, **self._data)
