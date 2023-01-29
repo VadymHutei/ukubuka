@@ -1,7 +1,7 @@
 from entities.Language import Language
 from repositories.Language.ILanguageRepository import ILanguageRepository
 from repositories.MySQLRepository import MySQLRepository
-from repositories.mappers.LanguageMapper import LanguageMapper
+from repositories.Language.MySQL.LanguageMapper import LanguageMapper
 
 
 class LanguageRepository(ILanguageRepository, MySQLRepository):

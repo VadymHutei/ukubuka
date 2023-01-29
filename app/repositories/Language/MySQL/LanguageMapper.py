@@ -1,5 +1,5 @@
 from entities.Language import Language
-from repositories.mappers.IMapper import IMapper
+from repositories.IMapper import IMapper
 
 
 class LanguageMapper(IMapper):
