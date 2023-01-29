@@ -1,10 +1,10 @@
 from entities.Language import Language
-from repositories.LanguageRepository import LanguageRepository
+from repositories.Language.ILanguageRepository import ILanguageRepository
 
 
 class LanguageService:
 
-    def __init__(self, repository: LanguageRepository) -> None:
+    def __init__(self, repository: ILanguageRepository) -> None:
         self._repository = repository
 
     def get_languages(self) -> dict[str, Language]:

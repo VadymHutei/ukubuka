@@ -1,4 +1,6 @@
 from services.LanguageService import LanguageService
+from service_container import sc
+from views.ACP.Language.LanguagesView import LanguagesView
 
 
 class LanguageController:
@@ -8,5 +10,6 @@ class LanguageController:
 
     def languages_page_action(self):
         languages = self._service.get_languages()
+        view = sc.get(LanguagesView)
 
         return languages
