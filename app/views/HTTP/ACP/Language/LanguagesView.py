@@ -1,7 +1,7 @@
 from re import TEMPLATE
-from views.HTTP.View import View
+from views.HTTP.ACP.ACPLayoutView import ACPLayoutView
 
 
-class LanguagesView(View):
+class LanguagesView(ACPLayoutView):
 
     page_code: str = 'acp_languages'

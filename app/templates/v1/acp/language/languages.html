@@ -1,1 +1,15 @@
-languages page
+{% extends l.template %}
+
+
+<table>
+    <thead>
+        <tr>
+            <th>{{ 'code'|_ }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for language in languages.values() %}
+        <td>{{ language.code }}</td>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ACP - {{ t.title }}</title>
+        <link rel="stylesheet" type="text/css" href="/static/styles/ACP/main.css">
+    </head>
+    <body>
+        {% include 'v1/acp/layout/header.html' %}
+        {% block content %}{% endblock %}
+        {% include 'v1/acp/layout/footer.html' %}
+    </body>
+</html>
