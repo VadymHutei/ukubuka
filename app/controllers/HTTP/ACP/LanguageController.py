@@ -9,7 +9,7 @@ class LanguageController:
     def __init__(self, service: LanguageService) -> None:
         self._service: LanguageService = service
 
-    def languages_page_action(self):
+    def languages_page_action(self) -> str:
         view_factory = sc.get(ViewFactory)
         view: LanguagesView = view_factory.get(LanguagesView)
 

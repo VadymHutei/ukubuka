@@ -13,10 +13,10 @@ class LayoutView(View):
             'template': self.layout_template,
         }
 
-    def _prepare_layout_data(self):
+    def _prepare_layout_data(self) -> None:
         pass
 
-    def _prepare_data(self):
+    def _prepare_data(self) -> None:
         super()._prepare_data()
 
         self._prepare_layout_data()
