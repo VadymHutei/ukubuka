@@ -1,5 +1,5 @@
 from flask import g
-from entities.Page import Page
+from entities.PageEntity import PageEntity
 from repositories.Page.IPageRepository import IPageRepository
 from repositories.MySQLRepository import MySQLRepository
 from repositories.Page.MySQL.PageMapper import PageMapper
@@ -15,7 +15,7 @@ class PageRepository(IPageRepository, MySQLRepository):
     def find_all(self):
         pass
 
-    def find_by_code(self, code: str) -> Page:
+    def find_by_code(self, code: str) -> PageEntity:
         query = f'''
             SELECT
                 page.id,

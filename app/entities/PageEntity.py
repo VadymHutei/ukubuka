@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @dataclass
-class Page:
+class PageEntity:
 
     id: int
     code: str

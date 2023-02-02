@@ -3,7 +3,7 @@ from typing import Optional
 
 
 @dataclass
-class Language:
+class LanguageEntity:
 
     code: str
     name: str

@@ -1,5 +1,5 @@
 from flask import render_template
-from entities.Page import Page
+from entities.PageEntity import PageEntity
 
 from views.AbstractView import AbstractView
 
@@ -8,7 +8,7 @@ class View(AbstractView):
 
     page_code: str
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: PageEntity) -> None:
         super().__init__()
 
         self._page = page
