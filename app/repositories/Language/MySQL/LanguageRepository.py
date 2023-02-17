@@ -1,4 +1,4 @@
-from entities.Language import Language
+from entities.LanguageEntity import LanguageEntity
 from repositories.Language.ILanguageRepository import ILanguageRepository
 from repositories.MySQLRepository import MySQLRepository
 from repositories.Language.MySQL.LanguageMapper import LanguageMapper
@@ -11,7 +11,7 @@ class LanguageRepository(ILanguageRepository, MySQLRepository):
     def __init__(self, mapper: LanguageMapper) -> None:
         self._mapper = mapper
 
-    def find_all(self) -> dict[str, Language]:
+    def find_all(self) -> dict[str, LanguageEntity]:
         query = f'''
             SELECT
                 code,

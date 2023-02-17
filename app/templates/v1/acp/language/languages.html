@@ -1,15 +1,31 @@
 {% extends l.template %}
 
+{% block content %}
 
 <table>
     <thead>
         <tr>
-            <th>{{ 'code'|_ }}</th>
+            <th>{{ 'Code' }}</th>
+            <th>{{ 'Name' }}</th>
+            <th>{{ 'Is active' }}</th>
+            <th>{{ 'Is default' }}</th>
+            <th>{{ 'Actions' }}</th>
         </tr>
     </thead>
     <tbody>
         {% for language in languages.values() %}
-        <td>{{ language.code }}</td>
+        <tr>
+            <td>{{ language.code }}</td>
+            <td>{{ language.name }}</td>
+            <td>{{ language.is_active }}</td>
+            <td>{{ language.is_default }}</td>
+            <td>
+                <a href="{{ language.links.edit }}">edit</a>
+                <a href="{{ language.links.delete }}">delete</a>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
+
+{% endblock %}

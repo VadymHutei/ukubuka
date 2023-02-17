@@ -1,11 +1,11 @@
-from entities.Page import Page
+from entities.PageEntity import PageEntity
 from repositories.IMapper import IMapper
 
 
 class PageMapper(IMapper):
 
-    def from_row(self, row: dict) -> Page:
-        return Page(
+    def from_row(self, row: dict) -> PageEntity:
+        return PageEntity(
             id=int(row['id']),
             code=row['code'],
             title=row['title'],
@@ -15,7 +15,7 @@ class PageMapper(IMapper):
             updated_at=row['updated_at'],
         )
 
-    def from_rows(self, rows: list|tuple) -> dict[str, Page]:
+    def from_rows(self, rows: list|tuple) -> dict[str, PageEntity]:
         pages = {}
 
         for row in rows:

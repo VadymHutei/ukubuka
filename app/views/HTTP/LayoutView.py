@@ -1,4 +1,4 @@
-from entities.Page import Page
+from entities.PageEntity import PageEntity
 from views.HTTP.View import View
 
 
@@ -6,17 +6,17 @@ class LayoutView(View):
 
     layout_template: str
 
-    def __init__(self, page: Page) -> None:
+    def __init__(self, page: PageEntity) -> None:
         super().__init__(page)
 
         self._layout_data = {
             'template': self.layout_template,
         }
 
-    def _prepare_layout_data(self):
+    def _prepare_layout_data(self) -> None:
         pass
 
-    def _prepare_data(self):
+    def _prepare_data(self) -> None:
         super()._prepare_data()
 
         self._prepare_layout_data()
