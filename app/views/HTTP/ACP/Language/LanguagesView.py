@@ -28,5 +28,3 @@ class LanguagesView(ACPLayoutView):
                 'edit': edit_link,
                 'delete': delete_link,
             }
-
-        print(self._data['languages'])
