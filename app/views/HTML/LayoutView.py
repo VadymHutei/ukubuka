@@ -1,15 +1,15 @@
 from entities.PageEntity import PageEntity
-from views.HTTP.View import View
+from views.HTML.HTMLView import HTMLView
 
 
-class LayoutView(View):
+class LayoutView(HTMLView):
 
     layout_template: str
 
     def __init__(self, page: PageEntity) -> None:
         super().__init__(page)
 
-        self._layout_data = {
+        self._layout_data: dict = {
             'template': self.layout_template,
         }
 

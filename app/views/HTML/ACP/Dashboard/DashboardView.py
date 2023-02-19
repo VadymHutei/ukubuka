@@ -1,4 +1,4 @@
-from views.HTTP.ACP.ACPLayoutView import ACPLayoutView
+from views.HTML.ACP.ACPLayoutView import ACPLayoutView
 
 
 class DashboardView(ACPLayoutView):

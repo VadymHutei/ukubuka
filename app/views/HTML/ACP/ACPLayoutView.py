@@ -1,4 +1,4 @@
-from views.HTTP.LayoutView import LayoutView
+from views.HTML.LayoutView import LayoutView
 
 
 class ACPLayoutView(LayoutView):

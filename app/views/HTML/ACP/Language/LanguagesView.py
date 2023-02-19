@@ -1,6 +1,6 @@
 from flask import g, url_for
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
-from views.HTTP.ACP.ACPLayoutView import ACPLayoutView
+from views.HTML.ACP.ACPLayoutView import ACPLayoutView
 from entities.transformers.HTTP.ACP.LanguageTransformer import LanguageTransformer
 
 

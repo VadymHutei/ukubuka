@@ -1,6 +1,6 @@
 from services.LanguageService import LanguageService
 from service_container import sc
-from views.HTTP.ACP.Language.LanguagesView import LanguagesView
+from views.HTML.ACP.Language.LanguagesView import LanguagesView
 from views.ViewFactory import ViewFactory
 
 
