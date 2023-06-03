@@ -4,11 +4,8 @@ from abc import ABC, abstractmethod
 class AbstractView(ABC):
 
     def __init__(self) -> None:
-        self._data = {}
+        self._data: dict = {}
 
     @abstractmethod
-    def render(self):
+    def render(self) -> str:
         pass
-
-    def set_data(self, **data):
-        self._data.update(data)
