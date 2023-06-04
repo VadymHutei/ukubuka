@@ -1,5 +1,5 @@
 from entities.LanguageEntity import LanguageEntity
-from repositories.Language.ILanguageRepository import ILanguageRepository
+from services.Language.ILanguageRepository import ILanguageRepository
 from repositories.MySQLRepository import MySQLRepository
 from repositories.Language.MySQL.LanguageMapper import LanguageMapper
 
@@ -26,3 +26,20 @@ class LanguageRepository(ILanguageRepository, MySQLRepository):
                 cursor.execute(query)
         
         return self._mapper.from_rows(cursor.fetchall())
+    
+    def find_by_code(self, code) -> LanguageEntity:
+        query = f'''
+            SELECT
+                code,
+                name,
+                is_active,
+                is_default
+            FROM {self.TABLE}
+            WHERE
+                code = %s
+        '''
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (code,))
+
+        return self._mapper.from_row(cursor.fetchone())

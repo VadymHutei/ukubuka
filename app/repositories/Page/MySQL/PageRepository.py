@@ -18,19 +18,19 @@ class PageRepository(IPageRepository, MySQLRepository):
     def find_by_code(self, code: str) -> PageEntity:
         query = f'''
             SELECT
-                page.id,
-                page.code,
-                page.template,
-                page.is_active,
-                page.created_at,
-                page.updated_at,
-                text.title
-            FROM {self.TABLE} AS page
-            JOIN {self.TABLE}_text AS text
-                ON text.page_id = page.id
-                AND text.language_code = %s
+                p.id,
+                p.code,
+                p.template,
+                p.is_active,
+                p.created_at,
+                p.updated_at,
+                pt.title
+            FROM {self.TABLE} AS p
+            JOIN {self.TABLE}_text AS pt
+                ON pt.page_id = p.id
+                AND pt.language_code = %s
             WHERE
-                page.code = %s
+                p.code = %s
         '''
 
         with self.connection as connection:

@@ -1,5 +1,6 @@
-from services.LanguageService import LanguageService
+from services.Language.LanguageService import LanguageService
 from service_container import sc
+from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
 from views.ViewFactory import ViewFactory
 
@@ -10,7 +11,7 @@ class LanguageController:
         self._service: LanguageService = service
 
     def languages_page_action(self) -> str:
-        view_factory = sc.get(ViewFactory)
+        view_factory: LanguagesView = sc.get(ViewFactory)
         view: LanguagesView = view_factory.get(LanguagesView)
 
         languages = self._service.get_languages()
@@ -19,4 +20,19 @@ class LanguageController:
             languages=languages
         )
 
+        return view.render()
+    
+    def edit_languages_page_action(self, language_code: str):
+        view_factory: ViewFactory = sc.get(ViewFactory)
+        view: EditLanguageView = view_factory.get(EditLanguageView)
+
+        language = self._service.find_by_code(language_code)
+
+        view.set_data(
+            language=language
+        )
+
+        if language is None:
+            raise Exception
+        
         return view.render()

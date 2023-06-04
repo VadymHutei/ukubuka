@@ -1,4 +1,4 @@
-from repositories.Language.ILanguageRepository import ILanguageRepository
+from services.Language.ILanguageRepository import ILanguageRepository
 from repositories.Language.MySQL.LanguageRepository import LanguageRepository
 
 
