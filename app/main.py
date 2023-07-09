@@ -1,9 +1,9 @@
 from flask import Flask, g
 
+from blueprints.HomeBlueprint import home_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
-from modules.Home.routes.HomeBlueprint import home_blueprint
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.Language.Translator import Translator

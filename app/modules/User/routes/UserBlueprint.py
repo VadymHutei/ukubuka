@@ -1,4 +1,5 @@
 from flask import Blueprint, g, redirect, request, url_for
+
 from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
 from modules.User.controllers.UserController import UserController

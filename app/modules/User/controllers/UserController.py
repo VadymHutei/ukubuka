@@ -24,8 +24,6 @@ class UserController:
     def users_action(self):
         view = UserView()
 
-        
-
     def registration_page_action(self):
         form_notification_service = FormNotificationService()
         view = RegistrationView()
@@ -154,4 +152,5 @@ class UserController:
 
     def account_action(self):
         view = AccountView()
+
         return view.render()

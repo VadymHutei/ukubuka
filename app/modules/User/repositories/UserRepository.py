@@ -211,3 +211,25 @@ class UserRepository(MySQLRepository):
             with connection.cursor() as cursor:
                 cursor.execute(query, (user_ID,))
             connection.commit()
+
+    def find_user_by_email(self, email: str) -> Optional[UserEntity]:
+        query = '''
+            SELECT
+                id,
+                email,
+                first_name,
+                last_name,
+                is_blocked,
+                registered_datetime
+            FROM
+                user
+            WHERE
+                email = %s
+        '''
+
+        with self.get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (email,))
+                user_data = cursor.fetchone()
+
+        return UserEntity(**user_data) if user_data else None
