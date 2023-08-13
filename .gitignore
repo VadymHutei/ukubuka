@@ -11,7 +11,7 @@ __pycache__/
 
 /db/mysql/
 /db/redis/
-/db/*_data.sql
+# /db/*_data.sql
 
 /app/vendor/
 /app/instance/config.py
