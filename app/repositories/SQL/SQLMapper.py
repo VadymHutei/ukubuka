@@ -1,3 +1,4 @@
+from exceptions.MapperException import MapperException
 from repositories.Mapper import Mapper
 from entities.Entity import Entity
 
@@ -5,9 +6,11 @@ from entities.Entity import Entity
 class SQLMapper(Mapper):
 
     _ENTITY_CLASS: type
+    _TABLE: str
     _TABLE_PREFIX: str
     _FIELDS: list[str]
-    _CAST: dict[str, str]
+    _CAST: dict[str, str] = {}
+    _ENTITIES: dict[str, Mapper] = {}
 
     @classmethod
     def get_fields(cls) -> str:
@@ -15,17 +18,24 @@ class SQLMapper(Mapper):
 
     @classmethod
     def create_entity(cls, db_record: dict) -> Entity:
-        data = {
-            field: cls._CAST[field](db_record[cls._get_field_name(field)])
-            if field in cls._CAST
-            else db_record[cls._get_field_name(field)]
-            for field in cls._FIELDS
-        }
+        data = {}
 
-        entity = cls._ENTITY_CLASS(**data)
+        for field in cls._FIELDS:
+            field_alias = f'{cls._TABLE_PREFIX}_{field}'
 
-        return entity
+            if field_alias not in db_record:
+                raise MapperException(f'Field {field_alias} not found in DB record')
 
-    @classmethod
-    def _get_field_name(cls, field: str) -> str:
-        return f'{cls._TABLE_PREFIX}_{field}'
+            if field in cls._CAST:
+                data[field] = cls._CAST[field](db_record[field_alias])
+            else:
+                data[field] = db_record[field_alias]
+
+        try:
+            for field, mapper in cls._ENTITIES.items():
+                entity = mapper.create_entity(db_record)
+                data[field] = entity
+        except MapperException:
+            pass
+
+        return cls._ENTITY_CLASS(**data)

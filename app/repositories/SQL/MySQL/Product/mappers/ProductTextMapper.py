@@ -1,9 +1,16 @@
 from entities.Product.ProductTextEntity import ProductTextEntity
+from repositories.SQL.SQLMapper import SQLMapper
 
 
-class ProductTextMapper:
+class ProductTextMapper(SQLMapper):
 
-    FIELDS = [
+    _ENTITY_CLASS = ProductTextEntity
+
+    _TABLE = 'product_text'
+
+    _TABLE_PREFIX = 'pt'
+
+    _FIELDS = [
         'id',
         'product_id',
         'language_id',
@@ -13,13 +20,8 @@ class ProductTextMapper:
         'updated_at',
     ]
 
-    def from_row(self, row: dict) -> dict:
-        return ProductTextEntity(
-            id=int(row['id']),
-            product_id=int(row['product_id']),
-            language_id=int(row['language_id']),
-            name=row['name'],
-            description=row['description'],
-            created_at=row['created_at'],
-            updated_at=row['updated_at'],
-        )
+    _CAST = {
+        'id': int,
+        'product_id': int,
+        'language_id': int,
+    }

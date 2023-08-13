@@ -1,6 +1,6 @@
 from services.Product.ProductRepository import ProductRepository
 from entities.Product.ProductEntity import ProductEntity
-from exceptions.ProductException import ProductException
+from exceptions.entities_exception.ProductException import ProductException
 
 
 class ProductService:

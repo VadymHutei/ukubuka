@@ -1,10 +1,13 @@
 from entities.Product.ProductEntity import ProductEntity
 from repositories.SQL.SQLMapper import SQLMapper
+from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
 
 
 class ProductMapper(SQLMapper):
 
     _ENTITY_CLASS = ProductEntity
+
+    _TABLE = 'product'
 
     _TABLE_PREFIX = 'p'
 
@@ -22,21 +25,6 @@ class ProductMapper(SQLMapper):
         'is_active': bool,
     }
 
-    def from_row(self, row: dict) -> dict:
-        return ProductEntity(
-            id=int(row['id']),
-            code=row['code'],
-            is_active=bool(row['is_active']),
-            created_at=row['created_at'],
-            updated_at=row['updated_at'],
-            deleted_at=row['deleted_at'],
-        )
-
-    def from_rows(self, rows: list|tuple) -> dict[str, ProductEntity]:
-        products = {}
-
-        for row in rows:
-            product = self.from_row(row)
-            products[product.code] = product
-
-        return products
+    _ENTITIES = {
+        'text': ProductTextMapper,
+    }
