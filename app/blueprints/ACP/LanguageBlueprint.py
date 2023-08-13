@@ -1,7 +1,7 @@
 from flask import Blueprint
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 
-from controllers.HTTP.ACP.LanguageController import LanguageController
+from controllers.web.ACP.LanguageController import LanguageController
 from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
 from service_container import sc

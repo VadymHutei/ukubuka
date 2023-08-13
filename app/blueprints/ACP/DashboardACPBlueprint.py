@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 from blueprints.blueprint_names import ACP_DASHBOARD_BLUEPRINT
-from controllers.HTTP.ACP.DashboardController import DashboardController
+from controllers.web.ACP.DashboardController import DashboardController
 from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
 from service_container import sc
