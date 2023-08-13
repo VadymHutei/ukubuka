@@ -9,10 +9,15 @@ class LanguageService:
         self._language_repository = LanguageRepository()
 
     def get_default_language(self):
-        return self._language_repository.get_default_language()
+        return LanguageEntity('ua', 'Українська', True, True)
+        # return self._language_repository.get_default_language()
 
     def get_languages(self, only_active: bool = False) -> dict[str, LanguageEntity]:
-        return self._language_repository.get_languages(only_active)
+        return {
+            'ua': LanguageEntity('ua', 'Українська', True, True),
+            'en': LanguageEntity('en', 'English', True, True),
+        }
+        # return self._language_repository.get_languages(only_active)
 
     def get_texts(self) -> dict[int, TextEntity]:
         return self._language_repository.get_texts()

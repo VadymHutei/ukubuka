@@ -2,7 +2,7 @@ from typing import Any
 from entities.transformers.AbstractTransformer import AbstractTransformer
 
 from entities.transformers.HTTP.HTTPTransformerMethods import HTTPTransformerMethods
-from entities.LanguageEntity import LanguageEntity
+from entities.Language.LanguageEntity import LanguageEntity
 
 
 class LanguageTransformer(AbstractTransformer, HTTPTransformerMethods):
@@ -13,7 +13,6 @@ class LanguageTransformer(AbstractTransformer, HTTPTransformerMethods):
             'code': language.code,
             'name': language.name,
             'is_active': cls.bool_param(language.is_active),
-            'is_default': cls.bool_param(language.is_default),
         }
 
     @classmethod

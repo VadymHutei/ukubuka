@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class IMapper(ABC):
+class Mapper(ABC):
     
     @abstractmethod
     def from_row(self, row: dict):

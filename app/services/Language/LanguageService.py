@@ -1,5 +1,5 @@
 from typing import Optional
-from entities.LanguageEntity import LanguageEntity
+from entities.Language.LanguageEntity import LanguageEntity
 from services.Language.ILanguageRepository import ILanguageRepository
 
 

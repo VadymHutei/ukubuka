@@ -3,6 +3,7 @@ from flask import Flask, g
 from blueprints.HomeBlueprint import home_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
+from blueprints.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
@@ -28,7 +29,8 @@ app.register_blueprint(home_blueprint)
 app.register_blueprint(user_blueprint)
 app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
-app.register_blueprint(ACP_user_blueprint)
+app.register_blueprint(product_blueprint)
 
+app.register_blueprint(ACP_user_blueprint)
 app.register_blueprint(acp_dashboard_blueprint)
 app.register_blueprint(acp_language_blueprint)

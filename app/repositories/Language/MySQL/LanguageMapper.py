@@ -1,15 +1,14 @@
-from entities.LanguageEntity import LanguageEntity
-from repositories.IMapper import IMapper
+from entities.Language.LanguageEntity import LanguageEntity
+from repositories.Mapper import Mapper
 
 
-class LanguageMapper(IMapper):
+class LanguageMapper(Mapper):
 
     def from_row(self, row: dict) -> LanguageEntity:
         return LanguageEntity(
             code=row['code'],
             name=row['name'],
             is_active=row['is_active'],
-            is_default=row['is_default'],
         )
 
     def from_rows(self, rows: list|tuple) -> dict[str, LanguageEntity]:

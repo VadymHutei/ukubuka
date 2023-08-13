@@ -1,6 +1,7 @@
 from typing import Type
 from services.PageService import PageService
-from views.HTML.HTMLView import HTMLView
+from views.View import View
+from views.web.WebView import WebView
 
 
 class ViewFactory:
@@ -8,7 +9,12 @@ class ViewFactory:
     def __init__(self, service: PageService) -> None:
         self._service = service
 
-    def get(self, view_class: Type[HTMLView]) -> HTMLView:
+    def get(self, view_class: Type[View]) -> View:
+        page = self._service.get_by_code(view_class.page_code)
+
+        return view_class(page)
+    
+    def get_web_view(self, view_class: Type[WebView]) -> WebView:
         page = self._service.get_by_code(view_class.page_code)
 
         return view_class(page)

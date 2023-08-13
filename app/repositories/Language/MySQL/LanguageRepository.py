@@ -1,4 +1,4 @@
-from entities.LanguageEntity import LanguageEntity
+from entities.Language.LanguageEntity import LanguageEntity
 from services.Language.ILanguageRepository import ILanguageRepository
 from repositories.MySQLRepository import MySQLRepository
 from repositories.Language.MySQL.LanguageMapper import LanguageMapper
@@ -16,8 +16,7 @@ class LanguageRepository(ILanguageRepository, MySQLRepository):
             SELECT
                 code,
                 name,
-                is_active,
-                is_default
+                is_active
             FROM
                 {self.TABLE}
         '''
@@ -32,8 +31,7 @@ class LanguageRepository(ILanguageRepository, MySQLRepository):
             SELECT
                 code,
                 name,
-                is_active,
-                is_default
+                is_active
             FROM {self.TABLE}
             WHERE
                 code = %s

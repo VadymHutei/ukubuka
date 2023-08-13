@@ -1,8 +1,8 @@
 from entities.PageEntity import PageEntity
-from repositories.IMapper import IMapper
+from repositories.Mapper import Mapper
 
 
-class PageMapper(IMapper):
+class PageMapper(Mapper):
 
     def from_row(self, row: dict) -> PageEntity:
         return PageEntity(
