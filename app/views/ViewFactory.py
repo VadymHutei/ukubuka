@@ -1,5 +1,5 @@
 from typing import Type
-from services.PageService import PageService
+from services.Page.PageService import PageService
 from views.View import View
 from views.web.WebView import WebView
 

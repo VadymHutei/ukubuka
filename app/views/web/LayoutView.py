@@ -1,4 +1,4 @@
-from entities.PageEntity import PageEntity
+from entities.Page.PageEntity import PageEntity
 from views.HTML.HTMLView import HTMLView
 
 

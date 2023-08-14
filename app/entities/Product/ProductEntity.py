@@ -3,8 +3,8 @@ from typing import Optional
 from datetime import datetime
 
 from entities.Entity import Entity
+from entities.Product.ProductPriceEntity import ProductPriceEntity
 from entities.Product.ProductTextEntity import ProductTextEntity
-from entities.PriceEntity import PriceEntity
 from exceptions.entities_exception.ProductException import ProductException
 
 
@@ -19,7 +19,7 @@ class ProductEntity(Entity):
     deleted_at: Optional[datetime]
 
     text: Optional[ProductTextEntity] = None
-    price: Optional[PriceEntity] = None
+    price: Optional[ProductPriceEntity] = None
 
     @property
     def name(self) -> str:

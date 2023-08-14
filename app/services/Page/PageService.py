@@ -1,5 +1,5 @@
-from entities.PageEntity import PageEntity
-from repositories.Page.MySQL.PageRepository import PageRepository
+from entities.Page.PageEntity import PageEntity
+from repositories.SQL.MySQL.Page.PageRepository import PageRepository
 
 class PageService:
 

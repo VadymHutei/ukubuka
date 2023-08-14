@@ -8,7 +8,7 @@ class ProductTextMapper(SQLMapper):
 
     _TABLE = 'product_text'
 
-    _TABLE_PREFIX = 'pt'
+    _TABLE_PREFIX = 'prd_t'
 
     _FIELDS = [
         'id',

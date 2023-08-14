@@ -1,5 +1,5 @@
 from flask import render_template
-from entities.PageEntity import PageEntity
+from entities.Page.PageEntity import PageEntity
 
 from views.AbstractView import AbstractView
 

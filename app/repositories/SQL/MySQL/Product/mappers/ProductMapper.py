@@ -1,6 +1,7 @@
 from entities.Product.ProductEntity import ProductEntity
 from repositories.SQL.SQLMapper import SQLMapper
 from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
+from repositories.SQL.MySQL.Product.mappers.ProductPriceMapper import ProductPriceMapper
 
 
 class ProductMapper(SQLMapper):
@@ -9,7 +10,7 @@ class ProductMapper(SQLMapper):
 
     _TABLE = 'product'
 
-    _TABLE_PREFIX = 'p'
+    _TABLE_PREFIX = 'prd'
 
     _FIELDS = [
         'id',
@@ -27,4 +28,5 @@ class ProductMapper(SQLMapper):
 
     _ENTITIES = {
         'text': ProductTextMapper,
+        'price': ProductPriceMapper
     }

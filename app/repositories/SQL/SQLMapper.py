@@ -15,6 +15,10 @@ class SQLMapper(Mapper):
     @classmethod
     def get_fields(cls) -> str:
         return ',\n'.join([f'{cls._TABLE_PREFIX}.{field} as {cls._TABLE_PREFIX}_{field}' for field in cls._FIELDS])
+    
+    @classmethod
+    def get_table(cls) -> str:
+        return f'{cls._TABLE} AS {cls._TABLE_PREFIX}'
 
     @classmethod
     def create_entity(cls, db_record: dict) -> Entity:
