@@ -9,8 +9,8 @@ class SQLMapper(Mapper):
     _TABLE: str
     _TABLE_PREFIX: str
     _FIELDS: list[str]
-    _CAST: dict[str, str] = {}
-    _ENTITIES: dict[str, Mapper] = {}
+    _CAST: dict[str, type] = {}
+    _ENTITIES: dict[str, type] = {}
 
     @classmethod
     def get_fields(cls) -> str:
