@@ -12,11 +12,10 @@ class PageEntity(Entity):
 
     id: int
     code: str
-    title: str
     template: str
     is_active: bool
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime] = None
 
     text: Optional[PageTextEntity] = None
 

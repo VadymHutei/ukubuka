@@ -1,16 +1,19 @@
+from typing import Type
+
 from exceptions.MapperException import MapperException
 from repositories.Mapper import Mapper
 from entities.Entity import Entity
+from repositories.MapperCast import MapperCast
 
 
 class SQLMapper(Mapper):
 
-    _ENTITY_CLASS: type
+    _ENTITY_CLASS: Type[Entity]
     _TABLE: str
     _TABLE_PREFIX: str
     _FIELDS: list[str]
-    _CAST: dict[str, type] = {}
-    _ENTITIES: dict[str, type] = {}
+    _CAST: dict[str, MapperCast] = {}
+    _ENTITIES: dict[str, Type[Mapper]] = {}
 
     @classmethod
     def get_fields(cls) -> str:
@@ -31,7 +34,7 @@ class SQLMapper(Mapper):
                 raise MapperException(f'Field {field_alias} not found in DB record')
 
             if field in cls._CAST:
-                data[field] = cls._CAST[field](db_record[field_alias])
+                data[field] = cls._CAST[field].value(db_record[field_alias])
             else:
                 data[field] = db_record[field_alias]
 

@@ -1,4 +1,5 @@
 from repositories.SQL.SQLMapper import SQLMapper
+from repositories.MapperCast import MapperCast
 from entities.Product.ProductPriceEntity import ProductPriceEntity
 from repositories.SQL.MySQL.Currency.CurrencyMapper import CurrencyMapper
 
@@ -21,10 +22,10 @@ class ProductPriceMapper(SQLMapper):
     ]
 
     _CAST = {
-        'id': int,
-        'product_id': int,
-        'currency_id': int,
-        'value': int,
+        'id': MapperCast.int,
+        'product_id': MapperCast.int,
+        'currency_id': MapperCast.int,
+        'value': MapperCast.int,
     }
 
     _ENTITIES = {

@@ -3,6 +3,8 @@ from datetime import datetime
 from typing import Optional
 
 from entities.Entity import Entity
+from entities.Language.LanguageEntity import LanguageEntity
+
 
 @dataclass
 class PageTextEntity(Entity):
@@ -13,3 +15,5 @@ class PageTextEntity(Entity):
     title: str
     created_at: datetime
     updated_at: Optional[datetime] = None
+
+    language: Optional[LanguageEntity] = None

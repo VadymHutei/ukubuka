@@ -1,13 +1,12 @@
-from entities.Page.PageEntity import PageEntity
-from views.HTML.HTMLView import HTMLView
+from views.web.WebView import WebView
 
 
-class LayoutView(HTMLView):
+class LayoutView(WebView):
 
     layout_template: str
 
-    def __init__(self, page: PageEntity) -> None:
-        super().__init__(page)
+    def __init__(self) -> None:
+        super().__init__()
 
         self._layout_data: dict = {
             'template': self.layout_template,

@@ -1,12 +1,21 @@
 from abc import ABC, abstractmethod
 
+from entities.Entity import Entity
+
 
 class Mapper(ABC):
-    
+
+    @classmethod
     @abstractmethod
-    def from_row(self, row: dict):
+    def get_fields(cls) -> str:
         pass
 
+    @classmethod
     @abstractmethod
-    def from_rows(self, rows: list):
+    def get_table(cls) -> str:
+        pass
+
+    @classmethod
+    @abstractmethod
+    def create_entity(cls, db_record: dict) -> Entity:
         pass

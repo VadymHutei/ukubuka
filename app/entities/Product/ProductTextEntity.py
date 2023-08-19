@@ -15,6 +15,6 @@ class ProductTextEntity(Entity):
     name: str
     description: str
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime] = None
 
     language: Optional[LanguageEntity] = None

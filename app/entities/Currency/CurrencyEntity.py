@@ -2,9 +2,11 @@ from dataclasses import dataclass
 from typing import Optional
 from datetime import datetime
 
+from entities.Entity import Entity
+
 
 @dataclass
-class CurrencyEntity:
+class CurrencyEntity(Entity):
 
     id: int
     code: str

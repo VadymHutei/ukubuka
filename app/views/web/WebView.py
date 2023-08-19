@@ -1,21 +1,26 @@
 from flask import render_template
+
+from views.View import View
+from service_container import sc
+from services.Page.PageService import PageService
 from entities.Page.PageEntity import PageEntity
 
-from views.AbstractView import AbstractView
 
+class WebView(View):
 
-class WebView(AbstractView):
+    _page_code: str
 
-    page_code: str
-
-    def __init__(self, page: PageEntity) -> None:
+    def __init__(self) -> None:
         super().__init__()
 
-        self._page: PageEntity = page
+        self._page_service = sc.get(PageService)
+        self._page: PageEntity = self._page_service.get_by_code(self._page_code)
+
         self._template_data: dict = {}
 
     def _prepare_data(self) -> None:
         self._prepare_page_data()
+
         self._prepare_template_data()
         self._data['t'] = self._template_data
 

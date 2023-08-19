@@ -1,4 +1,5 @@
 from entities.Product.ProductTextEntity import ProductTextEntity
+from repositories.MapperCast import MapperCast
 from repositories.SQL.SQLMapper import SQLMapper
 
 
@@ -21,7 +22,7 @@ class ProductTextMapper(SQLMapper):
     ]
 
     _CAST = {
-        'id': int,
-        'product_id': int,
-        'language_id': int,
+        'id': MapperCast.int,
+        'product_id': MapperCast.int,
+        'language_id': MapperCast.int,
     }

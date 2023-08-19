@@ -3,14 +3,14 @@ from typing import Optional
 from flask import g
 
 from repositories.SQL.SQLRepository import SQLRepository
-from services.Product.ProductRepository import ProductRepository
+from services.Product.ProductRepository import ProductRepository as ProductRepositoryInterface
 from repositories.SQL.MySQL.Product.mappers.ProductPriceMapper import ProductPriceMapper
 from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
 from repositories.SQL.MySQL.Product.mappers.ProductMapper import ProductMapper
 from entities.Product.ProductEntity import ProductEntity
 
 
-class ProductRepository(SQLRepository, ProductRepository):
+class ProductRepository(SQLRepository, ProductRepositoryInterface):
 
     def find_by_code(self, code: str) -> Optional[ProductEntity]:
         query = f'''
@@ -33,4 +33,4 @@ class ProductRepository(SQLRepository, ProductRepository):
                 cursor.execute(query, (g.current_language.id, code))
                 data = cursor.fetchone()
 
-        return ProductMapper.create_entity(data)
+        return ProductMapper.create_entity(data) if data else None

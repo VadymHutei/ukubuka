@@ -1,9 +1,11 @@
+from services.Service import Service
 from services.Product.ProductRepository import ProductRepository
 from entities.Product.ProductEntity import ProductEntity
 from exceptions.entities_exception.ProductException import ProductException
 
 
-class ProductService:
+class ProductService(Service):
+
     def __init__(self, product_repository: ProductRepository):
         self.product_repository = product_repository
 
