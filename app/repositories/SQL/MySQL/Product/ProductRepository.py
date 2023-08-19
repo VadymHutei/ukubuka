@@ -3,7 +3,7 @@ from typing import Optional
 from flask import g
 
 from repositories.SQL.SQLRepository import SQLRepository
-from services.Product.ProductRepository import ProductRepository as ProductRepositoryInterface
+from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
 from repositories.SQL.MySQL.Product.mappers.ProductPriceMapper import ProductPriceMapper
 from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
 from repositories.SQL.MySQL.Product.mappers.ProductMapper import ProductMapper

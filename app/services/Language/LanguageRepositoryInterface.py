@@ -1,0 +1,2 @@
+class LanguageRepositoryInterface:
+    pass

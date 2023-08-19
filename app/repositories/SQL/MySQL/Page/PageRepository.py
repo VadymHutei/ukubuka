@@ -3,11 +3,11 @@ from repositories.SQL.MySQL.Page.mappers.PageTextMapper import PageTextMapper
 
 from repositories.SQL.SQLRepository import SQLRepository
 from repositories.SQL.MySQL.Page.mappers.PageMapper import PageMapper
-from services.Page.PageRepository import PageRepository
+from services.Page.PageRepositoryInterface import PageRepositoryInterface
 from entities.Page.PageEntity import PageEntity
 
 
-class PageRepository(SQLRepository, PageRepository):
+class PageRepository(SQLRepository, PageRepositoryInterface):
 
     def find_by_code(self, code: str) -> PageEntity:
         query = f'''

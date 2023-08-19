@@ -1,12 +1,12 @@
 from services.Service import Service
-from services.Page.PageRepository import PageRepository
+from services.Page.PageRepositoryInterface import PageRepositoryInterface
 from entities.Page.PageEntity import PageEntity
 from exceptions.entities_exception.PageException import PageException
 
 
 class PageService(Service):
 
-    def __init__(self, repository: PageRepository) -> None:
+    def __init__(self, repository: PageRepositoryInterface) -> None:
         self._repository = repository
 
     def get_by_code(self, code: str) -> PageEntity:

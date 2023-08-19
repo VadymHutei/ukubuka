@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from entities.Page.PageEntity import PageEntity
 
 
-class PageRepository(ABC):
+class PageRepositoryInterface(ABC):
 
     @abstractmethod
     def find_by_code(self, code: str) -> PageEntity:
