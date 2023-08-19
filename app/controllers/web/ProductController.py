@@ -13,7 +13,7 @@ class ProductController(Controller):
     def product_page_action(self, code: str) -> str:
         product = self.product_service.get_by_code(code)
 
-        view = self._view_factory.get_web_view(ProductView)
+        view = ProductView()
         view.set_data(product=product)
 
         return view.render()

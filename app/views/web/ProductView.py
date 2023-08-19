@@ -1,6 +1,6 @@
-from views.web.LayoutView import LayoutView
+from views.web.WebView import WebView
 
 
-class ProductView (LayoutView):
+class ProductView(WebView):
 
-    page_code: str = 'product'
+    _page_code: str = 'product'

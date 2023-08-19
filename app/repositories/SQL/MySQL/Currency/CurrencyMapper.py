@@ -1,9 +1,9 @@
 from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLMapper import SQLMapper
+from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 from entities.Currency.CurrencyEntity import CurrencyEntity
 
 
-class CurrencyMapper(SQLMapper):
+class CurrencyMapper(SQLEntityMapper):
 
     _ENTITY_CLASS = CurrencyEntity
 
@@ -21,6 +21,6 @@ class CurrencyMapper(SQLMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.int,
-        'is_active': MapperCast.bool,
+        'id': MapperCast.INT,
+        'is_active': MapperCast.BOOL,
     }

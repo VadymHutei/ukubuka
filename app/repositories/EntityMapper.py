@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from entities.Entity import Entity
 
 
-class Mapper(ABC):
+class EntityMapper(ABC):
 
     @classmethod
     @abstractmethod

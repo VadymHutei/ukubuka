@@ -1,10 +1,10 @@
-from repositories.SQL.SQLMapper import SQLMapper
+from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 from repositories.MapperCast import MapperCast
 from entities.Page.PageEntity import PageEntity
 from repositories.SQL.MySQL.Page.mappers.PageTextMapper import PageTextMapper
 
 
-class PageMapper(SQLMapper):
+class PageMapper(SQLEntityMapper):
 
     _ENTITY_CLASS = PageEntity
 
@@ -22,8 +22,8 @@ class PageMapper(SQLMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.int,
-        'is_active': MapperCast.bool,
+        'id': MapperCast.INT,
+        'is_active': MapperCast.BOOL,
     }
 
     _ENTITIES = {

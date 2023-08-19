@@ -1,9 +1,9 @@
 from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLMapper import SQLMapper
+from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 from entities.Page.PageTextEntity import PageTextEntity
 
 
-class PageTextMapper(SQLMapper):
+class PageTextMapper(SQLEntityMapper):
 
     _ENTITY_CLASS = PageTextEntity
 
@@ -21,7 +21,7 @@ class PageTextMapper(SQLMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.int,
-        'page_id': MapperCast.int,
-        'language_id': MapperCast.int,
+        'id': MapperCast.INT,
+        'page_id': MapperCast.INT,
+        'language_id': MapperCast.INT,
     }

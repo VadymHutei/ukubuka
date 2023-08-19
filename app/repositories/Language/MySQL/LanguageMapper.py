@@ -1,8 +1,8 @@
 from entities.Language.LanguageEntity import LanguageEntity
-from repositories.Mapper import Mapper
+from repositories.EntityMapper import EntityMapper
 
 
-class LanguageMapper(Mapper):
+class LanguageMapper(EntityMapper):
 
     def from_row(self, row: dict) -> LanguageEntity:
         return LanguageEntity(

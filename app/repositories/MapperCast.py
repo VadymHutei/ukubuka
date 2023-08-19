@@ -1,14 +1,16 @@
-from enum import Enum
-
-
-def _int(value: str):
-    return int(value)
-
-def _bool(value: str):
-    return bool(value)
+from enum import Enum, auto
+from typing import Self
 
 
 class MapperCast(Enum):
 
-    int = _int
-    bool = _bool
+    INT = auto()
+    BOOL = auto()
+
+    @classmethod
+    def cast(cls, cast_type: Self, value: str):
+        match cast_type:
+            case cls.INT:
+                return int(value)
+            case cls.BOOL:
+                return bool(value)
