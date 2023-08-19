@@ -1,0 +1,9 @@
+<ul>
+    {% for language in l.languages.values() %}
+    {% if language.code == t.language.code %}
+    <li>{{ language.name }}</li>
+    {% else %}
+    <li><a href="{{ url_for(l.request_endpoint, language=language.code) }}">{{ language.name }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

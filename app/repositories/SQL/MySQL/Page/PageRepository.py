@@ -1,10 +1,10 @@
 from typing import Optional
 
 from entities.Page.PageEntity import PageEntity
-from services.Page.PageRepositoryInterface import PageRepositoryInterface
+from repositories.SQL.MySQL.Page.mappers.PageMapper import PageMapper
 from repositories.SQL.MySQL.Page.mappers.PageTextMapper import PageTextMapper
 from repositories.SQL.SQLRepository import SQLRepository
-from repositories.SQL.MySQL.Page.mappers.PageMapper import PageMapper
+from services.Page.PageRepositoryInterface import PageRepositoryInterface
 
 
 class PageRepository(SQLRepository, PageRepositoryInterface):
@@ -16,11 +16,13 @@ class PageRepository(SQLRepository, PageRepositoryInterface):
                 {PageTextMapper.fields}
             FROM {PageMapper.table}
             JOIN {PageTextMapper.table}
-                ON {PageMapper.table_prefix}.id = {PageTextMapper.table_prefix}.page_id
+                ON {PageTextMapper.table_prefix}.page_id = {PageMapper.table_prefix}.id
                 AND {PageTextMapper.table_prefix}.language_id = %s
             WHERE
                 {PageMapper.table_prefix}.code = %s
         '''
+
+        print(query)
 
         with self.connection as connection:
             with connection.cursor() as cursor:

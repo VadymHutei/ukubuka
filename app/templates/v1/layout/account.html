@@ -1,0 +1,8 @@
+{% if t.user and t.user.is_logged_in %}
+    <a href="/{{ t.language.code }}/account">{{ 'Account'|_ }}</a>
+{% else %}
+    <ul>
+        <li><a href="/{{ t.language.code }}/login">{{ 'Log in'|_ }}</a></li>
+        <li><a href="/{{ t.language.code }}/registration">{{ 'Registration'|_ }}</a></li>
+    </ul>
+{% endif %}

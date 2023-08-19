@@ -1,7 +1,7 @@
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
-from repositories.MapperCast import MapperCast
 from entities.Page.PageEntity import PageEntity
+from repositories.MapperCast import MapperCast
 from repositories.SQL.MySQL.Page.mappers.PageTextMapper import PageTextMapper
+from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 
 
 class PageMapper(SQLEntityMapper):
@@ -16,6 +16,7 @@ class PageMapper(SQLEntityMapper):
         'id',
         'code',
         'template',
+        'layout',
         'is_active',
         'created_at',
         'updated_at',
