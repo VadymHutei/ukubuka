@@ -1,1 +1,16 @@
-product.html
+<table>
+    <thead>
+        <tr>
+            <th>{{ 'Name'|_ }}</th>
+            <th>{{ 'Description'|_ }}</th>
+            <th>{{ 'Price'|_ }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+        </tr>
+    </tbody>
+</table>
