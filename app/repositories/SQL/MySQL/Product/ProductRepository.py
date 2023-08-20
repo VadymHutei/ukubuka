@@ -1,16 +1,14 @@
-from typing import Optional
-
-from repositories.SQL.SQLRepository import SQLRepository
-from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
+from entities.Product.ProductEntity import ProductEntity
+from repositories.SQL.MySQL.Product.mappers.ProductMapper import ProductMapper
 from repositories.SQL.MySQL.Product.mappers.ProductPriceMapper import ProductPriceMapper
 from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
-from repositories.SQL.MySQL.Product.mappers.ProductMapper import ProductMapper
-from entities.Product.ProductEntity import ProductEntity
+from repositories.SQL.SQLRepository import SQLRepository
+from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
 
 
 class ProductRepository(SQLRepository, ProductRepositoryInterface):
 
-    def find_by_code(self, code: str) -> Optional[ProductEntity]:
+    def find_by_code(self, code: str) -> ProductEntity|None:
         query = f'''
             SELECT
                 {ProductMapper.fields},

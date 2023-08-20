@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 
 @dataclass
@@ -10,4 +9,4 @@ class SessionEntity:
     created_datetime: datetime
     last_visit_datetime: datetime
     expired_datetime: datetime
-    user_agent: Optional[str]
+    user_agent: str|None

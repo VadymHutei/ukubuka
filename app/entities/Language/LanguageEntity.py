@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 from entities.Entity import Entity
 
@@ -13,4 +12,4 @@ class LanguageEntity(Entity):
     name: str
     is_active: bool
     created_at: datetime
-    updated_at: Optional[datetime] = None
+    updated_at: datetime | None

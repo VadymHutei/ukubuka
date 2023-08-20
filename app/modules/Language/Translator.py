@@ -1,6 +1,5 @@
-from typing import Optional
-
 from flask import g
+
 from modules.Language.entities.LanguageEntity import LanguageEntity
 from modules.Language.entities.TextEntity import TextEntity
 from modules.Language.services.LanguageService import LanguageService
@@ -25,10 +24,10 @@ class Translator:
     def _get_text_IDs(self) -> dict[str, int]:
         return {text_entity.text: text_entity.ID for text_entity in self._texts.values()}
 
-    def _get_text_ID(self, text: str) -> Optional[int]:
+    def _get_text_ID(self, text: str) -> int|None:
         return self._text_IDs.get(text)
 
-    def get_translation(self, text: str, language: str) -> Optional[str]:
+    def get_translation(self, text: str, language: str) -> str|None:
         try:
             text_ID = self._get_text_ID(text)
             return self._texts[text_ID].translations[language]

@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 from datetime import datetime
 
 from entities.Entity import Entity
@@ -13,4 +12,4 @@ class CurrencyEntity(Entity):
     symbol: str
     is_active: bool
     created_at: datetime
-    updated_at: Optional[datetime]
+    updated_at: datetime | None

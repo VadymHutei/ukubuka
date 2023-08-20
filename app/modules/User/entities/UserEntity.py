@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 from modules.User.entities.UserNameEntity import UserNameEntity
 
@@ -9,7 +8,7 @@ from modules.User.entities.UserNameEntity import UserNameEntity
 class UserEntity():
 
     ID: int
-    email: Optional[str]
-    name: Optional[UserNameEntity]
+    email: str|None
+    name: UserNameEntity|None
     is_blocked: bool
     registered_datetime: datetime

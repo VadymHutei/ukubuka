@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 
 from flask import g
 
@@ -15,10 +14,10 @@ class UserService:
     def __init__(self):
         self._repository = UserRepository()
 
-    def get_user_by_id(self, user_id: int) -> Optional[UserEntity]:
+    def get_user_by_id(self, user_id: int) -> UserEntity|None:
         return self._repository.get_user_by_ID(user_id)
 
-    def get_user_by_session_id(self, session_id: str) -> Optional[UserEntity]:
+    def get_user_by_session_id(self, session_id: str) -> UserEntity|None:
         return self._repository.get_user_by_session_ID(session_id)
 
     def create_user(self, data: dict) -> int:

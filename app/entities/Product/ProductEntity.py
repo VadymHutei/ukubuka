@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 from datetime import datetime
 
 from entities.Entity import Entity
@@ -15,11 +14,11 @@ class ProductEntity(Entity):
     code: str
     is_active: bool
     created_at: datetime
-    updated_at: Optional[datetime]
-    deleted_at: Optional[datetime]
+    updated_at: datetime|None
+    deleted_at: datetime|None
 
-    text: Optional[ProductTextEntity] = None
-    price: Optional[ProductPriceEntity] = None
+    text: ProductTextEntity|None = None
+    price: ProductPriceEntity|None = None
 
     @property
     def name(self) -> str:

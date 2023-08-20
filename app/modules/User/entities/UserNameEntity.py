@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
 class UserNameEntity:
 
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
+    first_name: str|None = None
+    last_name: str|None = None
 
     def __str__(self):
         name_list = []

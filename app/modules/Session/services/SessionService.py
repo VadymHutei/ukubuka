@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-from typing import Optional
 
 from flask import current_app as app
 from flask import request
+
 from modules.Auth.services.AuthService import AuthService
 from modules.Session.entities.SessionEntity import SessionEntity
 from modules.Session.repositories.SessionMySQLRepository import SessionMySQLRepository
@@ -15,7 +15,7 @@ class SessionService:
         self._MySQL_repository = SessionMySQLRepository()
         self._Redis_repository = SessionRedisRepository()
 
-    def get_session(self, session_ID: str) -> Optional[SessionEntity]:
+    def get_session(self, session_ID: str) -> SessionEntity|None:
         return self._Redis_repository.get_session(session_ID)
 
     def create_session(self) -> SessionEntity:

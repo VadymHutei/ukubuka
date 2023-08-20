@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 
 from modules.Base.repositories.RedisRepository import RedisRepository
 from modules.Notification.entities.Notification import Notification
@@ -13,8 +12,8 @@ class NotificationRedisRepository(RedisRepository):
 
     def _get_notification_key(
         self,
-        recipient: Optional[NotificationRecipient],
-        endpoint: Optional[str]
+        recipient: NotificationRecipient|None,
+        endpoint: str|None
     ) -> str:
         data = []
 
@@ -46,7 +45,7 @@ class NotificationRedisRepository(RedisRepository):
     def pop_list(
         self,
         recipient: NotificationRecipient,
-        endpoint: Optional[str] = None,
+        endpoint: str|None = None,
         by_pattern: bool = False,
     ) -> list[Notification]:
         key = self._get_notification_key(recipient, endpoint)

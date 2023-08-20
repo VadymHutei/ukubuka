@@ -1,5 +1,3 @@
-from typing import Optional
-
 from modules.Base.repositories.MySQLRepository import MySQLRepository
 from modules.Session.entities.SessionEntity import SessionEntity
 
@@ -15,7 +13,7 @@ class SessionMySQLRepository(MySQLRepository):
             user_agent=row['user_agent'],
         )
 
-    def get_session(self, session_ID: str) -> Optional[SessionEntity]:
+    def get_session(self, session_ID: str) -> SessionEntity|None:
         query = '''
             SELECT
                 id,

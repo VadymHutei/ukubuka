@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from datetime import datetime
 
 from entities.Entity import Entity
 from entities.Language.LanguageEntity import LanguageEntity
@@ -13,7 +13,7 @@ class SKUTextEntity(Entity):
     language_id: int
     name: str
     description: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime|None
 
-    language: Optional[LanguageEntity] = None
+    language: LanguageEntity|None = None

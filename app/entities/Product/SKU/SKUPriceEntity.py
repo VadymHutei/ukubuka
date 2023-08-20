@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 from entities.Currency.CurrencyEntity import CurrencyEntity
 
 from entities.Entity import Entity
@@ -15,4 +14,4 @@ class SKUPriceEntity(Entity):
         created_at: str
         updated_at: str
 
-        currency: Optional[CurrencyEntity] = None
+        currency: CurrencyEntity|None = None

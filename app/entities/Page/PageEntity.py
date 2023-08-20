@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 from entities.Entity import Entity
 from entities.Page.PageTextEntity import PageTextEntity
@@ -13,12 +12,12 @@ class PageEntity(Entity):
     id: int
     code: str
     template: str
-    layout: Optional[str]
+    layout: str|None
     is_active: bool
     created_at: datetime
-    updated_at: Optional[datetime]
+    updated_at: datetime|None
 
-    text: Optional[PageTextEntity] = None
+    text: PageTextEntity|None = None
 
     @property
     def title(self) -> str:

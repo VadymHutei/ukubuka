@@ -1,7 +1,6 @@
 import json
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
 
 from modules.Base.entities.AbstractJSONSerializable import AbstractJSONSerializable
 from modules.Base.repositories.RedisRepository import RedisRepository
@@ -14,9 +13,9 @@ class Notification(AbstractJSONSerializable):
 
     text: str
     type: NotificationType
-    recipient: Optional[NotificationRecipient] = None
-    endpoint: Optional[str] = None
-    expired_at: Optional[datetime] = None
+    recipient: NotificationRecipient|None = None
+    endpoint: str|None = None
+    expired_at: datetime|None = None
     metadata: dict = field(default_factory=dict)
 
     def to_JSON(self) -> str:

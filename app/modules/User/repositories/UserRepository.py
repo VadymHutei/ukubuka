@@ -1,5 +1,3 @@
-from typing import Optional
-
 from modules.Base.repositories.MySQLRepository import MySQLRepository
 from modules.User.entities.UserEntity import UserEntity
 from modules.User.entities.UserNameEntity import UserNameEntity
@@ -20,7 +18,7 @@ class UserRepository(MySQLRepository):
             registered_datetime=row['registered_datetime'],
         )
 
-    def get_user_by_ID(self, user_ID: int) -> Optional[UserEntity]:
+    def get_user_by_ID(self, user_ID: int) -> UserEntity|None:
         query = '''
             SELECT
                 id,
@@ -41,7 +39,7 @@ class UserRepository(MySQLRepository):
 
         return UserRepository.create_user_entity(cursor.fetchone())
 
-    def get_user_by_email(self, email: str) -> Optional[UserEntity]:
+    def get_user_by_email(self, email: str) -> UserEntity|None:
         query = '''
             SELECT
                 id,
@@ -63,7 +61,7 @@ class UserRepository(MySQLRepository):
         
         return UserRepository.create_user_entity(user_data) if user_data else None
 
-    def get_user_by_session_ID(self, session_ID: str) -> Optional[UserEntity]:
+    def get_user_by_session_ID(self, session_ID: str) -> UserEntity|None:
         query = '''
             SELECT
                 user.id,
@@ -127,7 +125,7 @@ class UserRepository(MySQLRepository):
 
         return user_ID
 
-    def get_user_password_by_email(self, email: str) -> Optional[tuple]:
+    def get_user_password_by_email(self, email: str) -> tuple|None:
         query = '''
             SELECT
                 u.id,
@@ -212,7 +210,7 @@ class UserRepository(MySQLRepository):
                 cursor.execute(query, (user_ID,))
             connection.commit()
 
-    def find_user_by_email(self, email: str) -> Optional[UserEntity]:
+    def find_user_by_email(self, email: str) -> UserEntity|None:
         query = '''
             SELECT
                 id,

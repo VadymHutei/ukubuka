@@ -1,5 +1,3 @@
-from typing import Optional
-
 from entities.Page.PageEntity import PageEntity
 from repositories.SQL.MySQL.Page.mappers.PageMapper import PageMapper
 from repositories.SQL.MySQL.Page.mappers.PageTextMapper import PageTextMapper
@@ -9,7 +7,7 @@ from services.Page.PageRepositoryInterface import PageRepositoryInterface
 
 class PageRepository(SQLRepository, PageRepositoryInterface):
 
-    def find_by_code(self, code: str) -> Optional[PageEntity]:
+    def find_by_code(self, code: str) -> PageEntity|None:
         query = f'''
             SELECT
                 {PageMapper.fields},

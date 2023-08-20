@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 from datetime import datetime
 
 from entities.Entity import Entity
@@ -13,7 +12,6 @@ class SKUEntity(Entity):
     sku: int
     product_id: int
     created_at: datetime
-    updated_at: Optional[datetime]
+    updated_at: datetime|None
 
-    text: Optional[SKUTextEntity] = None
-    price: Optional[SKUPrice] = None
+    text: SKUTextEntity|None = None

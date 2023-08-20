@@ -1,17 +1,14 @@
-from typing import Optional
-
-
 class ValidatedField:
 
     def __init__(self, name: str, required: bool = True, empty_allowed: bool = False):
         self.name: str = name
-        self.value: Optional[str] = None
+        self.value: str|None = None
         self.required: bool = required
         self.empty_allowed: bool = empty_allowed
         self.errors: list = []
         self.rules: list = []
 
-    def validate(self, value: Optional[str]):
+    def validate(self, value: str|None):
         if value is None and self.required:
             self.errors.append(f'{self.name} is required')
             return
