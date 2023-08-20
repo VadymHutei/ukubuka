@@ -19,3 +19,8 @@ class EntityMapper(ABC):
     @abstractmethod
     def create_entity(cls, db_record: dict) -> Entity:
         pass
+
+    @classmethod
+    @abstractmethod
+    def create_entity_tuple(cls, db_records: list[dict]) -> tuple[Entity]:
+        pass

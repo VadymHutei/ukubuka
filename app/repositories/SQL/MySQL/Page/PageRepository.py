@@ -22,8 +22,6 @@ class PageRepository(SQLRepository, PageRepositoryInterface):
                 {PageMapper.table_prefix}.code = %s
         '''
 
-        print(query)
-
         with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, (1, code))

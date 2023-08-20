@@ -1,8 +1,8 @@
 from flask import Flask, g
 
-from blueprints.HomeBlueprint import home_blueprint
-from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
+from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
+from blueprints.HomeBlueprint import home_blueprint
 from blueprints.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
 from modules.Language.jinjaFilters import filters as language_filters
@@ -10,6 +10,8 @@ from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlue
 from modules.Language.Translator import Translator
 from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
 from modules.User.routes.UserBlueprint import user_blueprint
+from service_container import sc
+from services.Config.ConfigService import ConfigService
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -21,6 +23,12 @@ app.jinja_env.filters.update(language_filters)
 
 @app.before_request
 def before_request() -> None:
+    if ConfigService.APP_CONFIG_KEY not in app.config or app.config[ConfigService.APP_CONFIG_KEY] is False:
+        config_service: ConfigService = sc.get(ConfigService)
+        config: dict = config_service.get_config()
+        app.config.update(config)
+        app.config[ConfigService.APP_CONFIG_KEY] = True
+
     g.t = Translator.getInstance()
     g.current_language = g.t.default_language
 

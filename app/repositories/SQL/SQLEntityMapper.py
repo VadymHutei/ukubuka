@@ -1,10 +1,8 @@
-from calendar import c
-from ctypes import cast
-from typing import Callable, Type
+from typing import Type
 
+from entities.Entity import Entity
 from exceptions.MapperException import MapperException
 from repositories.EntityMapper import EntityMapper
-from entities.Entity import Entity
 from repositories.MapperCast import MapperCast
 
 
@@ -57,3 +55,7 @@ class SQLEntityMapper(EntityMapper):
             pass
 
         return cls._ENTITY_CLASS(**data)
+
+    @classmethod
+    def create_entity_tuple(cls, db_records: list[dict]) -> list[Entity]:
+        return [cls.create_entity(db_record) for db_record in db_records]
