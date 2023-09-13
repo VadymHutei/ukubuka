@@ -1,7 +1,7 @@
-from services.Service import Service
-from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
 from entities.Product.ProductEntity import ProductEntity
-from exceptions.entities_exception.ProductException import ProductException
+from exceptions.entities_exceptions.ProductException import ProductException
+from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
+from services.Service import Service
 
 
 class ProductService(Service):
@@ -16,3 +16,6 @@ class ProductService(Service):
             raise ProductException('Product not found')
 
         return product
+
+    def find_by_code(self, code: str) -> ProductEntity|None:
+        return self.product_repository.find_by_code(code)

@@ -15,6 +15,7 @@ class CurrencyMapper(SQLEntityMapper):
         'id',
         'code',
         'symbol',
+        'symbol_position',
         'is_active',
         'created_at',
         'updated_at',

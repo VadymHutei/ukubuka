@@ -1,8 +1,8 @@
 from entities.Product.ProductEntity import ProductEntity
 from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
-from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
 from repositories.SQL.MySQL.Product.mappers.ProductPriceMapper import ProductPriceMapper
+from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
+from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 
 
 class ProductMapper(SQLEntityMapper):

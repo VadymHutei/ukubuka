@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from entities.Currency.CurrencyEntity import CurrencyEntity
 
 from entities.Entity import Entity
 
@@ -14,4 +15,4 @@ class ProductPriceEntity(Entity):
     created_at: datetime
     updated_at: datetime|None
 
-    currency: str|None = None
+    currency: CurrencyEntity|None = None

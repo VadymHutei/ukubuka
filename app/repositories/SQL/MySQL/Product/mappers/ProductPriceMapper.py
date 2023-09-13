@@ -1,7 +1,7 @@
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
-from repositories.MapperCast import MapperCast
 from entities.Product.ProductPriceEntity import ProductPriceEntity
+from repositories.MapperCast import MapperCast
 from repositories.SQL.MySQL.Currency.CurrencyMapper import CurrencyMapper
+from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 
 
 class ProductPriceMapper(SQLEntityMapper):
@@ -29,5 +29,5 @@ class ProductPriceMapper(SQLEntityMapper):
     }
 
     _ENTITIES = {
-        'currency': CurrencyMapper
+        'currency': CurrencyMapper,
     }

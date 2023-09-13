@@ -4,7 +4,7 @@ from datetime import datetime
 from entities.Entity import Entity
 from entities.Product.ProductPriceEntity import ProductPriceEntity
 from entities.Product.ProductTextEntity import ProductTextEntity
-from exceptions.entities_exception.ProductException import ProductException
+from exceptions.entities_exceptions.ProductException import ProductException
 
 
 @dataclass

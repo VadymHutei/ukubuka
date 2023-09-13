@@ -3,7 +3,7 @@ from datetime import datetime
 
 from entities.Entity import Entity
 from entities.Page.PageTextEntity import PageTextEntity
-from exceptions.entities_exception.PageException import PageException
+from exceptions.entities_exceptions.PageException import PageException
 
 
 @dataclass

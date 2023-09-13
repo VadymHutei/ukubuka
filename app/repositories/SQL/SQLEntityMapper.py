@@ -4,11 +4,12 @@ from entities.Entity import Entity
 from exceptions.MapperException import MapperException
 from repositories.EntityMapper import EntityMapper
 from repositories.MapperCast import MapperCast
+from value_objects.ValueObject import ValueObject
 
 
 class SQLEntityMapper(EntityMapper):
 
-    _ENTITY_CLASS: Type[Entity]
+    _ENTITY_CLASS: Type[Entity|ValueObject]
     _TABLE: str
     _TABLE_PREFIX: str
     _FIELDS: list[str]

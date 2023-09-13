@@ -1,7 +1,7 @@
 from services.Service import Service
 from services.Page.PageRepositoryInterface import PageRepositoryInterface
 from entities.Page.PageEntity import PageEntity
-from exceptions.entities_exception.PageException import PageException
+from exceptions.entities_exceptions.PageException import PageException
 
 
 class PageService(Service):
