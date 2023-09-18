@@ -1,10 +1,10 @@
 from custom_types.Price import Price
 from entities.Product.ProductEntity import ProductEntity
-from transformers.response_transformers.Price.PriceTransformer import PriceTransformer
-from transformers.Transformer import Transformer
+from response_transformers.Price.PriceTransformer import PriceTransformer
+from response_transformers.ResponseTransformer import ResponseTransformer
 
 
-class ProductTransformer(Transformer):
+class ProductTransformer(ResponseTransformer):
 
     @classmethod
     def transform(cls, product: ProductEntity) -> dict[str, str]:

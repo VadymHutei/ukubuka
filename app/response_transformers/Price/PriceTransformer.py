@@ -1,9 +1,9 @@
-from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
-from transformers.Transformer import Transformer
 from custom_types.Price import Price
+from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
+from response_transformers.ResponseTransformer import ResponseTransformer
 
 
-class PriceTransformer(Transformer):
+class PriceTransformer(ResponseTransformer):
 
     @staticmethod
     def transform(price: Price) -> str:

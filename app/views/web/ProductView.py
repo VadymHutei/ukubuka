@@ -1,4 +1,4 @@
-from transformers.response_transformers.Product.ProductTransformer import ProductTransformer
+from response_transformers.Product.ProductTransformer import ProductTransformer
 from views.web.WebView import WebView
 
 
