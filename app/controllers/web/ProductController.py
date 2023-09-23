@@ -1,5 +1,3 @@
-from flask import abort
-
 from controllers.Controller import Controller
 from services.Product.ProductService import ProductService
 from views.web.ProductView import ProductView
@@ -14,9 +12,6 @@ class ProductController(Controller):
 
     def product_page_action(self, code: str) -> str:
         product = self.product_service.find_by_code(code)
-
-        if product is None:
-            abort(404)
 
         view = ProductView()
         view.set_data(product=product)

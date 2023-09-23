@@ -7,7 +7,7 @@ from service_container import sc
 from controllers.web.ProductController import ProductController
 
 
-product_blueprint = Blueprint(PRODUCT_BLUEPRINT, __name__, url_prefix='/<string:language>/product')
+product_blueprint = Blueprint(PRODUCT_BLUEPRINT, __name__, url_prefix='/<string:language>/products')
 
 
 @product_blueprint.route('<string:code>', methods=['GET'])
