@@ -1,13 +1,13 @@
 from entities.Config.ConfigEntity import ConfigEntity
 from services.Service import IService
-from services.Config.ConfigRepositoryInterface import ConfigRepositoryInterface
+from services.Config.ConfigRepositoryInterface import IConfigRepository
 
 
 class ConfigService(IService):
 
     APP_CONFIG_KEY = 'app_config'
 
-    def __init__(self, repository: ConfigRepositoryInterface):
+    def __init__(self, repository: IConfigRepository):
         self._repository = repository
 
     def get_config(self) -> dict[str, ConfigEntity]:

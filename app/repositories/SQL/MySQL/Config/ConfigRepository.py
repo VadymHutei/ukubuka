@@ -1,10 +1,10 @@
 from entities.Config.ConfigEntity import ConfigEntity
 from repositories.SQL.MySQL.Config.ConfigMapper import ConfigMapper
-from repositories.SQL.SQLRepository import SQLRepository
-from services.Config.ConfigRepositoryInterface import ConfigRepositoryInterface
+from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from services.Config.ConfigRepositoryInterface import IConfigRepository
 
 
-class ConfigRepository(SQLRepository, ConfigRepositoryInterface):
+class ConfigRepository(MySQLRepository, IConfigRepository):
 
     def get_config(self) -> list[ConfigEntity]:
         query = f'''

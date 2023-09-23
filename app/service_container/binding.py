@@ -4,7 +4,7 @@ from repositories.SQL.MySQL.Language.LanguageRepository import LanguageRepositor
 from repositories.SQL.MySQL.Page.PageRepository import PageRepository as MySQLPageRepository
 from repositories.SQL.MySQL.Product.ProductRepository import ProductRepository as MySQLProductRepository
 from services.Catalog.ICatalogRepository import ICatalogRepository
-from services.Config.ConfigRepositoryInterface import ConfigRepositoryInterface
+from services.Config.ConfigRepositoryInterface import IConfigRepository
 from services.Language.LanguageRepositoryInterface import LanguageRepositoryInterface
 from services.Page.PageRepositoryInterface import PageRepositoryInterface
 from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
@@ -14,6 +14,6 @@ services_map: dict[type, type] = {
     LanguageRepositoryInterface: MySQLLanguageRepository,
     ProductRepositoryInterface: MySQLProductRepository,
     PageRepositoryInterface: MySQLPageRepository,
-    ConfigRepositoryInterface: MySQLConfigRepository,
+    IConfigRepository: MySQLConfigRepository,
     ICatalogRepository: CatalogRepository,
 }

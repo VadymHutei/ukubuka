@@ -2,6 +2,7 @@ from flask import Flask, g
 
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
+from blueprints.CatalogBlueprint import catalog_blueprint
 from blueprints.HomeBlueprint import home_blueprint
 from blueprints.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
@@ -38,6 +39,7 @@ app.register_blueprint(user_blueprint)
 app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(product_blueprint)
+app.register_blueprint(catalog_blueprint)
 
 app.register_blueprint(ACP_user_blueprint)
 app.register_blueprint(acp_dashboard_blueprint)
