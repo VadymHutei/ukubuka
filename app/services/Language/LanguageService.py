@@ -1,8 +1,8 @@
 from services.Language.LanguageRepositoryInterface import LanguageRepositoryInterface
-from services.Service import Service
+from services.Service import IService
 
 
-class LanguageService(Service):
+class LanguageService(IService):
 
     def __init__(self, repository: LanguageRepositoryInterface) -> None:
         self._repository = repository

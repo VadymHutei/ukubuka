@@ -1,2 +1,2 @@
-class Service:
+class IService:
     pass

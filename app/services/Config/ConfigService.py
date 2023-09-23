@@ -1,9 +1,9 @@
 from entities.Config.ConfigEntity import ConfigEntity
-from services.Service import Service
+from services.Service import IService
 from services.Config.ConfigRepositoryInterface import ConfigRepositoryInterface
 
 
-class ConfigService(Service):
+class ConfigService(IService):
 
     APP_CONFIG_KEY = 'app_config'
 

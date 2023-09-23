@@ -1,0 +1,2 @@
+class ICatalogRepository:
+    pass
