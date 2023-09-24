@@ -1,9 +1,9 @@
-from controllers.Controller import Controller
+from controllers.IController import IController
 from services.Product.ProductService import ProductService
 from views.web.ProductView import ProductView
 
 
-class ProductController(Controller):
+class ProductController(IController):
 
     def __init__(self, product_service: ProductService):
         super().__init__()
