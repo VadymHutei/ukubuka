@@ -18,4 +18,4 @@ class ConfigRepository(MySQLRepository, IConfigRepository):
                 cursor.execute(query)
                 data = cursor.fetchall()
 
-        return ConfigMapper.create_entity_tuple(data) if data else ()
+        return ConfigMapper.create_entities(data) if data else ()

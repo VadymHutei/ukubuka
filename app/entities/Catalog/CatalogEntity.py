@@ -2,16 +2,14 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from entities.IEntity import IEntity
-from entities.Product.SKU.SKUTextEntity import SKUTextEntity
 
 
 @dataclass
-class SKUEntity(IEntity):
+class CatalogEntity(IEntity):
 
     id: int
-    sku: int
-    product_id: int
+    code: str
+    is_active: bool
     created_at: datetime
     updated_at: datetime|None = None
-
-    text: SKUTextEntity|None = None
+    deleted_at: datetime|None = None

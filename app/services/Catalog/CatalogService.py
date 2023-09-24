@@ -1,3 +1,4 @@
+from entities.Catalog.CatalogEntity import CatalogEntity
 from services.Catalog.ICatalogRepository import ICatalogRepository
 from services.IService import IService
 
@@ -5,4 +6,7 @@ from services.IService import IService
 class CatalogService(IService):
 
     def __init__(self, repository: ICatalogRepository) -> None:
-        self.repository: ICatalogRepository = repository
+        self._repository: ICatalogRepository = repository
+
+    def get_all(self) -> list[CatalogEntity]:
+        return self._repository.get_all()

@@ -1,21 +1,21 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 from entities.Product.ProductPriceEntity import ProductPriceEntity
 from entities.Product.ProductTextEntity import ProductTextEntity
 from exceptions.entities_exceptions.ProductException import ProductException
 
 
 @dataclass
-class ProductEntity(Entity):
+class ProductEntity(IEntity):
 
     id: int
     code: str
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None
-    deleted_at: datetime|None
+    updated_at: datetime|None = None
+    deleted_at: datetime|None = None
 
     text: ProductTextEntity|None = None
     price: ProductPriceEntity|None = None

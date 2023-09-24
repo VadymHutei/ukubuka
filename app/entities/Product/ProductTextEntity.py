@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 from entities.Language.LanguageEntity import LanguageEntity
 
 
 @dataclass
-class ProductTextEntity(Entity):
+class ProductTextEntity(IEntity):
 
     id: int
     product_id: int

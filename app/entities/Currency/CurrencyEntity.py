@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
 
 
 @dataclass
-class CurrencyEntity(Entity):
+class CurrencyEntity(IEntity):
 
     id: int
     code: str
@@ -14,4 +14,4 @@ class CurrencyEntity(Entity):
     symbol_position: CurrencySymbolPositionEnum
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None
+    updated_at: datetime|None = None

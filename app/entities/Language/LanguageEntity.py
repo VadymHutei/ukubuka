@@ -1,15 +1,15 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 
 
 @dataclass
-class LanguageEntity(Entity):
+class LanguageEntity(IEntity):
 
     id: int
     code: str
     name: str
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None
+    updated_at: datetime|None = None

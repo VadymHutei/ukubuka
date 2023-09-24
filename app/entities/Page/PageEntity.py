@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 from entities.Page.PageTextEntity import PageTextEntity
 from exceptions.entities_exceptions.PageException import PageException
 
 
 @dataclass
-class PageEntity(Entity):
+class PageEntity(IEntity):
 
     id: int
     code: str
@@ -15,7 +15,7 @@ class PageEntity(Entity):
     layout: str|None
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None
+    updated_at: datetime|None = None
 
     text: PageTextEntity|None = None
 

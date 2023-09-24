@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 from entities.Language.LanguageEntity import LanguageEntity
 
 
 @dataclass
-class SKUTextEntity(Entity):
+class SKUTextEntity(IEntity):
 
     id: int
     sku_id: int
@@ -14,6 +14,6 @@ class SKUTextEntity(Entity):
     name: str
     description: str
     created_at: datetime
-    updated_at: datetime|None
+    updated_at: datetime|None = None
 
     language: LanguageEntity|None = None

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 
 
 class EntityMapper(ABC):
@@ -17,10 +17,10 @@ class EntityMapper(ABC):
 
     @classmethod
     @abstractmethod
-    def create_entity(cls, db_record: dict) -> Entity:
+    def create_entity(cls, db_record: dict) -> IEntity:
         pass
 
     @classmethod
     @abstractmethod
-    def create_entity_tuple(cls, db_records: list[dict]) -> tuple[Entity]:
+    def create_entities(cls, db_records: list[dict]) -> list[IEntity]:
         pass

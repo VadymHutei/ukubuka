@@ -1,5 +1,21 @@
+from entities.Catalog.CatalogEntity import CatalogEntity
+from repositories.SQL.MySQL.Catalog.mappers.CatalogMapper import CatalogMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from services.Catalog.ICatalogRepository import ICatalogRepository
 
 
-class CatalogRepository(MySQLRepository):
-    pass
+class CatalogRepository(MySQLRepository, ICatalogRepository):
+
+    def get_all(self) -> list[CatalogEntity]:
+        query = f'''
+            SELECT
+                {CatalogMapper.fields}
+            FROM {CatalogMapper.table}
+        '''
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                data = cursor.fetchall()
+
+        return CatalogMapper.create_entities(data) if data else None

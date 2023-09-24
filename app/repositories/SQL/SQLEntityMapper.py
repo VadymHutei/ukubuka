@@ -1,6 +1,6 @@
 from typing import Type
 
-from entities.Entity import Entity
+from entities.IEntity import IEntity
 from exceptions.MapperException import MapperException
 from repositories.EntityMapper import EntityMapper
 from repositories.MapperCast import MapperCast
@@ -9,7 +9,7 @@ from value_objects.ValueObject import ValueObject
 
 class SQLEntityMapper(EntityMapper):
 
-    _ENTITY_CLASS: Type[Entity|ValueObject]
+    _ENTITY_CLASS: Type[IEntity|ValueObject]
     _TABLE: str
     _TABLE_PREFIX: str
     _FIELDS: list[str]
@@ -32,7 +32,7 @@ class SQLEntityMapper(EntityMapper):
         return ',\n'.join([f'{cls._TABLE_PREFIX}.{field} as {cls._TABLE_PREFIX}_{field}' for field in cls._FIELDS])
 
     @classmethod
-    def create_entity(cls, db_record: dict) -> Entity:
+    def create_entity(cls, db_record: dict) -> IEntity:
         data = {}
 
         for field in cls._FIELDS:
@@ -58,5 +58,5 @@ class SQLEntityMapper(EntityMapper):
         return cls._ENTITY_CLASS(**data)
 
     @classmethod
-    def create_entity_tuple(cls, db_records: list[dict]) -> list[Entity]:
+    def create_entities(cls, db_records: list[dict]) -> list[IEntity]:
         return [cls.create_entity(db_record) for db_record in db_records]

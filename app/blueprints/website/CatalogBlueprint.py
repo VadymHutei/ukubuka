@@ -16,7 +16,7 @@ catalog_blueprint = Blueprint(CATALOG_BLUEPRINT, __name__, url_prefix='/<string:
 def catalogs_page_route():
     controller: CatalogController = sc.get(CatalogController)
 
-    return controller.getCatalogsPageAction()
+    return controller.get_catalogs_page_action()
 
 @catalog_blueprint.route('<string:catalog_code>', methods=['GET'])
 @language_redirect
@@ -24,4 +24,4 @@ def catalogs_page_route():
 def catalog_page_route(catalog_code: str):
     controller: CatalogController = sc.get(CatalogController)
 
-    return controller.getCatalogPageAction(catalog_code)
+    return controller.get_catalog_page_action(catalog_code)
