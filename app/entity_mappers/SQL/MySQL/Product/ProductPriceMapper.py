@@ -12,7 +12,7 @@ class ProductPriceMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'prd_prc'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'product_id',
         'currency_id',

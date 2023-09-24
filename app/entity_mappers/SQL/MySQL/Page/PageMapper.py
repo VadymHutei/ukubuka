@@ -12,7 +12,7 @@ class PageMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'pg'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'code',
         'template',

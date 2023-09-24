@@ -11,7 +11,7 @@ class PageTextMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'pg_t'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'page_id',
         'language_id',

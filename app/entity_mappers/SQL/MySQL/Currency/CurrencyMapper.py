@@ -11,7 +11,7 @@ class CurrencyMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'cur'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'code',
         'symbol',

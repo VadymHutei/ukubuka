@@ -13,7 +13,7 @@ class ProductMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'prd'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'code',
         'is_active',

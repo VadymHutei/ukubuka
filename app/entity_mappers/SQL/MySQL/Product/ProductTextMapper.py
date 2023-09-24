@@ -11,7 +11,7 @@ class ProductTextMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'prd_t'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'product_id',
         'language_id',

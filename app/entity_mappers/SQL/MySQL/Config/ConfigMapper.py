@@ -11,7 +11,7 @@ class ConfigMapper(MySQLEntityMapper):
 
     _TABLE_PREFIX = 'conf'
 
-    _FIELDS = [
+    _DATA_FIELDS = [
         'id',
         'code',
         'value',
