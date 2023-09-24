@@ -2,9 +2,9 @@ from flask import Flask, g
 
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
-from blueprints.CatalogBlueprint import catalog_blueprint
-from blueprints.HomeBlueprint import home_blueprint
-from blueprints.ProductBlueprint import product_blueprint
+from blueprints.website.CatalogBlueprint import catalog_blueprint
+from blueprints.website.HomeBlueprint import home_blueprint
+from blueprints.website.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
