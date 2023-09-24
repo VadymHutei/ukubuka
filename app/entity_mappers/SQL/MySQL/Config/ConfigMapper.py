@@ -19,6 +19,6 @@ class ConfigMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
-    _CAST = {
+    _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
     }

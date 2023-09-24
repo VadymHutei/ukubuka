@@ -21,13 +21,13 @@ class ProductPriceMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
-    _CAST = {
+    _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'product_id': MapperFieldTypes.INT,
         'currency_id': MapperFieldTypes.INT,
         'value': MapperFieldTypes.INT,
     }
 
-    _ENTITIES = {
+    _NESTED_ENTITY_MAPPERS = {
         'currency': CurrencyMapper,
     }

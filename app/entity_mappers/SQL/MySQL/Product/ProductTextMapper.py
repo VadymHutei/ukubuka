@@ -21,7 +21,7 @@ class ProductTextMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
-    _CAST = {
+    _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'product_id': MapperFieldTypes.INT,
         'language_id': MapperFieldTypes.INT,

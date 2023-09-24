@@ -20,7 +20,7 @@ class PageTextMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
-    _CAST = {
+    _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'page_id': MapperFieldTypes.INT,
         'language_id': MapperFieldTypes.INT,

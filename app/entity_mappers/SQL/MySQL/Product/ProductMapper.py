@@ -22,12 +22,12 @@ class ProductMapper(MySQLEntityMapper):
         'deleted_at',
     ]
 
-    _CAST = {
+    _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,
     }
 
-    _ENTITIES = {
+    _NESTED_ENTITY_MAPPERS = {
         'text': ProductTextMapper,
         'price': ProductPriceMapper
     }

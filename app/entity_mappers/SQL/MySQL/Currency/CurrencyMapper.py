@@ -21,7 +21,7 @@ class CurrencyMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
-    _CAST = {
+    _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,
     }
