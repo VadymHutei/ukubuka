@@ -30,10 +30,15 @@ class ProductRepository(MySQLRepository, IProductRepository):
             LIMIT 1
         '''
 
+        query_data = (
+            # g.current_language.id,
+            1,
+            code,
+        )
+
         with self.connection as connection:
             with connection.cursor() as cursor:
-                # cursor.execute(query, (g.current_language.id, code))
-                cursor.execute(query, (1, code))
+                cursor.execute(query, query_data)
                 data = cursor.fetchone()
 
         return ProductMapper.create_entity(data) if data else None # type: ignore

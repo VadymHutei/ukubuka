@@ -1,19 +1,19 @@
-from entities.Product.ProductTextEntity import ProductTextEntity
+from entities.Catalog.CatalogTextEntity import CatalogTextEntity
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
 from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class ProductTextMapper(MySQLEntityMapper):
+class CatalogTextMapper(MySQLEntityMapper):
 
-    _ENTITY_CLASS = ProductTextEntity
+    _ENTITY_CLASS = CatalogTextEntity
 
-    _TABLE = 'product_text'
+    _TABLE = 'catalog_text'
 
-    _TABLE_PREFIX = 'prd_txt'
+    _TABLE_PREFIX = 'ctlg_txt'
 
     _DATA_FIELDS = [
         'id',
-        'product_id',
+        'catalog_id',
         'language_id',
         'name',
         'description',
@@ -23,6 +23,6 @@ class ProductTextMapper(MySQLEntityMapper):
 
     _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
-        'product_id': MapperFieldTypes.INT,
+        'catalog_id': MapperFieldTypes.INT,
         'language_id': MapperFieldTypes.INT,
     }

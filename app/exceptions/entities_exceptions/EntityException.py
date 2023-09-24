@@ -1,0 +1,2 @@
+class EntityException(Exception):
+    pass

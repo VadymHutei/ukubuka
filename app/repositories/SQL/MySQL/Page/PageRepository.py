@@ -20,8 +20,13 @@ class PageRepository(MySQLRepository, PageRepositoryInterface):
                 {PageMapper.table_prefix}.code = %s
         '''
 
+        query_data = (
+            1,
+            code,
+        )
+
         with self.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (1, code))
+                cursor.execute(query, query_data)
 
         return PageMapper.create_entity(cursor.fetchone()) # type: ignore

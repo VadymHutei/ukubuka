@@ -30,6 +30,10 @@ class SQLEntityMapper(EntityMapper):
         return ',\n'.join(fields)
 
     @classmethod
+    def field(cls, field: str) -> str:
+        return f'{cls._TABLE_PREFIX}.{field}'
+
+    @classmethod
     def _get_field_alias(cls, field: str) -> str:
         return f'{cls._TABLE_PREFIX}_{field}'
 

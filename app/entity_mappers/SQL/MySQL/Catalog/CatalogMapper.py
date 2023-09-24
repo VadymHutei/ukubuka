@@ -1,5 +1,6 @@
 from entities.Catalog.CatalogEntity import CatalogEntity
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.Catalog.CatalogTextMapper import CatalogTextMapper
 from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
@@ -23,4 +24,8 @@ class CatalogMapper(MySQLEntityMapper):
     _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,
+    }
+
+    _NESTED_ENTITY_MAPPERS = {
+        'text': CatalogTextMapper,
     }

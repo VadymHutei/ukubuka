@@ -1,5 +1,5 @@
 from exceptions.entities_exceptions.EntityException import EntityException
 
 
-class PageException(EntityException):
+class CatalogException(EntityException):
     pass
