@@ -18,8 +18,10 @@ def catalogs_page_route():
 
     return controller.getCatalogsPageAction()
 
-@catalog_blueprint.route('<string:code>', methods=['GET'])
+@catalog_blueprint.route('<string:catalog_code>', methods=['GET'])
 @language_redirect
 @with_session
-def catalog_route(code: str):
-    return 'catalog'
+def catalog_page_route(catalog_code: str):
+    controller: CatalogController = sc.get(CatalogController)
+
+    return controller.getCatalogPageAction(catalog_code)

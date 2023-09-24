@@ -9,3 +9,6 @@ class CatalogController(IController):
 
     def getCatalogsPageAction(self):
         return 'catalogs'
+
+    def getCatalogPageAction(self, catalog_code: str):
+        return f'catalog {catalog_code}'
