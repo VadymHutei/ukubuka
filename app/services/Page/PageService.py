@@ -1,4 +1,4 @@
-from services.Service import IService
+from services.IService import IService
 from services.Page.PageRepositoryInterface import PageRepositoryInterface
 from entities.Page.PageEntity import PageEntity
 from exceptions.entities_exceptions.PageException import PageException

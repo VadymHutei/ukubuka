@@ -1,5 +1,5 @@
 from entities.Config.ConfigEntity import ConfigEntity
-from services.Service import IService
+from services.IService import IService
 from services.Config.ConfigRepositoryInterface import IConfigRepository
 
 

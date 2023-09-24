@@ -1,5 +1,5 @@
 from services.Catalog.ICatalogRepository import ICatalogRepository
-from services.Service import IService
+from services.IService import IService
 
 
 class CatalogService(IService):

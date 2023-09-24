@@ -1,4 +1,4 @@
-from services.Service import IService
+from services.IService import IService
 
 
 class PriceService(IService):

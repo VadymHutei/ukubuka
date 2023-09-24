@@ -1,5 +1,5 @@
 from services.Language.LanguageRepositoryInterface import LanguageRepositoryInterface
-from services.Service import IService
+from services.IService import IService
 
 
 class LanguageService(IService):
