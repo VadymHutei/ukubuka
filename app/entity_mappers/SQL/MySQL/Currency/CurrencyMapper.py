@@ -1,9 +1,9 @@
-from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 from entities.Currency.CurrencyEntity import CurrencyEntity
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class CurrencyMapper(SQLEntityMapper):
+class CurrencyMapper(MySQLEntityMapper):
 
     _ENTITY_CLASS = CurrencyEntity
 
@@ -22,6 +22,6 @@ class CurrencyMapper(SQLEntityMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.INT,
-        'is_active': MapperCast.BOOL,
+        'id': MapperFieldTypes.INT,
+        'is_active': MapperFieldTypes.BOOL,
     }

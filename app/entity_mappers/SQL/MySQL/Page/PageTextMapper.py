@@ -1,9 +1,9 @@
-from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
 from entities.Page.PageTextEntity import PageTextEntity
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class PageTextMapper(SQLEntityMapper):
+class PageTextMapper(MySQLEntityMapper):
 
     _ENTITY_CLASS = PageTextEntity
 
@@ -21,7 +21,7 @@ class PageTextMapper(SQLEntityMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.INT,
-        'page_id': MapperCast.INT,
-        'language_id': MapperCast.INT,
+        'id': MapperFieldTypes.INT,
+        'page_id': MapperFieldTypes.INT,
+        'language_id': MapperFieldTypes.INT,
     }

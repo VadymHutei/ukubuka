@@ -1,9 +1,9 @@
 from entities.Product.ProductTextEntity import ProductTextEntity
-from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class ProductTextMapper(SQLEntityMapper):
+class ProductTextMapper(MySQLEntityMapper):
 
     _ENTITY_CLASS = ProductTextEntity
 
@@ -22,7 +22,7 @@ class ProductTextMapper(SQLEntityMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.INT,
-        'product_id': MapperCast.INT,
-        'language_id': MapperCast.INT,
+        'id': MapperFieldTypes.INT,
+        'product_id': MapperFieldTypes.INT,
+        'language_id': MapperFieldTypes.INT,
     }

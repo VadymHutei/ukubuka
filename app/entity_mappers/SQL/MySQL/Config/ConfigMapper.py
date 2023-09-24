@@ -1,9 +1,9 @@
 from entities.Config.ConfigEntity import ConfigEntity
-from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class ConfigMapper(SQLEntityMapper):
+class ConfigMapper(MySQLEntityMapper):
 
     _ENTITY_CLASS = ConfigEntity
 
@@ -20,5 +20,5 @@ class ConfigMapper(SQLEntityMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.INT,
+        'id': MapperFieldTypes.INT,
     }

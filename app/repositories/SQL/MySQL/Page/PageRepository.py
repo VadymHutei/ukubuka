@@ -1,11 +1,11 @@
 from entities.Page.PageEntity import PageEntity
-from repositories.SQL.MySQL.Page.mappers.PageMapper import PageMapper
-from repositories.SQL.MySQL.Page.mappers.PageTextMapper import PageTextMapper
-from repositories.SQL.SQLRepository import SQLRepository
+from entity_mappers.SQL.MySQL.Page.PageMapper import PageMapper
+from entity_mappers.SQL.MySQL.Page.PageTextMapper import PageTextMapper
+from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 from services.Page.PageRepositoryInterface import PageRepositoryInterface
 
 
-class PageRepository(SQLRepository, PageRepositoryInterface):
+class PageRepository(MySQLRepository, PageRepositoryInterface):
 
     def find_by_code(self, code: str) -> PageEntity|None:
         query = f'''
@@ -24,4 +24,4 @@ class PageRepository(SQLRepository, PageRepositoryInterface):
             with connection.cursor() as cursor:
                 cursor.execute(query, (1, code))
 
-        return PageMapper.create_entity(cursor.fetchone())
+        return PageMapper.create_entity(cursor.fetchone()) # type: ignore

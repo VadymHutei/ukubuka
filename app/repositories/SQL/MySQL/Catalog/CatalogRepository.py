@@ -1,5 +1,5 @@
 from entities.Catalog.CatalogEntity import CatalogEntity
-from repositories.SQL.MySQL.Catalog.mappers.CatalogMapper import CatalogMapper
+from entity_mappers.SQL.MySQL.Catalog.CatalogMapper import CatalogMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 from services.Catalog.ICatalogRepository import ICatalogRepository
 
@@ -18,4 +18,4 @@ class CatalogRepository(MySQLRepository, ICatalogRepository):
                 cursor.execute(query)
                 data = cursor.fetchall()
 
-        return CatalogMapper.create_entities(data) if data else None
+        return CatalogMapper.create_entities(data) if data else None # type: ignore

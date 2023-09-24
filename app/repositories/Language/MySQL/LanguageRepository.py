@@ -1,10 +1,10 @@
 from entities.Language.LanguageEntity import LanguageEntity
-from services.Language.LanguageRepositoryInterface import LanguageRepositoryInterface
-from repositories.MySQLRepository import MySQLRepository
-from repositories.Language.MySQL.LanguageMapper import LanguageMapper
+from entity_mappers.SQL.MySQL.Language.LanguageMapper import LanguageMapper
+from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from services.Language.ILanguageRepository import ILanguageRepository
 
 
-class LanguageRepositoryInterface(LanguageRepositoryInterface, MySQLRepository):
+class LanguageRepository(MySQLRepository, ILanguageRepository):
 
     TABLE = 'language'
 

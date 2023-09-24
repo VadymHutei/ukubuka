@@ -2,13 +2,13 @@ from enum import Enum, auto
 from typing import Self
 
 
-class MapperCast(Enum):
+class MapperFieldTypes(Enum):
 
     INT = auto()
     BOOL = auto()
 
     @classmethod
-    def cast(cls, cast_type: Self, value: str):
+    def convert(cls, cast_type: Self, value: str):
         match cast_type:
             case cls.INT:
                 return int(value)

@@ -1,6 +1,6 @@
-from repositories.SQL.SQLRepository import SQLRepository
-from services.Language.LanguageRepositoryInterface import LanguageRepositoryInterface
+from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from services.Language.ILanguageRepository import ILanguageRepository
 
 
-class LanguageRepository(SQLRepository, LanguageRepositoryInterface):
+class LanguageRepository(MySQLRepository, ILanguageRepository):
     pass

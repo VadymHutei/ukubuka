@@ -1,13 +1,13 @@
 from entities.Product.ProductEntity import ProductEntity
-from repositories.SQL.MySQL.Currency.CurrencyMapper import CurrencyMapper
-from repositories.SQL.MySQL.Product.mappers.ProductMapper import ProductMapper
-from repositories.SQL.MySQL.Product.mappers.ProductPriceMapper import ProductPriceMapper
-from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
-from repositories.SQL.SQLRepository import SQLRepository
-from services.Product.ProductRepositoryInterface import ProductRepositoryInterface
+from entity_mappers.SQL.MySQL.Currency.CurrencyMapper import CurrencyMapper
+from entity_mappers.SQL.MySQL.Product.ProductMapper import ProductMapper
+from entity_mappers.SQL.MySQL.Product.ProductPriceMapper import ProductPriceMapper
+from entity_mappers.SQL.MySQL.Product.ProductTextMapper import ProductTextMapper
+from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from services.Product.IProductRepository import IProductRepository
 
 
-class ProductRepository(SQLRepository, ProductRepositoryInterface):
+class ProductRepository(MySQLRepository, IProductRepository):
 
     def find_by_code(self, code: str) -> ProductEntity|None:
         query = f'''
@@ -36,4 +36,4 @@ class ProductRepository(SQLRepository, ProductRepositoryInterface):
                 cursor.execute(query, (1, code))
                 data = cursor.fetchone()
 
-        return ProductMapper.create_entity(data) if data else None
+        return ProductMapper.create_entity(data) if data else None # type: ignore

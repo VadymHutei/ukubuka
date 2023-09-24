@@ -1,9 +1,9 @@
 from entities.Catalog.CatalogEntity import CatalogEntity
-from repositories.MapperCast import MapperCast
-from repositories.SQL.SQLEntityMapper import SQLEntityMapper
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class CatalogMapper(SQLEntityMapper):
+class CatalogMapper(MySQLEntityMapper):
 
     _ENTITY_CLASS = CatalogEntity
 
@@ -21,6 +21,6 @@ class CatalogMapper(SQLEntityMapper):
     ]
 
     _CAST = {
-        'id': MapperCast.INT,
-        'is_active': MapperCast.BOOL,
+        'id': MapperFieldTypes.INT,
+        'is_active': MapperFieldTypes.BOOL,
     }

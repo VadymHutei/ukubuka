@@ -1,5 +1,5 @@
 from entities.Language.LanguageEntity import LanguageEntity
-from repositories.EntityMapper import EntityMapper
+from entity_mappers.EntityMapper import EntityMapper
 
 
 class LanguageMapper(EntityMapper):
