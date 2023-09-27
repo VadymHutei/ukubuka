@@ -1,6 +1,6 @@
 from controllers.IController import IController
 from services.Product.ProductService import ProductService
-from views.web.ProductView import ProductView
+from views.web.Product.ProductView import ProductView
 
 
 class ProductController(IController):

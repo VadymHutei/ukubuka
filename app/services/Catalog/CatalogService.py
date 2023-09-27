@@ -10,3 +10,6 @@ class CatalogService(IService):
 
     def get_all(self) -> list[CatalogEntity]:
         return self._repository.get_all()
+
+    def find_by_code(self, code: str) -> CatalogEntity|None:
+        return self._repository.find_by_code(code)
