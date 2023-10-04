@@ -1,6 +1,8 @@
-from views.HTML.ACP.ACPLayoutView import ACPLayoutView
+from views.web.WebView import WebView
 
 
-class DashboardView(ACPLayoutView):
+class DashboardView(WebView):
 
-    page_code: str = 'acp_dashboard'
+    _page_code: str = 'acp_dashboard'
+
+    _with_layout = True

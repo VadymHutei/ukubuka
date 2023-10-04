@@ -14,7 +14,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table ukubuka.catalog: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.catalog: ~2 rows (приблизно)
 INSERT INTO `catalog` (`id`, `code`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'test_catalog', 1, '2023-09-24 18:46:49', NULL, NULL),
 	(2, 'test_catalog_2', 1, '2023-09-27 22:48:29', NULL, NULL);
@@ -30,7 +30,7 @@ INSERT INTO `catalog_text` (`id`, `catalog_id`, `language_id`, `name`, `descript
 	(3, 2, 1, 'Catalog 2 name', 'Catalog 2 description', '2023-09-27 22:49:14', NULL),
 	(4, 2, 2, 'Назва каталогу 2', 'Опис каталогу 2', '2023-09-27 22:49:38', NULL);
 
--- Dumping data for table ukubuka.category: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.category: ~1 rows (приблизно)
 INSERT INTO `category` (`id`, `alias`, `parent_id`, `created_datetime`, `changed_datetime`, `is_active`) VALUES
 	(1, 'test', NULL, '2022-02-14 22:55:42', '2022-02-14 22:55:44', 1);
 
@@ -49,7 +49,7 @@ INSERT INTO `category_text` (`category_id`, `language`, `name`) VALUES
 
 -- Dumping data for table ukubuka.complex_product_recipe: ~0 rows (приблизно)
 
--- Dumping data for table ukubuka.config: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.config: ~1 rows (приблизно)
 INSERT INTO `config` (`id`, `code`, `value`, `created_at`, `updated_at`) VALUES
 	(1, 'default_language_id', '1', '2023-08-20 13:27:22', NULL);
 
@@ -66,13 +66,13 @@ INSERT INTO `language` (`id`, `code`, `name`, `is_active`, `created_at`, `update
 -- Dumping data for table ukubuka.page: ~6 rows (приблизно)
 INSERT INTO `page` (`id`, `code`, `template`, `layout`, `is_active`, `created_at`, `updated_at`) VALUES
 	(1, 'acp_languages', 'v1/acp/language/languages.html', NULL, 1, '2023-01-29 20:17:10', NULL),
-	(2, 'acp_dashboard', 'v1/acp/dashboard/dashboard.html', NULL, 1, '2023-02-18 12:49:49', NULL),
+	(2, 'acp_dashboard', 'v1/acp/dashboard/dashboard.html', 'v1/acp/layout/layout.html', 1, '2023-02-18 12:49:49', NULL),
 	(3, 'acp_edit_language', 'v1/acp/language/edit_language.html', NULL, 1, '2023-06-04 21:59:51', NULL),
 	(4, 'product', 'v1/product/product.html', 'v1/layout/layout.html', 1, '2023-08-13 16:39:09', NULL),
 	(5, 'catalog', 'v1/catalog/catalog.html', 'v1/layout/layout.html', 1, '2023-09-27 22:43:43', NULL),
 	(6, 'catalogs', 'v1/catalog/catalogs.html', 'v1/layout/layout.html', 1, '2023-09-27 22:47:26', NULL);
 
--- Dumping data for table ukubuka.page_text: ~10 rows (приблизно)
+-- Dumping data for table ukubuka.page_text: ~12 rows (приблизно)
 INSERT INTO `page_text` (`id`, `page_id`, `language_id`, `title`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, 'Languages', '2023-08-14 20:14:25', NULL),
 	(2, 1, 2, 'Мови', '2023-08-14 20:14:25', NULL),
@@ -87,7 +87,7 @@ INSERT INTO `page_text` (`id`, `page_id`, `language_id`, `title`, `created_at`, 
 	(12, 6, 1, 'Catalogs', '2023-09-27 22:47:49', NULL),
 	(13, 6, 2, 'Каталоги', '2023-09-27 22:48:04', NULL);
 
--- Dumping data for table ukubuka.product: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.product: ~1 rows (приблизно)
 INSERT INTO `product` (`id`, `code`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'test', 1, '2023-08-13 19:31:09', NULL, NULL);
 
@@ -101,7 +101,7 @@ INSERT INTO `product` (`id`, `code`, `is_active`, `created_at`, `updated_at`, `d
 
 -- Dumping data for table ukubuka.product_position_text: ~0 rows (приблизно)
 
--- Dumping data for table ukubuka.product_price: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.product_price: ~1 rows (приблизно)
 INSERT INTO `product_price` (`id`, `product_id`, `currency_id`, `value`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, 13050, '2023-08-13 19:33:55', NULL);
 
@@ -432,12 +432,12 @@ INSERT INTO `translation` (`text_id`, `language`, `translation`) VALUES
 	(100, 'eng', ''),
 	(100, 'ukr', '');
 
--- Dumping data for table ukubuka.user: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.user: ~2 rows (приблизно)
 INSERT INTO `user` (`id`, `email`, `first_name`, `last_name`, `is_blocked`, `registered_datetime`) VALUES
 	(1, 'hutei@live.com', 'Вадим', 'Гутей', 0, '2021-11-19 17:19:54'),
 	(2, 'hutei2@live.com', NULL, NULL, 1, '2022-08-17 15:29:55');
 
--- Dumping data for table ukubuka.user_password: ~0 rows (приблизно)
+-- Dumping data for table ukubuka.user_password: ~2 rows (приблизно)
 INSERT INTO `user_password` (`user_id`, `password_hash`, `salt`) VALUES
 	(1, 'f7fe84cf1842098524521f955fff817817afb7ea758bab950a3a82d3f25cbafb965cdde62ac8d308c614d6144ae01bd7434926643103fde9d31e6326746cbeed', 'nSRbsNDp2RZu'),
 	(2, '1788d38766e84c3b120c6e66dd50ee25d5f416f27c979d773e79e109636c620d6618a67fb260f8eb3902f0dc67c8a6db95f763729f9c88bb42df9f8ff75cfbbe', 'aNotKyX8AZPw');
