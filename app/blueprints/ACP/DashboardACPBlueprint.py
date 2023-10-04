@@ -13,6 +13,7 @@ acp_dashboard_blueprint = Blueprint(ACP_DASHBOARD_BLUEPRINT, __name__, url_prefi
 @acp_dashboard_blueprint.route('', methods=['GET'])
 @language_redirect
 @with_session
-def dashboard_route():
+def dashboard_page_route():
     controller: DashboardController = sc.get(DashboardController)
+
     return controller.dashboard_page_action()
