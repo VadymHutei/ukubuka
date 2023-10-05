@@ -1,0 +1,15 @@
+.main_wrap {
+
+    .control_panel {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: $control_panel_width;
+        background-color: rgb(34, 34, 34);
+    }
+
+    main {
+        padding: 0 0 0 $control_panel_width;
+    }
+}
