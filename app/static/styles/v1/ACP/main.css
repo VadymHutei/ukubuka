@@ -26,6 +26,21 @@ html {
   width: 15rem;
   background-color: rgb(34, 34, 34);
 }
+.main_wrap .control_panel .acp_nav {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.main_wrap .control_panel .acp_nav a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+.main_wrap .control_panel .acp_nav a:hover {
+  text-decoration: underline;
+}
+.main_wrap .control_panel .acp_nav .nav_elem {
+  padding: 0.5em 1em;
+}
 .main_wrap main {
   padding: 0 0 0 15rem;
 }/*# sourceMappingURL=main.css.map */

@@ -1,21 +1,26 @@
 from entities.Language.LanguageEntity import LanguageEntity
-from entity_mappers.EntityMapper import EntityMapper
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
+from entity_mappers.SQL.MySQL.MySQLEntityMapper import MySQLEntityMapper
 
 
-class LanguageMapper(EntityMapper):
+class LanguageMapper(MySQLEntityMapper):
 
-    def from_row(self, row: dict) -> LanguageEntity:
-        return LanguageEntity(
-            code=row['code'],
-            name=row['name'],
-            is_active=row['is_active'],
-        )
+    _ENTITY_CLASS = LanguageEntity
 
-    def from_rows(self, rows: list|tuple) -> dict[str, LanguageEntity]:
-        languages = {}
+    _TABLE = 'language'
 
-        for row in rows:
-            language = self.from_row(row)
-            languages[language.code] = language
+    _TABLE_PREFIX = 'lng'
 
-        return languages
+    _DATA_FIELDS = [
+        'id',
+        'code',
+        'name',
+        'is_active',
+        'created_at',
+        'updated_at',
+    ]
+
+    _FIELD_TYPES = {
+        'id': MapperFieldTypes.INT,
+        'is_active': MapperFieldTypes.BOOL,
+    }

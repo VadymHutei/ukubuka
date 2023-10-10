@@ -7,6 +7,24 @@
         left: 0;
         width: $control_panel_width;
         background-color: rgb(34, 34, 34);
+
+        .acp_nav {
+            display: flex;
+            flex-flow: column nowrap;
+
+            a {
+                color: white;
+                text-decoration: none;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .nav_elem {
+                padding: 0.5em 1em;
+            }
+        }
     }
 
     main {
