@@ -24,7 +24,7 @@ def language_route():
 def edit_language_route(language_code: str):
     controller: LanguageController = sc.get(LanguageController)
 
-    return controller.edit_languages_page_action(language_code)
+    return controller.edit_language_page_action(language_code)
 
 @acp_language_blueprint.route('/delete/<string:language_code>', methods=['GET'])
 @language_redirect
@@ -32,4 +32,4 @@ def edit_language_route(language_code: str):
 def delete_language_route(language_code: str):
     controller: LanguageController = sc.get(LanguageController)
 
-    return controller.languages_page_action(language_code)
+    return controller.delete_language_page_action(language_code)
