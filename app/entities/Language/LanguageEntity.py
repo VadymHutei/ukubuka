@@ -12,4 +12,4 @@ class LanguageEntity(IEntity):
     name: str
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None = None
+    updated_at: datetime | None = None

@@ -10,3 +10,6 @@ class LanguageService(IService):
 
     def get_all(self, with_inactive: bool = False) -> list[LanguageEntity]:
         return self._repository.get_all(with_inactive)
+
+    def find_by_code(self, code: str) -> LanguageEntity | None:
+        return self._repository.find_by_code(code)

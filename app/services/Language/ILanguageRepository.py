@@ -9,3 +9,7 @@ class ILanguageRepository(IRepository):
     @abstractmethod
     def get_all(self, with_inactive: bool = False) -> list[LanguageEntity]:
         pass
+
+    @abstractmethod
+    def find_by_code(self, code: str) -> LanguageEntity | None:
+        pass

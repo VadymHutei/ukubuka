@@ -14,7 +14,7 @@ class NotificationService:
     def pop_list(
         self,
         recipient: NotificationRecipient,
-        endpoint: str|None = None,
+        endpoint: str | None = None,
         by_pattern: bool = False,
     ) -> list[Notification]:
         return self._repository.pop_list(recipient, endpoint, by_pattern)

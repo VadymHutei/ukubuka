@@ -1,4 +1,5 @@
 from services.Language.LanguageService import LanguageService
+from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
 
 
@@ -17,7 +18,13 @@ class LanguageController:
         return view.render()
     
     def edit_language_page_action(self, language_code: str):
-        pass
+        language = self._service.find_by_code(language_code)
+
+        view: EditLanguageView = EditLanguageView()
+
+        view.set_data(language=language)
+
+        return view.render()
 
     def delete_language_page_action(self, language_code: str):
         pass

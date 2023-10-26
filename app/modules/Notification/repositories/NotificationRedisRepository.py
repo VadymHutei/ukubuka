@@ -12,8 +12,8 @@ class NotificationRedisRepository(RedisRepository):
 
     def _get_notification_key(
         self,
-        recipient: NotificationRecipient|None,
-        endpoint: str|None
+        recipient: NotificationRecipient | None,
+        endpoint: str | None
     ) -> str:
         data = []
 
@@ -45,7 +45,7 @@ class NotificationRedisRepository(RedisRepository):
     def pop_list(
         self,
         recipient: NotificationRecipient,
-        endpoint: str|None = None,
+        endpoint: str | None = None,
         by_pattern: bool = False,
     ) -> list[Notification]:
         key = self._get_notification_key(recipient, endpoint)

@@ -14,4 +14,4 @@ class SKUPriceEntity(IEntity):
         created_at: str
         updated_at: str
 
-        currency: CurrencyEntity|None = None
+        currency: CurrencyEntity | None = None

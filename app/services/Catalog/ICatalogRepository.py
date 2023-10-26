@@ -11,5 +11,5 @@ class ICatalogRepository(IRepository):
         pass
 
     @abstractmethod
-    def find_by_code(self, code: str) -> CatalogEntity|None:
+    def find_by_code(self, code: str) -> CatalogEntity | None:
         pass

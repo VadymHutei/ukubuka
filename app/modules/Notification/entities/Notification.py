@@ -13,9 +13,9 @@ class Notification(AbstractJSONSerializable):
 
     text: str
     type: NotificationType
-    recipient: NotificationRecipient|None = None
-    endpoint: str|None = None
-    expired_at: datetime|None = None
+    recipient: NotificationRecipient | None = None
+    endpoint: str | None = None
+    expired_at: datetime | None = None
     metadata: dict = field(default_factory=dict)
 
     def to_JSON(self) -> str:

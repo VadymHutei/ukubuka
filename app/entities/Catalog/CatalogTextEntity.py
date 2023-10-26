@@ -13,6 +13,6 @@ class CatalogTextEntity(IEntity):
     name: str
     description: str
     created_at: datetime
-    updated_at: datetime|None = None
+    updated_at: datetime | None = None
 
-    language: LanguageEntity|None = None
+    language: LanguageEntity | None = None

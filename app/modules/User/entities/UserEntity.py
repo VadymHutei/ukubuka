@@ -8,7 +8,7 @@ from modules.User.entities.UserNameEntity import UserNameEntity
 class UserEntity():
 
     ID: int
-    email: str|None
-    name: UserNameEntity|None
+    email: str | None
+    name: UserNameEntity | None
     is_blocked: bool
     registered_datetime: datetime

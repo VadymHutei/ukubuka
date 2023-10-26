@@ -12,12 +12,12 @@ class PageEntity(IEntity):
     id: int
     code: str
     template: str
-    layout: str|None
+    layout: str | None
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None = None
+    updated_at: datetime | None = None
 
-    text: PageTextEntity|None = None
+    text: PageTextEntity | None = None
 
     @property
     def title(self) -> str:

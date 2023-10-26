@@ -9,4 +9,4 @@ class SessionEntity:
     created_datetime: datetime
     last_visit_datetime: datetime
     expired_datetime: datetime
-    user_agent: str|None
+    user_agent: str | None

@@ -29,7 +29,7 @@ class CatalogRepository(MySQLRepository, ICatalogRepository):
 
         return CatalogMapper.create_entities(data) if data else None # type: ignore
 
-    def find_by_code(self, code: str) -> CatalogEntity|None:
+    def find_by_code(self, code: str) -> CatalogEntity | None:
         query = f'''
             SELECT
                 {CatalogMapper.fields},

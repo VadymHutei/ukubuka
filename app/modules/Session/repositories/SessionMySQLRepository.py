@@ -13,7 +13,7 @@ class SessionMySQLRepository(MySQLRepository):
             user_agent=row['user_agent'],
         )
 
-    def get_session(self, session_ID: str) -> SessionEntity|None:
+    def get_session(self, session_ID: str) -> SessionEntity | None:
         query = '''
             SELECT
                 id,

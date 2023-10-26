@@ -12,6 +12,6 @@ class SKUEntity(IEntity):
     sku: int
     product_id: int
     created_at: datetime
-    updated_at: datetime|None = None
+    updated_at: datetime | None = None
 
-    text: SKUTextEntity|None = None
+    text: SKUTextEntity | None = None

@@ -4,8 +4,8 @@ from dataclasses import dataclass
 @dataclass
 class UserNameEntity:
 
-    first_name: str|None = None
-    last_name: str|None = None
+    first_name: str | None = None
+    last_name: str | None = None
 
     def __str__(self):
         name_list = []

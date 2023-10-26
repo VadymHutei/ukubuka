@@ -9,7 +9,7 @@ from services.Product.IProductRepository import IProductRepository
 
 class ProductRepository(MySQLRepository, IProductRepository):
 
-    def find_by_code(self, code: str) -> ProductEntity|None:
+    def find_by_code(self, code: str) -> ProductEntity | None:
         query = f'''
             SELECT
                 {ProductMapper.fields},

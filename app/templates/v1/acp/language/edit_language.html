@@ -1,9 +1,51 @@
-{% extends l.template %}
+<table>
+    <caption>Language info</caption>
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td>{{ language.id }}</td>
+        </tr>
+        <tr>
+            <td>Created at</td>
+            <td>{{ language.created_at }}</td>
+        </tr>
+        <tr>
+            <td>Updated at</td>
+            <td>{{ language.updated_at }}</td>
+        </tr>
+    </tbody>
+</table>
 
-{% block content %}
-
-<form>
-    <input type="text">
+<form action="{{ form.action }}">
+    <table>
+        <caption>Edit Language</caption>
+        <tbody>
+            <tr>
+                <td>
+                    <label for="language_code_field">Code</label>
+                </td>
+                <td>
+                    <input id="language_code_field" type="text" value="{{ language.code }}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="language_name_field">Name</label>
+                </td>
+                <td>
+                    <input id="language_name_field" type="text" value="{{ language.name }}">
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <td>
+                    <label for="language_is_active_field">Is active</label>
+                </td>
+                <td>
+                    <input id="language_is_active_field" type="checkbox" {{ language.is_active|checked }}>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Надіслати">
 </form>
-
-{% endblock %}

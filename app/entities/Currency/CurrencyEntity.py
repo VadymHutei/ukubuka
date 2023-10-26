@@ -14,4 +14,4 @@ class CurrencyEntity(IEntity):
     symbol_position: CurrencySymbolPositionEnum
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None = None
+    updated_at: datetime | None = None

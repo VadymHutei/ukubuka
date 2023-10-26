@@ -1,4 +1,4 @@
-from response_transformers.web.ACP.LanguageResponseTransformer import LanguageResponseTransformer
+from response_transformers.web.ACP.Language.LanguageResponseTransformer import LanguageResponseTransformer
 from views.web.WebView import WebView
 
 

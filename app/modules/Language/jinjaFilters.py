@@ -1,4 +1,5 @@
 from flask import g
+
 from modules.Language.Translator import Translator
 
 
@@ -14,8 +15,12 @@ def view(x):
         return 'yes' if x else 'no'
     return x
 
+def checked(value: bool) -> str:
+    return 'checked' if value else ''
+
 
 filters = {
     '_': _,
     'view': view,
+    'checked': checked,
 }

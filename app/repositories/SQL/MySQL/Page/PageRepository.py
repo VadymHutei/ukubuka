@@ -7,7 +7,7 @@ from services.Page.PageRepositoryInterface import PageRepositoryInterface
 
 class PageRepository(MySQLRepository, PageRepositoryInterface):
 
-    def find_by_code(self, code: str) -> PageEntity|None:
+    def find_by_code(self, code: str) -> PageEntity | None:
         query = f'''
             SELECT
                 {PageMapper.fields},

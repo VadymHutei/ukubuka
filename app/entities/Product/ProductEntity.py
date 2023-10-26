@@ -14,11 +14,11 @@ class ProductEntity(IEntity):
     code: str
     is_active: bool
     created_at: datetime
-    updated_at: datetime|None = None
-    deleted_at: datetime|None = None
+    updated_at: datetime | None = None
+    deleted_at: datetime | None = None
 
-    text: ProductTextEntity|None = None
-    price: ProductPriceEntity|None = None
+    text: ProductTextEntity | None = None
+    price: ProductPriceEntity | None = None
 
     @property
     def name(self) -> str:

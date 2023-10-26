@@ -15,7 +15,7 @@ class SessionService:
         self._MySQL_repository = SessionMySQLRepository()
         self._Redis_repository = SessionRedisRepository()
 
-    def get_session(self, session_ID: str) -> SessionEntity|None:
+    def get_session(self, session_ID: str) -> SessionEntity | None:
         return self._Redis_repository.get_session(session_ID)
 
     def create_session(self) -> SessionEntity:

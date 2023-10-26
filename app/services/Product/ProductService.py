@@ -17,5 +17,5 @@ class ProductService(IService):
 
         return product
 
-    def find_by_code(self, code: str) -> ProductEntity|None:
+    def find_by_code(self, code: str) -> ProductEntity | None:
         return self.product_repository.find_by_code(code)

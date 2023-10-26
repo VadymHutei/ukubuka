@@ -25,3 +25,18 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
                 data = cursor.fetchall()
 
         return LanguageMapper.create_entities(data) if data else None # type: ignore
+
+    def find_by_code(self, code: str) -> LanguageEntity | None:
+        query = f'''
+            SELECT
+                {LanguageMapper.fields}
+            FROM {LanguageMapper.table}
+            WHERE {LanguageMapper.field('code')} = %s
+        '''
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (code,))
+                data = cursor.fetchone()
+
+        return LanguageMapper.create_entity(data) if data else None # type: ignore
