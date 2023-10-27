@@ -13,7 +13,7 @@ acp_language_blueprint = Blueprint(ACP_LANGUAGE_BLUEPRINT, __name__, url_prefix=
 @acp_language_blueprint.route('', methods=['GET'])
 @language_redirect
 @with_session
-def language_route():
+def languages_route():
     controller: LanguageController = sc.get(LanguageController)
 
     return controller.languages_page_action()
