@@ -7,7 +7,7 @@ from repositories.IRepository import IRepository
 class ILanguageRepository(IRepository):
 
     @abstractmethod
-    def get_all(self, with_inactive: bool = False) -> list[LanguageEntity]:
+    def find_all(self) -> list[LanguageEntity] | None:
         pass
 
     @abstractmethod

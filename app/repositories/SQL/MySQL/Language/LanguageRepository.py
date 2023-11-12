@@ -6,17 +6,11 @@ from services.Language.ILanguageRepository import ILanguageRepository
 
 class LanguageRepository(MySQLRepository, ILanguageRepository):
 
-    def get_all(self, with_inactive: bool = False) -> list[LanguageEntity]:
-        conditions = []
-
-        if not with_inactive:
-            conditions.append('is_active = 1')
-
+    def find_all(self) -> list[LanguageEntity] | None:
         query = f'''
             SELECT
                 {LanguageMapper.fields}
             FROM {LanguageMapper.table}
-            {self.create_where_conditions(conditions)}
         '''
 
         with self.connection as connection:
@@ -24,7 +18,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
                 cursor.execute(query)
                 data = cursor.fetchall()
 
-        return LanguageMapper.create_entities(data) if data else None # type: ignore
+        return LanguageMapper.create_entities(data) if data else None
 
     def find_by_code(self, code: str) -> LanguageEntity | None:
         query = f'''
@@ -39,4 +33,4 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
                 cursor.execute(query, (code,))
                 data = cursor.fetchone()
 
-        return LanguageMapper.create_entity(data) if data else None # type: ignore
+        return LanguageMapper.create_entity(data) if data else None

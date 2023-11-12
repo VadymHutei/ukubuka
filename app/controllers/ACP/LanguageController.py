@@ -1,19 +1,18 @@
+from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
 
 
-class LanguageController:
+class LanguageController(IController):
 
     def __init__(self, service: LanguageService) -> None:
         self._service: LanguageService = service
 
     def languages_page_action(self) -> str:
-        languages = self._service.get_all(with_inactive=True)
+        view = LanguagesView()
 
-        view: LanguagesView = LanguagesView()
-
-        view.set_data(languages=languages)
+        view.set_data(languages=self._service.find_all())
 
         return view.render()
     
