@@ -41,6 +41,6 @@ app.register_blueprint(translationsACPBlueprint)
 app.register_blueprint(product_blueprint)
 app.register_blueprint(catalog_blueprint)
 
-app.register_blueprint(ACP_user_blueprint)
 app.register_blueprint(acp_dashboard_blueprint)
 app.register_blueprint(acp_language_blueprint)
+app.register_blueprint(ACP_user_blueprint)
