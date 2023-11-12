@@ -1,7 +1,7 @@
 from custom_types.Price import Price
 from entities.Product.ProductEntity import ProductEntity
-from response_transformers.Price.PriceTransformer import PriceTransformer
-from response_transformers.ResponseTransformer import ResponseTransformer
+from transformers.response_transformers.Price.PriceTransformer import PriceTransformer
+from transformers.response_transformers.ResponseTransformer import ResponseTransformer
 
 
 class ProductTransformer(ResponseTransformer):

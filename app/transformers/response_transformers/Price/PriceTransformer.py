@@ -1,6 +1,6 @@
 from custom_types.Price import Price
 from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
-from response_transformers.ResponseTransformer import ResponseTransformer
+from transformers.response_transformers.ResponseTransformer import ResponseTransformer
 
 
 class PriceTransformer(ResponseTransformer):
