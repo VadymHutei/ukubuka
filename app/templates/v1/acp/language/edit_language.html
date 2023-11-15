@@ -2,35 +2,35 @@
     <caption>Language info</caption>
     <tbody>
         <tr>
-            <td>ID</td>
+            <td class="param_name">ID</td>
             <td>{{ language.id }}</td>
         </tr>
         <tr>
-            <td>Created at</td>
+            <td class="param_name">created at</td>
             <td>{{ language.created_at }}</td>
         </tr>
         <tr>
-            <td>Updated at</td>
-            <td>{{ language.updated_at }}</td>
+            <td class="param_name">pdated at</td>
+            <td>{{ language.updated_at|none }}</td>
         </tr>
     </tbody>
 </table>
 
 <form action="{{ form.action }}">
     <table>
-        <caption>Edit Language</caption>
+        <caption>Edit language</caption>
         <tbody>
             <tr>
-                <td>
-                    <label for="language_code_field">Code</label>
+                <td class="param_name">
+                    <label for="language_code_field">code</label>
                 </td>
                 <td>
                     <input id="language_code_field" type="text" value="{{ language.code }}">
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label for="language_name_field">Name</label>
+                <td class="param_name">
+                    <label for="language_name_field">name</label>
                 </td>
                 <td>
                     <input id="language_name_field" type="text" value="{{ language.name }}">
@@ -38,14 +38,20 @@
             </tr>
             </tr>
             <tr>
-                <td>
-                    <label for="language_is_active_field">Is active</label>
+                <td class="param_name">
+                    <label for="language_is_active_field">is active</label>
                 </td>
                 <td>
                     <input id="language_is_active_field" type="checkbox" {{ language.is_active|checked }}>
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="actions">
+                    <input type="submit" value="Зберегти">
+                </td>
+            </tr>
+        </tfoot>
     </table>
-    <input type="submit" value="Надіслати">
 </form>

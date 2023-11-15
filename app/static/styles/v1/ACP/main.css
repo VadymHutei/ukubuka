@@ -14,8 +14,49 @@ p {
 }
 
 html {
-  font-size: 16px;
+  font-size: 14px;
   font-family: Roboto, Tahoma, sans-serif;
+}
+
+form table input[type=text] {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: none;
+}
+form table input[type=submit] {
+  background-color: #eee;
+  border: 1px #888 solid;
+  padding: 4px 8px;
+}
+form table input[type=submit]:hover {
+  background-color: #ddd;
+}
+
+table {
+  width: 100%;
+  max-width: 1000px;
+  margin: 10px 0 0 10px;
+  border: 1px #aaa solid;
+  border-collapse: collapse;
+  background-color: #eee;
+}
+table caption {
+  margin: 8px;
+  text-align: left;
+  font-weight: bold;
+}
+table td {
+  padding: 4px 8px;
+  border: 1px #aaa solid;
+}
+table td.param_name {
+  width: 25%;
+  text-align: right;
+  font-weight: bold;
+}
+table tfoot tr td.actions {
+  text-align: right;
 }
 
 .main_wrap .control_panel {
@@ -23,7 +64,7 @@ html {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 15rem;
+  width: 240px;
   background-color: rgb(34, 34, 34);
 }
 .main_wrap .control_panel .acp_nav {
@@ -42,5 +83,5 @@ html {
   padding: 0.5em 1em;
 }
 .main_wrap main {
-  padding: 0 0 0 15rem;
+  margin: 0 0 0 240px;
 }/*# sourceMappingURL=main.css.map */

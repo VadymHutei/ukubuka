@@ -16,12 +16,10 @@ class LanguageController(IController):
 
         return view.render()
     
-    def edit_language_page_action(self, language_code: str):
-        language = self._service.find_by_code(language_code)
+    def edit_language_page_action(self, language_code: str) -> str:
+        view = EditLanguageView()
 
-        view: EditLanguageView = EditLanguageView()
-
-        view.set_data(language=language)
+        view.set_data(language=self._service.find_by_code(language_code))
 
         return view.render()
 

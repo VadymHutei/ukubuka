@@ -1,0 +1,20 @@
+form {
+    table {
+        input {
+            &[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                background-color: #fff;
+                border: none;
+            }
+
+            &[type="submit"] {
+                background-color: #eee;
+                border: 1px #888 solid;
+                padding: 4px 8px;
+
+                &:hover {background-color: #ddd;}
+            }
+        }
+    }
+}

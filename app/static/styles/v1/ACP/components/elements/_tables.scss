@@ -1,0 +1,35 @@
+table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 10px 0 0 10px;
+    border: 1px #aaa solid;
+    border-collapse: collapse;
+    background-color: #eee;
+
+    caption {
+        margin: 8px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    td {
+        padding: 4px 8px;
+        border: 1px #aaa solid;
+
+        &.param_name {
+            width: 25%;
+            text-align: right;
+            font-weight: bold;
+        }
+    }
+
+    tfoot {
+        tr {
+            td {
+                &.actions {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
