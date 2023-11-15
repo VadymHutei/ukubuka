@@ -17,12 +17,12 @@ class LanguageResponseTransformer(WebACPResponseTransformer):
         edit_page_url = url_for(
             ACP_LANGUAGE_BLUEPRINT + '.edit_language_route',
             language=g.current_language.code,
-            language_code=language.code,
+            code=language.code,
         )
         delete_page_url = url_for(
             ACP_LANGUAGE_BLUEPRINT + '.delete_language_route',
             language=g.current_language.code,
-            language_code=language.code,
+            code=language.code,
         )
 
         return {

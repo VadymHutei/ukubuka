@@ -24,4 +24,4 @@ class LanguageController(IController):
         return view.render()
 
     def delete_language_page_action(self, language_code: str):
-        pass
+        return ''
