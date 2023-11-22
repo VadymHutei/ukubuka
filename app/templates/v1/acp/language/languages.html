@@ -22,12 +22,12 @@
             <td>{{ language.created_at }}</td>
             <td>{{ language.updated_at|none }}</td>
             <td>
-                {% set edit_form_name = 'edit_language_%s_form' % language.code %}
-                {% set delete_form_name = 'delete_language_%s_form' % language.code %}
-                <form id="{{ edit_form_name }}" class="form_button" action="{{ language.edit_page_url }}"></form>
-                <form id="{{ delete_form_name }}" class="form_button" action="{{ language.delete_page_url }}"></form>
-                <input form="{{ edit_form_name }}" type="submit" value="{{ 'edit' }}">
-                <input form="{{ delete_form_name }}" type="submit" value="{{ 'delete' }}">
+                <a class="button_link" href="{{ language.edit_page_url }}">
+                    <div>{{ 'Edit' }}</div>
+                </a>
+                <a class="button_link" href="{{ language.delete_page_url }}">
+                    <div>{{ 'Delete' }}</div>
+                </a>
             </td>
         </tr>
         {% endfor %}
@@ -36,8 +36,9 @@
     <tfoot>
         <tr>
             <td class="actions" colspan="7">
-                <form id="add_language_form" class="form_button" action="{{ add_language_url }}"></form>
-                <input form="add_language_form" type="submit" value="{{ 'Add' }}">
+                <a class="button_link" href="{{ add_language_url }}">
+                    <div>{{ 'Add' }}</div>
+                </a>
             </td>
         </tr>
     </tfoot>

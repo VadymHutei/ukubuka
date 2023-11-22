@@ -1,0 +1,20 @@
+a.button_link {
+    display: inline-block;
+    color: initial;
+    text-decoration: none;
+
+    div {
+        padding: 4px 8px;
+        border: 1px solid #888;
+        border-radius: 4px;
+        background-color: #eee;
+
+        &:hover {
+            background-color: #ddd;
+        }
+        
+        &:active {
+            background-color: inherit;
+        }
+    }
+}

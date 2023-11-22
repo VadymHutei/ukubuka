@@ -18,9 +18,6 @@ html {
   font-family: Roboto, Tahoma, sans-serif;
 }
 
-form.form_button {
-  display: none;
-}
 form table input[type=text] {
   width: 100%;
   box-sizing: border-box;
@@ -60,6 +57,24 @@ table td.param_name {
 }
 table tfoot tr td.actions {
   text-align: right;
+}
+
+a.button_link {
+  display: inline-block;
+  color: initial;
+  text-decoration: none;
+}
+a.button_link div {
+  padding: 4px 8px;
+  border: 1px solid #888;
+  border-radius: 4px;
+  background-color: #eee;
+}
+a.button_link div:hover {
+  background-color: #ddd;
+}
+a.button_link div:active {
+  background-color: inherit;
 }
 
 .main_wrap .control_panel {

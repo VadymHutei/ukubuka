@@ -2,10 +2,10 @@ from flask import g, url_for
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from transformers.response_transformers.web.ACP.Language.EditLanguageResponseTransformer import EditLanguageResponseTransformer
-from views.HTML.ACP.ACPLayoutView import ACPLayoutView
+from views.web.WebView import WebView
 
 
-class EditLanguageView(ACPLayoutView):
+class EditLanguageView(WebView):
 
     _page_code = 'acp_edit_language'
 
