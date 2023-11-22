@@ -18,6 +18,14 @@ def languages_route() -> str:
 
     return controller.languages_page_action()
 
+@acp_language_blueprint.route('/add', methods=['GET'])
+@language_redirect
+@with_session
+def add_language_route() -> str:
+    controller: LanguageController = sc.get(LanguageController)
+
+    return controller.add_language_page_action()
+
 @acp_language_blueprint.route('/edit', methods=['GET', 'POST'])
 @language_redirect
 @with_session

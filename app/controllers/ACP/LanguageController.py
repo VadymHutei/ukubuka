@@ -1,5 +1,6 @@
 from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
+from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
 
@@ -15,7 +16,12 @@ class LanguageController(IController):
         view.set_data(languages=self._service.find_all())
 
         return view.render()
-    
+
+    def add_language_page_action(self) -> str:
+        view = AddLanguageView()
+
+        return view.render()
+
     def edit_language_page_action(self, language_code: str) -> str:
         view = EditLanguageView()
 

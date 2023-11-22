@@ -18,6 +18,9 @@ html {
   font-family: Roboto, Tahoma, sans-serif;
 }
 
+form.form_button {
+  display: none;
+}
 form table input[type=text] {
   width: 100%;
   box-sizing: border-box;
