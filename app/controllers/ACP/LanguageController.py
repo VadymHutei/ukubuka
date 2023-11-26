@@ -1,8 +1,10 @@
+from datetime import datetime
 from flask import g, redirect, url_for
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
+from value_objects.Language.LanguageVO import LanguageVO
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
@@ -27,6 +29,15 @@ class LanguageController(IController):
         return view.render()
     
     def add_language_action(self) -> Response:
+        language_vo = LanguageVO(
+            code='tst',
+            name='test language',
+            is_active=False,
+            created_at=datetime.now(),
+        )
+
+        print(self._service.add_language(language_vo))
+
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
             language=g.current_language.code,

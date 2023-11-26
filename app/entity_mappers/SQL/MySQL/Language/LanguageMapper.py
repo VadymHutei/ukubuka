@@ -20,6 +20,14 @@ class LanguageMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
+    _FILLABLE_FIELDS = [
+        'code',
+        'name',
+        'is_active',
+        'created_at',
+        'updated_at',
+    ]
+
     _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,

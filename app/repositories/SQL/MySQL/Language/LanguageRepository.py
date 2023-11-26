@@ -2,15 +2,27 @@ from entities.Language.LanguageEntity import LanguageEntity
 from entity_mappers.SQL.MySQL.Language.LanguageMapper import LanguageMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 from services.Language.ILanguageRepository import ILanguageRepository
+from value_objects.Language.LanguageVO import LanguageVO
 
 
 class LanguageRepository(MySQLRepository, ILanguageRepository):
+
+    def add(self, language_vo: LanguageVO) -> bool:
+        placeholders = ', '.join(['%s'] * LanguageMapper.fillable_length)
+
+        query = f'INSERT INTO {LanguageMapper.table} ({LanguageMapper.fillable}) VALUES ({placeholders})'
+
+        query_data = LanguageMapper.fillable_data(language_vo)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                return cursor.execute(query, query_data) > 0
 
     def find_all(self) -> list[LanguageEntity] | None:
         query = f'''
             SELECT
                 {LanguageMapper.fields}
-            FROM {LanguageMapper.table}
+            FROM {LanguageMapper.table_as_prefix}
         '''
 
         with self.connection as connection:
@@ -24,7 +36,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
         query = f'''
             SELECT
                 {LanguageMapper.fields}
-            FROM {LanguageMapper.table}
+            FROM {LanguageMapper.table_as_prefix}
             WHERE {LanguageMapper.field('code')} = %s
         '''
 

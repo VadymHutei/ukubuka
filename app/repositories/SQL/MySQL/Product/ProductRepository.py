@@ -16,13 +16,13 @@ class ProductRepository(MySQLRepository, IProductRepository):
                 {ProductTextMapper.fields},
                 {ProductPriceMapper.fields},
                 {CurrencyMapper.fields}
-            FROM {ProductMapper.table}
-            JOIN {ProductTextMapper.table}
+            FROM {ProductMapper.table_as_prefix}
+            JOIN {ProductTextMapper.table_as_prefix}
                 ON {ProductTextMapper.table_prefix}.product_id = {ProductMapper.table_prefix}.id
                 AND {ProductTextMapper.table_prefix}.language_id = %s
-            JOIN {ProductPriceMapper.table}
+            JOIN {ProductPriceMapper.table_as_prefix}
                 ON {ProductPriceMapper.table_prefix}.product_id = {ProductMapper.table_prefix}.id
-            LEFT JOIN {CurrencyMapper.table}
+            LEFT JOIN {CurrencyMapper.table_as_prefix}
                 ON {CurrencyMapper.table_prefix}.id = {ProductPriceMapper.table_prefix}.currency_id
                 AND {CurrencyMapper.table_prefix}.is_active = 1
             WHERE

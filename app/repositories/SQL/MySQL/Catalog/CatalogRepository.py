@@ -12,8 +12,8 @@ class CatalogRepository(MySQLRepository, ICatalogRepository):
             SELECT
                 {CatalogMapper.fields},
                 {CatalogTextMapper.fields}
-            FROM {CatalogMapper.table}
-            JOIN {CatalogTextMapper.table}
+            FROM {CatalogMapper.table_as_prefix}
+            JOIN {CatalogTextMapper.table_as_prefix}
                 ON {CatalogTextMapper.field('catalog_id')} = {CatalogMapper.field('id')}
                 AND {CatalogTextMapper.field('language_id')} = %s
         '''
@@ -34,8 +34,8 @@ class CatalogRepository(MySQLRepository, ICatalogRepository):
             SELECT
                 {CatalogMapper.fields},
                 {CatalogTextMapper.fields}
-            FROM {CatalogMapper.table}
-            JOIN {CatalogTextMapper.table}
+            FROM {CatalogMapper.table_as_prefix}
+            JOIN {CatalogTextMapper.table_as_prefix}
                 ON {CatalogTextMapper.field('catalog_id')} = {CatalogMapper.field('id')}
                 AND {CatalogTextMapper.field('language_id')} = %s
             WHERE

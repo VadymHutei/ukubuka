@@ -10,7 +10,7 @@ class ConfigRepository(MySQLRepository, IConfigRepository):
         query = f'''
             SELECT
                 {ConfigMapper.fields}
-            FROM {ConfigMapper.table}
+            FROM {ConfigMapper.table_as_prefix}
         '''
 
         with self.connection as connection:
@@ -24,7 +24,7 @@ class ConfigRepository(MySQLRepository, IConfigRepository):
         query = f'''
             SELECT
                 {ConfigMapper.fields}
-            FROM {ConfigMapper.table}
+            FROM {ConfigMapper.table_as_prefix}
         '''
 
         with self.connection as connection:

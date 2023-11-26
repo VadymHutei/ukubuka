@@ -12,21 +12,19 @@ class PageRepository(MySQLRepository, PageRepositoryInterface):
             SELECT
                 {PageMapper.fields},
                 {PageTextMapper.fields}
-            FROM {PageMapper.table}
-            JOIN {PageTextMapper.table}
+            FROM {PageMapper.table_as_prefix}
+            JOIN {PageTextMapper.table_as_prefix}
                 ON {PageTextMapper.table_prefix}.page_id = {PageMapper.table_prefix}.id
                 AND {PageTextMapper.table_prefix}.language_id = %s
             WHERE
                 {PageMapper.table_prefix}.code = %s
         '''
 
-        query_data = (
-            1,
-            code,
-        )
+        query_data = (1, code)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, query_data)
+                data = cursor.fetchall()
 
-        return PageMapper.create_entity(cursor.fetchone()) # type: ignore
+        return PageMapper.create_entity(data) if data else None
