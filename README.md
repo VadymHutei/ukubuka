@@ -22,12 +22,12 @@ pip install -r ../requirements.txt
 
 ### MySQL DB
 ```
-docker run --name ukubuka_mysql_8_1 -d --restart always -v /path/to/mysql/data/dir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:8.1
+docker run --name mysql8 -d --restart always -v /path/to/mysql/data/dir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:8
 ```
 
 ### Redis
 ```
-docker run --name ukubuka_redis_7_2 -d --restart always -v /path/to/redis/data/dir:/data -p 6379:6379 redis:7.2
+docker run --name redis7 -d --restart always -v /path/to/redis/data/dir:/data -p 6379:6379 redis:7
 ```
 
 ### Running app
