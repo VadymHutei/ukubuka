@@ -16,7 +16,11 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                return cursor.execute(query, query_data) > 0
+                result = cursor.execute(query, query_data) > 0
+
+            connection.commit()
+
+        return result
 
     def find_all(self) -> list[LanguageEntity] | None:
         query = f'''

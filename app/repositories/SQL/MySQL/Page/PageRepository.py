@@ -25,6 +25,6 @@ class PageRepository(MySQLRepository, PageRepositoryInterface):
         with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, query_data)
-                data = cursor.fetchall()
+                data = cursor.fetchone()
 
         return PageMapper.create_entity(data) if data else None
