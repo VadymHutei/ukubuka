@@ -1,8 +1,12 @@
+from flask import g, redirect, url_for
+
+from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
+from werkzeug import Response
 
 
 class LanguageController(IController):
@@ -21,6 +25,14 @@ class LanguageController(IController):
         view = AddLanguageView()
 
         return view.render()
+    
+    def add_language_action(self) -> Response:
+        languages_url = url_for(
+            '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
+            language=g.current_language.code,
+        )
+
+        return redirect(languages_url)
 
     def edit_language_page_action(self, language_code: str) -> str:
         view = EditLanguageView()

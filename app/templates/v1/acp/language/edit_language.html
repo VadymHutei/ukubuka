@@ -1,57 +1,49 @@
+<h1>{{ 'Edit language' }}</h1>
+
+<form id="edit_language_form" action="{{ form.action }}" method="post"></form>
+
 <table>
-    <caption>Language info</caption>
+
     <tbody>
         <tr>
-            <td class="param_name">ID</td>
-            <td>{{ language.id }}</td>
+            <td class="param_name">
+                <label for="language_id_field">{{ 'ID' }}</label>
+            </td>
+            <td><input id="language_id_field" form="edit_language_form" type="number" value="{{ language.id }}" disabled></td>
         </tr>
         <tr>
-            <td class="param_name">created at</td>
-            <td>{{ language.created_at }}</td>
+            <td class="param_name">
+                <label for="language_code_field">{{ 'code' }}</label>
+            </td>
+            <td>
+                <input id="language_code_field" form="edit_language_form" type="text" placeholder="{{ 'code' }}" value="{{ language.code }}">
+            </td>
         </tr>
         <tr>
-            <td class="param_name">pdated at</td>
-            <td>{{ language.updated_at|none }}</td>
+            <td class="param_name">
+                <label for="language_name_field">{{ 'name' }}</label>
+            </td>
+            <td>
+                <input id="language_name_field" form="edit_language_form" type="text" placeholder="{{ 'name' }}" value="{{ language.name }}">
+            </td>
+        </tr>
+        </tr>
+        <tr>
+            <td class="param_name">
+                <label for="language_is_active_field">{{ 'is active' }}</label>
+            </td>
+            <td>
+                <input id="language_is_active_field" form="edit_language_form" type="checkbox" {{ language.is_active|checked }}>
+            </td>
         </tr>
     </tbody>
-</table>
 
-<form action="{{ form.action }}" method="post">
-    <table>
-        <caption>Edit language</caption>
-        <tbody>
-            <tr>
-                <td class="param_name">
-                    <label for="language_code_field">code</label>
-                </td>
-                <td>
-                    <input id="language_code_field" type="text" value="{{ language.code }}">
-                </td>
-            </tr>
-            <tr>
-                <td class="param_name">
-                    <label for="language_name_field">name</label>
-                </td>
-                <td>
-                    <input id="language_name_field" type="text" value="{{ language.name }}">
-                </td>
-            </tr>
-            </tr>
-            <tr>
-                <td class="param_name">
-                    <label for="language_is_active_field">is active</label>
-                </td>
-                <td>
-                    <input id="language_is_active_field" type="checkbox" {{ language.is_active|checked }}>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="2" class="actions">
-                    <input type="submit" value="Зберегти">
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-</form>
+    <tfoot>
+        <tr>
+            <td colspan="2" class="actions">
+                <input type="submit" value="{{ 'Save' }}">
+            </td>
+        </tr>
+    </tfoot>
+
+</table>

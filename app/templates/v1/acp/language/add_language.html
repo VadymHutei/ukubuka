@@ -1,1 +1,43 @@
-add_language
+<h1>{{ 'Add language' }}</h1>
+
+<form id="add_language_form" action="{{ form.action }}" method="post"></form>
+
+<table>
+
+    <tbody>
+        <tr>
+            <td class="param_name">
+                <label for="language_code_field">{{ 'code' }}</label>
+            </td>
+            <td>
+                <input id="language_code_field" form="add_language_form" type="text" placeholder="{{ 'code' }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td class="param_name">
+                <label for="language_name_field">{{ 'name' }}</label>
+            </td>
+            <td>
+                <input id="language_name_field" form="add_language_form" type="text" placeholder="{{ 'name' }}" required>
+            </td>
+        </tr>
+        </tr>
+        <tr>
+            <td class="param_name">
+                <label for="language_is_active_field">{{ 'is active' }}</label>
+            </td>
+            <td>
+                <input id="language_is_active_field" form="add_language_form" type="checkbox">
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="2" class="actions">
+                <input form="add_language_form" type="submit" value="{{ 'Save' }}">
+            </td>
+        </tr>
+    </tfoot>
+
+</table>

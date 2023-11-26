@@ -25,7 +25,7 @@ def checkbox(env, value: bool) -> str:
     result = '<input type="checkbox"'
     if value:
         result += ' checked'
-    result += ' disabled>'
+    result += '>'
 
     if env.autoescape:
         result = Markup(result)
