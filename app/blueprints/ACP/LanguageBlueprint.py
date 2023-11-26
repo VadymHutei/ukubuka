@@ -13,31 +13,35 @@ acp_language_blueprint = Blueprint(ACP_LANGUAGE_BLUEPRINT, __name__, url_prefix=
 @acp_language_blueprint.route('', methods=['GET'])
 @language_redirect
 @with_session
-def languages_route() -> str:
+def languages_route():
     controller: LanguageController = sc.get(LanguageController)
 
     return controller.languages_page_action()
 
-@acp_language_blueprint.route('/add', methods=['GET'])
+@acp_language_blueprint.route('/add', methods=['GET', 'POST'])
 @language_redirect
 @with_session
-def add_language_route() -> str:
+def add_language_route():
     controller: LanguageController = sc.get(LanguageController)
 
-    return controller.add_language_page_action()
+    match request.method:
+        case 'GET':
+            return controller.add_language_page_action()
+        case 'POST':
+            return controller.add_language_action()
 
 @acp_language_blueprint.route('/edit', methods=['GET', 'POST'])
 @language_redirect
 @with_session
-def edit_language_route() -> str:
-    if request.method == 'GET':
-        controller: LanguageController = sc.get(LanguageController)
+def edit_language_route():
+    controller: LanguageController = sc.get(LanguageController)
 
-        language_code = request.args.get('code')
-
-        return controller.edit_language_page_action(language_code)
-    else:
-        return 'DONE'
+    match request.method:
+        case 'GET':
+            language_code = request.args.get('code')
+            return controller.edit_language_page_action(language_code)
+        case 'POST':
+            return controller.edit_language_action()
 
 @acp_language_blueprint.route('/delete', methods=['GET'])
 @language_redirect
