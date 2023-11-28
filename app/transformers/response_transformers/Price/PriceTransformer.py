@@ -7,7 +7,6 @@ class PriceTransformer(ResponseTransformer):
 
     @staticmethod
     def transform(price: Price) -> str:
-        print(price)
         delimiter = ','
         decimal_separator = '.'
         integer = f'{price.integer:{delimiter}}'

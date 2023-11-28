@@ -10,7 +10,7 @@
                 <label for="language_code_field">{{ 'code' }}</label>
             </td>
             <td>
-                <input id="language_code_field" form="add_language_form" type="text" placeholder="{{ 'code' }}" required>
+                <input id="language_code_field" form="add_language_form" type="text" name="code" placeholder="{{ 'code' }}" required>
             </td>
         </tr>
         <tr>
@@ -18,7 +18,7 @@
                 <label for="language_name_field">{{ 'name' }}</label>
             </td>
             <td>
-                <input id="language_name_field" form="add_language_form" type="text" placeholder="{{ 'name' }}" required>
+                <input id="language_name_field" form="add_language_form" type="text" name="name" placeholder="{{ 'name' }}" required>
             </td>
         </tr>
         </tr>
@@ -27,7 +27,7 @@
                 <label for="language_is_active_field">{{ 'is active' }}</label>
             </td>
             <td>
-                <input id="language_is_active_field" form="add_language_form" type="checkbox">
+                <input id="language_is_active_field" form="add_language_form" name="is_active" type="checkbox">
             </td>
         </tr>
     </tbody>

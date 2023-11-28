@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import g, redirect, url_for
+from flask import g, redirect, request, url_for
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
@@ -29,10 +29,11 @@ class LanguageController(IController):
         return view.render()
     
     def add_language_action(self) -> Response:
+
         language_vo = LanguageVO(
-            code='tst',
-            name='test language',
-            is_active=False,
+            code=request.form.get('code'),
+            name=request.form.get('name'),
+            is_active=request.form.get('is_active') is not None,
             created_at=datetime.now(),
         )
 
@@ -52,5 +53,12 @@ class LanguageController(IController):
 
         return view.render()
 
-    def delete_language_page_action(self, language_code: str):
-        return ''
+    def delete_language_action(self):
+        self._service.delete_by_code(request.form.get('code'))
+
+        languages_url = url_for(
+            '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
+            language=g.current_language.code,
+        )
+
+        return redirect(languages_url)

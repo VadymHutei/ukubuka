@@ -27,9 +27,10 @@
                 <a class="button_link" href="{{ language.edit_page_url }}">
                     <div>{{ 'Edit' }}</div>
                 </a>
-                <a class="button_link" href="{{ language.delete_page_url }}">
-                    <div>{{ 'Delete' }}</div>
-                </a>
+                {% set delete_form_name = 'delete_language_' ~ language.code ~ '_form' %}
+                <form id="{{ delete_form_name }}" class="form_button" action="{{ language.delete_url }}" method="post"></form>
+                <input form="{{ delete_form_name }}" type="hidden" name="code" value="{{ language.code }}">
+                <input form="{{ delete_form_name }}" type="submit" value="{{ 'Delete' }}">
             </td>
         </tr>
         {% endfor %}

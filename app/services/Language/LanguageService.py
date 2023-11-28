@@ -17,3 +17,6 @@ class LanguageService(IService):
 
     def find_by_code(self, code: str) -> LanguageEntity | None:
         return self._repository.find_by_code(code)
+
+    def delete_by_code(self, code: str):
+        return self._repository.delete_by_code(code)

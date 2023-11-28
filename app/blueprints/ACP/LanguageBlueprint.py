@@ -43,12 +43,10 @@ def edit_language_route():
         case 'POST':
             return controller.edit_language_action()
 
-@acp_language_blueprint.route('/delete', methods=['GET'])
+@acp_language_blueprint.route('/delete', methods=['POST'])
 @language_redirect
 @with_session
-def delete_language_route(language_code: str):
+def delete_language_route():
     controller: LanguageController = sc.get(LanguageController)
 
-    language_code = request.args.get('code')
-
-    return controller.delete_language_page_action(language_code)
+    return controller.delete_language_action()

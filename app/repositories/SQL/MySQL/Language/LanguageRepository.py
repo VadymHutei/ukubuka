@@ -50,3 +50,16 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
                 data = cursor.fetchone()
 
         return LanguageMapper.create_entity(data) if data else None
+
+    def delete_by_code(self, code: str) -> bool:
+        query = f'DELETE FROM {LanguageMapper.table} WHERE code = %s'
+
+        query_data = (code,)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                result = cursor.execute(query, query_data) > 0
+
+            connection.commit()
+
+        return result

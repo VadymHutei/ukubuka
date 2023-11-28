@@ -19,10 +19,9 @@ class LanguageResponseTransformer(WebACPResponseTransformer):
             language=g.current_language.code,
             code=language.code,
         )
-        delete_page_url = url_for(
+        delete_url = url_for(
             ACP_LANGUAGE_BLUEPRINT + '.delete_language_route',
             language=g.current_language.code,
-            code=language.code,
         )
 
         return {
@@ -33,5 +32,5 @@ class LanguageResponseTransformer(WebACPResponseTransformer):
             'created_at': created_at,
             'updated_at': updated_at,
             'edit_page_url': edit_page_url,
-            'delete_page_url': delete_page_url,
+            'delete_url': delete_url,
         }

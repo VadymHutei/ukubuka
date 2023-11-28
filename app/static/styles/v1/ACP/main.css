@@ -18,19 +18,28 @@ html {
   font-family: Roboto, Tahoma, sans-serif;
 }
 
+form.form_button {
+  display: none;
+}
 form table input[type=text] {
   width: 100%;
   box-sizing: border-box;
   background-color: #fff;
   border: none;
 }
-form table input[type=submit] {
-  background-color: #eee;
-  border: 1px #888 solid;
+
+input[type=submit] {
   padding: 4px 8px;
+  font-size: inherit;
+  border: 1px solid #888;
+  border-radius: 4px;
+  background-color: #eee;
 }
-form table input[type=submit]:hover {
+input[type=submit]:hover {
   background-color: #ddd;
+}
+input[type=submit]:active {
+  background-color: inherit;
 }
 
 table {

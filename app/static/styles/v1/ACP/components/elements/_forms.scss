@@ -1,5 +1,9 @@
 form {
 
+    &.form_button {
+        display: none;
+    }
+
     table {
         input {
             &[type="text"] {
@@ -8,14 +12,25 @@ form {
                 background-color: #fff;
                 border: none;
             }
+        }
+    }
+}
 
-            &[type="submit"] {
-                background-color: #eee;
-                border: 1px #888 solid;
-                padding: 4px 8px;
+input {
 
-                &:hover {background-color: #ddd;}
-            }
+    &[type="submit"] {
+        padding: 4px 8px;
+        font-size: inherit;
+        border: 1px solid #888;
+        border-radius: 4px;
+        background-color: #eee;
+
+        &:hover {
+            background-color: #ddd;
+        }
+
+        &:active {
+            background-color: inherit;
         }
     }
 }

@@ -18,3 +18,7 @@ class ILanguageRepository(IRepository):
     @abstractmethod
     def find_by_code(self, code: str) -> LanguageEntity | None:
         pass
+
+    @abstractmethod
+    def delete_by_code(self, code: str) -> bool:
+        pass
