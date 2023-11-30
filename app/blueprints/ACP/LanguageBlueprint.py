@@ -38,8 +38,7 @@ def edit_language_route():
 
     match request.method:
         case 'GET':
-            language_code = request.args.get('code')
-            return controller.edit_language_page_action(language_code)
+            return controller.edit_language_page_action()
         case 'POST':
             return controller.edit_language_action()
 

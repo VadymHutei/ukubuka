@@ -8,7 +8,7 @@ from value_objects.Language.LanguageVO import LanguageVO
 class ILanguageRepository(IRepository):
 
     @abstractmethod
-    def add(self, language_vo: LanguageVO) -> bool:
+    def add(self, vo: LanguageVO) -> bool:
         pass
 
     @abstractmethod
@@ -16,7 +16,15 @@ class ILanguageRepository(IRepository):
         pass
 
     @abstractmethod
+    def find_by_id(self, id: int) -> LanguageEntity | None:
+        pass
+
+    @abstractmethod
     def find_by_code(self, code: str) -> LanguageEntity | None:
+        pass
+
+    @abstractmethod
+    def update(self, entity: LanguageEntity) -> bool:
         pass
 
     @abstractmethod

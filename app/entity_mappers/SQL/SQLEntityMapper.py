@@ -1,4 +1,6 @@
-from entities.IEntity import IEntity
+from typing import Any
+
+from entities.Entity import Entity
 from entity_mappers.EntityMapper import EntityMapper
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
 from exceptions.MapperException import MapperException
@@ -58,7 +60,7 @@ class SQLEntityMapper(EntityMapper):
         return f'{cls._TABLE_PREFIX}_{field}'
 
     @classmethod
-    def create_entity(cls, db_record: dict) -> IEntity | IValueObject:
+    def create_entity(cls, db_record: dict) -> Entity | IValueObject:
         data = {}
 
         for field in cls._DATA_FIELDS:
@@ -82,5 +84,15 @@ class SQLEntityMapper(EntityMapper):
         return cls._ENTITY_CLASS(**data)
 
     @classmethod
-    def create_entities(cls, db_records: list[dict]) -> list[IEntity | IValueObject]:
+    def create_entities(cls, db_records: list[dict]) -> list[Entity | IValueObject]:
         return [cls.create_entity(db_record) for db_record in db_records]
+
+    @classmethod
+    def get_set_data(cls, entity: Entity) -> tuple[str, list[Any]]:
+        set_fields_statement = []
+        set_field_values = []
+        for field in cls._FILLABLE_FIELDS:
+            set_fields_statement.append(f'{field} = %s')
+            set_field_values.append(getattr(entity, field))
+
+        return ', '.join(set_fields_statement), set_field_values

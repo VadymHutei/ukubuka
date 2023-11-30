@@ -1,5 +1,5 @@
-from transformers.ITransformer import ITransformer
+from Transformer import Transformer
 
 
-class ResponseTransformer(ITransformer):
+class ResponseTransformer(Transformer):
     pass

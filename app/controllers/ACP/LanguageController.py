@@ -3,6 +3,7 @@ from flask import g, redirect, request, url_for
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
+from data_transfer_objects.Lanugage.UpdateLanguageDTO import UpdateLanguageDTO
 from services.Language.LanguageService import LanguageService
 from value_objects.Language.LanguageVO import LanguageVO
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
@@ -27,9 +28,8 @@ class LanguageController(IController):
         view = AddLanguageView()
 
         return view.render()
-    
-    def add_language_action(self) -> Response:
 
+    def add_language_action(self) -> Response:
         language_vo = LanguageVO(
             code=request.form.get('code'),
             name=request.form.get('name'),
@@ -46,14 +46,31 @@ class LanguageController(IController):
 
         return redirect(languages_url)
 
-    def edit_language_page_action(self, language_code: str) -> str:
+    def edit_language_page_action(self) -> str:
         view = EditLanguageView()
 
-        view.set_data(language=self._service.find_by_code(language_code))
+        view.set_data(language=self._service.find_by_code(request.args.get('code')))
 
         return view.render()
 
-    def delete_language_action(self):
+    def edit_language_action(self) -> Response:
+        update_language_DTO = UpdateLanguageDTO(
+            id=request.form.get('id'),
+            code=request.form.get('code'),
+            name=request.form.get('name'),
+            is_active=request.form.get('is_active') is not None,
+        )
+
+        self._service.update(update_language_DTO)
+
+        languages_url = url_for(
+            '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
+            language=g.current_language.code,
+        )
+
+        return redirect(languages_url)
+
+    def delete_language_action(self) -> Response:
         self._service.delete_by_code(request.form.get('code'))
 
         languages_url = url_for(
