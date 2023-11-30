@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from entities.Language.LanguageEntity import LanguageEntity
 
 @dataclass
-class CatalogTextEntity(IEntity):
+class CatalogTextEntity(Entity):
 
     id: int
     catalog_id: int

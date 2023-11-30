@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from entities.Catalog.CatalogTextEntity import CatalogTextEntity
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from exceptions.entities_exceptions.CatalogException import CatalogException
 
 
 @dataclass
-class CatalogEntity(IEntity):
+class CatalogEntity(Entity):
 
     id: int
     code: str

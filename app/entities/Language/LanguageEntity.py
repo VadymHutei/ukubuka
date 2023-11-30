@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from value_objects.Language.LanguageVO import LanguageVO
 
 
 @dataclass(kw_only=True)
-class LanguageEntity(IEntity, LanguageVO):
+class LanguageEntity(Entity, LanguageVO):
 
     id: int

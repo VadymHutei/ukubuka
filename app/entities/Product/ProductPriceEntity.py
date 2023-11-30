@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from entities.Currency.CurrencyEntity import CurrencyEntity
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 
 
 @dataclass
-class ProductPriceEntity(IEntity):
+class ProductPriceEntity(Entity):
 
     id: int
     product_id: int

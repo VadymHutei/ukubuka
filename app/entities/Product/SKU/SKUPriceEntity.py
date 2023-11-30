@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from entities.Currency.CurrencyEntity import CurrencyEntity
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 
 
 @dataclass
-class SKUPriceEntity(IEntity):
+class SKUPriceEntity(Entity):
 
         id: int
         sku_id: int

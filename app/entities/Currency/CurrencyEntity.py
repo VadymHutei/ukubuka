@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
 
 
 @dataclass
-class CurrencyEntity(IEntity):
+class CurrencyEntity(Entity):
 
     id: int
     code: str

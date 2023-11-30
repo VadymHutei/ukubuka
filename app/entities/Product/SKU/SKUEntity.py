@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from entities.Product.SKU.SKUTextEntity import SKUTextEntity
 
 
 @dataclass
-class SKUEntity(IEntity):
+class SKUEntity(Entity):
 
     id: int
     sku: int

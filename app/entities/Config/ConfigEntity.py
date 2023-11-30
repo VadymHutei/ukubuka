@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 
 
 @dataclass
-class ConfigEntity(IEntity):
+class ConfigEntity(Entity):
 
     id: int
     code: str

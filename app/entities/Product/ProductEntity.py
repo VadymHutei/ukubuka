@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from entities.Product.ProductPriceEntity import ProductPriceEntity
 from entities.Product.ProductTextEntity import ProductTextEntity
 from exceptions.entities_exceptions.ProductException import ProductException
 
 
 @dataclass
-class ProductEntity(IEntity):
+class ProductEntity(Entity):
 
     id: int
     code: str

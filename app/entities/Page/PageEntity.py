@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.IEntity import IEntity
+from entities.Entity import Entity
 from entities.Page.PageTextEntity import PageTextEntity
 from exceptions.entities_exceptions.PageException import PageException
 
 
 @dataclass
-class PageEntity(IEntity):
+class PageEntity(Entity):
 
     id: int
     code: str
