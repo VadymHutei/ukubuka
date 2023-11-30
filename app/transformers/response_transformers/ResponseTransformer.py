@@ -1,4 +1,4 @@
-from Transformer import Transformer
+from transformers.Transformer import Transformer
 
 
 class ResponseTransformer(Transformer):
