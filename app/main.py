@@ -2,6 +2,7 @@ from flask import Flask, g
 
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
+from blueprints.ACP.PageBlueprint import acp_page_blueprint
 from blueprints.website.CatalogBlueprint import catalog_blueprint
 from blueprints.website.HomeBlueprint import home_blueprint
 from blueprints.website.ProductBlueprint import product_blueprint
@@ -13,6 +14,7 @@ from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
 from modules.User.routes.UserBlueprint import user_blueprint
 from service_container import sc
 from services.Config.ConfigService import ConfigService
+from services.Language.LanguageService import LanguageService
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -30,17 +32,21 @@ def before_request() -> None:
         app.config.update(config)
         app.config[ConfigService.APP_CONFIG_KEY] = True
 
+    language_service: LanguageService = sc.get(LanguageService)
+    app.config['AVAILABLE_LANGUAGE_CODES'] = [language.code for language in language_service.get_available_languages()]
+    g.default_language = language_service.get_by_code(app.config['default_language_code'])
+
     g.t = Translator.getInstance()
-    g.current_language = g.t.default_language
 
 
-app.register_blueprint(home_blueprint)
-app.register_blueprint(user_blueprint)
-app.register_blueprint(categoryACPBlueprint)
-app.register_blueprint(translationsACPBlueprint)
-app.register_blueprint(product_blueprint)
 app.register_blueprint(catalog_blueprint)
+app.register_blueprint(categoryACPBlueprint)
+app.register_blueprint(home_blueprint)
+app.register_blueprint(product_blueprint)
+app.register_blueprint(translationsACPBlueprint)
+app.register_blueprint(user_blueprint)
 
 app.register_blueprint(acp_dashboard_blueprint)
 app.register_blueprint(acp_language_blueprint)
+app.register_blueprint(acp_page_blueprint)
 app.register_blueprint(ACP_user_blueprint)
