@@ -15,6 +15,12 @@ class LanguageService(IService):
     def add_language(self, language_vo: LanguageVO) -> bool:
         return self._repository.add(language_vo)
 
+    def get_by_id(self, id: int) -> LanguageEntity:
+        return self._repository.get_by_id(id)
+
+    def get_by_code(self, code: str) -> LanguageEntity:
+        return self._repository.get_by_code(code)
+
     def find_all(self) -> list[LanguageEntity] | None:
         return self._repository.find_all()
     
@@ -35,3 +41,6 @@ class LanguageService(IService):
 
     def delete_by_code(self, code: str):
         return self._repository.delete_by_code(code)
+
+    def get_available_languages(self) -> list[LanguageEntity]:
+        return self._repository.get_only_active()

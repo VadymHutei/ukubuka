@@ -3,6 +3,7 @@ from flask import g
 from modules.Language.entities.LanguageEntity import LanguageEntity
 from modules.Language.entities.TextEntity import TextEntity
 from modules.Language.services.LanguageService import LanguageService
+from service_container import sc
 
 
 class Translator:
@@ -10,7 +11,7 @@ class Translator:
     _instance = None
 
     def __init__(self) -> None:
-        self._language_service = LanguageService()
+        self._language_service = sc.get(LanguageService)
 
         self.default_language: LanguageEntity = self._language_service.get_default_language()
         self.languages: dict[str, LanguageEntity] = self._language_service.get_languages(only_active=True)

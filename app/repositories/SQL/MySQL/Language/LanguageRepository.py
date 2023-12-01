@@ -22,6 +22,40 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
 
         return result
 
+    def get_by_id(self, id: int) -> LanguageEntity:
+        query = f'''
+            SELECT
+                {LanguageMapper.fields}
+            FROM {LanguageMapper.table_as_prefix}
+            WHERE {LanguageMapper.field('id')} = %s
+        '''
+
+        query_data = (id,)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, query_data)
+                data = cursor.fetchone()
+
+        return LanguageMapper.create_entity(data)
+
+    def get_by_code(self, code: str) -> LanguageEntity:
+        query = f'''
+            SELECT
+                {LanguageMapper.fields}
+            FROM {LanguageMapper.table_as_prefix}
+            WHERE {LanguageMapper.field('code')} = %s
+        '''
+
+        query_data = (code,)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, query_data)
+                data = cursor.fetchone()
+
+        return LanguageMapper.create_entity(data)
+
     def find_all(self) -> list[LanguageEntity] | None:
         query = f'''
             SELECT
@@ -97,3 +131,18 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
             connection.commit()
 
         return result
+
+    def get_only_active(self) -> list[LanguageEntity]:
+        query = f'''
+            SELECT
+                {LanguageMapper.fields}
+            FROM {LanguageMapper.table_as_prefix}
+            WHERE {LanguageMapper.field('is_active')} = 1
+        '''
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                data = cursor.fetchall()
+
+        return LanguageMapper.create_entities(data)

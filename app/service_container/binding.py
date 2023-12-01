@@ -6,14 +6,14 @@ from repositories.SQL.MySQL.Product.ProductRepository import ProductRepository
 from services.Catalog.ICatalogRepository import ICatalogRepository
 from services.Config.ConfigRepositoryInterface import IConfigRepository
 from services.Language.ILanguageRepository import ILanguageRepository
-from services.Page.PageRepositoryInterface import PageRepositoryInterface
+from services.Page.IPageRepository import IPageRepository
 from services.Product.IProductRepository import IProductRepository
 
 
 services_map: dict[type, type] = {
     ILanguageRepository: LanguageRepository,
     IProductRepository: ProductRepository,
-    PageRepositoryInterface: PageRepository,
+    IPageRepository: PageRepository,
     IConfigRepository: ConfigRepository,
     ICatalogRepository: CatalogRepository,
 }

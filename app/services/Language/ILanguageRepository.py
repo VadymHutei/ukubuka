@@ -11,6 +11,12 @@ class ILanguageRepository(IRepository):
     def add(self, vo: LanguageVO) -> bool:
         pass
 
+    def get_by_id(self, id: int) -> LanguageEntity:
+        pass
+
+    def get_by_code(self, code: str) -> LanguageEntity:
+        pass
+
     @abstractmethod
     def find_all(self) -> list[LanguageEntity] | None:
         pass
@@ -29,4 +35,8 @@ class ILanguageRepository(IRepository):
 
     @abstractmethod
     def delete_by_code(self, code: str) -> bool:
+        pass
+
+    @abstractmethod
+    def get_only_active(self) -> list[LanguageEntity]:
         pass

@@ -13,4 +13,4 @@ class ConfigService(IService):
     def get_config(self) -> dict[str, ConfigEntity]:
         config_data = self._repository.get_config()
 
-        return {entity.code: entity for entity in config_data}
+        return {entity.code: entity.value for entity in config_data}
