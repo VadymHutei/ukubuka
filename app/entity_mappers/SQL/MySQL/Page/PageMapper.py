@@ -22,6 +22,15 @@ class PageMapper(MySQLEntityMapper):
         'updated_at',
     ]
 
+    _FILLABLE_FIELDS = [
+        'code',
+        'template',
+        'layout',
+        'is_active',
+        'created_at',
+        'updated_at',
+    ]
+
     _FIELD_TYPES = {
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,

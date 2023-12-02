@@ -1,0 +1,51 @@
+<h1>{{ 'Add page' }}</h1>
+
+<form id="add_page_form" action="{{ form.action }}" method="post"></form>
+
+<table>
+
+    <tbody>
+        <tr>
+            <td class="param_name">
+                <label for="page_code_field">{{ 'code' }}</label>
+            </td>
+            <td>
+                <input id="page_code_field" form="add_page_form" type="text" name="code" placeholder="{{ 'code' }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td class="param_name">
+                <label for="page_template_field">{{ 'template' }}</label>
+            </td>
+            <td>
+                <input id="page_template_field" form="add_page_form" type="text" name="template" placeholder="{{ 'template' }}" required>
+            </td>
+        </tr>
+        <tr>
+            <td class="param_name">
+                <label for="page_layout_field">{{ 'layout' }}</label>
+            </td>
+            <td>
+                <input id="page_layout_field" form="add_page_form" type="text" name="layout" placeholder="{{ 'layout' }}">
+            </td>
+        </tr>
+        </tr>
+        <tr>
+            <td class="param_name">
+                <label for="page_is_active_field">{{ 'is active' }}</label>
+            </td>
+            <td>
+                <input id="page_is_active_field" form="add_page_form" name="is_active" type="checkbox">
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="2" class="actions">
+                <input form="add_page_form" type="submit" value="{{ 'Save' }}">
+            </td>
+        </tr>
+    </tfoot>
+
+</table>

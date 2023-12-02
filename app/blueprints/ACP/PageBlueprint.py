@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from controllers.ACP.PageController import PageController
@@ -22,14 +22,13 @@ def pages_route():
 @with_language
 @with_session
 def add_page_route():
-    return ''
-#     controller: PageController = sc.get(PageController)
+    controller: PageController = sc.get(PageController)
 
-#     match request.method:
-#         case 'GET':
-#             return controller.add_page_page_action()
-#         case 'POST':
-#             return controller.add_page_action()
+    match request.method:
+        case 'GET':
+            return controller.add_page_page_action()
+        case 'POST':
+            return controller.add_page_action()
 
 @acp_page_blueprint.route('/edit', methods=['GET', 'POST'])
 @with_language

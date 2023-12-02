@@ -37,7 +37,7 @@ class LanguageController(IController):
             created_at=datetime.now(),
         )
 
-        self._service.add_language(language_vo)
+        self._service.add(language_vo)
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),

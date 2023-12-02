@@ -8,9 +8,10 @@ from value_objects.Language.LanguageVO import LanguageVO
 class LanguageRepository(MySQLRepository, ILanguageRepository):
 
     def add(self, vo: LanguageVO) -> bool:
-        placeholders = ', '.join(['%s'] * LanguageMapper.fillable_length)
-
-        query = f'INSERT INTO {LanguageMapper.table} ({LanguageMapper.fillable}) VALUES ({placeholders})'
+        query = f'''
+            INSERT INTO {LanguageMapper.table} ({LanguageMapper.fillable})
+            VALUES ({LanguageMapper.fillable_placeholders()})
+        '''
 
         query_data = LanguageMapper.fillable_data(vo)
 

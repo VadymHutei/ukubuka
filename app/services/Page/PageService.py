@@ -2,6 +2,7 @@ from services.IService import IService
 from services.Page.IPageRepository import IPageRepository
 from entities.Page.PageEntity import PageEntity
 from exceptions.entities_exceptions.PageException import PageException
+from value_objects.Page.PageVO import PageVO
 
 
 class PageService(IService):
@@ -19,3 +20,6 @@ class PageService(IService):
 
     def get_all(self) -> list[PageEntity]:
         return self._repository.get_all()
+    
+    def add_page(self, vo: PageVO) -> bool:
+        return self._repository.add(vo)
