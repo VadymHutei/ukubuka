@@ -2,16 +2,16 @@ from flask import Blueprint, request
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.ACP.LanguageController import LanguageController
-from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
+from request_decorators import with_language
 from service_container import sc
 
 
-acp_language_blueprint = Blueprint(ACP_LANGUAGE_BLUEPRINT, __name__, url_prefix='/<string:language>/acp/languages')
+acp_language_blueprint = Blueprint(ACP_LANGUAGE_BLUEPRINT, __name__, url_prefix='/<string:language_code>/acp/languages')
 
 
 @acp_language_blueprint.route('', methods=['GET'])
-@language_redirect
+@with_language
 @with_session
 def languages_route():
     controller: LanguageController = sc.get(LanguageController)
@@ -19,7 +19,7 @@ def languages_route():
     return controller.languages_page_action()
 
 @acp_language_blueprint.route('/add', methods=['GET', 'POST'])
-@language_redirect
+@with_language
 @with_session
 def add_language_route():
     controller: LanguageController = sc.get(LanguageController)
@@ -31,7 +31,7 @@ def add_language_route():
             return controller.add_language_action()
 
 @acp_language_blueprint.route('/edit', methods=['GET', 'POST'])
-@language_redirect
+@with_language
 @with_session
 def edit_language_route():
     controller: LanguageController = sc.get(LanguageController)
@@ -43,7 +43,7 @@ def edit_language_route():
             return controller.edit_language_action()
 
 @acp_language_blueprint.route('/delete', methods=['POST'])
-@language_redirect
+@with_language
 @with_session
 def delete_language_route():
     controller: LanguageController = sc.get(LanguageController)

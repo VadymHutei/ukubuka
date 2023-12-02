@@ -41,7 +41,7 @@ class LanguageController(IController):
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
-            language=g.current_language.code,
+            language_code=g.current_language.code,
         )
 
         return redirect(languages_url)
@@ -65,7 +65,7 @@ class LanguageController(IController):
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
-            language=g.current_language.code,
+            language_code=g.current_language.code,
         )
 
         return redirect(languages_url)
@@ -75,7 +75,7 @@ class LanguageController(IController):
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
-            language=g.current_language.code,
+            language_code=g.current_language.code,
         )
 
         return redirect(languages_url)

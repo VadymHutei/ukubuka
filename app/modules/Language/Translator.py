@@ -11,7 +11,7 @@ class Translator:
     _instance = None
 
     def __init__(self) -> None:
-        self._language_service = sc.get(LanguageService)
+        self._language_service: LanguageService = sc.get(LanguageService)
 
         self.default_language: LanguageEntity = self._language_service.get_default_language()
         self.languages: dict[str, LanguageEntity] = self._language_service.get_languages(only_active=True)

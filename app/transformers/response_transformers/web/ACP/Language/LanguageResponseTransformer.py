@@ -16,12 +16,12 @@ class LanguageResponseTransformer(WebACPResponseTransformer):
         updated_at = language.updated_at.strftime(cls.ACP_DATE_FORMAT) if language.updated_at else None
         edit_page_url = url_for(
             ACP_LANGUAGE_BLUEPRINT + '.edit_language_route',
-            language=g.current_language.code,
+            language_code=g.current_language.code,
             code=language.code,
         )
         delete_url = url_for(
             ACP_LANGUAGE_BLUEPRINT + '.delete_language_route',
-            language=g.current_language.code,
+            language_code=g.current_language.code,
         )
 
         return {

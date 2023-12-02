@@ -15,7 +15,7 @@ class AddLanguageView(WebView):
 
         form_action = url_for(
             endpoint='.'.join((ACP_LANGUAGE_BLUEPRINT, 'add_language_route')),
-            language=g.current_language.code,
+            language_code=g.current_language.code,
         )
 
         self._data['form'] = {
