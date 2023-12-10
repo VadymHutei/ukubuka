@@ -84,7 +84,6 @@ class PageRepository(MySQLRepository, IPageRepository):
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                print(cursor.mogrify(query, query_data))
                 result = cursor.execute(query, query_data) > 0
 
             connection.commit()

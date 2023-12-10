@@ -9,7 +9,6 @@ class Price:
 
     def __init__(self, value: int, currency: CurrencyEntity) -> None:
         self._subunits_number = 10 ** self._DIGITS
-        print(self._subunits_number)
         self.value = value
         self.currency = currency
 
