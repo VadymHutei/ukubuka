@@ -7,6 +7,7 @@ from controllers.IController import IController
 from services.Page.PageService import PageService
 from value_objects.Page.PageVO import PageVO
 from views.HTML.ACP.Page.AddPageView import AddPageView
+from views.HTML.ACP.Page.EditPageView import EditPageView
 from views.HTML.ACP.Page.PageView import PageView
 
 
@@ -15,7 +16,7 @@ class PageController(IController):
     def __init__(self, service: PageService) -> None:
         self._service = service
 
-    def pages_page_action(self):
+    def pages_page_action(self) -> str:
         view = PageView()
 
         view.set_data(pages=self._service.get_all())
@@ -44,3 +45,13 @@ class PageController(IController):
         )
 
         return redirect(pages_url)
+
+    def edit_page_page_action(self):
+        view = EditPageView()
+
+        view.set_data(page=self._service.find_by_code(request.args.get('code')))
+
+        return view.render()
+
+    def edit_page_action(self):
+        return '<h1>Edit Page</h1>'

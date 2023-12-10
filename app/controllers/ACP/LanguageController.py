@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from flask import g, redirect, request, url_for
+from werkzeug import Response
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
@@ -9,7 +11,6 @@ from value_objects.Language.LanguageVO import LanguageVO
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
-from werkzeug import Response
 
 
 class LanguageController(IController):
@@ -54,14 +55,14 @@ class LanguageController(IController):
         return view.render()
 
     def edit_language_action(self) -> Response:
-        update_language_DTO = UpdateLanguageDTO(
-            id=request.form.get('id'),
+        update_language_dto = UpdateLanguageDTO(
+            id=int(request.form.get('id')),
             code=request.form.get('code'),
             name=request.form.get('name'),
             is_active=request.form.get('is_active') is not None,
         )
 
-        self._service.update(update_language_DTO)
+        self._service.update(update_language_dto)
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),

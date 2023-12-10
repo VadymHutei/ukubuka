@@ -7,15 +7,14 @@ from blueprints.website.CatalogBlueprint import catalog_blueprint
 from blueprints.website.HomeBlueprint import home_blueprint
 from blueprints.website.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
+from modules.Language.Translator import Translator
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
-from modules.Language.Translator import Translator
 from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
 from modules.User.routes.UserBlueprint import user_blueprint
 from service_container import sc
 from services.Config.ConfigService import ConfigService
 from services.Language.LanguageService import LanguageService
-
 
 app = Flask(__name__, instance_relative_config=True)
 

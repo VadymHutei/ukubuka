@@ -34,14 +34,13 @@ def add_page_route():
 @with_language
 @with_session
 def edit_page_route():
-    return ''
-#     controller: PageController = sc.get(PageController)
+    controller: PageController = sc.get(PageController)
 
-#     match request.method:
-#         case 'GET':
-#             return controller.edit_page_page_action()
-#         case 'POST':
-#             return controller.edit_page_action()
+    match request.method:
+        case 'GET':
+            return controller.edit_page_page_action()
+        case 'POST':
+            return controller.edit_page_action()
 
 @acp_page_blueprint.route('/delete', methods=['POST'])
 @with_language
