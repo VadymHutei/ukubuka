@@ -1,4 +1,3 @@
-from entities.Language.LanguageEntity import LanguageEntity
 from entities.Page.PageEntity import PageEntity
 from transformers.response_transformers.web.ACP.ACPWebResponseTransformer import WebACPResponseTransformer
 
@@ -16,7 +15,8 @@ class EditPageResponseTransformer(WebACPResponseTransformer):
         return {
             'id': page.id,
             'code': page.code,
-            'name': page.name,
+            'template': page.template,
+            'layout': page.layout,
             'is_active': page.is_active,
             'created_at': created_at,
             'updated_at': updated_at,

@@ -5,6 +5,7 @@ from flask import g, redirect, request, url_for
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Page.PageService import PageService
+from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
 from value_objects.Page.PageVO import PageVO
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageView import EditPageView
@@ -54,4 +55,13 @@ class PageController(IController):
         return view.render()
 
     def edit_page_action(self):
-        return '<h1>Edit Page</h1>'
+        update_page_dto = RequestToUpdatePageDTOTransformer.transform(request)
+
+        self._service.update(update_page_dto)
+
+        pages_url = url_for(
+            '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
+            language_code=g.current_language.code,
+        )
+
+        return redirect(pages_url)

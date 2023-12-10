@@ -1,18 +1,17 @@
 from abc import ABC, abstractmethod
-
-from entities.Entity import Entity
+from typing import Any
 
 
 class Transformer(ABC):
 
     @classmethod
     @abstractmethod
-    def transform(cls, entity: Entity | None) -> dict[str, str | int | bool | None] | None:
+    def transform(cls, data: Any) -> Any:
         pass
 
     @classmethod
-    def transform_collection(cls, entities: list[Entity] | None) -> list[dict[str, str | int | bool | None]] | None:
-        if entities is None:
+    def transform_collection(cls, data: Any) -> Any:
+        if data is None:
             return None
 
-        return [cls.transform(entity) for entity in entities]
+        return [cls.transform(element) for element in data]

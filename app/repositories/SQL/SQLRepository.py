@@ -1,10 +1,10 @@
+from typing import Type
+
+from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
 from repositories.IRepository import IRepository
 
 
 class SQLRepository(IRepository):
 
-    def create_where_conditions(self, conditions: list[str]) -> str:
-        if not conditions:
-            return ''
-
-        return 'WHERE ' + ' AND '.join(conditions)
+    mapper: Type[SQLEntityMapper] | None
+    text_mapper: Type[SQLEntityMapper] | None

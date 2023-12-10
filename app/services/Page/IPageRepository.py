@@ -7,7 +7,11 @@ from value_objects.Page.PageVO import PageVO
 class IPageRepository(ABC):
 
     @abstractmethod
-    def find_by_code(self, code: str) -> PageEntity:
+    def find_by_id(self, id: int) -> PageEntity | None:
+        pass
+
+    @abstractmethod
+    def find_by_code(self, code: str) -> PageEntity | None:
         pass
 
     @abstractmethod
@@ -16,4 +20,8 @@ class IPageRepository(ABC):
 
     @abstractmethod
     def add(self, vo: PageVO) -> bool:
+        pass
+
+    @abstractmethod
+    def update(self, page: PageEntity) -> bool:
         pass

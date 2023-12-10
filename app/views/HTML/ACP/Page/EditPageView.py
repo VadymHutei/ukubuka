@@ -1,6 +1,6 @@
 from flask import g, url_for
 
-from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
+from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from transformers.response_transformers.web.ACP.Page.EditPageResponseTransformer import EditPageResponseTransformer
 from views.web.WebView import WebView
 
@@ -15,7 +15,7 @@ class EditPageView(WebView):
         super()._prepare_page_data()
 
         form_action = url_for(
-            endpoint='.'.join((ACP_LANGUAGE_BLUEPRINT, 'edit_page_route')),
+            endpoint='.'.join((ACP_PAGE_BLUEPRINT, 'edit_page_route')),
             language_code=g.current_language.code,
         )
 
