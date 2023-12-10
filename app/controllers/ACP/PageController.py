@@ -1,12 +1,11 @@
-from datetime import datetime
-
 from flask import g, redirect, request, url_for
+from werkzeug import Response
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Page.PageService import PageService
+from transformers.request_transformers.Page.RequestToAddPageDTOTransformer import RequestToAddPageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
-from value_objects.Page.PageVO import PageVO
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageView import EditPageView
 from views.HTML.ACP.Page.PageView import PageView
@@ -24,19 +23,13 @@ class PageController(IController):
 
         return view.render()
 
-    def add_page_page_action(self):
+    def add_page_page_action(self) -> str:
         view = AddPageView()
 
         return view.render()
 
-    def add_page_action(self):
-        page_vo = PageVO(
-            code=request.form.get('code'),
-            template=request.form.get('template'),
-            layout=request.form.get('layout'),
-            is_active=request.form.get('is_active') is not None,
-            created_at=datetime.now(),
-        )
+    def add_page_action(self) -> Response:
+        page_vo = RequestToAddPageDTOTransformer.transform(request)
 
         self._service.add_page(page_vo)
 
@@ -47,17 +40,29 @@ class PageController(IController):
 
         return redirect(pages_url)
 
-    def edit_page_page_action(self):
+    def edit_page_page_action(self) -> str:
         view = EditPageView()
 
-        view.set_data(page=self._service.find_by_code(request.args.get('code')))
+        page = self._service.find_page_by_code(request.args.get('code'))
+
+        view.set_data(page=page)
 
         return view.render()
 
-    def edit_page_action(self):
+    def edit_page_action(self) -> Response:
         update_page_dto = RequestToUpdatePageDTOTransformer.transform(request)
 
-        self._service.update(update_page_dto)
+        self._service.update_page(update_page_dto)
+
+        pages_url = url_for(
+            '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
+            language_code=g.current_language.code,
+        )
+
+        return redirect(pages_url)
+
+    def delete_page_action(self) -> Response:
+        self._service.delete_page_by_code(request.form.get('code'))
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),

@@ -45,7 +45,6 @@ def edit_page_route():
 @with_language
 @with_session
 def delete_page_route():
-    return ''
-#     controller: PageController = sc.get(PageController)
+    controller: PageController = sc.get(PageController)
 
-#     return controller.delete_page_action()
+    return controller.delete_page_action()

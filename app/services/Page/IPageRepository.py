@@ -25,3 +25,7 @@ class IPageRepository(ABC):
     @abstractmethod
     def update(self, page: PageEntity) -> bool:
         pass
+
+    @abstractmethod
+    def delete_by_code(self, code: str) -> bool:
+        pass

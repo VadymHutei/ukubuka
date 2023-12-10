@@ -6,7 +6,7 @@ from werkzeug import Request
 from transformers.Transformer import Transformer
 
 
-class IRequestTransformer(Transformer):
+class RequestTransformer(Transformer):
 
     @classmethod
     @abstractmethod

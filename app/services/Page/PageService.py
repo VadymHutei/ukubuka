@@ -27,10 +27,10 @@ class PageService(IService):
     def add_page(self, vo: PageVO) -> bool:
         return self._repository.add(vo)
 
-    def find_by_code(self, code: str) -> PageEntity | None:
+    def find_page_by_code(self, code: str) -> PageEntity | None:
         return self._repository.find_by_code(code)
 
-    def update(self, update_page_dto: UpdatePageDTO) -> bool:
+    def update_page(self, update_page_dto: UpdatePageDTO) -> bool:
         page = self._repository.find_by_id(update_page_dto.id)
 
         page.update_from_dict(update_page_dto.to_dict())
@@ -38,3 +38,6 @@ class PageService(IService):
         page.updated_at = datetime.now()
 
         return self._repository.update(page)
+
+    def delete_page_by_code(self, code: str) -> bool:
+        return self._repository.delete_by_code(code)

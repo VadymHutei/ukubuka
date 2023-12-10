@@ -44,3 +44,16 @@ class MySQLRepository(SQLRepository):
             connection.commit()
 
         return result
+
+    def delete_by_code(self, code: str) -> bool:
+        query = f'DELETE FROM {self.mapper.table} WHERE code = %s'
+
+        query_data = (code,)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                result = cursor.execute(query, query_data) > 0
+
+            connection.commit()
+
+        return result
