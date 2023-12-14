@@ -6,7 +6,6 @@ from modules.Session.requestDecorators import with_session
 from request_decorators import with_language
 from service_container import sc
 
-
 acp_language_blueprint = Blueprint(ACP_LANGUAGE_BLUEPRINT, __name__, url_prefix='/<string:language_code>/acp/languages')
 
 

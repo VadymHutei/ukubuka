@@ -1,5 +1,6 @@
 from typing import Any
 
+from data_transfer_objects.DataTransferObject import DataTransferObject
 from entities.Entity import Entity
 from entity_mappers.EntityMapper import EntityMapper
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
@@ -53,7 +54,7 @@ class SQLEntityMapper(EntityMapper):
         return ', '.join([cls._QUERY_PLACEHOLDER] * len(cls._FILLABLE_FIELDS))
 
     @classmethod
-    def fillable_data(cls, obj: IValueObject) -> list[str]:
+    def fillable_data(cls, obj: DataTransferObject) -> list[str]:
         return [getattr(obj, field) for field in cls._FILLABLE_FIELDS]
 
     @classmethod

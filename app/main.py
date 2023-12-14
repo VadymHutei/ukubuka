@@ -7,7 +7,6 @@ from blueprints.website.CatalogBlueprint import catalog_blueprint
 from blueprints.website.HomeBlueprint import home_blueprint
 from blueprints.website.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
-from modules.Language.Translator import Translator
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Language.routes.TranslationsACPBlueprint import translationsACPBlueprint
 from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
@@ -34,8 +33,6 @@ def before_request() -> None:
     language_service: LanguageService = sc.get(LanguageService)
     app.config['AVAILABLE_LANGUAGE_CODES'] = [language.code for language in language_service.get_available()]
     g.default_language = language_service.get_by_code(app.config['default_language_code'])
-
-    g.t = Translator.getInstance()
 
 
 app.register_blueprint(catalog_blueprint)

@@ -1,10 +1,10 @@
 from datetime import datetime
 
+from data_transfer_objects.Lanugage.AddLanguageDTO import AddLanguageDTO
 from data_transfer_objects.Lanugage.UpdateLanguageDTO import UpdateLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
 from services.IService import IService
 from services.Language.ILanguageRepository import ILanguageRepository
-from value_objects.Language.LanguageVO import LanguageVO
 
 
 class LanguageService(IService):
@@ -12,8 +12,8 @@ class LanguageService(IService):
     def __init__(self, repository: ILanguageRepository) -> None:
         self._repository: ILanguageRepository = repository
 
-    def add(self, language_vo: LanguageVO) -> bool:
-        return self._repository.add(language_vo)
+    def add(self, add_language_dto: AddLanguageDTO) -> bool:
+        return self._repository.add(add_language_dto)
 
     def get_by_id(self, id: int) -> LanguageEntity:
         return self._repository.get_by_id(id)

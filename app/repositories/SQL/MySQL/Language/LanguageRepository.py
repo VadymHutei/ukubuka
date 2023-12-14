@@ -1,19 +1,19 @@
+from data_transfer_objects.Lanugage.AddLanguageDTO import AddLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
 from entity_mappers.SQL.MySQL.Language.LanguageMapper import LanguageMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 from services.Language.ILanguageRepository import ILanguageRepository
-from value_objects.Language.LanguageVO import LanguageVO
 
 
 class LanguageRepository(MySQLRepository, ILanguageRepository):
 
-    def add(self, vo: LanguageVO) -> bool:
+    def add(self, add_language_dto: AddLanguageDTO) -> bool:
         query = f'''
             INSERT INTO {LanguageMapper.table} ({LanguageMapper.fillable})
             VALUES ({LanguageMapper.fillable_placeholders()})
         '''
 
-        query_data = LanguageMapper.fillable_data(vo)
+        query_data = LanguageMapper.fillable_data(add_language_dto)
 
         with self.connection as connection:
             with connection.cursor() as cursor:

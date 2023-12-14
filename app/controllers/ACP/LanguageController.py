@@ -5,9 +5,9 @@ from werkzeug import Response
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
+from data_transfer_objects.Lanugage.AddLanguageDTO import AddLanguageDTO
 from data_transfer_objects.Lanugage.UpdateLanguageDTO import UpdateLanguageDTO
 from services.Language.LanguageService import LanguageService
-from value_objects.Language.LanguageVO import LanguageVO
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
@@ -31,14 +31,14 @@ class LanguageController(IController):
         return view.render()
 
     def add_language_action(self) -> Response:
-        language_vo = LanguageVO(
+        add_language_dto = AddLanguageDTO(
             code=request.form.get('code'),
             name=request.form.get('name'),
             is_active=request.form.get('is_active') is not None,
             created_at=datetime.now(),
         )
 
-        self._service.add(language_vo)
+        self._service.add(add_language_dto)
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),

@@ -1,14 +1,14 @@
 from abc import abstractmethod
 
+from data_transfer_objects.Lanugage.AddLanguageDTO import AddLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
 from repositories.IRepository import IRepository
-from value_objects.Language.LanguageVO import LanguageVO
 
 
 class ILanguageRepository(IRepository):
 
     @abstractmethod
-    def add(self, vo: LanguageVO) -> bool:
+    def add(self, add_language_dto: AddLanguageDTO) -> bool:
         pass
 
     def get_by_id(self, id: int) -> LanguageEntity:

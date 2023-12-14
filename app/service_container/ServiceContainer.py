@@ -9,8 +9,8 @@ class ServiceContainer:
     def _create(self, service_class: type, parameters: dict):
         dependencies = {}
         dependencies.update(parameters)
-        service_parametert = inspect.signature(service_class).parameters
-        for parameter in service_parametert.values():
+        service_parameters = inspect.signature(service_class).parameters
+        for parameter in service_parameters.values():
             if parameter.name in dependencies:
                 continue
             if parameter.name == 'self':

@@ -1,10 +1,13 @@
-from dataclasses import dataclass
+from datetime import datetime
 
 from entities.Entity import Entity
-from value_objects.Language.LanguageVO import LanguageVO
 
 
-@dataclass(kw_only=True)
-class LanguageEntity(Entity, LanguageVO):
+class LanguageEntity(Entity):
 
     id: int
+    code: str
+    name: str
+    is_active: bool
+    created_at: datetime
+    updated_at: datetime | None = None
