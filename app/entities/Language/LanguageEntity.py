@@ -1,8 +1,10 @@
+from dataclasses import dataclass
 from datetime import datetime
 
 from entities.Entity import Entity
 
 
+@dataclass
 class LanguageEntity(Entity):
 
     id: int
