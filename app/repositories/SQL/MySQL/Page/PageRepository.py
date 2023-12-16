@@ -5,6 +5,7 @@ from entity_mappers.SQL.MySQL.Page.PageMapper import PageMapper
 from entity_mappers.SQL.MySQL.Page.PageTextMapper import PageTextMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 from services.Page.IPageRepository import IPageRepository
+from transformers.entity_transformers.SQL.MySQL.Page.PageEntityTransformer import PageEntityTransformer
 from value_objects.Page.PageVO import PageVO
 
 
@@ -75,7 +76,7 @@ class PageRepository(MySQLRepository, IPageRepository):
                 cursor.execute(query, query_data)
                 data = cursor.fetchall()
 
-        return PageMapper.create_entities(data) if data else []
+        return PageEntityTransformer.transform_collection(data) if data else None
 
     def add(self, vo: PageVO) -> bool:
         query = f'INSERT INTO {self.mapper.table} ({self.mapper.fillable_fields}) VALUES ({self.mapper.fillable_placeholders()})'

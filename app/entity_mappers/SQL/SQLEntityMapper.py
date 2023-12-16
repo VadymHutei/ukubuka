@@ -1,6 +1,5 @@
 from typing import Any
 
-from data_transfer_objects.DataTransferObject import DataTransferObject
 from entities.Entity import Entity
 from entity_mappers.EntityMapper import EntityMapper
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
@@ -35,7 +34,7 @@ class SQLEntityMapper(EntityMapper):
     @classmethod
     @property
     def fields(cls) -> str:
-        fields = [f'{cls._TABLE_PREFIX}.{field} as {cls._get_field_alias(field)}' for field in cls._DATA_FIELDS]
+        fields = [f'{cls._TABLE_PREFIX}.{field} as {cls.field_alias(field)}' for field in cls._DATA_FIELDS]
 
         return ',\n'.join(fields)
 
@@ -57,23 +56,27 @@ class SQLEntityMapper(EntityMapper):
         return f'{cls._TABLE_PREFIX}.{field}'
 
     @classmethod
-    def _get_field_alias(cls, field: str) -> str:
+    def field_alias(cls, field: str) -> str:
         return f'{cls._TABLE_PREFIX}_{field}'
 
     @classmethod
-    def create_entity(cls, db_record: dict) -> Entity | IValueObject:
+    def get_field_value_from_db_record(cls, db_record: dict, field: str):
+        field_alias = cls.field_alias(field)
+
+        if field_alias not in db_record:
+            raise MapperException(f'Field {field_alias} not found in DB record')
+
+        if field in cls._FIELD_TYPES:
+            return MapperFieldTypes.convert(cls._FIELD_TYPES[field], db_record[field_alias])
+        else:
+            return db_record[field_alias]
+
+    @classmethod
+    def create_entity(cls, db_record: dict) -> Entity:
         data = {}
 
         for field in cls._DATA_FIELDS:
-            field_alias = cls._get_field_alias(field)
-
-            if field_alias not in db_record:
-                raise MapperException(f'Field {field_alias} not found in DB record')
-
-            if field in cls._FIELD_TYPES:
-                data[field] = MapperFieldTypes.convert(cls._FIELD_TYPES[field], db_record[field_alias])
-            else:
-                data[field] = db_record[field_alias]
+            data[field] = cls.get_field_value_from_db_record(db_record, field)
 
         try:
             for field, mapper in cls._NESTED_ENTITY_MAPPERS.items():
