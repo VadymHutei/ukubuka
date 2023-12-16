@@ -3,9 +3,11 @@ from werkzeug import Response
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
-from data_transfer_objects.Lanugage.AddLanguageDTO import AddLanguageDTO
-from data_transfer_objects.Lanugage.UpdateLanguageDTO import UpdateLanguageDTO
+from data_transfer_objects.Language.AddLanguageDTO import AddLanguageDTO
+from data_transfer_objects.Language.UpdateLanguageDTO import UpdateLanguageDTO
 from services.Language.LanguageService import LanguageService
+from transformers.request_transformers.Language.AddLanguageDTOTransformer import AddLanguageDTOTransformer
+from transformers.request_transformers.Language.UpdateLanguageDTOTransformer import UpdateLanguageDTOTransformer
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
@@ -29,11 +31,7 @@ class LanguageController(IController):
         return view.render()
 
     def add_language_action(self) -> Response:
-        add_language_dto = AddLanguageDTO(
-            code=request.form.get('code'),
-            name=request.form.get('name'),
-            is_active=request.form.get('is_active') is not None,
-        )
+        add_language_dto = AddLanguageDTOTransformer.transform(request)
 
         self._service.add(add_language_dto)
 
@@ -52,12 +50,7 @@ class LanguageController(IController):
         return view.render()
 
     def edit_language_action(self) -> Response:
-        update_language_dto = UpdateLanguageDTO(
-            id=int(request.form.get('id')),
-            code=request.form.get('code'),
-            name=request.form.get('name'),
-            is_active=request.form.get('is_active') is not None,
-        )
+        update_language_dto = UpdateLanguageDTOTransformer.transform(request)
 
         self._service.update(update_language_dto)
 

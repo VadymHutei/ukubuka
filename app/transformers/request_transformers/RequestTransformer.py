@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Any
 
-from werkzeug import Request
+from flask import Request
 
 from transformers.Transformer import Transformer
 

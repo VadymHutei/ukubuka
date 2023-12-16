@@ -45,6 +45,7 @@ def edit_language_route():
 @with_language
 @with_session
 def delete_language_route():
+    # TODO: soft delete
     controller: LanguageController = sc.get(LanguageController)
 
     return controller.delete_language_action()

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from data_transfer_objects.Lanugage.AddLanguageDTO import AddLanguageDTO
-from data_transfer_objects.Lanugage.UpdateLanguageDTO import UpdateLanguageDTO
+from data_transfer_objects.Language.AddLanguageDTO import AddLanguageDTO
+from data_transfer_objects.Language.UpdateLanguageDTO import UpdateLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
 from services.IService import IService
 from services.Language.ILanguageRepository import ILanguageRepository
