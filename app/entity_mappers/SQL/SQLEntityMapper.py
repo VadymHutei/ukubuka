@@ -41,21 +41,16 @@ class SQLEntityMapper(EntityMapper):
 
     @classmethod
     @property
-    def fillable(cls) -> str:
+    def fillable_fields(cls) -> str:
         return ', '.join(cls._FILLABLE_FIELDS)
-
-    @classmethod
-    @property
-    def fillable_length(cls) -> int:
-        return len(cls._FILLABLE_FIELDS)
 
     @classmethod
     def fillable_placeholders(cls) -> str:
         return ', '.join([cls._QUERY_PLACEHOLDER] * len(cls._FILLABLE_FIELDS))
 
     @classmethod
-    def fillable_data(cls, obj: DataTransferObject) -> list[str]:
-        return [getattr(obj, field) for field in cls._FILLABLE_FIELDS]
+    def fillable_data(cls, entity: Entity) -> list[str]:
+        return [getattr(entity, field) for field in cls._FILLABLE_FIELDS]
 
     @classmethod
     def field(cls, field: str) -> str:

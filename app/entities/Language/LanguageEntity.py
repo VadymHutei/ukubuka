@@ -7,9 +7,10 @@ from entities.Entity import Entity
 @dataclass
 class LanguageEntity(Entity):
 
-    id: int
     code: str
     name: str
     is_active: bool
     created_at: datetime
+
+    id: int | None = None
     updated_at: datetime | None = None

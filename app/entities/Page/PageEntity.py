@@ -9,6 +9,7 @@ from exceptions.entities_exceptions.PageException import PageException
 @dataclass
 class PageEntity(Entity):
 
+    id: int
     code: str
     template: str
     layout: str | None

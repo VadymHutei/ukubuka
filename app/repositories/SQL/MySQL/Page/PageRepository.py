@@ -78,7 +78,7 @@ class PageRepository(MySQLRepository, IPageRepository):
         return PageMapper.create_entities(data) if data else []
 
     def add(self, vo: PageVO) -> bool:
-        query = f'INSERT INTO {self.mapper.table} ({self.mapper.fillable}) VALUES ({self.mapper.fillable_placeholders()})'
+        query = f'INSERT INTO {self.mapper.table} ({self.mapper.fillable_fields}) VALUES ({self.mapper.fillable_placeholders()})'
 
         query_data = PageMapper.fillable_data(vo)
 

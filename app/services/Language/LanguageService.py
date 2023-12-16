@@ -13,7 +13,14 @@ class LanguageService(IService):
         self._repository: ILanguageRepository = repository
 
     def add(self, add_language_dto: AddLanguageDTO) -> bool:
-        return self._repository.add(add_language_dto)
+        language = LanguageEntity(
+            code=add_language_dto.code,
+            name=add_language_dto.name,
+            is_active=add_language_dto.is_active,
+            created_at=datetime.now(),
+        )
+
+        return self._repository.add(language)
 
     def get_by_id(self, id: int) -> LanguageEntity:
         return self._repository.get_by_id(id)

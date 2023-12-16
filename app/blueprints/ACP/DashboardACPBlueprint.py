@@ -6,7 +6,6 @@ from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
 from service_container import sc
 
-
 acp_dashboard_blueprint = Blueprint(ACP_DASHBOARD_BLUEPRINT, __name__, url_prefix='/<string:language>/acp')
 
 

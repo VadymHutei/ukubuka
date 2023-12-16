@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import g, redirect, request, url_for
 from werkzeug import Response
 
@@ -35,7 +33,6 @@ class LanguageController(IController):
             code=request.form.get('code'),
             name=request.form.get('name'),
             is_active=request.form.get('is_active') is not None,
-            created_at=datetime.now(),
         )
 
         self._service.add(add_language_dto)
