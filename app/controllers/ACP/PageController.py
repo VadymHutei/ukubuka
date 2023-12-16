@@ -29,9 +29,9 @@ class PageController(IController):
         return view.render()
 
     def add_page_action(self) -> Response:
-        page_vo = RequestToAddPageDTOTransformer.transform(request)
+        add_page_dto = RequestToAddPageDTOTransformer.transform(request)
 
-        self._service.add_page(page_vo)
+        self._service.add_page(add_page_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),

@@ -78,10 +78,13 @@ class PageRepository(MySQLRepository, IPageRepository):
 
         return PageEntityTransformer.transform_collection(data) if data else None
 
-    def add(self, vo: PageVO) -> bool:
-        query = f'INSERT INTO {self.mapper.table} ({self.mapper.fillable_fields}) VALUES ({self.mapper.fillable_placeholders()})'
+    def add(self, page: PageEntity) -> bool:
+        query = f'''
+            INSERT INTO {self.mapper.table} ({self.mapper.fillable_fields})
+            VALUES ({self.mapper.fillable_placeholders()})
+        '''
 
-        query_data = PageMapper.fillable_data(vo)
+        query_data = PageMapper.fillable_data(page)
 
         with self.connection as connection:
             with connection.cursor() as cursor:

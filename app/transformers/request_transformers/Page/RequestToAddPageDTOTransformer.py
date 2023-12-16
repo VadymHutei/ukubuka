@@ -1,19 +1,16 @@
-from datetime import datetime
-
 from flask import Request
 
+from data_transfer_objects.Page.AddPageDTO import AddPageDTO
 from transformers.request_transformers.RequestTransformer import RequestTransformer
-from value_objects.Page.PageVO import PageVO
 
 
 class RequestToAddPageDTOTransformer(RequestTransformer):
 
     @classmethod
-    def transform(cls, request: Request) -> PageVO:
-        return PageVO(
+    def transform(cls, request: Request) -> AddPageDTO:
+        return AddPageDTO(
             code=request.form.get('code'),
             template=request.form.get('template'),
             layout=request.form.get('layout'),
             is_active=request.form.get('is_active') is not None,
-            created_at=datetime.now(),
         )

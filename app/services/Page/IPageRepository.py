@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 from entities.Page.PageEntity import PageEntity
-from value_objects.Page.PageVO import PageVO
 
 
 class IPageRepository(ABC):
@@ -19,7 +18,7 @@ class IPageRepository(ABC):
         pass
 
     @abstractmethod
-    def add(self, vo: PageVO) -> bool:
+    def add(self, page: PageEntity) -> bool:
         pass
 
     @abstractmethod
