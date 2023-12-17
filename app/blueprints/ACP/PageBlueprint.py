@@ -17,6 +17,14 @@ def pages_route():
 
     return controller.pages_page_action()
 
+@acp_page_blueprint.route('page', methods=['GET'])
+@with_language
+@with_session
+def page_route():
+    controller: PageController = sc.get(PageController)
+
+    return controller.page_page_action()
+
 @acp_page_blueprint.route('/add', methods=['GET', 'POST'])
 @with_language
 @with_session

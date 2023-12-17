@@ -1,23 +1,22 @@
-from flask import g, url_for
-
-from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from transformers.response_transformers.web.ACP.Page.PageResponseTransformer import PageResponseTransformer
+from transformers.response_transformers.web.ACP.Page.PageTextResponseTransformer import PageTextResponseTransformer
 from views.web.WebView import WebView
 
 
 class PageView(WebView):
 
-    _page_code = 'acp_pages'
+    _page_code = 'acp_page'
 
     _with_layout = True
 
     def _prepare_page_data(self) -> None:
         super()._prepare_page_data()
 
-        add_page_url = url_for(
-            endpoint='.'.join((ACP_PAGE_BLUEPRINT, 'add_page_route')),
-            language_code=g.current_language.code,
+        self._data['page'] = PageResponseTransformer.transform(self._data['page'])
+        self._data['page']['translations'] = PageTextResponseTransformer.transform_collection(
+            self._data['page_translations']
         )
 
-        self._data['pages'] = PageResponseTransformer.transform_collection(self._data['pages'])
-        self._data['add_page_url'] = add_page_url
+        languages = {language.id: language.name for language in self._data['languages']}
+        for translation in self._data['page']['translations']:
+            translation['language'] = languages[translation['language_id']].capitalize()

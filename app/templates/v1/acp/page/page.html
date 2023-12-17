@@ -1,0 +1,76 @@
+<h1>{{ page.title }}</h1>
+
+<h2>{{ 'Info' }}</h2>
+
+<table>
+
+    <tbody>
+        <tr>
+            <td>{{ 'ID' }}</td>
+            <td>{{ page.id }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Title' }}</td>
+            <td>{{ page.title }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Code' }}</td>
+            <td>{{ page.code }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Template' }}</td>
+            <td>{{ page.template }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Layout' }}</td>
+            <td>{{ page.layout }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Is active' }}</td>
+            <td>{{ page.is_active|checkbox }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Created at' }}</td>
+            <td>{{ page.created_at }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Updated at' }}</td>
+            <td>{{ page.updated_at|none }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Actions' }}</td>
+            <td>
+                {# Edit button #}
+                <a class="button_link" href="{{ page.edit_page_url }}">
+                <div>{{ 'Edit' }}</div>
+                </a>
+
+                {# Delete button #}
+                {% set delete_form_name = 'delete_page_' ~ page.code ~ '_form' %}
+                <form id="{{ delete_form_name }}" class="form_button" action="{{ page.delete_url }}" method="post"></form>
+                <input form="{{ delete_form_name }}" type="hidden" name="code" value="{{ page.code }}">
+                <input form="{{ delete_form_name }}" type="submit" value="{{ 'Delete' }}">
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<h2>{{ 'Translations' }}</h2>
+
+{% for translation in page.translations %}
+
+<h3>{{ translation.language }}</h3>
+
+<table>
+
+    <tbody>
+        <tr>
+            <td>{{ 'Title' }}</td>
+            <td>{{ translation.title }}</td>
+        </tr>
+    </tbody>
+
+</table>
+
+{% endfor %}

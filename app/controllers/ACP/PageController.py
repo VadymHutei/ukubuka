@@ -3,23 +3,39 @@ from werkzeug import Response
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from controllers.IController import IController
+from services.Language.LanguageService import LanguageService
 from services.Page.PageService import PageService
 from transformers.request_transformers.Page.RequestToAddPageDTOTransformer import RequestToAddPageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageView import EditPageView
 from views.HTML.ACP.Page.PageView import PageView
+from views.HTML.ACP.Page.PagesView import PagesView
 
 
 class PageController(IController):
 
-    def __init__(self, service: PageService) -> None:
+    def __init__(self, service: PageService, language_service: LanguageService) -> None:
         self._service = service
+        self._language_service = language_service
 
     def pages_page_action(self) -> str:
+        view = PagesView()
+
+        view.set_data(pages=self._service.find_all())
+
+        return view.render()
+
+    def page_page_action(self) -> str:
         view = PageView()
 
-        view.set_data(pages=self._service.get_all())
+        page_code = request.args.get('code')
+
+        view.set_data(
+            page=self._service.find_by_code(page_code),
+            page_translations=self._service.find_translations_by_code(page_code),
+            languages=self._language_service.find_all()
+        )
 
         return view.render()
 
@@ -43,7 +59,7 @@ class PageController(IController):
     def edit_page_page_action(self) -> str:
         view = EditPageView()
 
-        page = self._service.find_page_by_code(request.args.get('code'))
+        page = self._service.find_by_code(request.args.get('code'))
 
         view.set_data(page=page)
 
@@ -62,7 +78,7 @@ class PageController(IController):
         return redirect(pages_url)
 
     def delete_page_action(self) -> Response:
-        self._service.delete_page_by_code(request.form.get('code'))
+        self._service.delete_by_code(request.form.get('code'))
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),

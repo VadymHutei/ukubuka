@@ -3,6 +3,7 @@ from datetime import datetime
 from data_transfer_objects.Page.AddPageDTO import AddPageDTO
 from data_transfer_objects.Page.UpdatePageDTO import UpdatePageDTO
 from entities.Page.PageEntity import PageEntity
+from entities.Page.PageTextEntity import PageTextEntity
 from exceptions.entities_exceptions.PageException import PageException
 from services.IService import IService
 from services.Page.IPageRepository import IPageRepository
@@ -21,8 +22,8 @@ class PageService(IService):
 
         return page
 
-    def get_all(self) -> list[PageEntity]:
-        return self._repository.get_all()
+    def find_all(self) -> list[PageEntity]:
+        return self._repository.find_all()
 
     def add_page(self, add_page_dto: AddPageDTO) -> bool:
         page = PageEntity(
@@ -35,7 +36,7 @@ class PageService(IService):
 
         return self._repository.add(page)
 
-    def find_page_by_code(self, code: str) -> PageEntity | None:
+    def find_by_code(self, code: str) -> PageEntity | None:
         return self._repository.find_by_code(code)
 
     def update_page(self, update_page_dto: UpdatePageDTO) -> bool:
@@ -47,5 +48,8 @@ class PageService(IService):
 
         return self._repository.update(page)
 
-    def delete_page_by_code(self, code: str) -> bool:
+    def delete_by_code(self, code: str) -> bool:
         return self._repository.delete_by_code(code)
+
+    def find_translations_by_code(self, code: str) -> list[PageTextEntity]:
+        return self._repository.find_translations_by_code(code)

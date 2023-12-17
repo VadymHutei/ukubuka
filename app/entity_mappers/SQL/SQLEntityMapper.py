@@ -9,12 +9,13 @@ from value_objects.IValueObject import IValueObject
 
 class SQLEntityMapper(EntityMapper):
 
+    QUERY_PLACEHOLDER = '%s'
+
     _TABLE: str
     _TABLE_PREFIX: str
     _DATA_FIELDS: list[str]
     _FILLABLE_FIELDS: list[str]
     _FIELD_TYPES: dict[str, MapperFieldTypes] = {}
-    _QUERY_PLACEHOLDER = '%s'
 
     @classmethod
     @property
@@ -45,7 +46,7 @@ class SQLEntityMapper(EntityMapper):
 
     @classmethod
     def fillable_placeholders(cls) -> str:
-        return ', '.join([cls._QUERY_PLACEHOLDER] * len(cls._FILLABLE_FIELDS))
+        return ', '.join([cls.QUERY_PLACEHOLDER] * len(cls._FILLABLE_FIELDS))
 
     @classmethod
     def fillable_data(cls, entity: Entity) -> list[str]:
@@ -96,7 +97,7 @@ class SQLEntityMapper(EntityMapper):
         set_fields_statement = []
         set_field_values = []
         for field in cls._FILLABLE_FIELDS:
-            set_fields_statement.append(f'{field} = {cls._QUERY_PLACEHOLDER}')
+            set_fields_statement.append(f'{field} = {cls.QUERY_PLACEHOLDER}')
             set_field_values.append(getattr(entity, field))
 
         return ', '.join(set_fields_statement), set_field_values

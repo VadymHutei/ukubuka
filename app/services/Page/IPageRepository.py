@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from entities.Page.PageEntity import PageEntity
+from entities.Page.PageTextEntity import PageTextEntity
 
 
 class IPageRepository(ABC):
@@ -14,7 +15,7 @@ class IPageRepository(ABC):
         pass
 
     @abstractmethod
-    def get_all(self) -> list[PageEntity]:
+    def find_all(self) -> list[PageEntity]:
         pass
 
     @abstractmethod
@@ -27,4 +28,8 @@ class IPageRepository(ABC):
 
     @abstractmethod
     def delete_by_code(self, code: str) -> bool:
+        pass
+
+    @abstractmethod
+    def find_translations_by_code(self, code: str) -> list[PageTextEntity]:
         pass

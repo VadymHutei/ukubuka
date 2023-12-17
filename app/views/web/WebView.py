@@ -29,13 +29,14 @@ class WebView(View):
         self._set_page()
 
         self._page_data['template'] = self._page.template
+        self._page_data['title'] = self._page.title
 
     def _prepare_template_data(self) -> None:
         self._template_data['title'] = self._page.title
         self._template_data['layout'] = self._page.layout
 
     def _set_page(self) -> None:
-        page_service = sc.get(PageService)
+        page_service: PageService = sc.get(PageService)
 
         self._page: PageEntity = page_service.get_by_code(self._page_code)
 

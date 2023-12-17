@@ -1,4 +1,4 @@
-<h1>{{ 'Pages' }}</h1>
+<h1>{{ p.title }}</h1>
 
 <table>
 
@@ -6,8 +6,7 @@
         <tr>
             <th>{{ 'ID' }}</th>
             <th>{{ 'Code' }}</th>
-            <th>{{ 'Template' }}</th>
-            <th>{{ 'Layout' }}</th>
+            <th>{{ 'Title' }}</th>
             <th>{{ 'Is active' }}</th>
             <th>{{ 'Created at' }}</th>
             <th>{{ 'Updated at' }}</th>
@@ -20,15 +19,22 @@
         <tr>
             <td>{{ page.id }}</td>
             <td>{{ page.code }}</td>
-            <td>{{ page.template }}</td>
-            <td>{{ page.layout }}</td>
+            <td>{{ page.title }}</td>
             <td>{{ page.is_active|checkbox }}</td>
             <td>{{ page.created_at }}</td>
             <td>{{ page.updated_at|none }}</td>
             <td>
+                {# Info button #}
+                <a class="button_link" href="{{ page.info_page_url }}">
+                    <div>{{ 'Info' }}</div>
+                </a>
+
+                {# Edit button #}
                 <a class="button_link" href="{{ page.edit_page_url }}">
                     <div>{{ 'Edit' }}</div>
                 </a>
+
+                {# Delete button #}
                 {% set delete_form_name = 'delete_page_' ~ page.code ~ '_form' %}
                 <form id="{{ delete_form_name }}" class="form_button" action="{{ page.delete_url }}" method="post"></form>
                 <input form="{{ delete_form_name }}" type="hidden" name="code" value="{{ page.code }}">
@@ -40,7 +46,7 @@
 
     <tfoot>
         <tr>
-            <td class="actions" colspan="8">
+            <td class="actions" colspan="7">
                 <a class="button_link" href="{{ add_page_url }}">
                     <div>{{ 'Add' }}</div>
                 </a>
