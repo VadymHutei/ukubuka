@@ -14,6 +14,7 @@ class PagesResponseTransformer(WebACPResponseTransformer):
 
         created_at = page.created_at.strftime(cls.ACP_DATE_FORMAT)
         updated_at = page.updated_at.strftime(cls.ACP_DATE_FORMAT) if page.updated_at else None
+
         info_page_url = url_for(
             ACP_PAGE_BLUEPRINT + '.page_route',
             language_code=g.current_language.code,

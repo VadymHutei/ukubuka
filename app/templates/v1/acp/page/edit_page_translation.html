@@ -1,0 +1,30 @@
+<h1>{{ p.title }}</h1>
+
+{% set form_name = 'edit_page_translation_form' %}
+
+<form id="{{ form_name }}" action="{{ form.action }}" method="post">
+    <input type="hidden" name="id" value="{{ translation.id }}">
+</form>
+
+<table>
+
+    <tbody>
+        <tr>
+            <td class="param_name">
+                <label for="page_code_field">{{ 'title' }}</label>
+            </td>
+            <td>
+                <input id="page_title_field" form="{{ form_name }}" type="text" name="title" placeholder="{{ 'title' }}" value="{{ translation.title }}">
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="2" class="actions">
+                <input form="{{ form_name }}" type="submit" value="{{ 'Save' }}">
+            </td>
+        </tr>
+    </tfoot>
+
+</table>

@@ -1,7 +1,7 @@
 from flask import g
 
 from entities.Page.PageEntity import PageEntity
-from entities.Page.PageTextEntity import PageTextEntity
+from entities.Page.PageTranslationEntity import PageTranslationEntity
 from entity_mappers.SQL.MySQL.Page.PageMapper import PageMapper
 from entity_mappers.SQL.MySQL.Page.PageTextMapper import PageTextMapper
 from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
@@ -96,7 +96,44 @@ class PageRepository(MySQLRepository, IPageRepository):
 
         return result
 
-    def find_translations_by_code(self, code: str) -> list[PageTextEntity]:
+    def update_translation(self, translation: PageTranslationEntity) -> bool:
+        set_fields_statement, set_field_values = self.text_mapper.get_set_data(translation)
+
+        query = f'''
+            UPDATE {self.text_mapper.table}
+            SET {set_fields_statement}
+            WHERE id = %s
+        '''
+
+        query_data = (*set_field_values, translation.id,)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                result = cursor.execute(query, query_data) > 0
+
+            connection.commit()
+
+        return result
+
+    def find_translation_by_id(self, id: int) -> PageTranslationEntity | None:
+        query = f'''
+            SELECT
+                {self.text_mapper.fields}
+            FROM {self.text_mapper.table_as_prefix}
+            WHERE
+                {self.text_mapper.table_prefix}.id = %s
+        '''
+
+        query_data = (id,)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, query_data)
+                data = cursor.fetchone()
+
+        return PageTextEntityTransformer.transform(data) if data else None
+
+    def find_translations_by_code(self, code: str) -> list[PageTranslationEntity]:
         query = f'''
             SELECT
                 {self.text_mapper.fields}
@@ -114,4 +151,4 @@ class PageRepository(MySQLRepository, IPageRepository):
                 cursor.execute(query, query_data)
                 data = cursor.fetchall()
 
-        return PageTextEntityTransformer.transform_collection(data) if data else [None]
+        return PageTextEntityTransformer.transform_collection(data) if data else []

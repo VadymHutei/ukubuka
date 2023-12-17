@@ -1,4 +1,4 @@
-from flask import g, redirect, request, url_for
+from flask import g, redirect, request, url_for, abort
 from werkzeug import Response
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
@@ -7,7 +7,10 @@ from services.Language.LanguageService import LanguageService
 from services.Page.PageService import PageService
 from transformers.request_transformers.Page.RequestToAddPageDTOTransformer import RequestToAddPageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
+from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import \
+    RequestToUpdatePageTranslationDTOTransformer
 from views.HTML.ACP.Page.AddPageView import AddPageView
+from views.HTML.ACP.Page.EditPageTranslationView import EditPageTranslationView
 from views.HTML.ACP.Page.EditPageView import EditPageView
 from views.HTML.ACP.Page.PageView import PageView
 from views.HTML.ACP.Page.PagesView import PagesView
@@ -26,13 +29,26 @@ class PageController(IController):
 
         return view.render()
 
-    def page_page_action(self) -> str:
-        view = PageView()
-
+    def page_page_action(self) -> Response | str:
         page_code = request.args.get('code')
 
+        if page_code is None:
+            pages_url = url_for(
+                '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
+                language_code=g.current_language.code,
+            )
+
+            return redirect(pages_url)
+
+        page = self._service.find_by_code(page_code)
+
+        if page is None:
+            abort(404)
+
+        view = PageView()
+
         view.set_data(
-            page=self._service.find_by_code(page_code),
+            page=page,
             page_translations=self._service.find_translations_by_code(page_code),
             languages=self._language_service.find_all()
         )
@@ -65,10 +81,31 @@ class PageController(IController):
 
         return view.render()
 
+    def edit_page_translation_page_action(self) -> str:
+        view = EditPageTranslationView()
+
+        translation = self._service.find_translation_by_id(int(request.args.get('id')))
+
+        view.set_data(translation=translation)
+
+        return view.render()
+
     def edit_page_action(self) -> Response:
         update_page_dto = RequestToUpdatePageDTOTransformer.transform(request)
 
         self._service.update_page(update_page_dto)
+
+        pages_url = url_for(
+            '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
+            language_code=g.current_language.code,
+        )
+
+        return redirect(pages_url)
+
+    def edit_page_translation_action(self) -> Response:
+        update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
+
+        self._service.update_page_translation(update_page_translation_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),

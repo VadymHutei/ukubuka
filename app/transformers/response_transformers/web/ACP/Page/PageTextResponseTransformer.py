@@ -1,11 +1,11 @@
-from entities.Page.PageTextEntity import PageTextEntity
+from entities.Page.PageTranslationEntity import PageTranslationEntity
 from transformers.response_transformers.web.ACP.ACPWebResponseTransformer import WebACPResponseTransformer
 
 
 class PageTextResponseTransformer(WebACPResponseTransformer):
 
     @classmethod
-    def transform(cls, page_text: PageTextEntity | None) -> dict[str, str | int | bool | None] | None:
+    def transform(cls, page_text: PageTranslationEntity | None) -> dict[str, str | int | bool | None] | None:
         if page_text is None:
             return None
 

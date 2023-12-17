@@ -25,7 +25,7 @@ def page_route():
 
     return controller.page_page_action()
 
-@acp_page_blueprint.route('/add', methods=['GET', 'POST'])
+@acp_page_blueprint.route('add', methods=['GET', 'POST'])
 @with_language
 @with_session
 def add_page_route():
@@ -37,7 +37,7 @@ def add_page_route():
         case 'POST':
             return controller.add_page_action()
 
-@acp_page_blueprint.route('/edit', methods=['GET', 'POST'])
+@acp_page_blueprint.route('edit', methods=['GET', 'POST'])
 @with_language
 @with_session
 def edit_page_route():
@@ -49,7 +49,19 @@ def edit_page_route():
         case 'POST':
             return controller.edit_page_action()
 
-@acp_page_blueprint.route('/delete', methods=['POST'])
+@acp_page_blueprint.route('edit_translation', methods=['GET', 'POST'])
+@with_language
+@with_session
+def edit_page_translation_route():
+    controller: PageController = sc.get(PageController)
+
+    match request.method:
+        case 'GET':
+            return controller.edit_page_translation_page_action()
+        case 'POST':
+            return controller.edit_page_translation_action()
+
+@acp_page_blueprint.route('delete', methods=['POST'])
 @with_language
 @with_session
 def delete_page_route():

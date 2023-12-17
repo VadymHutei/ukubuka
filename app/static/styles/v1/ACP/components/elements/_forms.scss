@@ -1,23 +1,21 @@
 form {
-
     &.form_button {
         display: none;
     }
+}
 
-    table {
-        input {
-            &[type="text"] {
-                width: 100%;
-                box-sizing: border-box;
-                background-color: #fff;
-                border: none;
-            }
+table {
+    input {
+        &[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: none;
         }
     }
 }
 
 input {
-
     &[type="submit"] {
         padding: 4px 8px;
         font-size: inherit;

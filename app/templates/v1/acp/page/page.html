@@ -41,8 +41,8 @@
             <td>{{ 'Actions' }}</td>
             <td>
                 {# Edit button #}
-                <a class="button_link" href="{{ page.edit_page_url }}">
-                <div>{{ 'Edit' }}</div>
+                <a class="button_link" href="{{ page.edit_url }}">
+                    <div>{{ 'Edit' }}</div>
                 </a>
 
                 {# Delete button #}
@@ -70,6 +70,18 @@
             <td>{{ translation.title }}</td>
         </tr>
     </tbody>
+
+    <tfoot>
+        <tr>
+            <td>{{ 'Actions' }}</td>
+            <td>
+                {# Edit translation button #}
+                <a class="button_link" href="{{ translation.edit_url }}">
+                    <div>{{ 'Edit' }}</div>
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 
 </table>
 

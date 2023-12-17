@@ -2,8 +2,9 @@ from datetime import datetime
 
 from data_transfer_objects.Page.AddPageDTO import AddPageDTO
 from data_transfer_objects.Page.UpdatePageDTO import UpdatePageDTO
+from data_transfer_objects.Page.UpdatePageTranslationDTO import UpdatePageTranslationDTO
 from entities.Page.PageEntity import PageEntity
-from entities.Page.PageTextEntity import PageTextEntity
+from entities.Page.PageTranslationEntity import PageTranslationEntity
 from exceptions.entities_exceptions.PageException import PageException
 from services.IService import IService
 from services.Page.IPageRepository import IPageRepository
@@ -48,8 +49,20 @@ class PageService(IService):
 
         return self._repository.update(page)
 
+    def update_page_translation(self, update_page_translation_dto: UpdatePageTranslationDTO) -> bool:
+        translation = self._repository.find_translation_by_id(update_page_translation_dto.id)
+
+        translation.update_from_dict(update_page_translation_dto.to_dict())
+
+        translation.updated_at = datetime.now()
+
+        return self._repository.update_translation(translation)
+
     def delete_by_code(self, code: str) -> bool:
         return self._repository.delete_by_code(code)
 
-    def find_translations_by_code(self, code: str) -> list[PageTextEntity]:
+    def find_translation_by_id(self, id: int) -> PageTranslationEntity | None:
+        return self._repository.find_translation_by_id(id)
+
+    def find_translations_by_code(self, code: str) -> list[PageTranslationEntity]:
         return self._repository.find_translations_by_code(code)

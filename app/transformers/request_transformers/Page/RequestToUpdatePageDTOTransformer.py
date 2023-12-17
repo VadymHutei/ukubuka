@@ -1,4 +1,4 @@
-from werkzeug import Request
+from flask import Request
 
 from data_transfer_objects.Page.UpdatePageDTO import UpdatePageDTO
 from transformers.request_transformers.RequestTransformer import RequestTransformer

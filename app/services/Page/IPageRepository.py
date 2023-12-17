@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from entities.Page.PageEntity import PageEntity
-from entities.Page.PageTextEntity import PageTextEntity
+from entities.Page.PageTranslationEntity import PageTranslationEntity
 
 
 class IPageRepository(ABC):
@@ -27,9 +27,17 @@ class IPageRepository(ABC):
         pass
 
     @abstractmethod
+    def update_translation(self, translation: PageTranslationEntity) -> bool:
+        pass
+
+    @abstractmethod
     def delete_by_code(self, code: str) -> bool:
         pass
 
     @abstractmethod
-    def find_translations_by_code(self, code: str) -> list[PageTextEntity]:
+    def find_translation_by_id(self, id: int) -> PageTranslationEntity | None:
+        pass
+
+    @abstractmethod
+    def find_translations_by_code(self, code: str) -> list[PageTranslationEntity]:
         pass

@@ -1,16 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Roboto");
-html, body, div, h1, h2, h3, h4, h5, h6, p {
+html, body, div {
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
   margin: 1rem;
-}
-
-p {
-  margin: 1rem;
+  padding: 0;
 }
 
 html {
@@ -21,7 +18,8 @@ html {
 form.form_button {
   display: none;
 }
-form table input[type=text] {
+
+table input[type=text] {
   width: 100%;
   box-sizing: border-box;
   background-color: #fff;
