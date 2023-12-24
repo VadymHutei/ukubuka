@@ -8,8 +8,6 @@
             <th>{{ 'Code' }}</th>
             <th>{{ 'Title' }}</th>
             <th>{{ 'Is active' }}</th>
-            <th>{{ 'Created at' }}</th>
-            <th>{{ 'Updated at' }}</th>
             <th>{{ 'Actions' }}</th>
         </tr>
     </thead>
@@ -21,8 +19,6 @@
             <td>{{ page.code }}</td>
             <td>{{ page.title }}</td>
             <td>{{ page.is_active|checkbox }}</td>
-            <td>{{ page.created_at }}</td>
-            <td>{{ page.updated_at|none }}</td>
             <td>
                 {# Info button #}
                 <a class="button_link" href="{{ page.info_page_url }}">
@@ -46,7 +42,7 @@
 
     <tfoot>
         <tr>
-            <td class="actions" colspan="7">
+            <td class="actions" colspan="5">
                 <a class="button_link" href="{{ add_page_url }}">
                     <div>{{ 'Add' }}</div>
                 </a>

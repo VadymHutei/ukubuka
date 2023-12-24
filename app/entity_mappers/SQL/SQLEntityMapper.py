@@ -24,13 +24,18 @@ class SQLEntityMapper(EntityMapper):
 
     @classmethod
     @property
+    def table_prefix(cls) -> str:
+        return cls._TABLE_PREFIX
+
+    @classmethod
+    @property
     def table_as_prefix(cls) -> str:
         return f'{cls._TABLE} AS {cls._TABLE_PREFIX}'
 
     @classmethod
     @property
-    def table_prefix(cls) -> str:
-        return cls._TABLE_PREFIX
+    def pr_id_field(cls) -> str:
+        return cls.pr_field('id')
 
     @classmethod
     @property
@@ -53,7 +58,7 @@ class SQLEntityMapper(EntityMapper):
         return [getattr(entity, field) for field in cls._FILLABLE_FIELDS]
 
     @classmethod
-    def field(cls, field: str) -> str:
+    def pr_field(cls, field: str) -> str:
         return f'{cls._TABLE_PREFIX}.{field}'
 
     @classmethod

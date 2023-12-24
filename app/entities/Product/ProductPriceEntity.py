@@ -8,7 +8,6 @@ from entities.Entity import Entity
 @dataclass
 class ProductPriceEntity(Entity):
 
-    id: int
     product_id: int
     currency_id: int
     value: int

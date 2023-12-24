@@ -8,7 +8,6 @@ from entities.Language.LanguageEntity import LanguageEntity
 @dataclass
 class SKUTextEntity(Entity):
 
-    id: int
     sku_id: int
     language_id: int
     name: str

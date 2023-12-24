@@ -27,7 +27,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
             SELECT
                 {LanguageMapper.fields}
             FROM {LanguageMapper.table_as_prefix}
-            WHERE {LanguageMapper.field('id')} = %s
+            WHERE {LanguageMapper.pr_field('id')} = %s
         '''
 
         query_data = (id,)
@@ -44,7 +44,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
             SELECT
                 {LanguageMapper.fields}
             FROM {LanguageMapper.table_as_prefix}
-            WHERE {LanguageMapper.field('code')} = %s
+            WHERE {LanguageMapper.pr_field('code')} = %s
         '''
 
         query_data = (code,)
@@ -75,7 +75,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
             SELECT
                 {LanguageMapper.fields}
             FROM {LanguageMapper.table_as_prefix}
-            WHERE {LanguageMapper.field('id')} = %s
+            WHERE {LanguageMapper.pr_field('id')} = %s
         '''
 
         query_data = (id,)
@@ -92,7 +92,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
             SELECT
                 {LanguageMapper.fields}
             FROM {LanguageMapper.table_as_prefix}
-            WHERE {LanguageMapper.field('code')} = %s
+            WHERE {LanguageMapper.pr_field('code')} = %s
         '''
 
         query_data = (code,)
@@ -137,7 +137,7 @@ class LanguageRepository(MySQLRepository, ILanguageRepository):
             SELECT
                 {LanguageMapper.fields}
             FROM {LanguageMapper.table_as_prefix}
-            WHERE {LanguageMapper.field('is_active')} = 1
+            WHERE {LanguageMapper.pr_field('is_active')} = 1
         '''
 
         with self.connection as connection:

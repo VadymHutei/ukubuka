@@ -12,5 +12,4 @@ class LanguageEntity(Entity):
     is_active: bool
     created_at: datetime
 
-    id: int | None = None
     updated_at: datetime | None = None

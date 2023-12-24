@@ -6,7 +6,6 @@ from entities.Entity import Entity
 @dataclass
 class ConfigEntity(Entity):
 
-    id: int
     code: str
     value: str
     created_at: str

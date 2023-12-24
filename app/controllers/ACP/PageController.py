@@ -9,6 +9,7 @@ from transformers.request_transformers.Page.RequestToAddPageDTOTransformer impor
 from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import \
     RequestToUpdatePageTranslationDTOTransformer
+from views.HTML.ACP.Page.AddPageTranslationView import AddPageTranslationView
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageTranslationView import EditPageTranslationView
 from views.HTML.ACP.Page.EditPageView import EditPageView
@@ -81,15 +82,6 @@ class PageController(IController):
 
         return view.render()
 
-    def edit_page_translation_page_action(self) -> str:
-        view = EditPageTranslationView()
-
-        translation = self._service.find_translation_by_id(int(request.args.get('id')))
-
-        view.set_data(translation=translation)
-
-        return view.render()
-
     def edit_page_action(self) -> Response:
         update_page_dto = RequestToUpdatePageDTOTransformer.transform(request)
 
@@ -102,7 +94,22 @@ class PageController(IController):
 
         return redirect(pages_url)
 
-    def edit_page_translation_action(self) -> Response:
+    def delete_page_action(self) -> Response:
+        self._service.delete_by_code(request.form.get('code'))
+
+        pages_url = url_for(
+            '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
+            language_code=g.current_language.code,
+        )
+
+        return redirect(pages_url)
+
+    def add_page_translation_page_action(self) -> str:
+        view = AddPageTranslationView()
+
+        return view.render()
+
+    def add_page_translation_action(self) -> Response:
         update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
 
         self._service.update_page_translation(update_page_translation_dto)
@@ -114,8 +121,19 @@ class PageController(IController):
 
         return redirect(pages_url)
 
-    def delete_page_action(self) -> Response:
-        self._service.delete_by_code(request.form.get('code'))
+    def edit_page_translation_page_action(self) -> str:
+        view = EditPageTranslationView()
+
+        translation = self._service.find_translation_by_id(int(request.args.get('id')))
+
+        view.set_data(translation=translation)
+
+        return view.render()
+
+    def edit_page_translation_action(self) -> Response:
+        update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
+
+        self._service.update_page_translation(update_page_translation_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),

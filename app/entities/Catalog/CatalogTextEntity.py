@@ -4,10 +4,10 @@ from datetime import datetime
 from entities.Entity import Entity
 from entities.Language.LanguageEntity import LanguageEntity
 
+
 @dataclass
 class CatalogTextEntity(Entity):
 
-    id: int
     catalog_id: int
     language_id: int
     name: str

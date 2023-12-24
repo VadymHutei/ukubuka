@@ -8,7 +8,6 @@ from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
 @dataclass
 class CurrencyEntity(Entity):
 
-    id: int
     code: str
     symbol: str
     symbol_position: CurrencySymbolPositionEnum

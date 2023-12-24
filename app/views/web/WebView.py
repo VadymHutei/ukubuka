@@ -38,7 +38,7 @@ class WebView(View):
     def _set_page(self) -> None:
         page_service: PageService = sc.get(PageService)
 
-        self._page: PageEntity = page_service.get_by_code(self._page_code)
+        self._page: PageEntity = page_service.find_by_code(self._page_code)
 
     def set_data(self, **data) -> None:
         self._data.update(data)

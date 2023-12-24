@@ -8,7 +8,6 @@ from entities.Product.SKU.SKUTextEntity import SKUTextEntity
 @dataclass
 class SKUEntity(Entity):
 
-    id: int
     sku: int
     product_id: int
     created_at: datetime

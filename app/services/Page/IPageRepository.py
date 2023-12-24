@@ -1,43 +1,13 @@
-from abc import ABC, abstractmethod
+from repositories.ICodeRepository import ICodeRepository
+from repositories.ICodeTextRepository import ICodeTextRepository
+from repositories.IRepository import IRepository
+from repositories.ITextRepository import ITextRepository
 
-from entities.Page.PageEntity import PageEntity
-from entities.Page.PageTranslationEntity import PageTranslationEntity
 
-
-class IPageRepository(ABC):
-
-    @abstractmethod
-    def find_by_id(self, id: int) -> PageEntity | None:
-        pass
-
-    @abstractmethod
-    def find_by_code(self, code: str) -> PageEntity | None:
-        pass
-
-    @abstractmethod
-    def find_all(self) -> list[PageEntity]:
-        pass
-
-    @abstractmethod
-    def add(self, page: PageEntity) -> bool:
-        pass
-
-    @abstractmethod
-    def update(self, page: PageEntity) -> bool:
-        pass
-
-    @abstractmethod
-    def update_translation(self, translation: PageTranslationEntity) -> bool:
-        pass
-
-    @abstractmethod
-    def delete_by_code(self, code: str) -> bool:
-        pass
-
-    @abstractmethod
-    def find_translation_by_id(self, id: int) -> PageTranslationEntity | None:
-        pass
-
-    @abstractmethod
-    def find_translations_by_code(self, code: str) -> list[PageTranslationEntity]:
-        pass
+class IPageRepository(
+    IRepository,
+    ICodeRepository,
+    ITextRepository,
+    ICodeTextRepository
+):
+    pass

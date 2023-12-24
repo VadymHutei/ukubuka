@@ -14,6 +14,12 @@ class PageResponseTransformer(WebACPResponseTransformer):
 
         created_at = page.created_at.strftime(cls.ACP_DATE_FORMAT)
         updated_at = page.updated_at.strftime(cls.ACP_DATE_FORMAT) if page.updated_at else None
+
+        add_translation_url = url_for(
+            ACP_PAGE_BLUEPRINT + '.edit_page_route',
+            language_code=g.current_language.code,
+            code=page.code,
+        )
         edit_url = url_for(
             ACP_PAGE_BLUEPRINT + '.edit_page_route',
             language_code=g.current_language.code,
@@ -33,6 +39,7 @@ class PageResponseTransformer(WebACPResponseTransformer):
             'is_active': page.is_active,
             'created_at': created_at,
             'updated_at': updated_at,
+            'add_translation_url': add_translation_url,
             'edit_url': edit_url,
             'delete_url': delete_url,
         }

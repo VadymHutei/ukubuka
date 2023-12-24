@@ -10,7 +10,6 @@ from exceptions.entities_exceptions.ProductException import ProductException
 @dataclass
 class ProductEntity(Entity):
 
-    id: int
     code: str
     is_active: bool
     created_at: datetime

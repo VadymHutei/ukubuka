@@ -7,7 +7,6 @@ from entities.Entity import Entity
 @dataclass
 class SKUPriceEntity(Entity):
 
-        id: int
         sku_id: int
         currency_id: int
         value: int

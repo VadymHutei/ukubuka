@@ -1,16 +1,15 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from entities.Entity import Entity
+from entities.TextEntity import TextEntity
 
 
 @dataclass
-class PageTranslationEntity(Entity):
+class PageTranslationEntity(TextEntity):
 
-    page_id: int
     language_id: int
+    page_id: int
     title: str
     created_at: datetime
 
-    id: int | None = None
     updated_at: datetime | None = None

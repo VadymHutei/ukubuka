@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
-from entities.Catalog.CatalogTextEntity import CatalogTextEntity
 
+from entities.Catalog.CatalogTextEntity import CatalogTextEntity
 from entities.Entity import Entity
 from exceptions.entities_exceptions.CatalogException import CatalogException
 
@@ -9,7 +9,6 @@ from exceptions.entities_exceptions.CatalogException import CatalogException
 @dataclass
 class CatalogEntity(Entity):
 
-    id: int
     code: str
     is_active: bool
     created_at: datetime

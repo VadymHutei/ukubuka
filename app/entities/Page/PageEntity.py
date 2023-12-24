@@ -12,7 +12,6 @@ class PageEntity(Entity):
     is_active: bool
     created_at: datetime
 
-    id: int | None = None
     title: str | None = None
     layout: str | None = None
     updated_at: datetime | None = None

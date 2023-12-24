@@ -5,7 +5,6 @@ from data_transfer_objects.Page.UpdatePageDTO import UpdatePageDTO
 from data_transfer_objects.Page.UpdatePageTranslationDTO import UpdatePageTranslationDTO
 from entities.Page.PageEntity import PageEntity
 from entities.Page.PageTranslationEntity import PageTranslationEntity
-from exceptions.entities_exceptions.PageException import PageException
 from services.IService import IService
 from services.Page.IPageRepository import IPageRepository
 
@@ -14,14 +13,6 @@ class PageService(IService):
 
     def __init__(self, repository: IPageRepository) -> None:
         self._repository = repository
-
-    def get_by_code(self, code: str) -> PageEntity:
-        page = self._repository.find_by_code(code)
-
-        if not page:
-            raise PageException('Page not found')
-
-        return page
 
     def find_all(self) -> list[PageEntity]:
         return self._repository.find_all()
