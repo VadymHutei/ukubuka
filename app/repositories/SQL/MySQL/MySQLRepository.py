@@ -1,8 +1,11 @@
+from typing import Type
+
 from flask import current_app as app
 from pymysql import connect
 from pymysql.cursors import DictCursor
 
 from entities.Entity import Entity
+from repositories.IRepository import IRepository
 from repositories.SQL.SQLRepository import SQLRepository
 from transformers.entity_transformers.EntityTransformer import EntityTransformer
 
@@ -15,9 +18,9 @@ def _get_connection():
     return connect(**credentials)
 
 
-class MySQLRepository(SQLRepository):
+class MySQLRepository(SQLRepository, IRepository):
 
-    transformer: EntityTransformer
+    transformer: Type[EntityTransformer]
 
     @property
     def connection(self):
