@@ -1,9 +1,8 @@
 from entities.Entity import Entity
-from repositories.ICodeRepository import ICodeRepository
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 
 
-class MySQLCodeRepository(MySQLRepository, ICodeRepository):
+class MySQLCodeRepository(MySQLRepository):
 
     def find_by_code(self, code: str) -> Entity | None:
         query = f'''
@@ -11,7 +10,7 @@ class MySQLCodeRepository(MySQLRepository, ICodeRepository):
                 {self.mapper.fields}
             FROM {self.mapper.table_as_prefix}
             WHERE
-                {self.mapper.table_prefix}.code = %s
+                {self.mapper.pr_field('code')} = %s
         '''
 
         query_data = (code,)

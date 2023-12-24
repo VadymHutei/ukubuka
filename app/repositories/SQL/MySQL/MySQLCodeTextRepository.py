@@ -1,11 +1,11 @@
 from entities.Entity import Entity
 from entities.TextEntity import TextEntity
 from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
-from repositories.ICodeTextRepository import ICodeTextRepository
-from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from repositories.SQL.MySQL.MySQLCodeRepository import MySQLCodeRepository
+from repositories.SQL.MySQL.MySQLTextRepository import MySQLTextRepository
 
 
-class MySQLCodeTextRepository(MySQLRepository, ICodeTextRepository):
+class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
 
     def find_by_code(self, code: str) -> Entity | None:
         query = f'''
@@ -16,7 +16,7 @@ class MySQLCodeTextRepository(MySQLRepository, ICodeTextRepository):
             LEFT JOIN {self.text_mapper.table_as_prefix}
                 ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_id_field}
             WHERE
-                {self.mapper.table_prefix}.code = %s
+                {self.mapper.pr_field('code')} = %s
         '''
 
         query_data = (code,)

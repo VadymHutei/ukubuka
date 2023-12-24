@@ -2,11 +2,10 @@ from flask import g
 
 from entities.Entity import Entity
 from entities.TextEntity import TextEntity
-from repositories.ITextRepository import ITextRepository
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 
 
-class MySQLTextRepository(MySQLRepository, ITextRepository):
+class MySQLTextRepository(MySQLRepository):
 
     def find(self, id: int) -> Entity | None:
         query = f'''
