@@ -23,7 +23,6 @@ class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                print(cursor.mogrify(query, query_data))
                 cursor.execute(query, query_data)
                 data = cursor.fetchone()
 
@@ -47,4 +46,4 @@ class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
                 cursor.execute(query, query_data)
                 data = cursor.fetchall()
 
-        return self.transformer.transform_collection(data) if data else []
+        return self.translation_transformer.transform_collection(data) if data else []

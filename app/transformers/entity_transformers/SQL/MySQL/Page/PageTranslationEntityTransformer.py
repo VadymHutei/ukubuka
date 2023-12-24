@@ -3,7 +3,7 @@ from entity_mappers.SQL.MySQL.Page.PageTextMapper import PageTextMapper
 from transformers.entity_transformers.SQL.MySQL.MySQLEntityTransformer import MySQLEntityTransformer
 
 
-class PageTextEntityTransformer(MySQLEntityTransformer):
+class PageTranslationEntityTransformer(MySQLEntityTransformer):
 
     @classmethod
     def transform(cls, db_row: dict) -> PageTranslationEntity:

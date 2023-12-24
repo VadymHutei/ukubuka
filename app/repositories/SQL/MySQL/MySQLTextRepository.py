@@ -1,11 +1,16 @@
+from typing import Type
+
 from flask import g
 
 from entities.Entity import Entity
 from entities.TextEntity import TextEntity
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from transformers.entity_transformers.EntityTransformer import EntityTransformer
 
 
 class MySQLTextRepository(MySQLRepository):
+
+    translation_transformer: Type[EntityTransformer]
 
     def find(self, id: int) -> Entity | None:
         query = f'''
@@ -84,4 +89,4 @@ class MySQLTextRepository(MySQLRepository):
                 cursor.execute(query, query_data)
                 data = cursor.fetchone()
 
-        return self.transformer.transform(data) if data else None
+        return self.translation_transformer.transform(data) if data else None
