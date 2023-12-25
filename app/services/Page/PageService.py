@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from data_transfer_objects.Page.AddPageDTO import AddPageDTO
-from data_transfer_objects.Page.UpdatePageDTO import UpdatePageDTO
+from data_transfer_objects.Page.EditPageDTO import EditPageDTO
 from data_transfer_objects.Page.UpdatePageTranslationDTO import UpdatePageTranslationDTO
 from entities.Page.PageEntity import PageEntity
 from entities.Page.PageTranslationEntity import PageTranslationEntity
@@ -31,10 +31,10 @@ class PageService(IService):
     def find_by_code(self, code: str) -> PageEntity | None:
         return self._repository.find_by_code(code)
 
-    def update_page(self, update_page_dto: UpdatePageDTO) -> bool:
-        page = self._repository.find_by_id(update_page_dto.id)
+    def edit_page(self, edit_page_dto: EditPageDTO) -> bool:
+        page = self._repository.find(edit_page_dto.id)
 
-        page.update_from_dict(update_page_dto.to_dict())
+        page.update_from_dict(edit_page_dto.to_dict())
 
         page.updated_at = datetime.now()
 

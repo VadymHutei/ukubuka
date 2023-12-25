@@ -14,7 +14,7 @@
                 <label for="page_code_field">{{ 'code' }}</label>
             </td>
             <td>
-                <input id="page_code_field" form="{{ form_name }}" type="text" name="code" placeholder="{{ 'code' }}" value="{{ page.code }}">
+                <input id="page_code_field" form="{{ form_name }}" type="text" name="code" placeholder="{{ 'code' }}" value="{{ page.code }}" required>
             </td>
         </tr>
         <tr>
@@ -22,7 +22,7 @@
                 <label for="page_template_field">{{ 'template' }}</label>
             </td>
             <td>
-                <input id="page_template_field" form="{{ form_name }}" type="text" name="template" placeholder="{{ 'template' }}" value="{{ page.template }}">
+                <input id="page_template_field" form="{{ form_name }}" type="text" name="template" placeholder="{{ 'template' }}" value="{{ page.template }}" required>
             </td>
         </tr>
         <tr>

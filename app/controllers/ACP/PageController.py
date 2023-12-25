@@ -1,11 +1,11 @@
-from flask import g, redirect, request, url_for, abort
+from flask import g, redirect, request, url_for
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
 from services.Page.PageService import PageService
 from transformers.request_transformers.Page.AddPageDTOTransformer import AddPageDTOTransformer
-from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
+from transformers.request_transformers.Page.EditPageDTOTransformer import EditPageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import \
     RequestToUpdatePageTranslationDTOTransformer
 from views.HTML.ACP.Page.AddPageTranslationView import AddPageTranslationView
@@ -32,18 +32,7 @@ class PageController(IController):
     def page_page_action(self):
         page_code = request.args.get('code')
 
-        if page_code is None:
-            pages_url = url_for(
-                '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
-                language_code=g.current_language.code,
-            )
-
-            return redirect(pages_url)
-
         page = self._service.find_by_code(page_code)
-
-        if page is None:
-            abort(404)
 
         view = PageView()
 
@@ -73,18 +62,20 @@ class PageController(IController):
         return redirect(pages_url)
 
     def edit_page_page_action(self):
-        view = EditPageView()
+        page_code = request.args.get('code')
 
-        page = self._service.find_by_code(request.args.get('code'))
+        page = self._service.find_by_code(page_code)
+
+        view = EditPageView()
 
         view.set_data(page=page)
 
         return view.render()
 
     def edit_page_action(self):
-        update_page_dto = RequestToUpdatePageDTOTransformer.transform(request)
+        edit_page_dto = EditPageDTOTransformer.transform(request)
 
-        self._service.update_page(update_page_dto)
+        self._service.edit_page(edit_page_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
