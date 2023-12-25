@@ -1,6 +1,8 @@
-<h1>{{ 'Add page' }}</h1>
+<h1>{{ p.title }}</h1>
 
-<form id="add_page_form" action="{{ form.action }}" method="post"></form>
+{% set form_name = 'add_page_form' %}
+
+<form id="{{ form_name }}" action="{{ form.action }}" method="post"></form>
 
 <table>
 
@@ -10,7 +12,7 @@
                 <label for="page_code_field">{{ 'code' }}</label>
             </td>
             <td>
-                <input id="page_code_field" form="add_page_form" type="text" name="code" placeholder="{{ 'code' }}" required>
+                <input id="page_code_field" form="{{ form_name }}" type="text" name="code" placeholder="{{ 'code' }}" required>
             </td>
         </tr>
         <tr>
@@ -18,7 +20,7 @@
                 <label for="page_template_field">{{ 'template' }}</label>
             </td>
             <td>
-                <input id="page_template_field" form="add_page_form" type="text" name="template" placeholder="{{ 'template' }}" required>
+                <input id="page_template_field" form="{{ form_name }}" type="text" name="template" placeholder="{{ 'template' }}" required>
             </td>
         </tr>
         <tr>
@@ -26,7 +28,7 @@
                 <label for="page_layout_field">{{ 'layout' }}</label>
             </td>
             <td>
-                <input id="page_layout_field" form="add_page_form" type="text" name="layout" placeholder="{{ 'layout' }}">
+                <input id="page_layout_field" form="{{ form_name }}" type="text" name="layout" placeholder="{{ 'layout' }}">
             </td>
         </tr>
         <tr>
@@ -34,7 +36,7 @@
                 <label for="page_is_active_field">{{ 'is active' }}</label>
             </td>
             <td>
-                <input id="page_is_active_field" form="add_page_form" name="is_active" type="checkbox">
+                <input id="page_is_active_field" form="{{ form_name }}" name="is_active" type="checkbox">
             </td>
         </tr>
     </tbody>
@@ -42,7 +44,7 @@
     <tfoot>
         <tr>
             <td colspan="2" class="actions">
-                <input form="add_page_form" type="submit" value="{{ 'Save' }}">
+                <input form="{{ form_name }}" type="submit" value="{{ 'Save' }}">
             </td>
         </tr>
     </tfoot>

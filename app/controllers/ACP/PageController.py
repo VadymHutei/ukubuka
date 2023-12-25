@@ -5,7 +5,7 @@ from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
 from services.Page.PageService import PageService
-from transformers.request_transformers.Page.RequestToAddPageDTOTransformer import RequestToAddPageDTOTransformer
+from transformers.request_transformers.Page.AddPageDTOTransformer import AddPageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageDTOTransformer import RequestToUpdatePageDTOTransformer
 from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import \
     RequestToUpdatePageTranslationDTOTransformer
@@ -62,7 +62,7 @@ class PageController(IController):
         return view.render()
 
     def add_page_action(self) -> Response:
-        add_page_dto = RequestToAddPageDTOTransformer.transform(request)
+        add_page_dto = AddPageDTOTransformer.transform(request)
 
         self._service.add_page(add_page_dto)
 

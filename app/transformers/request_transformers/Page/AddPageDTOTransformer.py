@@ -4,7 +4,7 @@ from data_transfer_objects.Page.AddPageDTO import AddPageDTO
 from transformers.request_transformers.RequestTransformer import RequestTransformer
 
 
-class RequestToAddPageDTOTransformer(RequestTransformer):
+class AddPageDTOTransformer(RequestTransformer):
 
     @classmethod
     def transform(cls, request: Request) -> AddPageDTO:

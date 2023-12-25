@@ -18,6 +18,8 @@ class AddPageView(WebView):
             language_code=g.current_language.code,
         )
 
-        self._data['form'] = {
+        form = {
             'action': form_action,
         }
+
+        self._data['form'] = form
