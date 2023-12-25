@@ -16,7 +16,7 @@ class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
             LEFT JOIN {self.text_mapper.table_as_prefix}
                 ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_id_field}
             WHERE
-                {self.mapper.pr_field('code')} = %s
+                {self.mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
         '''
 
         query_data = (code,)
@@ -28,7 +28,7 @@ class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
 
         return self.transformer.transform(data) if data else None
 
-    def find_translations_by_code(self, code: str) -> list[TextEntity]:
+    def find_translations_by_entity_code(self, entity_code: str) -> list[TextEntity]:
         query = f'''
             SELECT
                 {self.text_mapper.fields}
@@ -39,7 +39,7 @@ class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
                 {self.mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
         '''
 
-        query_data = (code,)
+        query_data = (entity_code,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:

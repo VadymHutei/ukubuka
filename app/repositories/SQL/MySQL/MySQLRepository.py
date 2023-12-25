@@ -5,6 +5,7 @@ from pymysql import connect
 from pymysql.cursors import DictCursor
 
 from entities.Entity import Entity
+from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
 from repositories.SQL.SQLRepository import SQLRepository
 from transformers.entity_transformers.EntityTransformer import EntityTransformer
 
@@ -31,7 +32,7 @@ class MySQLRepository(SQLRepository):
                 {self.mapper.fields},
             FROM {self.mapper.table_as_prefix}
             WHERE
-                {self.mapper.table_prefix}.id = %s
+                {self.mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
         '''
 
         query_data = (id)
@@ -79,7 +80,7 @@ class MySQLRepository(SQLRepository):
         query = f'''
             UPDATE {self.mapper.table}
             SET {set_fields_statement}
-            WHERE id = %s
+            WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}
         '''
 
         query_data = (*set_field_values, entity.id,)
@@ -93,7 +94,7 @@ class MySQLRepository(SQLRepository):
         return result
 
     def delete(self, id: int) -> bool:
-        query = f'DELETE FROM {self.mapper.table} WHERE id = %s'
+        query = f'DELETE FROM {self.mapper.table} WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}'
 
         query_data = (id,)
 

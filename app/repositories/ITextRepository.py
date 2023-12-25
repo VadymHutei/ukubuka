@@ -10,5 +10,9 @@ class ITextRepository(ABC):
         pass
 
     @abstractmethod
+    def find_translations_by_entity_id(self, entity_id: int) -> list[TextEntity]:
+        pass
+
+    @abstractmethod
     def update_translation(self, text: TextEntity) -> bool:
         pass

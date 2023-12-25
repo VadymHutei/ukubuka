@@ -14,6 +14,9 @@ class PageService(IService):
     def __init__(self, repository: IPageRepository) -> None:
         self._repository = repository
 
+    def find(self, id: int) -> PageEntity | None:
+        return self._repository.find(id)
+
     def find_all(self) -> list[PageEntity]:
         return self._repository.find_all()
 
@@ -41,7 +44,7 @@ class PageService(IService):
         return self._repository.update(page)
 
     def update_page_translation(self, update_page_translation_dto: UpdatePageTranslationDTO) -> bool:
-        translation = self._repository.find_translation_by_id(update_page_translation_dto.id)
+        translation = self._repository.find_translation(update_page_translation_dto.id)
 
         translation.update_from_dict(update_page_translation_dto.to_dict())
 
@@ -55,5 +58,8 @@ class PageService(IService):
     def find_translation_by_id(self, id: int) -> PageTranslationEntity | None:
         return self._repository.find_translation_by_id(id)
 
-    def find_translations_by_code(self, code: str) -> list[PageTranslationEntity]:
-        return self._repository.find_translations_by_code(code)
+    def find_translations_by_page_id(self, page_id: int) -> list[PageTranslationEntity]:
+        return self._repository.find_translations_by_entity_id(page_id)
+
+    def find_translations_by_page_code(self, page_code: str) -> list[PageTranslationEntity]:
+        return self._repository.find_translations_by_entity_code(page_code)

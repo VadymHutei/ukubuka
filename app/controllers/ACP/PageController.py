@@ -30,15 +30,15 @@ class PageController(IController):
         return view.render()
 
     def page_page_action(self):
-        page_code = request.args.get('code')
+        page_id = request.args.get('id', type=int)
 
-        page = self._service.find_by_code(page_code)
+        page = self._service.find(page_id)
 
         view = PageView()
 
         view.set_data(
             page=page,
-            page_translations=self._service.find_translations_by_code(page_code),
+            page_translations=self._service.find_translations_by_page_id(page_id),
             languages=self._language_service.find_all()
         )
 
