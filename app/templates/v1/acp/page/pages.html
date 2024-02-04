@@ -17,7 +17,7 @@
         <tr>
             <td>{{ page.id }}</td>
             <td>{{ page.code }}</td>
-            <td>{{ page.title }}</td>
+            <td>{{ page.title|none }}</td>
             <td>{{ page.is_active|checkbox }}</td>
             <td>
                 {# Info button #}

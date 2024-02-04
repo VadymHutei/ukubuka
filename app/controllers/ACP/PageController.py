@@ -18,27 +18,27 @@ from views.HTML.ACP.Page.PagesView import PagesView
 
 class PageController(IController):
 
-    def __init__(self, service: PageService, language_service: LanguageService):
-        self._service = service
+    def __init__(self, page_service: PageService, language_service: LanguageService):
+        self._page_service = page_service
         self._language_service = language_service
 
     def pages_page_action(self):
         view = PagesView()
 
-        view.set_data(pages=self._service.find_all())
+        view.set_data(pages=self._page_service.find_all())
 
         return view.render()
 
     def page_page_action(self):
         page_id = request.args.get('id', type=int)
 
-        page = self._service.find(page_id)
+        page = self._page_service.find(page_id)
 
         view = PageView()
 
         view.set_data(
             page=page,
-            page_translations=self._service.find_translations_by_page_id(page_id),
+            page_translations=self._page_service.find_translations_by_page_id(page_id),
             languages=self._language_service.find_all()
         )
 
@@ -52,7 +52,7 @@ class PageController(IController):
     def add_page_action(self):
         add_page_dto = AddPageDTOTransformer.transform(request)
 
-        self._service.add_page(add_page_dto)
+        self._page_service.add_page(add_page_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
@@ -62,9 +62,9 @@ class PageController(IController):
         return redirect(pages_url)
 
     def edit_page_page_action(self):
-        page_code = request.args.get('code')
+        page_id = int(request.args.get('id'))
 
-        page = self._service.find_by_code(page_code)
+        page = self._page_service.find(page_id)
 
         view = EditPageView()
 
@@ -75,7 +75,7 @@ class PageController(IController):
     def edit_page_action(self):
         edit_page_dto = EditPageDTOTransformer.transform(request)
 
-        self._service.edit_page(edit_page_dto)
+        self._page_service.edit_page(edit_page_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
@@ -85,7 +85,7 @@ class PageController(IController):
         return redirect(pages_url)
 
     def delete_page_action(self):
-        self._service.delete_by_code(request.form.get('code'))
+        self._page_service.delete_by_code(request.form.get('code'))
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
@@ -102,7 +102,7 @@ class PageController(IController):
     def add_page_translation_action(self):
         update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
 
-        self._service.update_page_translation(update_page_translation_dto)
+        self._page_service.update_page_translation(update_page_translation_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
@@ -114,7 +114,7 @@ class PageController(IController):
     def edit_page_translation_page_action(self):
         view = EditPageTranslationView()
 
-        translation = self._service.find_translation_by_id(int(request.args.get('id')))
+        translation = self._page_service.find_translation_by_id(int(request.args.get('id')))
 
         view.set_data(translation=translation)
 
@@ -123,7 +123,7 @@ class PageController(IController):
     def edit_page_translation_action(self):
         update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
 
-        self._service.update_page_translation(update_page_translation_dto)
+        self._page_service.update_page_translation(update_page_translation_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
