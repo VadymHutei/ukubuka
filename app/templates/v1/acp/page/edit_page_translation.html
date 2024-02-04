@@ -2,13 +2,23 @@
 
 {% set form_name = 'edit_page_translation_form' %}
 
-<form id="{{ form_name }}" action="{{ form.action }}" method="post">
-    <input type="hidden" name="id" value="{{ translation.id }}">
-</form>
+<form id="{{ form_name }}" action="{{ form.action }}" method="post"></form>
 
 <table>
 
     <tbody>
+        <tr>
+            <td class="param_name">
+                <label for="language_id_field">{{ 'language' }}</label>
+            </td>
+            <td>
+                <select id="language_id_field" name="language_id" form="{{ form_name }}" required>
+                    {% for language in languages %}
+                    <option value="{{ language.id }}">{{ language.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
         <tr>
             <td class="param_name">
                 <label for="page_title_field">{{ 'title' }}</label>

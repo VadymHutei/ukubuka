@@ -69,14 +69,14 @@ def add_page_translation_route(page_id: int):
         case 'POST':
             return controller.add_page_translation_action(page_id)
 
-@acp_page_blueprint.route('edit_translation', methods=['GET', 'POST'])
+@acp_page_blueprint.route('translations/<int:translation_id>/edit', methods=['GET', 'POST'])
 @with_language
 @with_session
-def edit_page_translation_route():
+def edit_page_translation_route(translation_id: int):
     controller: PageController = sc.get(PageController)
 
     match request.method:
         case 'GET':
-            return controller.edit_page_translation_page_action()
+            return controller.edit_page_translation_page_action(translation_id)
         case 'POST':
-            return controller.edit_page_translation_action()
+            return controller.edit_page_translation_action(translation_id)

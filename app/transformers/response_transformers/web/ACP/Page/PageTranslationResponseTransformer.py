@@ -18,7 +18,7 @@ class PageTranslationResponseTransformer(WebACPResponseTransformer):
         edit_url = url_for(
             ACP_PAGE_BLUEPRINT + '.edit_page_translation_route',
             language_code=g.current_language.code,
-            id=translation.id,
+            translation_id=translation.id,
         )
 
         return {

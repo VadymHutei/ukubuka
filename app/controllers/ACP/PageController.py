@@ -116,19 +116,24 @@ class PageController(IController):
 
         return redirect(pages_url)
 
-    def edit_page_translation_page_action(self):
+    def edit_page_translation_page_action(self, translation_id: int):
+        languages = self._language_service.find_all()
+
+        translation = self._page_service.find_translation(translation_id)
+
         view = EditPageTranslationView()
 
-        translation = self._page_service.find_translation_by_id(int(request.args.get('id')))
-
-        view.set_data(translation=translation)
+        view.set_data(
+            languages=languages,
+            translation=translation,
+        )
 
         return view.render()
 
-    def edit_page_translation_action(self):
+    def edit_page_translation_action(self, translation_id: int):
         update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
 
-        self._page_service.update_page_translation(update_page_translation_dto)
+        self._page_service.update_page_translation(translation_id, update_page_translation_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),

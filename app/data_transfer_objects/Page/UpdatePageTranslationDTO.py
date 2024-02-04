@@ -6,5 +6,5 @@ from data_transfer_objects.DataTransferObject import DataTransferObject
 @dataclass
 class UpdatePageTranslationDTO(DataTransferObject):
 
-    id: int
+    language_id: int
     title: str

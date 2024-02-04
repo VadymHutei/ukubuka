@@ -9,6 +9,6 @@ class RequestToUpdatePageTranslationDTOTransformer(RequestTransformer):
     @classmethod
     def transform(cls, request: Request) -> UpdatePageTranslationDTO:
         return UpdatePageTranslationDTO(
-            id=int(request.form.get('id')),
+            language_id=int(request.form.get('language_id')),
             title=request.form.get('title'),
         )

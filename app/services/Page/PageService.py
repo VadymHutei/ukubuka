@@ -36,7 +36,7 @@ class PageService(IService):
         return self._page_repository.find_by_code(code)
 
     def edit_page(self, page_id: int, edit_page_dto: EditPageDTO) -> bool:
-        page = self._page_repository.find(page_id)
+        page: PageEntity = self._page_repository.find(page_id)
 
         page.update_from_dict(edit_page_dto.to_dict())
 
@@ -44,8 +44,22 @@ class PageService(IService):
 
         return self._page_repository.update(page)
 
-    def update_page_translation(self, update_page_translation_dto: UpdatePageTranslationDTO) -> bool:
-        translation = self._page_repository.find_translation(update_page_translation_dto.id)
+    def add_page_translation(self, page_id: int, data: AddPageTranslationDTO) -> bool:
+        translation = PageTranslationEntity(
+            page_id=page_id,
+            language_id=data.language_id,
+            title=data.title,
+            created_at=datetime.now(),
+        )
+
+        return self._page_repository.add_translation(translation)
+
+    def update_page_translation(
+        self,
+        translation_id: int,
+        update_page_translation_dto: UpdatePageTranslationDTO,
+    ) -> bool:
+        translation: PageTranslationEntity = self.find_translation(translation_id)
 
         translation.update_from_dict(update_page_translation_dto.to_dict())
 
@@ -59,21 +73,11 @@ class PageService(IService):
     def delete_by_code(self, code: str) -> bool:
         return self._page_repository.delete_by_code(code)
 
-    def find_translation_by_id(self, page_id: int) -> PageTranslationEntity | None:
-        return self._page_repository.find_translation_by_id(page_id)
+    def find_translation(self, translation_id: int) -> PageTranslationEntity | None:
+        return self._page_repository.find_translation(translation_id)
 
     def find_translations_by_page_id(self, page_id: int) -> list[PageTranslationEntity]:
         return self._page_repository.find_translations_by_entity_id(page_id)
 
     def find_translations_by_page_code(self, page_code: str) -> list[PageTranslationEntity]:
         return self._page_repository.find_translations_by_entity_code(page_code)
-    
-    def add_page_translation(self, page_id: int, data: AddPageTranslationDTO):
-        translation = PageTranslationEntity(
-            page_id=page_id,
-            language_id=data.language_id,
-            title=data.title,
-            created_at=datetime.now(),
-        )
-
-        return self._page_repository.add_translation(translation)
