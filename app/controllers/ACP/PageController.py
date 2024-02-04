@@ -5,15 +5,15 @@ from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
 from services.Page.PageService import PageService
 from transformers.request_transformers.Page.AddPageDTOTransformer import AddPageDTOTransformer
+from transformers.request_transformers.Page.AddPageTranslationDTOTransformer import AddPageTranslationDTOTransformer
 from transformers.request_transformers.Page.EditPageDTOTransformer import EditPageDTOTransformer
-from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import \
-    RequestToUpdatePageTranslationDTOTransformer
+from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import RequestToUpdatePageTranslationDTOTransformer
 from views.HTML.ACP.Page.AddPageTranslationView import AddPageTranslationView
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageTranslationView import EditPageTranslationView
 from views.HTML.ACP.Page.EditPageView import EditPageView
-from views.HTML.ACP.Page.PageView import PageView
 from views.HTML.ACP.Page.PagesView import PagesView
+from views.HTML.ACP.Page.PageView import PageView
 
 
 class PageController(IController):
@@ -92,18 +92,26 @@ class PageController(IController):
         return redirect(pages_url)
 
     def add_page_translation_page_action(self, page_id: int):
+        languages = self._language_service.find_all()
+
         view = AddPageTranslationView()
+
+        view.set_data(
+            page_id=page_id,
+            languages=languages,
+        )
 
         return view.render()
 
     def add_page_translation_action(self, page_id: int):
-        update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
+        add_page_translation_dto = AddPageTranslationDTOTransformer.transform(request)
 
-        self._page_service.update_page_translation(update_page_translation_dto)
+        self._page_service.add_page_translation(page_id, add_page_translation_dto)
 
         pages_url = url_for(
-            '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
+            '.'.join([ACP_PAGE_BLUEPRINT, 'page_route']),
             language_code=g.current_language.code,
+            page_id=page_id,
         )
 
         return redirect(pages_url)

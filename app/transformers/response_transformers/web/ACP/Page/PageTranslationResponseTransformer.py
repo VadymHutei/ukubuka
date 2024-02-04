@@ -2,7 +2,7 @@ from flask import url_for, g
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
 from entities.Page.PageTranslationEntity import PageTranslationEntity
-from transformers.response_transformers.web.ACP.ACPWebResponseTransformer import WebACPResponseTransformer
+from transformers.response_transformers.web.ACP.WebACPResponseTransformer import WebACPResponseTransformer
 
 
 class PageTranslationResponseTransformer(WebACPResponseTransformer):

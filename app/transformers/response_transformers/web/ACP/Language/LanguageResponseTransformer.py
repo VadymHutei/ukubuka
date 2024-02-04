@@ -2,7 +2,7 @@ from flask import g, url_for
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from entities.Language.LanguageEntity import LanguageEntity
-from transformers.response_transformers.web.ACP.ACPWebResponseTransformer import WebACPResponseTransformer
+from transformers.response_transformers.web.ACP.WebACPResponseTransformer import WebACPResponseTransformer
 
 
 class LanguageResponseTransformer(WebACPResponseTransformer):

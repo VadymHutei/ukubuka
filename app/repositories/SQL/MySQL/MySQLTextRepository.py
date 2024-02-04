@@ -55,6 +55,22 @@ class MySQLTextRepository(MySQLRepository):
 
         return self.transformer.transform_collection(data) if data else []
 
+    def add_translation(self, text: TextEntity) -> bool:
+        query = f'''
+            INSERT INTO {self.text_mapper.table} ({self.text_mapper.fillable_fields})
+            VALUES ({self.text_mapper.fillable_placeholders()})
+        '''
+
+        query_data = self.text_mapper.fillable_data(text)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                result = cursor.execute(query, query_data) > 0
+
+            connection.commit()
+
+        return result
+
     def update_translation(self, text: TextEntity) -> bool:
         set_fields_statement, set_field_values = self.text_mapper.get_set_data(text)
 

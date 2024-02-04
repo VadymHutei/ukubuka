@@ -9,6 +9,18 @@
     <tbody>
         <tr>
             <td class="param_name">
+                <label for="language_id_field">{{ 'language' }}</label>
+            </td>
+            <td>
+                <select id="language_id_field" name="language_id" form="{{ form_name }}" required>
+                    {% for language in languages %}
+                    <option value="{{ language.id }}">{{ language.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="param_name">
                 <label for="page_title_field">{{ 'title' }}</label>
             </td>
             <td>

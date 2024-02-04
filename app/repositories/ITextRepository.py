@@ -14,5 +14,9 @@ class ITextRepository(ABC):
         pass
 
     @abstractmethod
+    def add_translation(self, entity: TextEntity) -> bool:
+        pass
+
+    @abstractmethod
     def update_translation(self, text: TextEntity) -> bool:
         pass

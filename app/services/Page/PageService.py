@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from data_transfer_objects.Page.AddPageDTO import AddPageDTO
+from data_transfer_objects.Page.AddPageTranslationDTO import AddPageTranslationDTO
 from data_transfer_objects.Page.EditPageDTO import EditPageDTO
 from data_transfer_objects.Page.UpdatePageTranslationDTO import UpdatePageTranslationDTO
 from entities.Page.PageEntity import PageEntity
@@ -14,8 +15,8 @@ class PageService(IService):
     def __init__(self, page_repository: IPageRepository) -> None:
         self._page_repository = page_repository
 
-    def find(self, id: int) -> PageEntity | None:
-        return self._page_repository.find(id)
+    def find(self, page_id: int) -> PageEntity | None:
+        return self._page_repository.find(page_id)
 
     def find_all(self) -> list[PageEntity]:
         return self._page_repository.find_all()
@@ -58,11 +59,21 @@ class PageService(IService):
     def delete_by_code(self, code: str) -> bool:
         return self._page_repository.delete_by_code(code)
 
-    def find_translation_by_id(self, id: int) -> PageTranslationEntity | None:
-        return self._page_repository.find_translation_by_id(id)
+    def find_translation_by_id(self, page_id: int) -> PageTranslationEntity | None:
+        return self._page_repository.find_translation_by_id(page_id)
 
     def find_translations_by_page_id(self, page_id: int) -> list[PageTranslationEntity]:
         return self._page_repository.find_translations_by_entity_id(page_id)
 
     def find_translations_by_page_code(self, page_code: str) -> list[PageTranslationEntity]:
         return self._page_repository.find_translations_by_entity_code(page_code)
+    
+    def add_page_translation(self, page_id: int, data: AddPageTranslationDTO):
+        translation = PageTranslationEntity(
+            page_id=page_id,
+            language_id=data.language_id,
+            title=data.title,
+            created_at=datetime.now(),
+        )
+
+        return self._page_repository.add_translation(translation)

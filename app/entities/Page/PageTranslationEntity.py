@@ -7,8 +7,8 @@ from entities.TextEntity import TextEntity
 @dataclass
 class PageTranslationEntity(TextEntity):
 
-    language_id: int
     page_id: int
+    language_id: int
     title: str
     created_at: datetime
 

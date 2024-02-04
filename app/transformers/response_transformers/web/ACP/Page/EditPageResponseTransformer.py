@@ -1,5 +1,5 @@
 from entities.Page.PageEntity import PageEntity
-from transformers.response_transformers.web.ACP.ACPWebResponseTransformer import WebACPResponseTransformer
+from transformers.response_transformers.web.ACP.WebACPResponseTransformer import WebACPResponseTransformer
 
 
 class EditPageResponseTransformer(WebACPResponseTransformer):
