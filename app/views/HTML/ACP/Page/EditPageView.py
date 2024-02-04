@@ -17,6 +17,7 @@ class EditPageView(WebView):
         form_action = url_for(
             endpoint='.'.join((ACP_PAGE_BLUEPRINT, 'edit_page_route')),
             language_code=g.current_language.code,
+            page_id=self._data['page'].id
         )
 
         form = {

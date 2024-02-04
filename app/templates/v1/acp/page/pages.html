@@ -33,7 +33,6 @@
                 {# Delete button #}
                 {% set delete_form_name = 'delete_page_' ~ page.code ~ '_form' %}
                 <form id="{{ delete_form_name }}" class="form_button" action="{{ page.delete_url }}" method="post"></form>
-                <input form="{{ delete_form_name }}" type="hidden" name="code" value="{{ page.code }}">
                 <input form="{{ delete_form_name }}" type="submit" value="{{ 'Delete' }}">
             </td>
         </tr>

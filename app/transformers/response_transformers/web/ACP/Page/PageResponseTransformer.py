@@ -18,16 +18,17 @@ class PageResponseTransformer(WebACPResponseTransformer):
         add_translation_url = url_for(
             ACP_PAGE_BLUEPRINT + '.add_page_translation_route',
             language_code=g.current_language.code,
-            code=page.code,
+            page_id=page.id,
         )
         edit_url = url_for(
             ACP_PAGE_BLUEPRINT + '.edit_page_route',
             language_code=g.current_language.code,
-            id=page.id,
+            page_id=page.id,
         )
         delete_url = url_for(
             ACP_PAGE_BLUEPRINT + '.delete_page_route',
             language_code=g.current_language.code,
+            page_id=page.id,
         )
 
         return {

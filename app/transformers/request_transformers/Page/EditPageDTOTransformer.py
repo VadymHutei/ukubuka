@@ -9,7 +9,6 @@ class EditPageDTOTransformer(RequestTransformer):
     @classmethod
     def transform(cls, request: Request) -> EditPageDTO:
         return EditPageDTO(
-            id=int(request.form.get('id')),
             code=request.form.get('code'),
             template=request.form.get('template'),
             layout=request.form.get('layout'),
