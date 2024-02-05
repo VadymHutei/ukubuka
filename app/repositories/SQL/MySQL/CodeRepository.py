@@ -3,7 +3,7 @@ from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 
 
-class MySQLCodeRepository(MySQLRepository):
+class CodeRepository(MySQLRepository):
 
     def find_by_code(self, code: str) -> Entity | None:
         query = f'''

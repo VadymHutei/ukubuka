@@ -1,5 +1,6 @@
 from abc import ABC
 
+from repositories.IActiveRepository import IActiveRepository
 from repositories.ICodeRepository import ICodeRepository
 from repositories.ICodeTextRepository import ICodeTextRepository
 from repositories.IRepository import IRepository
@@ -10,6 +11,7 @@ class IPageRepository(
     ICodeTextRepository,
     ITextRepository,
     ICodeRepository,
+    IActiveRepository,
     IRepository,
     ABC,
 ):

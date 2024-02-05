@@ -9,7 +9,7 @@ from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
 from transformers.entity_transformers.EntityTransformer import EntityTransformer
 
 
-class MySQLTextRepository(MySQLRepository):
+class TextRepository(MySQLRepository):
 
     translation_transformer: Type[EntityTransformer]
 

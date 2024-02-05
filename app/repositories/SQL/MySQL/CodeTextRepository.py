@@ -1,11 +1,11 @@
 from entities.Entity import Entity
 from entities.TextEntity import TextEntity
 from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
-from repositories.SQL.MySQL.MySQLCodeRepository import MySQLCodeRepository
-from repositories.SQL.MySQL.MySQLTextRepository import MySQLTextRepository
+from repositories.SQL.MySQL.CodeRepository import CodeRepository
+from repositories.SQL.MySQL.TextRepository import TextRepository
 
 
-class MySQLCodeTextRepository(MySQLCodeRepository, MySQLTextRepository):
+class CodeTextRepository(CodeRepository, TextRepository):
 
     def find_by_code(self, code: str) -> Entity | None:
         query = f'''

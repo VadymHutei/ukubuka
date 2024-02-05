@@ -1,11 +1,11 @@
-from entities.Page.PageTranslationEntity import PageTranslationEntity
+from entities.Page.PageTextEntity import PageTextEntity
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
 from entity_mappers.SQL.MySQL.MySQLTextEntityMapper import MySQLTextEntityMapper
 
 
 class PageTextMapper(MySQLTextEntityMapper):
 
-    _ENTITY_CLASS = PageTranslationEntity
+    _ENTITY_CLASS = PageTextEntity
 
     _TABLE = 'page_text'
 

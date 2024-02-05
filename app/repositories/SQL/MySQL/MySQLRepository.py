@@ -29,7 +29,7 @@ class MySQLRepository(SQLRepository):
     def find(self, id: int) -> Entity | None:
         query = f'''
             SELECT
-                {self.mapper.fields},
+                {self.mapper.fields}
             FROM {self.mapper.table_as_prefix}
             WHERE
                 {self.mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
@@ -47,7 +47,7 @@ class MySQLRepository(SQLRepository):
     def find_all(self) -> list[Entity]:
         query = f'''
             SELECT
-                {self.mapper.fields},
+                {self.mapper.fields}
             FROM {self.mapper.table_as_prefix}
         '''
 

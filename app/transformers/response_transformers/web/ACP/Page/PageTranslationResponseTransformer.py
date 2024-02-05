@@ -1,14 +1,14 @@
 from flask import url_for, g
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
-from entities.Page.PageTranslationEntity import PageTranslationEntity
+from entities.Page.PageTextEntity import PageTextEntity
 from transformers.response_transformers.web.ACP.WebACPResponseTransformer import WebACPResponseTransformer
 
 
 class PageTranslationResponseTransformer(WebACPResponseTransformer):
 
     @classmethod
-    def transform(cls, translation: PageTranslationEntity | None) -> dict[str, str | int | bool | None] | None:
+    def transform(cls, translation: PageTextEntity | None) -> dict[str, str | int | bool | None] | None:
         if translation is None:
             return None
 

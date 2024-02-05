@@ -5,7 +5,7 @@ from entities.TextEntity import TextEntity
 
 
 @dataclass
-class PageTranslationEntity(TextEntity):
+class PageTextEntity(TextEntity):
 
     page_id: int
     language_id: int
