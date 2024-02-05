@@ -3,14 +3,18 @@ from datetime import datetime
 from data_transfer_objects.Language.AddLanguageDTO import AddLanguageDTO
 from data_transfer_objects.Language.UpdateLanguageDTO import UpdateLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
+from exceptions.entities_exceptions.LanguageException import LanguageException
 from services.IService import IService
 from services.Language.ILanguageRepository import ILanguageRepository
 
 
 class LanguageService(IService):
 
-    def __init__(self, repository: ILanguageRepository) -> None:
-        self._repository: ILanguageRepository = repository
+    def __init__(self, language_repository: ILanguageRepository):
+        self._language_repository = language_repository
+
+    def find(self, id: int) -> LanguageEntity | None:
+        return self._language_repository.find(id)
 
     def add(self, add_language_dto: AddLanguageDTO) -> bool:
         language = LanguageEntity(
@@ -20,34 +24,41 @@ class LanguageService(IService):
             created_at=datetime.now(),
         )
 
-        return self._repository.add(language)
+        return self._language_repository.add(language)
 
     def get_by_id(self, id: int) -> LanguageEntity:
-        return self._repository.get_by_id(id)
+        language = self._language_repository.find(id)
+
+        if language is None:
+            raise LanguageException('Not found')
+
+        return language
 
     def get_by_code(self, code: str) -> LanguageEntity:
-        return self._repository.get_by_code(code)
+        language = self._language_repository.find_by_code(code)
+
+        if language is None:
+            raise LanguageException('Not found')
+
+        return language
 
     def find_all(self) -> list[LanguageEntity] | None:
-        return self._repository.find_all()
-    
-    def find_by_id(self, id: int) -> LanguageEntity | None:
-        return self._repository.find_by_id(id)
+        return self._language_repository.find_all()
 
     def find_by_code(self, code: str) -> LanguageEntity | None:
-        return self._repository.find_by_code(code)
+        return self._language_repository.find_by_code(code)
     
     def update(self, update_lanugage_DTO: UpdateLanguageDTO) -> bool:
-        language = self.find_by_id(update_lanugage_DTO.id)
+        language = self.find(update_lanugage_DTO.id)
 
         language.update_from_dict(update_lanugage_DTO.to_dict())
 
         language.updated_at = datetime.now()
 
-        return self._repository.update(language)
+        return self._language_repository.update(language)
 
     def delete_by_code(self, code: str):
-        return self._repository.delete_by_code(code)
+        return self._language_repository.delete_by_code(code)
 
-    def get_available(self) -> list[LanguageEntity]:
-        return self._repository.get_only_active()
+    def find_active(self) -> list[LanguageEntity]:
+        return self._language_repository.find_active()

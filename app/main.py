@@ -31,7 +31,7 @@ def before_request() -> None:
         app.config[ConfigService.APP_CONFIG_KEY] = True
 
     language_service: LanguageService = sc.get(LanguageService)
-    app.config['AVAILABLE_LANGUAGE_CODES'] = [language.code for language in language_service.get_available()]
+    app.config['AVAILABLE_LANGUAGE_CODES'] = [language.code for language in language_service.find_active()]
     g.default_language = language_service.get_by_code(app.config['default_language_code'])
 
 

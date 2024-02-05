@@ -12,13 +12,13 @@ from views.HTML.ACP.Language.LanguagesView import LanguagesView
 
 class LanguageController(IController):
 
-    def __init__(self, service: LanguageService):
-        self._service: LanguageService = service
+    def __init__(self, language_service: LanguageService):
+        self._language_service: LanguageService = language_service
 
     def languages_page_action(self):
         view = LanguagesView()
 
-        view.set_data(languages=self._service.find_all())
+        view.set_data(languages=self._language_service.find_all())
 
         return view.render()
 
@@ -30,7 +30,7 @@ class LanguageController(IController):
     def add_language_action(self):
         add_language_dto = AddLanguageDTOTransformer.transform(request)
 
-        self._service.add(add_language_dto)
+        self._language_service.add(add_language_dto)
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
@@ -42,14 +42,14 @@ class LanguageController(IController):
     def edit_language_page_action(self):
         view = EditLanguageView()
 
-        view.set_data(language=self._service.find_by_code(request.args.get('code')))
+        view.set_data(language=self._language_service.find_by_code(request.args.get('code')))
 
         return view.render()
 
     def edit_language_action(self):
         update_language_dto = UpdateLanguageDTOTransformer.transform(request)
 
-        self._service.update(update_language_dto)
+        self._language_service.update(update_language_dto)
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
@@ -59,7 +59,7 @@ class LanguageController(IController):
         return redirect(languages_url)
 
     def delete_language_action(self):
-        self._service.delete_by_code(request.form.get('code'))
+        self._language_service.delete_by_code(request.form.get('code'))
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
