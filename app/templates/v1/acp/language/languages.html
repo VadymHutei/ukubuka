@@ -1,4 +1,4 @@
-<h1>{{ 'Languages' }}</h1>
+<h1>{{ p.title }}</h1>
 
 <table>
 
@@ -21,11 +21,11 @@
             <td>{{ language.is_active|checkbox }}</td>
             <td>
                 {# Info button #}
-                <a class="button_link" href="{{ language.info_language_url }}">
+                <a class="button_link" href="{{ language.info_url }}">
                     <div>{{ 'Info' }}</div>
                 </a>
 
-                <a class="button_link" href="{{ language.edit_page_url }}">
+                <a class="button_link" href="{{ language.edit_url }}">
                     <div>{{ 'Edit' }}</div>
                 </a>
                 {% set delete_form_name = 'delete_language_' ~ language.code ~ '_form' %}
@@ -40,7 +40,7 @@
     <tfoot>
         <tr>
             <td class="actions" colspan="7">
-                <a class="button_link" href="{{ add_language_url }}">
+                <a class="button_link" href="{{ add_url }}">
                     <div>{{ 'Add' }}</div>
                 </a>
             </td>

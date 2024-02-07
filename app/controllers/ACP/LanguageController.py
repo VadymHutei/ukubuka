@@ -8,6 +8,7 @@ from transformers.request_transformers.Language.UpdateLanguageDTOTransformer imp
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
+from views.HTML.ACP.Language.LanguageView import LanguageView
 
 
 class LanguageController(IController):
@@ -23,7 +24,7 @@ class LanguageController(IController):
         return view.render()
 
     def language_page_action(self, language_id: int):
-        view = LanguagesView()
+        view = LanguageView()
 
         view.set_data(language=self._language_service.find(language_id))
 

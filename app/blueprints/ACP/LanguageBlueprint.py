@@ -25,7 +25,7 @@ def language_route(language_id: int):
 
     return controller.language_page_action(language_id)
 
-@acp_language_blueprint.route('/add', methods=['GET', 'POST'])
+@acp_language_blueprint.route('add', methods=['GET', 'POST'])
 @with_language
 @with_session
 def add_language_route():
@@ -37,10 +37,10 @@ def add_language_route():
         case 'POST':
             return controller.add_language_action()
 
-@acp_language_blueprint.route('/edit', methods=['GET', 'POST'])
+@acp_language_blueprint.route('<int:language_id>/edit', methods=['GET', 'POST'])
 @with_language
 @with_session
-def edit_language_route():
+def edit_language_route(language_id: int):
     controller: LanguageController = sc.get(LanguageController)
 
     match request.method:
@@ -49,10 +49,10 @@ def edit_language_route():
         case 'POST':
             return controller.edit_language_action()
 
-@acp_language_blueprint.route('/delete', methods=['POST'])
+@acp_language_blueprint.route('<int:language_id>/delete', methods=['POST'])
 @with_language
 @with_session
-def delete_language_route():
+def delete_language_route(language_id: int):
     # TODO: soft delete
     controller: LanguageController = sc.get(LanguageController)
 
