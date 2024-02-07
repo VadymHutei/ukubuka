@@ -4,7 +4,7 @@ from data_transfer_objects.DataTransferObject import DataTransferObject
 
 
 @dataclass
-class UpdatePageTranslationDTO(DataTransferObject):
+class EditPageTranslationDTO(DataTransferObject):
 
     language_id: int
     title: str

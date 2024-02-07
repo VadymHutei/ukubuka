@@ -7,7 +7,7 @@ from services.Page.PageService import PageService
 from transformers.request_transformers.Page.AddPageDTOTransformer import AddPageDTOTransformer
 from transformers.request_transformers.Page.AddPageTranslationDTOTransformer import AddPageTranslationDTOTransformer
 from transformers.request_transformers.Page.EditPageDTOTransformer import EditPageDTOTransformer
-from transformers.request_transformers.Page.RequestToUpdatePageTranslationDTOTransformer import RequestToUpdatePageTranslationDTOTransformer
+from transformers.request_transformers.Page.EditPageTranslationDTOTransformer import EditPageTranslationDTOTransformer
 from views.HTML.ACP.Page.AddPageTranslationView import AddPageTranslationView
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageTranslationView import EditPageTranslationView
@@ -131,9 +131,9 @@ class PageController(IController):
         return view.render()
 
     def edit_page_translation_action(self, translation_id: int):
-        update_page_translation_dto = RequestToUpdatePageTranslationDTOTransformer.transform(request)
+        update_page_translation_dto = EditPageTranslationDTOTransformer.transform(request)
 
-        self._page_service.update_page_translation(translation_id, update_page_translation_dto)
+        self._page_service.edit_page_translation(translation_id, update_page_translation_dto)
 
         pages_url = url_for(
             '.'.join([ACP_PAGE_BLUEPRINT, 'pages_route']),
