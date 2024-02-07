@@ -12,9 +12,6 @@ class PagesResponseTransformer(WebACPResponseTransformer):
         if page is None:
             return None
 
-        created_at = page.created_at.strftime(cls.ACP_DATE_FORMAT)
-        updated_at = page.updated_at.strftime(cls.ACP_DATE_FORMAT) if page.updated_at else None
-
         info_page_url = url_for(
             ACP_PAGE_BLUEPRINT + '.page_route',
             language_code=g.current_language.code,
@@ -35,11 +32,7 @@ class PagesResponseTransformer(WebACPResponseTransformer):
             'id': page.id,
             'code': page.code,
             'title': page.title,
-            'template': page.template,
-            'layout': page.layout,
             'is_active': page.is_active,
-            'created_at': created_at,
-            'updated_at': updated_at,
             'info_page_url': info_page_url,
             'edit_page_url': edit_page_url,
             'delete_url': delete_url,
