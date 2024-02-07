@@ -21,12 +21,12 @@
             <td>{{ page.is_active|checkbox }}</td>
             <td>
                 {# Info button #}
-                <a class="button_link" href="{{ page.info_page_url }}">
+                <a class="button_link" href="{{ page.info_url }}">
                     <div>{{ 'Info' }}</div>
                 </a>
 
                 {# Edit button #}
-                <a class="button_link" href="{{ page.edit_page_url }}">
+                <a class="button_link" href="{{ page.edit_url }}">
                     <div>{{ 'Edit' }}</div>
                 </a>
 
@@ -42,7 +42,7 @@
     <tfoot>
         <tr>
             <td class="actions" colspan="5">
-                <a class="button_link" href="{{ add_page_url }}">
+                <a class="button_link" href="{{ add_url }}">
                     <div>{{ 'Add' }}</div>
                 </a>
             </td>

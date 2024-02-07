@@ -12,12 +12,12 @@ class PagesResponseTransformer(WebACPResponseTransformer):
         if page is None:
             return None
 
-        info_page_url = url_for(
+        info_url = url_for(
             ACP_PAGE_BLUEPRINT + '.page_route',
             language_code=g.current_language.code,
             page_id=page.id,
         )
-        edit_page_url = url_for(
+        edit_url = url_for(
             ACP_PAGE_BLUEPRINT + '.edit_page_route',
             language_code=g.current_language.code,
             page_id=page.id,
@@ -33,7 +33,7 @@ class PagesResponseTransformer(WebACPResponseTransformer):
             'code': page.code,
             'title': page.title,
             'is_active': page.is_active,
-            'info_page_url': info_page_url,
-            'edit_page_url': edit_page_url,
+            'info_url': info_url,
+            'edit_url': edit_url,
             'delete_url': delete_url,
         }

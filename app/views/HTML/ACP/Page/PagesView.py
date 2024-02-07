@@ -14,10 +14,10 @@ class PagesView(WebView):
     def _prepare_page_data(self) -> None:
         super()._prepare_page_data()
 
-        add_page_url = url_for(
+        add_url = url_for(
             endpoint='.'.join((ACP_PAGE_BLUEPRINT, 'add_page_route')),
             language_code=g.current_language.code,
         )
 
         self._data['pages'] = PagesResponseTransformer.transform_collection(self._data['pages'])
-        self._data['add_page_url'] = add_page_url
+        self._data['add_url'] = add_url
