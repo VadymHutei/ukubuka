@@ -8,8 +8,6 @@
             <th>{{ 'Code' }}</th>
             <th>{{ 'Name' }}</th>
             <th>{{ 'Is active' }}</th>
-            <th>{{ 'Created at' }}</th>
-            <th>{{ 'Updated at' }}</th>
             <th>{{ 'Actions' }}</th>
         </tr>
     </thead>
@@ -21,9 +19,12 @@
             <td>{{ language.code }}</td>
             <td>{{ language.name }}</td>
             <td>{{ language.is_active|checkbox }}</td>
-            <td>{{ language.created_at }}</td>
-            <td>{{ language.updated_at|none }}</td>
             <td>
+                {# Info button #}
+                <a class="button_link" href="{{ language.info_language_url }}">
+                    <div>{{ 'Info' }}</div>
+                </a>
+
                 <a class="button_link" href="{{ language.edit_page_url }}">
                     <div>{{ 'Edit' }}</div>
                 </a>

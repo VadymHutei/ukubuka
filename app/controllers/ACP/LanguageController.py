@@ -22,6 +22,13 @@ class LanguageController(IController):
 
         return view.render()
 
+    def language_page_action(self, language_id: int):
+        view = LanguagesView()
+
+        view.set_data(language=self._language_service.find(language_id))
+
+        return view.render()
+
     def add_language_page_action(self):
         view = AddLanguageView()
 
