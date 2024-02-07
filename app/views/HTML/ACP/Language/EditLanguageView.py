@@ -17,10 +17,12 @@ class EditLanguageView(WebView):
         form_action = url_for(
             endpoint='.'.join((ACP_LANGUAGE_BLUEPRINT, 'edit_language_route')),
             language_code=g.current_language.code,
+            language_id=self._data['language'].id
         )
 
-        self._data['form'] = {
+        form = {
             'action': form_action,
         }
 
+        self._data['form'] = form
         self._data['language'] = EditLanguageResponseTransformer.transform(self._data['language'])

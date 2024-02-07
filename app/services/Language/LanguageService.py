@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from data_transfer_objects.Language.AddLanguageDTO import AddLanguageDTO
-from data_transfer_objects.Language.UpdateLanguageDTO import UpdateLanguageDTO
+from data_transfer_objects.Language.EditLanguageDTO import EditLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
 from exceptions.entities_exceptions.LanguageException import LanguageException
 from services.IService import IService
@@ -48,14 +48,17 @@ class LanguageService(IService):
     def find_by_code(self, code: str) -> LanguageEntity | None:
         return self._language_repository.find_by_code(code)
     
-    def update(self, update_lanugage_DTO: UpdateLanguageDTO) -> bool:
-        language = self.find(update_lanugage_DTO.id)
+    def edit_language(self, language_id: int, update_lanugage_DTO: EditLanguageDTO) -> bool:
+        language: LanguageEntity = self.find(language_id)
 
         language.update_from_dict(update_lanugage_DTO.to_dict())
 
         language.updated_at = datetime.now()
 
         return self._language_repository.update(language)
+
+    def delete(self, language_id: int):
+        return self._language_repository.delete(language_id)
 
     def delete_by_code(self, code: str):
         return self._language_repository.delete_by_code(code)

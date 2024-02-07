@@ -1,10 +1,8 @@
-<h1>{{ 'Edit language' }}</h1>
+<h1>{{ p.title }}</h1>
 
 {% set form_name = 'edit_language_form' %}
 
-<form id="{{ form_name }}" action="{{ form.action }}" method="post">
-    <input type="hidden" name="id" value="{{ language.id }}">
-</form>
+<form id="{{ form_name }}" action="{{ form.action }}" method="post"></form>
 
 <table>
 

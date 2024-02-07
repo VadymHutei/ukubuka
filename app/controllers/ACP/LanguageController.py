@@ -4,7 +4,7 @@ from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
 from controllers.IController import IController
 from services.Language.LanguageService import LanguageService
 from transformers.request_transformers.Language.AddLanguageDTOTransformer import AddLanguageDTOTransformer
-from transformers.request_transformers.Language.UpdateLanguageDTOTransformer import UpdateLanguageDTOTransformer
+from transformers.request_transformers.Language.EditLanguageDTOTransformer import EditLanguageDTOTransformer
 from views.HTML.ACP.Language.AddLanguageView import AddLanguageView
 from views.HTML.ACP.Language.EditLanguageView import EditLanguageView
 from views.HTML.ACP.Language.LanguagesView import LanguagesView
@@ -47,27 +47,28 @@ class LanguageController(IController):
 
         return redirect(languages_url)
 
-    def edit_language_page_action(self):
+    def edit_language_page_action(self, language_id: int):
         view = EditLanguageView()
 
-        view.set_data(language=self._language_service.find_by_code(request.args.get('code')))
+        view.set_data(language=self._language_service.find(language_id))
 
         return view.render()
 
-    def edit_language_action(self):
-        update_language_dto = UpdateLanguageDTOTransformer.transform(request)
+    def edit_language_action(self, language_id: int):
+        edit_language_dto = EditLanguageDTOTransformer.transform(request)
 
-        self._language_service.update(update_language_dto)
+        self._language_service.edit_language(language_id, edit_language_dto)
 
-        languages_url = url_for(
-            '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),
+        language_url = url_for(
+            '.'.join([ACP_LANGUAGE_BLUEPRINT, 'language_route']),
             language_code=g.current_language.code,
+            language_id=language_id,
         )
 
-        return redirect(languages_url)
+        return redirect(language_url)
 
-    def delete_language_action(self):
-        self._language_service.delete_by_code(request.form.get('code'))
+    def delete_language_action(self, language_id: int):
+        self._language_service.delete(language_id)
 
         languages_url = url_for(
             '.'.join([ACP_LANGUAGE_BLUEPRINT, 'languages_route']),

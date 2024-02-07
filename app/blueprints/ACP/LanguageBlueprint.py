@@ -45,9 +45,9 @@ def edit_language_route(language_id: int):
 
     match request.method:
         case 'GET':
-            return controller.edit_language_page_action()
+            return controller.edit_language_page_action(language_id)
         case 'POST':
-            return controller.edit_language_action()
+            return controller.edit_language_action(language_id)
 
 @acp_language_blueprint.route('<int:language_id>/delete', methods=['POST'])
 @with_language
@@ -56,4 +56,4 @@ def delete_language_route(language_id: int):
     # TODO: soft delete
     controller: LanguageController = sc.get(LanguageController)
 
-    return controller.delete_language_action()
+    return controller.delete_language_action(language_id)
