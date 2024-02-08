@@ -14,6 +14,7 @@ class LanguageResponseTransformer(WebACPResponseTransformer):
 
         created_at = language.created_at.strftime(cls.ACP_DATE_FORMAT)
         updated_at = language.updated_at.strftime(cls.ACP_DATE_FORMAT) if language.updated_at else None
+        deleted_at = language.deleted_at.strftime(cls.ACP_DATE_FORMAT) if language.deleted_at else None
 
         edit_url = url_for(
             ACP_LANGUAGE_BLUEPRINT + '.edit_language_route',
@@ -33,6 +34,7 @@ class LanguageResponseTransformer(WebACPResponseTransformer):
             'is_active': language.is_active,
             'created_at': created_at,
             'updated_at': updated_at,
+            'deleted_at': deleted_at,
             'edit_url': edit_url,
             'delete_url': delete_url,
         }

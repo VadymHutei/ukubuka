@@ -26,7 +26,7 @@ class MySQLRepository(SQLRepository):
     def connection(self):
         return _get_connection()
 
-    def find(self, id: int) -> Entity | None:
+    def find(self, entity_id: int) -> Entity | None:
         query = f'''
             SELECT
                 {self.mapper.fields}
@@ -35,7 +35,7 @@ class MySQLRepository(SQLRepository):
                 {self.mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
         '''
 
-        query_data = (id)
+        query_data = entity_id
 
         with self.connection as connection:
             with connection.cursor() as cursor:
@@ -83,7 +83,7 @@ class MySQLRepository(SQLRepository):
             WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}
         '''
 
-        query_data = (*set_field_values, entity.id,)
+        query_data = (*set_field_values, entity.id)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
@@ -93,10 +93,10 @@ class MySQLRepository(SQLRepository):
 
         return result
 
-    def delete(self, id: int) -> bool:
+    def delete(self, entity_id: int) -> bool:
         query = f'DELETE FROM {self.mapper.table} WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}'
 
-        query_data = (id,)
+        query_data = (entity_id,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:

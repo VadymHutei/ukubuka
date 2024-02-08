@@ -53,7 +53,6 @@ def edit_language_route(language_id: int):
 @with_language
 @with_session
 def delete_language_route(language_id: int):
-    # TODO: soft delete
     controller: LanguageController = sc.get(LanguageController)
 
     return controller.delete_language_action(language_id)

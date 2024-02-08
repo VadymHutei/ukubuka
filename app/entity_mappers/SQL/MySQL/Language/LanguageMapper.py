@@ -18,6 +18,7 @@ class LanguageMapper(MySQLEntityMapper):
         'is_active',
         'created_at',
         'updated_at',
+        'deleted_at',
     ]
 
     _FILLABLE_FIELDS = [
@@ -26,6 +27,7 @@ class LanguageMapper(MySQLEntityMapper):
         'is_active',
         'created_at',
         'updated_at',
+        'deleted_at',
     ]
 
     _FIELD_TYPES = {

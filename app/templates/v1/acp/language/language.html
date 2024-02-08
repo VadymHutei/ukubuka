@@ -10,34 +10,38 @@
             <td>{{ language.id }}</td>
         </tr>
         <tr>
-            <td>{{ 'Name' }}</td>
+            <td>{{ 'name' }}</td>
             <td>{{ language.name }}</td>
         </tr>
         </tr>
         <tr>
-            <td>{{ 'Is active' }}</td>
+            <td>{{ 'is active' }}</td>
             <td>{{ language.is_active|checkbox }}</td>
         </tr>
         <tr>
-            <td>{{ 'Created at' }}</td>
+            <td>{{ 'created at' }}</td>
             <td>{{ language.created_at }}</td>
         </tr>
         <tr>
-            <td>{{ 'Updated at' }}</td>
+            <td>{{ 'updated at' }}</td>
             <td>{{ language.updated_at|none }}</td>
         </tr>
         <tr>
-            <td>{{ 'Actions' }}</td>
+            <td>{{ 'deleted at' }}</td>
+            <td>{{ language.deleted_at|none }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'actions' }}</td>
             <td>
-                {# Edit button #}
+                {# edit button #}
                 <a class="button_link" href="{{ language.edit_url }}">
-                    <div>{{ 'Edit' }}</div>
+                    <div>{{ 'edit' }}</div>
                 </a>
 
-                {# Delete button #}
+                {# delete button #}
                 {% set delete_form_name = 'delete_language_' ~ language.code ~ '_form' %}
                 <form id="{{ delete_form_name }}" class="form_button" action="{{ language.delete_url }}" method="post"></form>
-                <input form="{{ delete_form_name }}" type="submit" value="{{ 'Delete' }}">
+                <input form="{{ delete_form_name }}" type="submit" value="{{ 'delete' }}">
             </td>
         </tr>
     </tbody>
