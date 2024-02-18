@@ -27,7 +27,3 @@ class ProductPriceMapper(MySQLEntityMapper):
         'currency_id': MapperFieldTypes.INT,
         'value': MapperFieldTypes.INT,
     }
-
-    _NESTED_ENTITY_MAPPERS = {
-        'currency': CurrencyMapper,
-    }

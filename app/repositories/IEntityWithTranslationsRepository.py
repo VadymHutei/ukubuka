@@ -3,7 +3,7 @@ from abc import abstractmethod, ABC
 from entities.TextEntity import TextEntity
 
 
-class ITextRepository(ABC):
+class IEntityWithTranslationsRepository(ABC):
 
     @abstractmethod
     def find_translation(self, id: int) -> TextEntity | None:

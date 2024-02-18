@@ -26,8 +26,3 @@ class ProductMapper(MySQLEntityMapper):
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,
     }
-
-    _NESTED_ENTITY_MAPPERS = {
-        'text': ProductTextMapper,
-        'price': ProductPriceMapper
-    }

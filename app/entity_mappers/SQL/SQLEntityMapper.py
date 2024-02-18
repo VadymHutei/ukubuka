@@ -84,13 +84,6 @@ class SQLEntityMapper(EntityMapper):
         for field in cls._DATA_FIELDS:
             data[field] = cls.get_field_value_from_db_record(db_record, field)
 
-        try:
-            for field, mapper in cls._NESTED_ENTITY_MAPPERS.items():
-                entity = mapper.create_entity(db_record)
-                data[field] = entity
-        except MapperException:
-            pass
-
         return cls._ENTITY_CLASS(**data)
 
     @classmethod

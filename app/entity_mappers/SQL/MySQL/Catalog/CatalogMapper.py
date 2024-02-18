@@ -25,7 +25,3 @@ class CatalogMapper(MySQLEntityMapper):
         'id': MapperFieldTypes.INT,
         'is_active': MapperFieldTypes.BOOL,
     }
-
-    _NESTED_ENTITY_MAPPERS = {
-        'text': CatalogTextMapper,
-    }

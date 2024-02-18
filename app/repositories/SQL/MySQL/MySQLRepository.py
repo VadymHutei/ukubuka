@@ -1,5 +1,3 @@
-from typing import Type
-
 from flask import current_app as app
 from pymysql import connect
 from pymysql.cursors import DictCursor
@@ -7,24 +5,16 @@ from pymysql.cursors import DictCursor
 from entities.Entity import Entity
 from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
 from repositories.SQL.SQLRepository import SQLRepository
-from transformers.entity_transformers.EntityTransformer import EntityTransformer
-
-
-def _get_connection():
-    credentials = {'cursorclass': DictCursor}
-
-    credentials.update(app.config['MYSQL_DB_CREDENTIALS'])
-
-    return connect(**credentials)
 
 
 class MySQLRepository(SQLRepository):
 
-    transformer: Type[EntityTransformer]
-
     @property
     def connection(self):
-        return _get_connection()
+        credentials = {'cursorclass': DictCursor}
+        credentials.update(app.config['MYSQL_DB_CREDENTIALS'])
+
+        return connect(**credentials)
 
     def find(self, entity_id: int) -> Entity | None:
         query = f'''

@@ -3,7 +3,7 @@ from abc import abstractmethod, ABC
 from entities.Entity import Entity
 
 
-class ICodeRepository(ABC):
+class IEntityWithCodeRepository(ABC):
 
     @abstractmethod
     def find_by_code(self, code: str) -> Entity | None:

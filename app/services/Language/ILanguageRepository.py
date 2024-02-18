@@ -1,13 +1,13 @@
 from abc import ABC
 
-from repositories.IActiveRepository import IActiveRepository
-from repositories.ICodeRepository import ICodeRepository
+from repositories.IActiveEntityRepository import IActiveEntityRepository
+from repositories.IEntityWithCodeRepository import IEntityWithCodeRepository
 from repositories.IRepository import IRepository
 
 
 class ILanguageRepository(
-    ICodeRepository,
-    IActiveRepository,
+    IEntityWithCodeRepository,
+    IActiveEntityRepository,
     IRepository,
     ABC,
 ):

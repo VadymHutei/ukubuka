@@ -1,5 +1,5 @@
-async-timeout
-cryptography
-Flask
-PyMySQL
-redis
+async-timeout==4.*
+cryptography==42.*
+Flask==3.*
+PyMySQL==1.*
+redis==5.*

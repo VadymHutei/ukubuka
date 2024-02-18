@@ -12,8 +12,8 @@ from views.HTML.ACP.Page.AddPageTranslationView import AddPageTranslationView
 from views.HTML.ACP.Page.AddPageView import AddPageView
 from views.HTML.ACP.Page.EditPageTranslationView import EditPageTranslationView
 from views.HTML.ACP.Page.EditPageView import EditPageView
-from views.HTML.ACP.Page.PagesView import PagesView
 from views.HTML.ACP.Page.PageView import PageView
+from views.HTML.ACP.Page.PagesView import PagesView
 
 
 class PageController(IController):

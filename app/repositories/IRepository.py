@@ -6,7 +6,7 @@ from entities.Entity import Entity
 class IRepository(ABC):
 
     @abstractmethod
-    def find(self, id: int) -> Entity | None:
+    def find(self, entity_id: int) -> Entity | None:
         pass
 
     @abstractmethod
@@ -22,5 +22,5 @@ class IRepository(ABC):
         pass
 
     @abstractmethod
-    def delete(self, id: int) -> bool:
+    def delete(self, entity_id: int) -> bool:
         pass
