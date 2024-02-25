@@ -16,7 +16,7 @@ class CodeTextRepository(CodeRepository, TextRepository):
             LEFT JOIN {self.text_mapper.table_as_prefix}
                 ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_id_field}
             WHERE
-                {self.mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (code,)
@@ -36,7 +36,7 @@ class CodeTextRepository(CodeRepository, TextRepository):
             JOIN {self.mapper.table_as_prefix}
                 ON {self.mapper.pr_id_field} = {self.text_mapper.entity_foreign_key_field_with_prefix}
             WHERE
-                {self.mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (entity_code,)

@@ -11,7 +11,7 @@ class CodeRepository(MySQLRepository):
                 {self.mapper.fields}
             FROM {self.mapper.table_as_prefix}
             WHERE
-                {self.mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (code,)
@@ -24,7 +24,7 @@ class CodeRepository(MySQLRepository):
         return self.transformer.transform(data) if data else None
 
     def delete_by_code(self, code: str) -> bool:
-        query = f'DELETE FROM {self.mapper.table} WHERE code = {SQLEntityMapper.QUERY_PLACEHOLDER}'
+        query = f'DELETE FROM {self.mapper.table} WHERE code = {SQLEntityMapper.PLCHLD}'
 
         query_data = (code,)
 

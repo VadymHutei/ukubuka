@@ -21,9 +21,9 @@ class TextRepository(MySQLRepository):
             FROM {self.mapper.table_as_prefix}
             LEFT JOIN {self.text_mapper.table_as_prefix}
                 ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_field('id')}
-                AND {self.text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                AND {self.text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.PLCHLD}
             WHERE
-                {self.mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (g.current_language.id, id)
@@ -43,7 +43,7 @@ class TextRepository(MySQLRepository):
             FROM {self.mapper.table_as_prefix}
             LEFT JOIN {self.text_mapper.table_as_prefix}
                 ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_field('id')}
-                AND {self.text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                AND {self.text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (g.current_language.id,)
@@ -77,7 +77,7 @@ class TextRepository(MySQLRepository):
         query = f'''
             UPDATE {self.text_mapper.table}
             SET {set_fields_statement}
-            WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+            WHERE id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (*set_field_values, text.id,)
@@ -96,7 +96,7 @@ class TextRepository(MySQLRepository):
                 {self.text_mapper.fields}
             FROM {self.text_mapper.table_as_prefix}
             WHERE
-                {self.text_mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.text_mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (id,)
@@ -116,7 +116,7 @@ class TextRepository(MySQLRepository):
             JOIN {self.mapper.table_as_prefix}
                 ON {self.mapper.pr_id_field} = {self.text_mapper.entity_foreign_key_field_with_prefix}
             WHERE
-                {self.mapper.pr_field('id')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.mapper.pr_field('id')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (entity_id,)

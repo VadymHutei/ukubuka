@@ -22,7 +22,7 @@ class MySQLRepository(SQLRepository):
                 {self.mapper.fields}
             FROM {self.mapper.table_as_prefix}
             WHERE
-                {self.mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self.mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = entity_id
@@ -70,7 +70,7 @@ class MySQLRepository(SQLRepository):
         query = f'''
             UPDATE {self.mapper.table}
             SET {set_fields_statement}
-            WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+            WHERE id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (*set_field_values, entity.id)
@@ -84,7 +84,7 @@ class MySQLRepository(SQLRepository):
         return result
 
     def delete(self, entity_id: int) -> bool:
-        query = f'DELETE FROM {self.mapper.table} WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}'
+        query = f'DELETE FROM {self.mapper.table} WHERE id = {SQLEntityMapper.PLCHLD}'
 
         query_data = (entity_id,)
 

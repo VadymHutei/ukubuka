@@ -6,6 +6,12 @@ from services.Config.ConfigRepositoryInterface import IConfigRepository
 
 class ConfigRepository(MySQLRepository, IConfigRepository):
 
+    def __init__(self, mapper: ConfigMapper):
+        super().__init__()
+
+        self._mapper = mapper
+        self._transformer = ConfigEntityTransformer
+
     def get_all(self) -> list[ConfigEntity]:
         query = f'''
             SELECT

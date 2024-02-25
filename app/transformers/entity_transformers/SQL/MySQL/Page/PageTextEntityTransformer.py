@@ -5,13 +5,17 @@ from transformers.entity_transformers.SQL.MySQL.MySQLEntityTransformer import My
 
 class PageTextEntityTransformer(MySQLEntityTransformer):
 
-    @classmethod
-    def transform(cls, db_row: dict) -> PageTextEntity:
+    def __init__(self, mapper: PageTextMapper):
+        super().__init__()
+
+        self._mapper = mapper
+
+    def transform(self, db_row: dict) -> PageTextEntity:
         return PageTextEntity(
-            id=PageTextMapper.get_field_value_from_db_record(db_row, 'id'),
-            page_id=PageTextMapper.get_field_value_from_db_record(db_row, 'page_id'),
-            language_id=PageTextMapper.get_field_value_from_db_record(db_row, 'language_id'),
-            title=PageTextMapper.get_field_value_from_db_record(db_row, 'title'),
-            created_at=PageTextMapper.get_field_value_from_db_record(db_row, 'created_at'),
-            updated_at=PageTextMapper.get_field_value_from_db_record(db_row, 'updated_at'),
+            id=self._mapper.get_field_value_from_db_record(db_row, 'id'),
+            page_id=self._mapper.get_field_value_from_db_record(db_row, 'page_id'),
+            language_id=self._mapper.get_field_value_from_db_record(db_row, 'language_id'),
+            title=self._mapper.get_field_value_from_db_record(db_row, 'title'),
+            created_at=self._mapper.get_field_value_from_db_record(db_row, 'created_at'),
+            updated_at=self._mapper.get_field_value_from_db_record(db_row, 'updated_at'),
         )

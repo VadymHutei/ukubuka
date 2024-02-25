@@ -11,13 +11,13 @@ from transformers.entity_transformers.SQL.MySQL.Page.PageEntityTransformer impor
 from transformers.entity_transformers.SQL.MySQL.Page.PageTextEntityTransformer import PageTextEntityTransformer
 
 
-class PageRepository(IPageRepository, MySQLRepository):
+class PageRepository(MySQLRepository, IPageRepository):
 
-    def __init__(self):
+    def __init__(self, mapper: PageMapper, text_mapper: PageTextMapper):
         super().__init__()
 
-        self._mapper = PageMapper
-        self._text_mapper = PageTextMapper
+        self._mapper = mapper
+        self._text_mapper = text_mapper
         self._transformer = PageEntityTransformer
         self._text_transformer = PageTextEntityTransformer
 
@@ -27,7 +27,7 @@ class PageRepository(IPageRepository, MySQLRepository):
                 {self._mapper.fields}
             FROM {self._mapper.table_as_prefix}
             WHERE
-                {self._mapper.pr_id_field} = {self._mapper.QUERY_PLACEHOLDER}
+                {self._mapper.pr_id_field} = {self._mapper.PLCHLD}
         '''
 
         query_data = (entity_id,)
@@ -47,7 +47,7 @@ class PageRepository(IPageRepository, MySQLRepository):
             FROM {self._mapper.table_as_prefix}
             LEFT JOIN {self._text_mapper.table_as_prefix}
                 ON {self._text_mapper.entity_foreign_key_field_with_prefix} = {self._mapper.pr_field('id')}
-                AND {self._text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                AND {self._text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (g.current_language.id,)
@@ -81,7 +81,7 @@ class PageRepository(IPageRepository, MySQLRepository):
         query = f'''
               UPDATE {self._mapper.table}
               SET {set_fields_statement}
-              WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+              WHERE id = {SQLEntityMapper.PLCHLD}
           '''
 
         query_data = (*set_field_values, entity.id)
@@ -95,7 +95,7 @@ class PageRepository(IPageRepository, MySQLRepository):
         return result
 
     def delete(self, entity_id: int) -> bool:
-        query = f'DELETE FROM {self._mapper.table} WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}'
+        query = f'DELETE FROM {self._mapper.table} WHERE id = {SQLEntityMapper.PLCHLD}'
 
         query_data = (entity_id,)
 
@@ -115,7 +115,7 @@ class PageRepository(IPageRepository, MySQLRepository):
             JOIN {self._mapper.table_as_prefix}
                 ON {self._mapper.pr_id_field} = {self._text_mapper.entity_foreign_key_field_with_prefix}
             WHERE
-                {self._mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self._mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (entity_code,)
@@ -133,7 +133,7 @@ class PageRepository(IPageRepository, MySQLRepository):
                 {self._text_mapper.fields}
             FROM {self._text_mapper.table_as_prefix}
             WHERE
-                {self._text_mapper.table_prefix}.id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self._text_mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (entity_text_id,)
@@ -153,7 +153,7 @@ class PageRepository(IPageRepository, MySQLRepository):
             JOIN {self._mapper.table_as_prefix}
                 ON {self._mapper.pr_id_field} = {self._text_mapper.entity_foreign_key_field_with_prefix}
             WHERE
-                {self._mapper.pr_field('id')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self._mapper.pr_field('id')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (entity_id,)
@@ -187,7 +187,7 @@ class PageRepository(IPageRepository, MySQLRepository):
         query = f'''
             UPDATE {self._text_mapper.table}
             SET {set_fields_statement}
-            WHERE id = {SQLEntityMapper.QUERY_PLACEHOLDER}
+            WHERE id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (*set_field_values, text.id,)
@@ -209,7 +209,7 @@ class PageRepository(IPageRepository, MySQLRepository):
             LEFT JOIN {self._text_mapper.table_as_prefix}
                 ON {self._text_mapper.entity_foreign_key_field_with_prefix} = {self._mapper.pr_id_field}
             WHERE
-                {self._mapper.pr_field('code')} = {SQLEntityMapper.QUERY_PLACEHOLDER}
+                {self._mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (code,)
@@ -222,7 +222,7 @@ class PageRepository(IPageRepository, MySQLRepository):
         return self._transformer.transform(data) if data else None
 
     def delete_by_code(self, code: str) -> bool:
-        query = f'DELETE FROM {self._mapper.table} WHERE code = {SQLEntityMapper.QUERY_PLACEHOLDER}'
+        query = f'DELETE FROM {self._mapper.table} WHERE code = {SQLEntityMapper.PLCHLD}'
 
         query_data = (code,)
 

@@ -1,17 +1,34 @@
+from entity_mappers.MapperFieldTypes import MapperFieldTypes
 from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
 
 
 class SQLTextEntityMapper(SQLEntityMapper):
 
-    ENTITY_FOREIGN_KEY_FIELD: str
     LANGUAGE_FOREIGN_KEY_FIELD: str = 'language_id'
 
-    @classmethod
-    @property
-    def entity_foreign_key_field_with_prefix(cls) -> str:
-        return f'{cls._TABLE_PREFIX}.{cls.ENTITY_FOREIGN_KEY_FIELD}'
+    def __init__(
+        self,
+        table: str,
+        table_prefix: str,
+        fields: list[str],
+        fillable_fields: list[str],
+        entity_foreign_key_field: str,
+        field_types: dict[str, MapperFieldTypes] = {},
+    ):
+        super().__init__(
+            table,
+            table_prefix,
+            fields,
+            fillable_fields,
+            field_types,
+        )
 
-    @classmethod
+        self._entity_foreign_key_field = entity_foreign_key_field
+
     @property
-    def language_foreign_key_field_with_prefix(cls) -> str:
-        return f'{cls._TABLE_PREFIX}.{cls.LANGUAGE_FOREIGN_KEY_FIELD}'
+    def entity_foreign_key_field_with_prefix(self) -> str:
+        return f'{self._table_prefix}.{self._entity_foreign_key_field}'
+
+    @property
+    def language_foreign_key_field_with_prefix(self) -> str:
+        return f'{self._table_prefix}.{self.LANGUAGE_FOREIGN_KEY_FIELD}'
