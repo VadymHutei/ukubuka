@@ -20,8 +20,8 @@ class TextRepository(MySQLRepository):
                 {self.text_mapper.fields}
             FROM {self.mapper.table_as_prefix}
             LEFT JOIN {self.text_mapper.table_as_prefix}
-                ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_field('id')}
-                AND {self.text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.PLCHLD}
+                ON {self.text_mapper.pr_entity_foreign_key_field} = {self.mapper.pr_field('id')}
+                AND {self.text_mapper.pr_language_foreign_key_field} = {SQLEntityMapper.PLCHLD}
             WHERE
                 {self.mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
         '''
@@ -42,8 +42,8 @@ class TextRepository(MySQLRepository):
                 {self.text_mapper.fields}
             FROM {self.mapper.table_as_prefix}
             LEFT JOIN {self.text_mapper.table_as_prefix}
-                ON {self.text_mapper.entity_foreign_key_field_with_prefix} = {self.mapper.pr_field('id')}
-                AND {self.text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.PLCHLD}
+                ON {self.text_mapper.pr_entity_foreign_key_field} = {self.mapper.pr_field('id')}
+                AND {self.text_mapper.pr_language_foreign_key_field} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (g.current_language.id,)
@@ -58,7 +58,7 @@ class TextRepository(MySQLRepository):
     def add_translation(self, text: TextEntity) -> bool:
         query = f'''
             INSERT INTO {self.text_mapper.table} ({self.text_mapper.fillable_fields})
-            VALUES ({self.text_mapper.fillable_placeholders()})
+            VALUES ({self.text_mapper.fillable_placeholders})
         '''
 
         query_data = self.text_mapper.fillable_data(text)
@@ -114,7 +114,7 @@ class TextRepository(MySQLRepository):
                 {self.text_mapper.fields}
             FROM {self.text_mapper.table_as_prefix}
             JOIN {self.mapper.table_as_prefix}
-                ON {self.mapper.pr_id_field} = {self.text_mapper.entity_foreign_key_field_with_prefix}
+                ON {self.mapper.pr_id_field} = {self.text_mapper.pr_entity_foreign_key_field}
             WHERE
                 {self.mapper.pr_field('id')} = {SQLEntityMapper.PLCHLD}
         '''

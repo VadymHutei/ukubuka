@@ -46,8 +46,8 @@ class PageRepository(MySQLRepository, IPageRepository):
                 {self._text_mapper.fields}
             FROM {self._mapper.table_as_prefix}
             LEFT JOIN {self._text_mapper.table_as_prefix}
-                ON {self._text_mapper.entity_foreign_key_field_with_prefix} = {self._mapper.pr_field('id')}
-                AND {self._text_mapper.language_foreign_key_field_with_prefix} = {SQLEntityMapper.PLCHLD}
+                ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_field('id')}
+                AND {self._text_mapper.pr_language_foreign_key_field} = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = (g.current_language.id,)
@@ -62,7 +62,7 @@ class PageRepository(MySQLRepository, IPageRepository):
     def add(self, entity: Entity) -> bool:
         query = f'''
               INSERT INTO {self._mapper.table} ({self._mapper.fillable_fields})
-              VALUES ({self._mapper.fillable_placeholders()})
+              VALUES ({self._mapper.fillable_placeholders})
           '''
 
         query_data = self._mapper.fillable_data(entity)
@@ -107,26 +107,6 @@ class PageRepository(MySQLRepository, IPageRepository):
 
         return result
 
-    def find_translations_by_entity_code(self, entity_code: str) -> list[TextEntity]:
-        query = f'''
-            SELECT
-                {self._text_mapper.fields}
-            FROM {self._text_mapper.table_as_prefix}
-            JOIN {self._mapper.table_as_prefix}
-                ON {self._mapper.pr_id_field} = {self._text_mapper.entity_foreign_key_field_with_prefix}
-            WHERE
-                {self._mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
-        '''
-
-        query_data = (entity_code,)
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query, query_data)
-                data = cursor.fetchall()
-
-        return self._text_transformer.transform_collection(data) if data else []
-
     def find_translation(self, entity_text_id: int) -> TextEntity | None:
         query = f'''
             SELECT
@@ -151,7 +131,7 @@ class PageRepository(MySQLRepository, IPageRepository):
                 {self._text_mapper.fields}
             FROM {self._text_mapper.table_as_prefix}
             JOIN {self._mapper.table_as_prefix}
-                ON {self._mapper.pr_id_field} = {self._text_mapper.entity_foreign_key_field_with_prefix}
+                ON {self._mapper.pr_id_field} = {self._text_mapper.pr_entity_foreign_key_field}
             WHERE
                 {self._mapper.pr_field('id')} = {SQLEntityMapper.PLCHLD}
         '''
@@ -168,7 +148,7 @@ class PageRepository(MySQLRepository, IPageRepository):
     def add_translation(self, text: TextEntity) -> bool:
         query = f'''
             INSERT INTO {self._text_mapper.table} ({self._text_mapper.fillable_fields})
-            VALUES ({self._text_mapper.fillable_placeholders()})
+            VALUES ({self._text_mapper.fillable_placeholders})
         '''
 
         query_data = self._text_mapper.fillable_data(text)
@@ -207,7 +187,7 @@ class PageRepository(MySQLRepository, IPageRepository):
                 {self._text_mapper.fields}
             FROM {self._mapper.table_as_prefix}
             LEFT JOIN {self._text_mapper.table_as_prefix}
-                ON {self._text_mapper.entity_foreign_key_field_with_prefix} = {self._mapper.pr_id_field}
+                ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_id_field}
             WHERE
                 {self._mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
         '''

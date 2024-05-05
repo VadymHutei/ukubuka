@@ -26,9 +26,9 @@ class SQLTextEntityMapper(SQLEntityMapper):
         self._entity_foreign_key_field = entity_foreign_key_field
 
     @property
-    def entity_foreign_key_field_with_prefix(self) -> str:
+    def pr_entity_foreign_key_field(self) -> str:
         return f'{self._table_prefix}.{self._entity_foreign_key_field}'
 
     @property
-    def language_foreign_key_field_with_prefix(self) -> str:
+    def pr_language_foreign_key_field(self) -> str:
         return f'{self._table_prefix}.{self.LANGUAGE_FOREIGN_KEY_FIELD}'

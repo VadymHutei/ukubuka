@@ -1,6 +1,6 @@
 from entities.Config.ConfigEntity import ConfigEntity
-from services.IService import IService
 from services.Config.ConfigRepositoryInterface import IConfigRepository
+from services.IService import IService
 
 
 class ConfigService(IService):

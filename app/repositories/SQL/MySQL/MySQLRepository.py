@@ -19,10 +19,10 @@ class MySQLRepository(SQLRepository):
     def find(self, entity_id: int) -> Entity | None:
         query = f'''
             SELECT
-                {self.mapper.fields}
-            FROM {self.mapper.table_as_prefix}
+                {self._mapper.fields}
+            FROM {self._mapper.table_as_prefix}
             WHERE
-                {self.mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
+                {self._mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
         '''
 
         query_data = entity_id
@@ -32,13 +32,13 @@ class MySQLRepository(SQLRepository):
                 cursor.execute(query, query_data)
                 data = cursor.fetchone()
 
-        return self.transformer.transform(data) if data else None
+        return self._transformer.transform(data) if data else None
 
     def find_all(self) -> list[Entity]:
         query = f'''
             SELECT
-                {self.mapper.fields}
-            FROM {self.mapper.table_as_prefix}
+                {self._mapper.fields}
+            FROM {self._mapper.table_as_prefix}
         '''
 
         with self.connection as connection:
@@ -46,15 +46,15 @@ class MySQLRepository(SQLRepository):
                 cursor.execute(query)
                 data = cursor.fetchall()
 
-        return self.transformer.transform_collection(data) if data else []
+        return self._transformer.transform_collection(data) if data else []
 
     def add(self, entity: Entity) -> bool:
         query = f'''
-            INSERT INTO {self.mapper.table} ({self.mapper.fillable_fields})
-            VALUES ({self.mapper.fillable_placeholders()})
+            INSERT INTO {self._mapper.table} ({self._mapper.fillable_fields})
+            VALUES ({self._mapper.fillable_placeholders()})
         '''
 
-        query_data = self.mapper.fillable_data(entity)
+        query_data = self._mapper.fillable_data(entity)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
@@ -65,10 +65,10 @@ class MySQLRepository(SQLRepository):
         return result
 
     def update(self, entity: Entity) -> bool:
-        set_fields_statement, set_field_values = self.mapper.get_set_data(entity)
+        set_fields_statement, set_field_values = self._mapper.get_set_data(entity)
 
         query = f'''
-            UPDATE {self.mapper.table}
+            UPDATE {self._mapper.table}
             SET {set_fields_statement}
             WHERE id = {SQLEntityMapper.PLCHLD}
         '''
@@ -84,7 +84,7 @@ class MySQLRepository(SQLRepository):
         return result
 
     def delete(self, entity_id: int) -> bool:
-        query = f'DELETE FROM {self.mapper.table} WHERE id = {SQLEntityMapper.PLCHLD}'
+        query = f'DELETE FROM {self._mapper.table} WHERE id = {SQLEntityMapper.PLCHLD}'
 
         query_data = (entity_id,)
 

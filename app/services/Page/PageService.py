@@ -78,6 +78,3 @@ class PageService(IService):
 
     def find_translations_by_page_id(self, page_id: int) -> list[PageTextEntity]:
         return self._page_repository.find_translations_by_entity_id(page_id)
-
-    def find_translations_by_page_code(self, page_code: str) -> list[PageTextEntity]:
-        return self._page_repository.find_translations_by_entity_code(page_code)
