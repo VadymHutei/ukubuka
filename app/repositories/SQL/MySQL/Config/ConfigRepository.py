@@ -1,5 +1,3 @@
-from flask import g
-
 from entities.Config.ConfigEntity import ConfigEntity
 from entity_mappers.SQL.MySQL.Config.ConfigMapper import ConfigMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
@@ -28,7 +26,7 @@ class ConfigRepository(PyMySQLRepository, MySQLRepository, IConfigRepository):
                 {self._mapper.pr_field('id')} = {PyMySQLRepository.PLCHLD}
         '''
 
-        query_data = (g.current_language.id, config_id)
+        query_data = (config_id,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
@@ -40,11 +38,9 @@ class ConfigRepository(PyMySQLRepository, MySQLRepository, IConfigRepository):
     def find_all(self) -> list[ConfigEntity]:
         query = f'SELECT {self._mapper.fields} FROM {self._mapper.table_as_prefix}'
 
-        query_data = (g.current_language.id,)
-
         with self.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, query_data)
+                cursor.execute(query)
                 data = cursor.fetchall()
 
         return self._transformer.transform_collection(data) if data else []

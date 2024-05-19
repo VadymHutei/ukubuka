@@ -1,5 +1,3 @@
-from flask import g
-
 from entities.Page.PageTextEntity import PageTextEntity
 from entity_mappers.SQL.MySQL.Page.PageTextMapper import PageTextMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
@@ -28,7 +26,7 @@ class PageTextRepository(PyMySQLRepository, MySQLRepository, IPageTextRepository
                 {self._mapper.pr_field('id')} = {PyMySQLRepository.PLCHLD}
         '''
 
-        query_data = (g.current_language.id, page_text_id)
+        query_data = (page_text_id,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
@@ -40,11 +38,9 @@ class PageTextRepository(PyMySQLRepository, MySQLRepository, IPageTextRepository
     def find_all(self) -> list[PageTextEntity]:
         query = f'SELECT {self._mapper.fields} FROM {self._mapper.table_as_prefix}'
 
-        query_data = (g.current_language.id,)
-
         with self.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, query_data)
+                cursor.execute(query)
                 data = cursor.fetchall()
 
         return self._transformer.transform_collection(data) if data else []

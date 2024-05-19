@@ -5,7 +5,7 @@ from pymysql.cursors import DictCursor
 
 class PyMySQLRepository:
 
-    PLCHLD = '%'
+    PLCHLD = '%s'
 
     @property
     def connection(self):
