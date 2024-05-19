@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 from entities.Entity import Entity
 
@@ -8,5 +9,6 @@ class ConfigEntity(Entity):
 
     code: str
     value: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+
+    updated_at: datetime | None = None

@@ -43,7 +43,7 @@ class SQLEntityMapper(EntityMapper):
     def fields(self) -> str:
         fields = [f'{self._table_prefix}.{field} as {self.field_alias(field)}' for field in self._fields]
 
-        return ',\n'.join(fields)
+        return ', '.join(fields)
 
     @property
     def fillable_fields(self) -> str:

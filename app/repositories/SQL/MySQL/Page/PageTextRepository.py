@@ -38,12 +38,7 @@ class PageTextRepository(PyMySQLRepository, MySQLRepository, IPageTextRepository
         return self._transformer.transform(data) if data else None
 
     def find_all(self) -> list[PageTextEntity]:
-        query = f'''
-            SELECT
-                {self._mapper.fields}
-            FROM
-                {self._mapper.table_as_prefix}
-        '''
+        query = f'SELECT {self._mapper.fields} FROM {self._mapper.table_as_prefix}'
 
         query_data = (g.current_language.id,)
 
@@ -55,12 +50,7 @@ class PageTextRepository(PyMySQLRepository, MySQLRepository, IPageTextRepository
         return self._transformer.transform_collection(data) if data else []
 
     def add(self, page: PageTextEntity) -> int | None:
-        query = f'''
-            INSERT
-                INTO {self._mapper.into}
-            VALUES
-                ({self._mapper.fillable_placeholders})
-        '''
+        query = f'INSERT INTO {self._mapper.into} VALUES ({self._mapper.fillable_placeholders})'
 
         query_data = self._mapper.fillable_data(page)
 

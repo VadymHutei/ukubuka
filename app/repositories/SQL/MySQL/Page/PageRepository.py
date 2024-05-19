@@ -89,12 +89,7 @@ class PageRepository(PyMySQLRepository, MySQLRepository, IPageRepository):
         return self._transformer.transform_collection(data) if data else []
 
     def add(self, page: PageEntity) -> int | None:
-        query = f'''
-            INSERT
-                INTO {self._mapper.into}
-            VALUES
-                ({self._mapper.fillable_placeholders})
-        '''
+        query = f'INSERT INTO {self._mapper.into} VALUES ({self._mapper.fillable_placeholders})'
 
         query_data = self._mapper.fillable_data(page)
 
