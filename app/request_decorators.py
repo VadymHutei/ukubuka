@@ -24,10 +24,10 @@ def with_language(f):
                 return redirect(url_for(endpoint, *args, **kwargs))
 
             g.current_language = language_service.get_by_code(kwargs['language_code'])
+
+            del kwargs['language_code']
         else:
             g.current_language = g.default_language
-
-        del kwargs['language_code']
 
         return f(*args, **kwargs)
 

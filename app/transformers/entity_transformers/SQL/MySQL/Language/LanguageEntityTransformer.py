@@ -18,4 +18,5 @@ class LanguageEntityTransformer(MySQLEntityTransformer):
             is_active=self._mapper.get_field_value_from_db_record(db_row, 'is_active'),
             created_at=self._mapper.get_field_value_from_db_record(db_row, 'created_at'),
             updated_at=self._mapper.get_field_value_from_db_record(db_row, 'updated_at'),
+            deleted_at=self._mapper.get_field_value_from_db_record(db_row, 'deleted_at'),
         )

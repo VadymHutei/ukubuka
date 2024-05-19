@@ -13,8 +13,11 @@ class LanguageService(IService):
     def __init__(self, language_repository: ILanguageRepository):
         self._language_repository = language_repository
 
-    def find(self, id: int) -> LanguageEntity | None:
-        return self._language_repository.find(id)
+    def find(self, language_id: int):
+        return self._language_repository.find(language_id)
+
+    def find_active(self):
+        return self._language_repository.find_active()
 
     def add(self, add_language_dto: AddLanguageDTO) -> bool:
         language = LanguageEntity(
@@ -62,6 +65,3 @@ class LanguageService(IService):
 
     def delete_by_code(self, code: str):
         return self._language_repository.delete_by_code(code)
-
-    def find_active(self) -> list[LanguageEntity]:
-        return self._language_repository.find_active()
