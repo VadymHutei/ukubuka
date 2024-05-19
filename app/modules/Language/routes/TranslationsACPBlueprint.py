@@ -1,7 +1,8 @@
 from flask import Blueprint, request
+
 from modules.Language.controllers.TranslationACPController import TranslationACPController
-from modules.Language.requestDecorators import language_redirect
 from modules.Session.requestDecorators import with_session
+from request_decorators import with_language
 
 translationsACPBlueprint = Blueprint(
     'translationsACPBlueprint',
@@ -12,14 +13,14 @@ translationsACPController = TranslationACPController()
 
 
 @translationsACPBlueprint.route('', methods=['GET'])
-@language_redirect
+@with_language
 @with_session
 def translationsACPRoute():
     return translationsACPController.translationsPageAction()
 
 
 @translationsACPBlueprint.route('/edit', methods=['GET', 'POST'])
-@language_redirect
+@with_language
 @with_session
 def editTranslationACPRoute():
     if request.method == 'GET':
@@ -29,7 +30,7 @@ def editTranslationACPRoute():
 
 
 @translationsACPBlueprint.route('/delete', methods=['GET'])
-@language_redirect
+@with_language
 @with_session
 def deleteTranslationACPRoute():
     return translationsACPController.deleteTextAction()
