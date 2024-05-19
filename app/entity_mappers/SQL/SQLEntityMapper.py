@@ -4,18 +4,17 @@ from entities.Entity import Entity
 from entity_mappers.EntityMapper import EntityMapper
 from entity_mappers.MapperFieldTypes import MapperFieldTypes
 from exceptions.MapperException import MapperException
+from repositories.SQL.MySQL.PyMySQLRepository import PyMySQLRepository
 
 
 class SQLEntityMapper(EntityMapper):
-
-    PLCHLD = '%s'
 
     def __init__(
         self,
         table: str,
         table_prefix: str,
-        fields: list[str],
-        fillable_fields: list[str],
+        fields: tuple[str, ...],
+        fillable_fields: tuple[str, ...],
         field_types: dict[str, MapperFieldTypes],
     ):
         self._table = table
@@ -51,8 +50,12 @@ class SQLEntityMapper(EntityMapper):
         return ', '.join(self._fillable_fields)
 
     @property
+    def into(self) -> str:
+        return f'{self.table} ({self.fillable_fields})'
+
+    @property
     def fillable_placeholders(self) -> str:
-        return ', '.join([self.PLCHLD] * len(self._fillable_fields))
+        return ', '.join([PyMySQLRepository.PLCHLD] * len(self._fillable_fields))
 
     def fillable_data(self, entity: Entity) -> list[str]:
         return [getattr(entity, field) for field in self._fillable_fields]
@@ -78,7 +81,7 @@ class SQLEntityMapper(EntityMapper):
         set_fields_statement = []
         set_field_values = []
         for field in self._fillable_fields:
-            set_fields_statement.append(f'{field} = {self.PLCHLD}')
+            set_fields_statement.append(f'{field} = {PyMySQLRepository.PLCHLD}')
             set_field_values.append(getattr(entity, field))
 
         return ', '.join(set_fields_statement), set_field_values

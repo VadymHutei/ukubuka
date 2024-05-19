@@ -8,21 +8,24 @@ class PageTextMapper(MySQLTextEntityMapper):
         super().__init__(
             'page_text',
             'pg_t',
-            [
+            (
                 'id',
                 'page_id',
                 'language_id',
                 'title',
                 'created_at',
                 'updated_at',
-            ],
-            [
+            ),
+            (
                 'page_id',
                 'language_id',
                 'title',
                 'created_at',
                 'updated_at',
-            ],
+            ),
+            (
+                'title',
+            ),
             'page_id',
             {
                 'id': MapperFieldTypes.INT,

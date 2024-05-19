@@ -1,36 +1,41 @@
 from flask import g
 
-from entities.Entity import Entity
-from entities.TextEntity import TextEntity
+from entities.Page.PageEntity import PageEntity
 from entity_mappers.SQL.MySQL.Page.PageMapper import PageMapper
 from entity_mappers.SQL.MySQL.Page.PageTextMapper import PageTextMapper
-from entity_mappers.SQL.SQLEntityMapper import SQLEntityMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from repositories.SQL.MySQL.PyMySQLRepository import PyMySQLRepository
 from services.Page.IPageRepository import IPageRepository
 from transformers.entity_transformers.SQL.MySQL.Page.PageEntityTransformer import PageEntityTransformer
-from transformers.entity_transformers.SQL.MySQL.Page.PageTextEntityTransformer import PageTextEntityTransformer
 
 
-class PageRepository(MySQLRepository, IPageRepository):
+class PageRepository(PyMySQLRepository, MySQLRepository, IPageRepository):
 
-    def __init__(self, mapper: PageMapper, text_mapper: PageTextMapper):
-        super().__init__()
-
+    def __init__(
+        self,
+        mapper: PageMapper,
+        text_mapper: PageTextMapper,
+        transformer: PageEntityTransformer,
+    ):
         self._mapper = mapper
+        self._transformer = transformer
         self._text_mapper = text_mapper
-        self._transformer = PageEntityTransformer
-        self._text_transformer = PageTextEntityTransformer
 
-    def find(self, entity_id: int) -> Entity | None:
+    def find(self, page_id: int) -> PageEntity | None:
         query = f'''
             SELECT
-                {self._mapper.fields}
-            FROM {self._mapper.table_as_prefix}
+                {self._mapper.fields},
+                {self._text_mapper.entity_fields}
+            FROM
+                {self._mapper.table_as_prefix}
+                LEFT JOIN {self._text_mapper.table_as_prefix}
+                    ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_field('id')}
+                    AND {self._text_mapper.pr_language_foreign_key_field} = {PyMySQLRepository.PLCHLD}
             WHERE
-                {self._mapper.pr_id_field} = {self._mapper.PLCHLD}
+                {self._mapper.pr_field('id')} = {PyMySQLRepository.PLCHLD}
         '''
 
-        query_data = (entity_id,)
+        query_data = (g.current_language.id, page_id)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
@@ -39,15 +44,39 @@ class PageRepository(MySQLRepository, IPageRepository):
 
         return self._transformer.transform(data) if data else None
 
-    def find_all(self) -> list[Entity]:
+    def find_by_code(self, code: str) -> PageEntity | None:
+        query = f'''
+            SELECT
+                {self._mapper.fields},
+                {self._text_mapper.entity_fields}
+            FROM
+                {self._mapper.table_as_prefix}
+                LEFT JOIN {self._text_mapper.table_as_prefix}
+                    ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_field('id')}
+                    AND {self._text_mapper.pr_language_foreign_key_field} = {PyMySQLRepository.PLCHLD}
+            WHERE
+                {self._mapper.pr_field('code')} = {PyMySQLRepository.PLCHLD}
+        '''
+
+        query_data = (g.current_language.id, code)
+
+        with self.connection as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query, query_data)
+                data = cursor.fetchone()
+
+        return self._transformer.transform(data) if data else None
+
+    def find_all(self) -> list[PageEntity]:
         query = f'''
             SELECT
                 {self._mapper.fields},
                 {self._text_mapper.fields}
-            FROM {self._mapper.table_as_prefix}
-            LEFT JOIN {self._text_mapper.table_as_prefix}
-                ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_field('id')}
-                AND {self._text_mapper.pr_language_foreign_key_field} = {SQLEntityMapper.PLCHLD}
+            FROM
+                {self._mapper.table_as_prefix}
+                LEFT JOIN {self._text_mapper.table_as_prefix}
+                    ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_field('id')}
+                    AND {self._text_mapper.pr_language_foreign_key_field} = {PyMySQLRepository.PLCHLD}
         '''
 
         query_data = (g.current_language.id,)
@@ -59,172 +88,72 @@ class PageRepository(MySQLRepository, IPageRepository):
 
         return self._transformer.transform_collection(data) if data else []
 
-    def add(self, entity: Entity) -> bool:
+    def add(self, page: PageEntity) -> int | None:
         query = f'''
-              INSERT INTO {self._mapper.table} ({self._mapper.fillable_fields})
-              VALUES ({self._mapper.fillable_placeholders})
-          '''
+            INSERT
+                INTO {self._mapper.into}
+            VALUES
+                ({self._mapper.fillable_placeholders})
+        '''
 
-        query_data = self._mapper.fillable_data(entity)
+        query_data = self._mapper.fillable_data(page)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                result = cursor.execute(query, query_data) > 0
+                if cursor.execute(query, query_data) == 0:
+                    return None
 
-            connection.commit()
+                connection.commit()
 
-        return result
+                return cursor.lastrowid
 
-    def update(self, entity: Entity) -> bool:
-        set_fields_statement, set_field_values = self._mapper.get_set_data(entity)
+    def update(self, page: PageEntity) -> bool:
+        set_fields_statement, set_field_values = self._mapper.get_set_data(page)
 
         query = f'''
-              UPDATE {self._mapper.table}
-              SET {set_fields_statement}
-              WHERE id = {SQLEntityMapper.PLCHLD}
-          '''
-
-        query_data = (*set_field_values, entity.id)
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                result = cursor.execute(query, query_data) > 0
-
-            connection.commit()
-
-        return result
-
-    def delete(self, entity_id: int) -> bool:
-        query = f'DELETE FROM {self._mapper.table} WHERE id = {SQLEntityMapper.PLCHLD}'
-
-        query_data = (entity_id,)
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                result = cursor.execute(query, query_data) > 0
-
-            connection.commit()
-
-        return result
-
-    def find_translation(self, entity_text_id: int) -> TextEntity | None:
-        query = f'''
-            SELECT
-                {self._text_mapper.fields}
-            FROM {self._text_mapper.table_as_prefix}
+            UPDATE
+                {self._mapper.table}
+            SET
+                {set_fields_statement}
             WHERE
-                {self._text_mapper.table_prefix}.id = {SQLEntityMapper.PLCHLD}
+                {self._mapper.pr_field('id')} = {PyMySQLRepository.PLCHLD}
         '''
 
-        query_data = (entity_text_id,)
+        query_data = (*set_field_values, page.id)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, query_data)
-                data = cursor.fetchone()
+                if cursor.execute(query, query_data) == 0:
+                    return False
 
-        return self._text_transformer.transform(data) if data else None
+                connection.commit()
 
-    def find_translations_by_entity_id(self, entity_id: int) -> list[TextEntity]:
-        query = f'''
-            SELECT
-                {self._text_mapper.fields}
-            FROM {self._text_mapper.table_as_prefix}
-            JOIN {self._mapper.table_as_prefix}
-                ON {self._mapper.pr_id_field} = {self._text_mapper.pr_entity_foreign_key_field}
-            WHERE
-                {self._mapper.pr_field('id')} = {SQLEntityMapper.PLCHLD}
-        '''
+                return True
 
-        query_data = (entity_id,)
+    def delete(self, page_id: int) -> bool:
+        query = f'DELETE FROM {self._mapper.table} WHERE id = {PyMySQLRepository.PLCHLD}'
+
+        query_data = (page_id,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, query_data)
-                data = cursor.fetchall()
+                if cursor.execute(query, query_data) == 0:
+                    return False
 
-        return self._text_transformer.transform_collection(data) if data else []
+                connection.commit()
 
-    def add_translation(self, text: TextEntity) -> bool:
-        query = f'''
-            INSERT INTO {self._text_mapper.table} ({self._text_mapper.fillable_fields})
-            VALUES ({self._text_mapper.fillable_placeholders})
-        '''
-
-        query_data = self._text_mapper.fillable_data(text)
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                result = cursor.execute(query, query_data) > 0
-
-            connection.commit()
-
-        return result
-
-    def update_translation(self, text: TextEntity) -> bool:
-        set_fields_statement, set_field_values = self._text_mapper.get_set_data(text)
-
-        query = f'''
-            UPDATE {self._text_mapper.table}
-            SET {set_fields_statement}
-            WHERE id = {SQLEntityMapper.PLCHLD}
-        '''
-
-        query_data = (*set_field_values, text.id,)
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                result = cursor.execute(query, query_data) > 0
-
-            connection.commit()
-
-        return result
-
-    def find_by_code(self, code: str) -> Entity | None:
-        query = f'''
-            SELECT
-                {self._mapper.fields},
-                {self._text_mapper.fields}
-            FROM {self._mapper.table_as_prefix}
-            LEFT JOIN {self._text_mapper.table_as_prefix}
-                ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_id_field}
-            WHERE
-                {self._mapper.pr_field('code')} = {SQLEntityMapper.PLCHLD}
-        '''
-
-        query_data = (code,)
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query, query_data)
-                data = cursor.fetchone()
-
-        return self._transformer.transform(data) if data else None
+                return True
 
     def delete_by_code(self, code: str) -> bool:
-        query = f'DELETE FROM {self._mapper.table} WHERE code = {SQLEntityMapper.PLCHLD}'
+        query = f'DELETE FROM {self._mapper.table} WHERE code = {PyMySQLRepository.PLCHLD}'
 
         query_data = (code,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                result = cursor.execute(query, query_data) > 0
+                if cursor.execute(query, query_data) == 0:
+                    return False
 
-            connection.commit()
+                connection.commit()
 
-        return result
-
-    def find_active(self) -> list[Entity]:
-        query = f'''
-            SELECT
-                {self._mapper.fields}
-            FROM {self._mapper.table_as_prefix}
-            WHERE {self._mapper.pr_field('is_active')} = 1
-        '''
-
-        with self.connection as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                data = cursor.fetchall()
-
-        return self._transformer.transform_collection(data) if data else []
+                return True

@@ -8,7 +8,7 @@ class PageMapper(MySQLEntityMapper):
         super().__init__(
             'page',
             'pg',
-            [
+            (
                 'id',
                 'code',
                 'template',
@@ -16,15 +16,15 @@ class PageMapper(MySQLEntityMapper):
                 'is_active',
                 'created_at',
                 'updated_at',
-            ],
-            [
+            ),
+            (
                 'code',
                 'template',
                 'layout',
                 'is_active',
                 'created_at',
                 'updated_at',
-            ],
+            ),
             {
                 'id': MapperFieldTypes.INT,
                 'is_active': MapperFieldTypes.BOOL,

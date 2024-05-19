@@ -10,8 +10,8 @@ class PageEntity(Entity):
     code: str
     template: str
     is_active: bool
+    title: str
     created_at: datetime
 
-    title: str | None = None
     layout: str | None = None
     updated_at: datetime | None = None

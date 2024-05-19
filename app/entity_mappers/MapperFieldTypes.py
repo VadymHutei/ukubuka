@@ -11,6 +11,6 @@ class MapperFieldTypes(Enum):
     def convert(cls, cast_type: Self, value: str):
         match cast_type:
             case cls.INT:
-                return int(value) if value is not None else None
+                return None if value is None else int(value)
             case cls.BOOL:
-                return bool(value) if value is not None else None
+                return None if value is None else bool(value)

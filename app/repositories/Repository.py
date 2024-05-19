@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from entities.Entity import Entity
 
 
-class IRepository(ABC):
+class Repository(ABC):
 
     @abstractmethod
     def find(self, entity_id: int) -> Entity | None:
@@ -14,7 +14,7 @@ class IRepository(ABC):
         pass
 
     @abstractmethod
-    def add(self, entity: Entity) -> bool:
+    def add(self, entity: Entity) -> int | None:
         pass
 
     @abstractmethod

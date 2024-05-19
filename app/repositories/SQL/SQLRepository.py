@@ -1,5 +1,2 @@
-from repositories.IRepository import IRepository
-
-
-class SQLRepository(IRepository):
+class SQLRepository:
     pass

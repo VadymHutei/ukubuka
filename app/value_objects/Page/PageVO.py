@@ -1,15 +1,14 @@
 from dataclasses import dataclass
-from datetime import datetime
 
-from value_objects.IValueObject import IValueObject
+from value_objects.ValueObject import ValueObject
 
 
 @dataclass(kw_only=True)
-class PageVO(IValueObject):
+class PageVO(ValueObject):
 
     code: str
     template: str
     is_active: bool
-    created_at: datetime
+    title: str
+
     layout: str | None = None
-    updated_at: datetime | None = None
