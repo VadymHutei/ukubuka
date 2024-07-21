@@ -31,5 +31,6 @@ docker run --name redis7 -d --restart always -v /path/to/redis/data/dir:/data -p
 ```
 
 ### Running app
+```
 flask --app=app/main.py --debug run --port=5000
 ```

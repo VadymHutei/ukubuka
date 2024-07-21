@@ -1,8 +1,8 @@
 from flask import Flask, g
 
+from blueprints import blueprints_list
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
-from blueprints.ACP.PageBlueprint import acp_page_blueprint
 from blueprints.website.CatalogBlueprint import catalog_blueprint
 from blueprints.website.HomeBlueprint import home_blueprint
 from blueprints.website.ProductBlueprint import product_blueprint
@@ -35,6 +35,9 @@ def before_request() -> None:
     g.default_language = language_service.get_by_code(app.config['default_language_code'])
 
 
+for blueprint in blueprints_list:
+    app.register_blueprint(blueprint)
+
 app.register_blueprint(catalog_blueprint)
 app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(home_blueprint)
@@ -44,5 +47,4 @@ app.register_blueprint(user_blueprint)
 
 app.register_blueprint(acp_dashboard_blueprint)
 app.register_blueprint(acp_language_blueprint)
-app.register_blueprint(acp_page_blueprint)
 app.register_blueprint(ACP_user_blueprint)
