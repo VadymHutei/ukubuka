@@ -26,7 +26,8 @@ class CatalogTextMapper(MySQLTextEntityMapper):
                 'updated_at',
             ),
             (
-                'title',
+                'name',
+                'description',
             ),
             'catalog_id',
             {

@@ -1,7 +1,9 @@
+from flask import abort
+
 from controllers.IController import IController
 from services.Catalog.CatalogService import CatalogService
+from views.HTML.website.Catalog.CatalogView import CatalogView
 from views.HTML.website.Catalog.CatalogsView import CatalogsView
-from views.web.Catalog.CatalogView import CatalogView
 
 
 class CatalogController(IController):
@@ -23,6 +25,11 @@ class CatalogController(IController):
 
         catalog = self._service.find_by_code(catalog_code)
 
-        view.set_data(catalog=catalog)
+        if catalog is None:
+            abort(404)
+
+        view.set_data(
+            catalog=self._service.find_by_code(catalog_code)
+        )
 
         return view.render()

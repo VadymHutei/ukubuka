@@ -17,6 +17,7 @@ def catalogs_page_route():
 
     return controller.catalogs_page_action()
 
+
 @catalog_blueprint.route('<string:catalog_code>', methods=['GET'])
 @with_language
 @with_session
