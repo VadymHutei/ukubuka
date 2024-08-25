@@ -6,14 +6,16 @@ from data_transfer_objects.Page.EditPageDTO import EditPageDTO
 from data_transfer_objects.Page.EditPageTranslationDTO import EditPageTranslationDTO
 from entities.Page.PageEntity import PageEntity
 from entities.Page.PageTextEntity import PageTextEntity
+from repositories.SQL.MySQL.Page.PageTextRepository import PageTextRepository
 from services.IService import IService
 from services.Page.IPageRepository import IPageRepository
 
 
 class PageService(IService):
 
-    def __init__(self, page_repository: IPageRepository):
+    def __init__(self, page_repository: IPageRepository, page_text_repository: PageTextRepository):
         self._page_repository = page_repository
+        self._page_text_repository = page_text_repository
 
     def find(self, page_id: int) -> PageEntity | None:
         return self._page_repository.find(page_id)
@@ -76,5 +78,5 @@ class PageService(IService):
     def find_translation(self, translation_id: int) -> PageTextEntity | None:
         return self._page_repository.find_translation(translation_id)
 
-    def find_translations_by_page_id(self, page_id: int) -> list[PageTextEntity]:
-        return self._page_repository.find_translations_by_entity_id(page_id)
+    def find_translations(self, page_id: int) -> list[PageTextEntity]:
+        return self._page_text_repository.find_by_page_id(page_id)

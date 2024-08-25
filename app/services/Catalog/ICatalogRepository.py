@@ -1,10 +1,10 @@
 from abc import abstractmethod
 
 from entities.Catalog.CatalogEntity import CatalogEntity
-from repositories.Repository import Repository
+from repositories.IRepository import IRepository
 
 
-class ICatalogRepository(Repository):
+class ICatalogRepository(IRepository):
 
     @abstractmethod
     def get_all(self) -> list[CatalogEntity]:

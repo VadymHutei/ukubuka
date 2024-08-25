@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from entities.Entity import Entity
 
 
-class Repository(ABC):
+class IRepository(ABC):
 
     @abstractmethod
     def find(self, entity_id: int) -> Entity | None:

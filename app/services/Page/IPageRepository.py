@@ -1,7 +1,7 @@
 from abc import ABC
 
-from repositories.Repository import Repository
+from repositories.IRepository import IRepository
 
 
-class IPageRepository(Repository, ABC):
+class IPageRepository(IRepository, ABC):
     pass

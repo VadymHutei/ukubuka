@@ -17,6 +17,7 @@ def pages_route():
 
     return controller.pages_page_action()
 
+
 @acp_page_blueprint.route('<int:page_id>', methods=['GET'])
 @with_language
 @with_session
@@ -24,6 +25,7 @@ def page_route(page_id: int):
     controller: PageController = sc.get(PageController)
 
     return controller.page_page_action(page_id)
+
 
 @acp_page_blueprint.route('add', methods=['GET', 'POST'])
 @with_language
@@ -37,6 +39,7 @@ def add_page_route():
         case 'POST':
             return controller.add_page_action()
 
+
 @acp_page_blueprint.route('<int:page_id>/edit', methods=['GET', 'POST'])
 @with_language
 @with_session
@@ -49,6 +52,7 @@ def edit_page_route(page_id: int):
         case 'POST':
             return controller.edit_page_action(page_id)
 
+
 @acp_page_blueprint.route('<int:page_id>/delete', methods=['POST'])
 @with_language
 @with_session
@@ -56,6 +60,7 @@ def delete_page_route(page_id: int):
     controller: PageController = sc.get(PageController)
 
     return controller.delete_page_action(page_id)
+
 
 @acp_page_blueprint.route('<int:page_id>/add_translation', methods=['GET', 'POST'])
 @with_language
@@ -68,6 +73,7 @@ def add_page_translation_route(page_id: int):
             return controller.add_page_translation_page_action(page_id)
         case 'POST':
             return controller.add_page_translation_action(page_id)
+
 
 @acp_page_blueprint.route('translations/<int:translation_id>/edit', methods=['GET', 'POST'])
 @with_language

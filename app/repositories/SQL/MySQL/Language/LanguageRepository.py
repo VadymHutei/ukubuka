@@ -70,11 +70,14 @@ class LanguageRepository(PyMySQLRepository, MySQLRepository, ILanguageRepository
             FROM
                 {self._mapper.table_as_prefix}
             WHERE
-                {self._mapper.pr_field('is_active')} = 1'''
+                {self._mapper.pr_field('is_active')} = {PyMySQLRepository.PLCHLD}
+        '''
+
+        query_data = (1,)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
-                cursor.execute(query)
+                cursor.execute(query, query_data)
                 data = cursor.fetchall()
 
         return self._transformer.transform_collection(data) if data else []

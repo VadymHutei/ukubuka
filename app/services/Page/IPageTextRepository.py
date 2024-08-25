@@ -1,7 +1,10 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
-from repositories.Repository import Repository
+from repositories.IRepository import IRepository
 
 
-class IPageTextRepository(Repository, ABC):
-    pass
+class IPageTextRepository(IRepository, ABC):
+
+    @abstractmethod
+    def find_by_page_id(self, page_id: int):
+        pass
