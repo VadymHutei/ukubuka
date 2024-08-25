@@ -6,7 +6,7 @@ from modules.Session.requestDecorators import with_session
 from request_decorators import with_language
 from service_container import sc
 
-catalog_blueprint = Blueprint(CATALOG_BLUEPRINT, __name__, url_prefix='/<string:language>/catalogs')
+catalog_blueprint = Blueprint(CATALOG_BLUEPRINT, __name__, url_prefix='/<string:language_code>/catalogs')
 
 
 @catalog_blueprint.route('', methods=['GET'])

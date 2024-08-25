@@ -1,7 +1,7 @@
 from controllers.IController import IController
 from services.Catalog.CatalogService import CatalogService
+from views.HTML.website.Catalog.CatalogsView import CatalogsView
 from views.web.Catalog.CatalogView import CatalogView
-from views.web.Catalog.CatalogsView import CatalogsView
 
 
 class CatalogController(IController):
@@ -12,9 +12,9 @@ class CatalogController(IController):
     def catalogs_page_action(self) -> str:
         view = CatalogsView()
 
-        catalogs = self._service.get_all()
-
-        view.set_data(catalogs=catalogs)
+        view.set_data(
+            catalogs=self._service.find_all()
+        )
 
         return view.render()
 

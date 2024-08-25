@@ -4,7 +4,6 @@ from blueprints import blueprints_list
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
 from blueprints.blueprint_names import HOME_BLUEPRINT
-from blueprints.website.CatalogBlueprint import catalog_blueprint
 from blueprints.website.ProductBlueprint import product_blueprint
 from modules.Category.routes.CategoryACPBlueprint import categoryACPBlueprint
 from modules.Language.jinjaFilters import filters as language_filters
@@ -49,7 +48,6 @@ def language_redirect():
     return redirect(url)
 
 
-app.register_blueprint(catalog_blueprint)
 app.register_blueprint(categoryACPBlueprint)
 app.register_blueprint(product_blueprint)
 app.register_blueprint(translationsACPBlueprint)
