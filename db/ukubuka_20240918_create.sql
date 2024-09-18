@@ -192,13 +192,13 @@ CREATE TABLE IF NOT EXISTS `page_text` (
 -- Dumping structure for таблиця ukubuka.product
 CREATE TABLE IF NOT EXISTS `product` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `slug` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `is_active` tinyint unsigned NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `product_code_ui` (`code`) USING BTREE
+  UNIQUE KEY `product_code_ui` (`slug`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дані для експорту не вибрані

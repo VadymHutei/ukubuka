@@ -14,12 +14,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table ukubuka.category: ~2 rows (приблизно)
+-- Dumping data for table ukubuka.category: ~1 rows (приблизно)
 INSERT INTO `category` (`id`, `slug`, `parent_id`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(2, 'test_category', NULL, 1, '2024-09-18 20:50:50', NULL, NULL),
 	(3, 'test_subcategory', 2, 1, '2024-09-18 20:51:05', NULL, NULL);
 
--- Dumping data for table ukubuka.category_text: ~4 rows (приблизно)
+-- Dumping data for table ukubuka.category_text: ~2 rows (приблизно)
 INSERT INTO `category_text` (`id`, `category_id`, `language_id`, `name`, `description`, `created_at`, `updated_at`) VALUES
 	(3, 2, 1, 'Test Category', 'Test category description', '2024-09-18 00:00:00', NULL),
 	(4, 2, 2, 'Тестова Категорія', 'Опис тестової категорії', '2024-09-18 00:00:00', NULL),
@@ -56,7 +56,7 @@ INSERT INTO `page` (`id`, `code`, `template`, `layout`, `is_active`, `created_at
 	(1, 'acp_languages', 'v1/acp/language/languages.html', 'v1/acp/layout/layout.html', 1, '2023-01-29 20:17:10', NULL),
 	(2, 'acp_dashboard', 'v1/acp/dashboard/dashboard.html', 'v1/acp/layout/layout.html', 1, '2023-02-18 12:49:49', NULL),
 	(3, 'acp_edit_language', 'v1/acp/language/edit_language.html', 'v1/acp/layout/layout.html', 1, '2023-06-04 21:59:51', '2023-10-26 23:03:35'),
-	(4, 'product', 'v1/product/product.html', 'v1/layout/layout.html', 1, '2023-08-13 16:39:09', NULL),
+	(4, 'product_page', 'v1/product/product_page.html', 'v1/layout/layout.html', 1, '2023-08-13 16:39:09', '2024-09-18 23:52:54'),
 	(5, 'catalog', 'v1/catalog/catalog.html', 'v1/layout/layout.html', 1, '2023-09-27 22:43:43', NULL),
 	(6, 'catalogs', 'v1/catalog/catalogs.html', 'v1/layout/layout.html', 1, '2023-09-27 22:47:26', NULL),
 	(7, 'acp_add_language', 'v1/acp/language/add_language.html', 'v1/acp/layout/layout.html', 1, '2023-11-22 21:26:52', NULL),
@@ -103,8 +103,8 @@ INSERT INTO `page_text` (`id`, `page_id`, `language_id`, `title`, `created_at`, 
 	(34, 25, 2, 'Мова', '2024-02-08 00:47:25', NULL);
 
 -- Dumping data for table ukubuka.product: ~1 rows (приблизно)
-INSERT INTO `product` (`id`, `code`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 'test', 1, '2023-08-13 19:31:09', NULL, NULL);
+INSERT INTO `product` (`id`, `slug`, `is_active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'test_product', 1, '2023-08-13 19:31:09', NULL, NULL);
 
 -- Dumping data for table ukubuka.product_characteristic_numeric: ~0 rows (приблизно)
 
