@@ -6,13 +6,13 @@ from modules.Session.requestDecorators import with_session
 from request_decorators import with_language
 from service_container import sc
 
-product_blueprint = Blueprint(PRODUCT_BLUEPRINT, __name__, url_prefix='/<string:language>/products')
+product_blueprint = Blueprint(PRODUCT_BLUEPRINT, __name__, url_prefix='/<string:language_code>/product')
 
 
-@product_blueprint.route('<string:code>', methods=['GET'])
+@product_blueprint.route('<string:product_slug>', methods=['GET'])
 @with_language
 @with_session
-def product_route(code: str):
+def product_page_route(product_slug: str):
     controller: ProductController = sc.get(ProductController)
 
-    return controller.product_page_action(code)
+    return controller.product_page_action(product_slug)

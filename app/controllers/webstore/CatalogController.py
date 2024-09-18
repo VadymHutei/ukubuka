@@ -3,33 +3,25 @@ from flask import abort
 from controllers.IController import IController
 from services.Catalog.CatalogService import CatalogService
 from views.HTML.website.Catalog.CatalogView import CatalogView
-from views.HTML.website.Catalog.CatalogsView import CatalogsView
 
 
 class CatalogController(IController):
 
     def __init__(self, service: CatalogService) -> None:
-        self._service: CatalogService = service
+        self._service = service
 
-    def catalogs_page_action(self) -> str:
-        view = CatalogsView()
+    def category_page_action(self, category_slug: str) -> str:
+        category = self._service.find_category_by_slug(category_slug)
 
-        view.set_data(
-            catalogs=self._service.find_all()
-        )
-
-        return view.render()
-
-    def catalog_page_action(self, catalog_code: str) -> str:
-        view = CatalogView()
-
-        catalog = self._service.find_by_code(catalog_code)
-
-        if catalog is None:
+        if category is None:
             abort(404)
 
+        category_products = self._service.find_category_products(category.code)
+
+        view = CatalogView()
         view.set_data(
-            catalog=self._service.find_by_code(catalog_code)
+            category=category,
+            products=category_products
         )
 
         return view.render()

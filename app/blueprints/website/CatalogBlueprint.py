@@ -6,22 +6,13 @@ from modules.Session.requestDecorators import with_session
 from request_decorators import with_language
 from service_container import sc
 
-catalog_blueprint = Blueprint(CATALOG_BLUEPRINT, __name__, url_prefix='/<string:language_code>/catalogs')
+catalog_blueprint = Blueprint(CATALOG_BLUEPRINT, __name__, url_prefix='/<string:language_code>/catalog')
 
 
-@catalog_blueprint.route('', methods=['GET'])
+@catalog_blueprint.route('<string:category_slug>', methods=['GET'])
 @with_language
 @with_session
-def catalogs_page_route():
+def category_page_route(category_slug: str):
     controller: CatalogController = sc.get(CatalogController)
 
-    return controller.catalogs_page_action()
-
-
-@catalog_blueprint.route('<string:catalog_code>', methods=['GET'])
-@with_language
-@with_session
-def catalog_page_route(catalog_code: str):
-    controller: CatalogController = sc.get(CatalogController)
-
-    return controller.catalog_page_action(catalog_code)
+    return controller.category_page_action(category_slug)

@@ -16,3 +16,6 @@ class CatalogService(IService):
 
     def find_all(self) -> list[CatalogEntity]:
         return self._repository.find_all()
+
+    def find_category_by_code(self, category_code: str) -> CatalogEntity | None:
+        pass
