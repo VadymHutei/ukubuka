@@ -1,21 +1,12 @@
 from entities.Product.ProductEntity import ProductEntity
-from exceptions.entities_exceptions.ProductException import ProductException
-from services.Product.IProductRepository import IProductRepository
 from services.IService import IService
+from services.Product.IProductRepository import IProductRepository
 
 
 class ProductService(IService):
 
-    def __init__(self, product_repository: IProductRepository):
-        self.product_repository: IProductRepository = product_repository
+    def __init__(self, repository: IProductRepository):
+        self._repository: IProductRepository = repository
 
-    def get_by_code(self, code: str) -> ProductEntity:
-        product = self.product_repository.find_by_code(code)
-
-        if not product:
-            raise ProductException('Product not found')
-
-        return product
-
-    def find_by_code(self, code: str) -> ProductEntity | None:
-        return self.product_repository.find_by_code(code)
+    def find_by_slug(self, slug: str, only_active: bool = False) -> ProductEntity | None:
+        return self._repository.find_by_slug(slug, only_active)

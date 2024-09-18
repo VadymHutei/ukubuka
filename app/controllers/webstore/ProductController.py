@@ -11,7 +11,7 @@ class ProductController(IController):
         self._service = service
 
     def product_page_action(self, product_slug: str) -> str:
-        product = self._service.find_by_slug(product_slug)
+        product = self._service.find_by_slug(product_slug, True)
 
         if product is None:
             abort(404)

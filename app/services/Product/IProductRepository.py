@@ -6,5 +6,5 @@ from entities.Product.ProductEntity import ProductEntity
 class IProductRepository(ABC):
 
     @abstractmethod
-    def find_by_code(self, code: str) -> ProductEntity | None:
+    def find_by_slug(self, slug: str, only_active: bool = False) -> ProductEntity | None:
         pass

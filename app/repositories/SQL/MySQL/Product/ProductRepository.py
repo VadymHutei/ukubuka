@@ -1,44 +1,48 @@
+from flask import g
+
 from entities.Product.ProductEntity import ProductEntity
-from entity_mappers.SQL.MySQL.Currency.CurrencyMapper import CurrencyMapper
-from entity_mappers.SQL.MySQL.Product.ProductMapper import ProductMapper
-from entity_mappers.SQL.MySQL.Product.ProductPriceMapper import ProductPriceMapper
-from entity_mappers.SQL.MySQL.Product.ProductTextMapper import ProductTextMapper
 from repositories.SQL.MySQL.MySQLRepository import MySQLRepository
+from repositories.SQL.MySQL.Product.mappers.ProductMapper import ProductMapper
+from repositories.SQL.MySQL.Product.mappers.ProductTextMapper import ProductTextMapper
+from repositories.SQL.MySQL.Product.transformers.ProductEntityTransformer import ProductEntityTransformer
+from repositories.SQL.MySQL.PyMySQLRepository import PyMySQLRepository
 from services.Product.IProductRepository import IProductRepository
 
 
-class ProductRepository(MySQLRepository, IProductRepository):
+class ProductRepository(PyMySQLRepository, MySQLRepository, IProductRepository):
 
-    def find_by_code(self, code: str) -> ProductEntity | None:
+    def __init__(
+        self,
+        mapper: ProductMapper,
+        text_mapper: ProductTextMapper,
+        transformer: ProductEntityTransformer,
+    ):
+        self._mapper = mapper
+        self._text_mapper = text_mapper
+        self._transformer = transformer
+
+    def find_by_slug(self, slug: str, only_active: bool = False) -> ProductEntity | None:
+        only_active_condition = f'AND {self._mapper.pr_field('is_active')} = 1' if only_active else ''
+
         query = f'''
             SELECT
-                {ProductMapper.fields},
-                {ProductTextMapper.fields},
-                {ProductPriceMapper.fields},
-                {CurrencyMapper.fields}
-            FROM {ProductMapper.table_as_prefix}
-            JOIN {ProductTextMapper.table_as_prefix}
-                ON {ProductTextMapper.table_prefix}.product_id = {ProductMapper.table_prefix}.id
-                AND {ProductTextMapper.table_prefix}.language_id = %s
-            JOIN {ProductPriceMapper.table_as_prefix}
-                ON {ProductPriceMapper.table_prefix}.product_id = {ProductMapper.table_prefix}.id
-            LEFT JOIN {CurrencyMapper.table_as_prefix}
-                ON {CurrencyMapper.table_prefix}.id = {ProductPriceMapper.table_prefix}.currency_id
-                AND {CurrencyMapper.table_prefix}.is_active = 1
+                {self._mapper.fields},
+                {self._text_mapper.entity_fields}
+            FROM
+                {self._mapper.table_as_prefix}
+                LEFT JOIN {self._text_mapper.table_as_prefix}
+                    ON {self._text_mapper.pr_entity_foreign_key_field} = {self._mapper.pr_field('id')}
+                    AND {self._text_mapper.pr_language_foreign_key_field} = {PyMySQLRepository.PLCHLD}
             WHERE
-                {ProductMapper.table_prefix}.code = %s
-            LIMIT 1
+                {self._mapper.pr_field('slug')} = {PyMySQLRepository.PLCHLD}
+                {only_active_condition}
         '''
 
-        query_data = (
-            # g.current_language.id,
-            1,
-            code,
-        )
+        query_data = (g.current_language.id, slug)
 
         with self.connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(query, query_data)
                 data = cursor.fetchone()
 
-        return ProductMapper.create_entity(data) if data else None # type: ignore
+        return self._transformer.transform(data) if data else None
