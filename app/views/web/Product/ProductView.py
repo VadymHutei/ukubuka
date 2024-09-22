@@ -1,3 +1,4 @@
+from views.web.Product.transformers.ProductViewTransformer import ProductViewTransformer
 from views.web.WebView import WebView
 
 
@@ -9,3 +10,5 @@ class ProductView(WebView):
 
     def _prepare_page_data(self) -> None:
         super()._prepare_page_data()
+
+        self._data['product'] = ProductViewTransformer.transform(self._data['product'])
