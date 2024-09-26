@@ -8,7 +8,12 @@ class ProductView(WebView):
 
     _with_layout: bool = True
 
+    def __init__(self) -> None:
+        super().__init__()
+
+        self._productViewTransformer = ProductViewTransformer()
+
     def _prepare_page_data(self) -> None:
         super()._prepare_page_data()
 
-        self._data['product'] = ProductViewTransformer.transform(self._data['product'])
+        self._data['product'] = self._productViewTransformer.transform(self._data['product'])
