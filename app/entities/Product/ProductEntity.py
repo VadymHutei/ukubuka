@@ -8,10 +8,10 @@ from entities.Entity import Entity
 class ProductEntity(Entity):
 
     slug: str
-    name: str
     is_active: bool
     created_at: datetime
 
+    name: str | None = None
     description: str | None = None
     updated_at: datetime | None = None
     deleted_at: datetime | None = None

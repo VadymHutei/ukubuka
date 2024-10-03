@@ -3,13 +3,13 @@ from repositories.SQL.MySQL.Config.ConfigRepository import ConfigRepository
 from repositories.SQL.MySQL.Language.LanguageRepository import LanguageRepository
 from repositories.SQL.MySQL.Page.PageRepository import PageRepository
 from repositories.SQL.MySQL.Page.PageTextRepository import PageTextRepository
-from repositories.SQL.MySQL.Product.ProductRepository import ProductRepository
+from repositories.builders.Product.IProductDAO import IProductDAO
+from repositories.data_access.SQL.MySQL.ProductDAO import ProductDAO
 from services.Catalog.ICatalogRepository import ICatalogRepository
 from services.Config.IConfigRepository import IConfigRepository
 from services.Language.ILanguageRepository import ILanguageRepository
 from services.Page.IPageRepository import IPageRepository
 from services.Page.IPageTextRepository import IPageTextRepository
-from services.Product.IProductRepository import IProductRepository
 
 
 services_map: dict[type, type] = {
@@ -18,5 +18,5 @@ services_map: dict[type, type] = {
     ILanguageRepository: LanguageRepository,
     IPageRepository: PageRepository,
     IPageTextRepository: PageTextRepository,
-    IProductRepository: ProductRepository,
+    IProductDAO: ProductDAO,
 }
