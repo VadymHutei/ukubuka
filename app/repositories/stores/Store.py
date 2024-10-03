@@ -11,14 +11,14 @@ class Store(Generic[T]):
     def __init__(self):
         self._entities = {}
 
-    def has(self, entity_id: int) -> bool:
-        return entity_id in self._entities
+    def has(self, key: str) -> bool:
+        return key in self._entities
 
-    def get(self, entity_id: int) -> T:
-        return self._entities[entity_id]
+    def get(self, key: str) -> T:
+        return self._entities[key]
 
-    def find(self, entity_id: int) -> T | None:
-        return self._entities.get(entity_id, None)
+    def find(self, key: str) -> T | None:
+        return self._entities.get(key, None)
 
-    def add(self, entity: T) -> None:
-        self._entities[entity.id] = entity
+    def add(self, key: str, entity: T) -> None:
+        self._entities[key] = entity

@@ -1,3 +1,5 @@
+from flask import g
+
 from entities.Product.ProductEntity import ProductEntity
 from repositories.Product.IProductDAO import IProductDAO
 from repositories.builders.Product.ProductBuilder import ProductBuilder
@@ -17,12 +19,15 @@ class ProductRepository:
         if product_id is None:
             return None
 
-        if self._store.has(product_id):
-            return self._store.get(product_id)
+        if self._store.has(self._store_key(product_id)):
+            return self._store.get(self._store_key(product_id))
         else:
             product = self._builder.build(product_id)
 
             if product is not None:
-                self._store.add(product)
+                self._store.add(self._store_key(product_id), product)
 
             return product
+
+    def _store_key(self, product_id) -> str:
+        return f'{product_id}_{g.current_language.code}'
