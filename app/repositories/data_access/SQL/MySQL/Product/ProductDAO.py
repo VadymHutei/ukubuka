@@ -1,4 +1,4 @@
-from repositories.builders.Product.IProductDAO import IProductDAO
+from repositories.Product.IProductDAO import IProductDAO
 from repositories.data_access.SQL.MySQL.MySQLDAO import MySQLDAO
 
 

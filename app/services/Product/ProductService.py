@@ -1,5 +1,5 @@
 from entities.Product.ProductEntity import ProductEntity
-from repositories.ProductRepository import ProductRepository
+from repositories.Product.ProductRepository import ProductRepository
 from services.IService import IService
 
 
