@@ -13,21 +13,27 @@ class ProductRepository:
         self._store = store
         self._builder = builder
 
-    def find_by_slug(self, slug: str, only_active: bool = False) -> ProductEntity | None:
-        product_id = self._product_dao.find_id_by_slug(slug, only_active)
-
-        if product_id is None:
-            return None
-
+    def find(self, product_id: int, only_active: bool = False) -> ProductEntity | None:
         if self._store.has(self._store_key(product_id)):
-            return self._store.get(self._store_key(product_id))
+            product = self._store.get(self._store_key(product_id))
         else:
             product = self._builder.build(product_id)
 
             if product is not None:
                 self._store.add(self._store_key(product_id), product)
 
-            return product
+        if only_active and not product.is_active:
+            return None
+
+        return product
+
+    def find_by_slug(self, slug: str, only_active: bool = False) -> ProductEntity | None:
+        product_id = self._product_dao.find_id_by_slug(slug)
+
+        if product_id is None:
+            return None
+
+        return self.find(product_id, only_active)
 
     def _store_key(self, product_id) -> str:
         return f'{product_id}_{g.current_language.code}'

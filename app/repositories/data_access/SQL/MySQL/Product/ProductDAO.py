@@ -4,8 +4,9 @@ from repositories.data_access.SQL.MySQL.MySQLDAO import MySQLDAO
 
 class ProductDAO(IProductDAO, MySQLDAO):
 
-    def find(self, product_id: int) -> dict | None:
-        query = '''
+    def find(self, product_id: int, only_active: bool = False) -> dict | None:
+        only_active_condition = 'AND is_active = 1' if only_active else ''
+        query = f'''
             SELECT
                 id,
                 slug,
@@ -17,6 +18,7 @@ class ProductDAO(IProductDAO, MySQLDAO):
                 product
             WHERE
                 id = %s
+                {only_active_condition}
         '''
 
         query_data = (product_id,)
@@ -28,9 +30,8 @@ class ProductDAO(IProductDAO, MySQLDAO):
 
         return data
 
-    def find_id_by_slug(self, product_slug: str, only_active: bool = False) -> int | None:
-        only_active_condition = 'AND is_active = 1' if only_active else ''
-        query = f'SELECT id FROM product WHERE slug = %s {only_active_condition}'
+    def find_id_by_slug(self, product_slug: str) -> int | None:
+        query = f'SELECT id FROM product WHERE slug = %s'
 
         query_data = (product_slug,)
 

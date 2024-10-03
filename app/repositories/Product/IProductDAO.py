@@ -8,5 +8,5 @@ class IProductDAO(ABC):
         pass
 
     @abstractmethod
-    def find_id_by_slug(self, product_slug: str, only_active: bool = False) -> int | None:
+    def find_id_by_slug(self, product_slug: str) -> int | None:
         pass
