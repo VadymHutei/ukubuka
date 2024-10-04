@@ -28,7 +28,7 @@ class ProductBuilder(Builder[ProductEntity]):
         self._product_position_builder = product_position_builder
         self._product_position_store = product_position_store
 
-    def build(self, product_id: int, params: ProductBuilderParams) -> ProductEntity | None:
+    def build(self, product_id: int, params: ProductBuilderParams):
         product = self._create_product(product_id, params.only_active)
 
         if product is None:
@@ -68,17 +68,19 @@ class ProductBuilder(Builder[ProductEntity]):
 
     def _build_positions(self, product: ProductEntity, only_active: bool) -> None:
         product_position_ids = self._product_position_dao.find_ids_by_product_id(product.id, only_active)
-
         use_store = app.config['USE_ENTITY_STORE']
+
         for product_position_id in product_position_ids:
-            if use_store and self._product_position_store.has(ProductPositionStore.key_for(product_position_id)):
-                product_position = self._product_position_store.get(ProductPositionStore.key_for(product_position_id))
+            store_key = ProductPositionStore.key_for(product_position_id)
+
+            if use_store and self._product_position_store.has(store_key):
+                product_position = self._product_position_store.get(store_key)
             else:
                 builder_params = ProductPositionBuilderParams(only_active=True)
                 product_position = self._product_position_builder.build(product_position_id, builder_params)
 
-                if product_position is not None:
-                    self._product_position_store.add(ProductPositionStore.key_for(product_position_id), product_position)
+                if use_store and product_position is not None:
+                    self._product_position_store.add(store_key, product_position)
 
             if product_position is None or (only_active and not product_position.is_active):
                 continue

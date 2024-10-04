@@ -16,14 +16,16 @@ class ProductRepository:
 
     def find(self, product_id: int, only_active: bool) -> ProductEntity | None:
         use_store = app.config['USE_ENTITY_STORE']
-        if use_store and self._product_store.has(ProductStore.key_for(product_id)):
-            product = self._product_store.get(ProductStore.key_for(product_id))
+        store_key = ProductStore.key_for(product_id)
+
+        if use_store and self._product_store.has(store_key):
+            product = self._product_store.get(store_key)
         else:
             builder_params = ProductBuilderParams(only_active=True)
             product = self._product_builder.build(product_id, builder_params)
 
-            if product is not None:
-                self._product_store.add(ProductStore.key_for(product_id), product)
+            if use_store and product is not None:
+                self._product_store.add(store_key, product)
 
         if only_active and not product.is_active:
             return None
