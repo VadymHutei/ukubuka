@@ -1,5 +1,3 @@
-from flask import g
-
 from entities.Product.ProductEntity import ProductEntity
 from repositories.Product.IProductDAO import IProductDAO
 from repositories.builders.Product.ProductBuilder import ProductBuilder
@@ -14,13 +12,13 @@ class ProductRepository:
         self._builder = builder
 
     def find(self, product_id: int, only_active: bool = False) -> ProductEntity | None:
-        if self._store.has(self._store_key(product_id)):
-            product = self._store.get(self._store_key(product_id))
+        if self._store.has(ProductStore.key_for(product_id)):
+            product = self._store.get(ProductStore.key_for(product_id))
         else:
             product = self._builder.build(product_id)
 
             if product is not None:
-                self._store.add(self._store_key(product_id), product)
+                self._store.add(ProductStore.key_for(product_id), product)
 
         if only_active and not product.is_active:
             return None
@@ -34,6 +32,3 @@ class ProductRepository:
             return None
 
         return self.find(product_id, only_active)
-
-    def _store_key(self, product_id) -> str:
-        return f'{product_id}_{g.current_language.code}'
