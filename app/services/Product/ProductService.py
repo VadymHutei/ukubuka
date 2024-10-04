@@ -5,8 +5,8 @@ from services.IService import IService
 
 class ProductService(IService):
 
-    def __init__(self, repository: ProductRepository):
-        self._repository = repository
+    def __init__(self, product_repository: ProductRepository):
+        self._product_repository = product_repository
 
-    def find_by_slug(self, slug: str, only_active: bool = False) -> ProductEntity | None:
-        return self._repository.find_by_slug(slug, only_active)
+    def find_by_slug(self, slug: str, only_active: bool) -> ProductEntity | None:
+        return self._product_repository.find_by_slug(slug, only_active)

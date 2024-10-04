@@ -4,7 +4,7 @@ from abc import abstractmethod, ABC
 class IProductDAO(ABC):
 
     @abstractmethod
-    def find(self, product_id: int) -> dict | None:
+    def find(self, product_id: int, only_active: bool) -> dict | None:
         pass
 
     @abstractmethod
