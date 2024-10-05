@@ -4,7 +4,6 @@ from blueprints import blueprints_list
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
 from blueprints.blueprint_names import HOME_BLUEPRINT
-from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Session.requestDecorators import with_session
 from modules.User.routes.UserACPBlueprint import ACP_user_blueprint

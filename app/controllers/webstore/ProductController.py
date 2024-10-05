@@ -13,8 +13,6 @@ class ProductController(Controller):
     def product_page_action(self, product_slug: str) -> str:
         product = self._product_service.find_by_slug(product_slug, only_active=True)
 
-        print(product)
-
         if product is None:
             abort(404)
 

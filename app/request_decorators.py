@@ -7,7 +7,6 @@ from services.Language.LanguageService import LanguageService
 
 
 def with_language(f):
-
     @wraps(f)
     def decorated_function(*args, **kwargs):
         language_service: LanguageService = sc.get(LanguageService)
@@ -28,6 +27,16 @@ def with_language(f):
             del kwargs['language_code']
         else:
             g.current_language = g.default_language
+
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
+def with_currency(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        g.current_currency = g.default_currency
 
         return f(*args, **kwargs)
 
