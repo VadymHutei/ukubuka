@@ -7,11 +7,11 @@ from data_transfer_objects.Page.EditPageTranslationDTO import EditPageTranslatio
 from entities.Page.PageEntity import PageEntity
 from entities.Page.PageTextEntity import PageTextEntity
 from repositories.SQL.MySQL.Page.PageTextRepository import PageTextRepository
-from services.IService import IService
+from services.Service import Service
 from services.Page.IPageRepository import IPageRepository
 
 
-class PageService(IService):
+class PageService(Service):
 
     def __init__(self, page_repository: IPageRepository, page_text_repository: PageTextRepository):
         self._page_repository = page_repository

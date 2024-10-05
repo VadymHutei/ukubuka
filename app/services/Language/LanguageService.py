@@ -4,11 +4,11 @@ from data_transfer_objects.Language.AddLanguageDTO import AddLanguageDTO
 from data_transfer_objects.Language.EditLanguageDTO import EditLanguageDTO
 from entities.Language.LanguageEntity import LanguageEntity
 from exceptions.entities_exceptions.LanguageException import LanguageException
-from services.IService import IService
+from services.Service import Service
 from services.Language.ILanguageRepository import ILanguageRepository
 
 
-class LanguageService(IService):
+class LanguageService(Service):
 
     def __init__(self, language_repository: ILanguageRepository):
         self._language_repository = language_repository

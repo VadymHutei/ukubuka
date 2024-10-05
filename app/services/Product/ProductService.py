@@ -1,9 +1,9 @@
 from entities.Product.ProductEntity import ProductEntity
 from repositories.Product.ProductRepository import ProductRepository
-from services.IService import IService
+from services.Service import Service
 
 
-class ProductService(IService):
+class ProductService(Service):
 
     def __init__(self, product_repository: ProductRepository):
         self._product_repository = product_repository

@@ -1,5 +1,5 @@
-from services.IService import IService
+from services.Service import Service
 
 
-class PriceService(IService):
+class PriceService(Service):
     pass

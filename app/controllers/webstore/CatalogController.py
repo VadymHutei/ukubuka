@@ -1,11 +1,11 @@
 from flask import abort
 
-from controllers.IController import IController
+from controllers.Controller import Controller
 from services.Catalog.CatalogService import CatalogService
 from views.HTML.website.Catalog.CatalogView import CatalogView
 
 
-class CatalogController(IController):
+class CatalogController(Controller):
 
     def __init__(self, service: CatalogService) -> None:
         self._service = service

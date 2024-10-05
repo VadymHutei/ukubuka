@@ -1,7 +1,7 @@
 from flask import g, redirect, request, url_for
 
 from blueprints.blueprint_names import ACP_PAGE_BLUEPRINT
-from controllers.IController import IController
+from controllers.Controller import Controller
 from services.Language.LanguageService import LanguageService
 from services.Page.PageService import PageService
 from transformers.request_transformers.Page.AddPageDTOTransformer import AddPageDTOTransformer
@@ -16,7 +16,7 @@ from views.HTML.ACP.Page.PageView import PageView
 from views.HTML.ACP.Page.PagesView import PagesView
 
 
-class PageController(IController):
+class PageController(Controller):
 
     def __init__(self, page_service: PageService, language_service: LanguageService):
         self._page_service = page_service

@@ -1,7 +1,7 @@
 from flask import g, redirect, request, url_for
 
 from blueprints.blueprint_names import ACP_LANGUAGE_BLUEPRINT
-from controllers.IController import IController
+from controllers.Controller import Controller
 from services.Language.LanguageService import LanguageService
 from transformers.request_transformers.Language.AddLanguageDTOTransformer import AddLanguageDTOTransformer
 from transformers.request_transformers.Language.EditLanguageDTOTransformer import EditLanguageDTOTransformer
@@ -11,7 +11,7 @@ from views.HTML.ACP.Language.LanguagesView import LanguagesView
 from views.HTML.ACP.Language.LanguageView import LanguageView
 
 
-class LanguageController(IController):
+class LanguageController(Controller):
 
     def __init__(self, language_service: LanguageService):
         self._language_service: LanguageService = language_service

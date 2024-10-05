@@ -1,9 +1,9 @@
 from entities.Catalog.CatalogEntity import CatalogEntity
 from services.Catalog.ICatalogRepository import ICatalogRepository
-from services.IService import IService
+from services.Service import Service
 
 
-class CatalogService(IService):
+class CatalogService(Service):
 
     def __init__(self, repository: ICatalogRepository) -> None:
         self._repository: ICatalogRepository = repository
