@@ -12,6 +12,6 @@ class ProductPriceEntity(Entity):
     currency_id: int
     value: int
     created_at: datetime
-    updated_at: datetime | None = None
 
     currency: CurrencyEntity | None = None
+    updated_at: datetime | None = None

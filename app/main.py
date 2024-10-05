@@ -4,12 +4,14 @@ from blueprints import blueprints_list
 from blueprints.ACP.DashboardACPBlueprint import acp_dashboard_blueprint
 from blueprints.ACP.LanguageBlueprint import acp_language_blueprint
 from blueprints.blueprint_names import HOME_BLUEPRINT
+from enums.CurrencySymbolPositionEnum import CurrencySymbolPositionEnum
 from modules.Language.jinjaFilters import filters as language_filters
 from modules.Session.requestDecorators import with_session
 from modules.User.routes.UserACPBlueprint import ACP_user_blueprint
 from modules.User.routes.UserBlueprint import user_blueprint
 from service_container import sc
 from services.Config.ConfigService import ConfigService
+from services.Currency.CurrencyService import CurrencyService
 from services.Language.LanguageService import LanguageService
 
 app = Flask(__name__, instance_relative_config=True)
@@ -30,6 +32,9 @@ def before_request() -> None:
     language_service: LanguageService = sc.get(LanguageService)
     app.config['AVAILABLE_LANGUAGE_CODES'] = [language.code for language in language_service.find_active()]
     g.default_language = language_service.get_by_code(app.config['default_language_code'])
+
+    currency_service: CurrencyService = sc.get(CurrencyService)
+    g.default_currency = currency_service.find_by_code(app.config['default_currency_code'], only_active=True)
 
 
 for blueprint in blueprints_list:

@@ -4,11 +4,13 @@ from flask import g
 from entities.Product.ProductEntity import ProductEntity
 from repositories.Product.IProductDAO import IProductDAO
 from repositories.Product.IProductPositionDAO import IProductPositionDAO
+from repositories.Product.IProductPriceDAO import IProductPriceDAO
 from repositories.Product.IProductTextDAO import IProductTextDAO
 from repositories.builders.Builder import Builder
 from repositories.builders.Product.ProductBuilderParams import ProductBuilderParams
 from repositories.builders.Product.ProductPositionBuilder import ProductPositionBuilder
 from repositories.builders.Product.ProductPositionBuilderParams import ProductPositionBuilderParams
+from repositories.builders.Product.ProductPriceBuilder import ProductPriceBuilder
 from repositories.stores.Product.ProductPositionStore import ProductPositionStore
 
 
@@ -19,22 +21,27 @@ class ProductBuilder(Builder[ProductEntity]):
         product_dao: IProductDAO,
         product_text_dao: IProductTextDAO,
         product_position_dao: IProductPositionDAO,
+        product_price_dao: IProductPriceDAO,
         product_position_builder: ProductPositionBuilder,
+        product_price_builder: ProductPriceBuilder,
         product_position_store: ProductPositionStore,
     ):
         self._product_dao = product_dao
         self._product_text_dao = product_text_dao
         self._product_position_dao = product_position_dao
+        self._product_price_dao = product_price_dao
         self._product_position_builder = product_position_builder
+        self._product_price_builder = product_price_builder
         self._product_position_store = product_position_store
 
-    def build(self, product_id: int, params: ProductBuilderParams):
+    def build(self, product_id: int, params: ProductBuilderParams | None = None):
         product = self._create_product(product_id, params.only_active)
 
         if product is None:
             return None
 
         self._build_text(product)
+        self._build_price(product)
         self._build_positions(product, params.only_active)
 
         return product
@@ -54,17 +61,30 @@ class ProductBuilder(Builder[ProductEntity]):
             deleted_at=product_record['deleted_at'],
         )
 
-    def _build_text(self, product: ProductEntity) -> None:
+    def _build_text(self, product: ProductEntity):
         product_text_record = self._product_text_dao.find_by_product_id_and_language_id(
             product.id,
             g.current_language.id,
         )
 
         if product_text_record is None:
-            return None
+            return
 
         product.name = product_text_record['name']
         product.description = product_text_record['description']
+
+    def _build_price(self, product: ProductEntity) -> None:
+        product_price_id = self._product_price_dao.find_id_by_product_id_and_currency_id(
+            product.id,
+            g.current_currency.id,
+        )
+
+        if product_price_id is None:
+            return
+
+        price = self._product_price_builder.build(product_price_id)
+
+        product.price = price
 
     def _build_positions(self, product: ProductEntity, only_active: bool) -> None:
         product_position_ids = self._product_position_dao.find_ids_by_product_id(product.id, only_active)

@@ -10,7 +10,7 @@ T = TypeVar('T', bound=Entity)
 class Builder(Generic[T], ABC):
 
     @abstractmethod
-    def build(self, entity_id: int, params: BuilderParams) -> T | None:
+    def build(self, entity_id: int, params: BuilderParams | None = None) -> T | None:
         pass
 
     def build_collection(self, entity_ids: list[int], params: BuilderParams) -> dict[int, T]:

@@ -2,12 +2,13 @@ from flask import current_app as app
 
 from entities.Product.ProductEntity import ProductEntity
 from repositories.Product.IProductDAO import IProductDAO
+from repositories.Repository import Repository
 from repositories.builders.Product.ProductBuilder import ProductBuilder
 from repositories.builders.Product.ProductBuilderParams import ProductBuilderParams
 from repositories.stores.Product.ProductStore import ProductStore
 
 
-class ProductRepository:
+class ProductRepository(Repository):
 
     def __init__(self, product_dao: IProductDAO, product_store: ProductStore, product_builder: ProductBuilder):
         self._product_dao = product_dao

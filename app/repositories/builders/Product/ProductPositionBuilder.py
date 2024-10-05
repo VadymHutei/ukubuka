@@ -17,7 +17,7 @@ class ProductPositionBuilder(Builder[ProductPositionEntity]):
         self._product_position_dao = product_position_dao
         self._product_position_text_dao = product_position_text_dao
 
-    def build(self, product_position_id: int, params: ProductPositionBuilderParams):
+    def build(self, product_position_id: int, params: ProductPositionBuilderParams | None = None):
         product_position = self._create_product_position(product_position_id, params.only_active)
 
         if product_position is None:
