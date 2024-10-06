@@ -29,6 +29,7 @@ class CurrencyBuilder(Builder[CurrencyEntity]):
             code=currency_record['code'],
             symbol=currency_record['symbol'],
             symbol_position=CurrencySymbolPositionEnum(currency_record['symbol_position']),
+            separator=currency_record['separator'],
             is_active=currency_record['is_active'],
             created_at=currency_record['created_at'],
             updated_at=currency_record['updated_at'],

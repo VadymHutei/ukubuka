@@ -21,17 +21,18 @@ class CurrencyRepository(Repository):
 
         if use_store and self._currency_store.has(store_key):
             currency = self._currency_store.get(store_key)
-        else:
-            currency_builder_params = CurrencyBuilderParams(only_active=only_active)
-            currency = self._currency_builder.build(currency_id, currency_builder_params)
+            return None if only_active and not currency.is_active else currency
 
-            if use_store and currency is not None:
-                self._currency_store.add(store_key, currency)
+        currency_builder_params = CurrencyBuilderParams(only_active=only_active)
+        currency = self._currency_builder.build(currency_id, currency_builder_params)
 
-        if only_active and not currency.is_active:
+        if currency is None:
             return None
 
-        return currency
+        if use_store:
+            self._currency_store.add(store_key, currency)
+
+        return None if only_active and not currency.is_active else currency
 
     def find_by_code(self, currency_code: str, only_active: bool) -> CurrencyEntity | None:
         currency_id = self._currency_dao.find_id_by_code(currency_code)

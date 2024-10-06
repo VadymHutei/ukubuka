@@ -11,6 +11,7 @@ class CurrencyDAO(ICurrencyDAO, MySQLDAO):
                 code,
                 symbol,
                 symbol_position,
+                `separator`,
                 is_active,
                 created_at,
                 updated_at
@@ -35,6 +36,7 @@ class CurrencyDAO(ICurrencyDAO, MySQLDAO):
                 code,
                 symbol,
                 symbol_position,
+                `separator`,
                 is_active,
                 created_at,
                 updated_at

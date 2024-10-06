@@ -21,17 +21,18 @@ class ProductRepository(Repository):
 
         if use_store and self._product_store.has(store_key):
             product = self._product_store.get(store_key)
-        else:
-            builder_params = ProductBuilderParams(only_active=True)
-            product = self._product_builder.build(product_id, builder_params)
+            return None if only_active and not product.is_active else product
 
-            if use_store and product is not None:
-                self._product_store.add(store_key, product)
+        product_builder_params = ProductBuilderParams(only_active=only_active)
+        product = self._product_builder.build(product_id, product_builder_params)
 
-        if only_active and not product.is_active:
+        if product is None:
             return None
 
-        return product
+        if use_store:
+            self._product_store.add(store_key, product)
+
+        return None if only_active and not product.is_active else product
 
     def find_by_slug(self, slug: str, only_active: bool) -> ProductEntity | None:
         product_id = self._product_dao.find_id_by_slug(slug)
