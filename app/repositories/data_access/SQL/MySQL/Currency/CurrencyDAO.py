@@ -12,6 +12,7 @@ class CurrencyDAO(ICurrencyDAO, MySQLDAO):
                 symbol,
                 symbol_position,
                 `separator`,
+                decimal_places,
                 is_active,
                 created_at,
                 updated_at
@@ -37,6 +38,7 @@ class CurrencyDAO(ICurrencyDAO, MySQLDAO):
                 symbol,
                 symbol_position,
                 `separator`,
+                decimal_places,
                 is_active,
                 created_at,
                 updated_at

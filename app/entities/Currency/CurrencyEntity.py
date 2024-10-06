@@ -12,6 +12,7 @@ class CurrencyEntity(Entity):
     symbol: str
     symbol_position: CurrencySymbolPositionEnum
     separator: str
+    decimal_places: int
     is_active: bool
     created_at: datetime
     updated_at: datetime | None = None
