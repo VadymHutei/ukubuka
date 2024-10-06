@@ -15,7 +15,7 @@ from services.Language.LanguageService import LanguageService
 
 app = Flask(__name__, instance_relative_config=True)
 
-app.config.from_object('config')
+app.config.from_object('config.app')
 app.config.from_pyfile('config.py')
 app.jinja_env.filters.update(language_filters)
 

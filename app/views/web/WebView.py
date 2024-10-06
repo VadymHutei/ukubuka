@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, current_app as app
 
 from entities.Page.PageEntity import PageEntity
 from services.Page.PageService import PageService

@@ -17,7 +17,7 @@ class ProductController(Controller):
         if product is None:
             abort(404)
 
-        view = sc.get(ProductView)
+        view: ProductView = sc.get(ProductView)
         view.set_data(product=product)
 
         return view.render()
