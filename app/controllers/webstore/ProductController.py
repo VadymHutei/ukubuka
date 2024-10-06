@@ -1,6 +1,7 @@
 from flask import abort
 
 from controllers.Controller import Controller
+from service_container import sc
 from services.Product.ProductService import ProductService
 from views.web.Product.ProductView import ProductView
 
@@ -16,7 +17,7 @@ class ProductController(Controller):
         if product is None:
             abort(404)
 
-        view = ProductView()
+        view = sc.get(ProductView)
         view.set_data(product=product)
 
         return view.render()

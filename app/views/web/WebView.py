@@ -1,7 +1,6 @@
 from flask import render_template
 
 from entities.Page.PageEntity import PageEntity
-from service_container import sc
 from services.Page.PageService import PageService
 from views.View import View
 
@@ -12,8 +11,10 @@ class WebView(View):
 
     _with_layout: bool = False
 
-    def __init__(self) -> None:
+    def __init__(self, page_service: PageService) -> None:
         super().__init__()
+
+        self._page_service = page_service
 
         self._page_data: dict = {}
         self._template_data: dict = {}
@@ -36,9 +37,7 @@ class WebView(View):
         self._template_data['layout'] = self._page.layout
 
     def _set_page(self) -> None:
-        page_service: PageService = sc.get(PageService)
-
-        self._page: PageEntity = page_service.find_by_code(self._page_code)
+        self._page: PageEntity = self._page_service.find_by_code(self._page_code)
 
     def set_data(self, **data) -> None:
         self._data.update(data)
